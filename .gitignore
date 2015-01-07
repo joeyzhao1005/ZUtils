@@ -6,9 +6,12 @@
 
 # Java class files
 *.class
+
 # generated files
 bin/
+libs/libray/bin/
 gen/
+libs/library/gen/
 build/
 
 # Local configuration file (sdk path, etc)
@@ -20,11 +23,21 @@ local.properties
 .settings/*
 proguard-project.txt
 
-
 # IntelliJ project files
 *.iws
-*/.idea/workspace.xml
-*/.idea/tasks.xml
+*.iml
+*.ipr
+.idea/
 
 # Gradle files
-/.gradle
+.gradle
+gradle
+build
+
+# Mac system files
+.DS_Store
+
+# others
+ant.properties
+build.xml
+META-INF
