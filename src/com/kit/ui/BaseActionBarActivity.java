@@ -2,13 +2,13 @@ package com.kit.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kit.app.ActivityManager;
 
-public class BaseV4FragmentActivity extends FragmentActivity implements BaseV4Fragment.OnFragmentInteractionListener,IDoActivityInit{
+public class BaseActionBarActivity extends ActionBarActivity implements BaseV4Fragment.OnFragmentInteractionListener,IDoActivityInit{
 
 
 //    public Context mContext;
