@@ -31,7 +31,7 @@ public class ResourceUtils extends AssetsUtils {
      */
     public static int getResId(Context context, String name, String defType) {
 
-        ZogUtils.printLog(ResourceUtils.class, "context:" + context);
+//        ZogUtils.printLog(ResourceUtils.class, "context:" + context);
         Resources resources = context.getApplicationContext().getResources();
 
         String packageName = context.getApplicationInfo().packageName;

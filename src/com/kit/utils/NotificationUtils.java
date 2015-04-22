@@ -45,13 +45,12 @@ public class NotificationUtils {
      * @Description 常驻状态栏的通知, 通过view设置点击，可以设置点击时间
      */
     @SuppressWarnings("deprecation")
-    public static void showResidentNotification4Service(Context context,
-                                                        NotificationManager nm, Notification notification, int notificationId, int statusBarIcon,
-                                                        Intent intent, PendingIntent contentIntent, RemoteViews view, String notice) {
+    public static void showResidentNotification4Service(NotificationManager nm, Notification notification, int notificationId, int statusBarIcon,
+                                                        PendingIntent contentIntent, RemoteViews view, String notice) {
         notification.contentView = view;
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         notification.flags = Notification.FLAG_ONGOING_EVENT;
 

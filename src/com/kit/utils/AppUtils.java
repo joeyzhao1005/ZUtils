@@ -10,7 +10,6 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.util.Log;
 
-import com.kit.app.ActivityManager;
 import com.kit.app.core.task.DoSomeThing;
 
 import java.util.ArrayList;
@@ -65,6 +64,24 @@ public class AppUtils {
             Log.e("VersionInfo", "Exception", e);
         }
         return appName;
+    }
+
+    /**
+     * @return null may be returned if the specified process not found
+     */
+    public static String getProcessName(Context cxt, int pid) {
+        android.app.ActivityManager am = (android.app.ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        List<android.app.ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (android.app.ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            if (procInfo.pid == pid) {
+                return procInfo.processName;
+            }
+
+        }
+        return null;
     }
 
     public static String getAppPackage(Context context) {
@@ -165,7 +182,7 @@ public class AppUtils {
 
         ZogUtils.printLog(AppUtils.class, "forceExit 0");
 
-        ActivityManager.getInstance().popAllActivity();
+        com.kit.app.ActivityManager.getInstance().popAllActivity();
         ZogUtils.printLog(AppUtils.class, "forceExit 1");
 
         System.exit(0);
@@ -178,6 +195,7 @@ public class AppUtils {
 
     /**
      * 暂停主线程
+     *
      * @param time
      */
     public static void sleep(long time) {
@@ -190,6 +208,7 @@ public class AppUtils {
 
     /**
      * 延时执行
+     *
      * @param time
      * @param doSomeThing
      */

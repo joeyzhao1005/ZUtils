@@ -82,10 +82,10 @@ public class ServiceManager {
     }
 
     public void stopService(final Context context, final Service... services) {
-            for (Service s : services) {
-                Intent service = new Intent(context, s.getClass());
-                context.stopService(service);
-            }
+        for (Service s : services) {
+            Intent service = new Intent(context, s.getClass());
+            context.stopService(service);
+        }
 
     }
 
@@ -98,8 +98,8 @@ public class ServiceManager {
     }
 
     public void restartService(final Context context, final Service... services) {
-        // System.out.println("ServiceManager restartDreamAlarmService");
-        stopService(context,services);
+        System.out.println("ServiceManager restartService");
+        stopService(context, services);
 
         for (Service s : services) {
             Intent service = new Intent(context, s.getClass());
