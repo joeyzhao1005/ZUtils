@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ListUtils {
 
-
     /**
      *
      * @param list 被截取list
@@ -37,7 +36,7 @@ public class ListUtils {
 
 
     /**
-     * 深copu
+     * 深copy
      * @param src
      * @return
      * @throws IOException

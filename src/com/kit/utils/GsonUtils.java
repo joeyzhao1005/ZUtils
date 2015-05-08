@@ -37,7 +37,7 @@ public class GsonUtils {
      * @param clazz
      * @return
      */
-    public static Object getObj(String jsonStr, Class clazz) {
+    public static <T> T getObj(String jsonStr, Class<T>  clazz) {
         Gson gson = new Gson();
         return gson.fromJson(jsonStr, clazz);
     }

@@ -6,10 +6,45 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FileUtils {
+
+
+    /**
+     * 讲文件写入本地
+     * @param fileName
+     * @param content
+     */
+    public static void saveFile(String fileName, String content) {
+        try {
+            // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
+            FileWriter writer = new FileWriter(fileName, false);
+            writer.write(content);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 讲文件以追加的形式写入本地
+     * @param fileName
+     * @param content
+     */
+     public static void saveEndOfFile(String fileName, String content) {
+        try {
+            // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
+            FileWriter writer = new FileWriter(fileName, true);
+            writer.write(content);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static InputStream getInputStream(String fileDir) {
         InputStream in = null;
@@ -169,7 +204,7 @@ public class FileUtils {
      */
     public static String getSuffix(String filedir) {
 
-        if (StringUtils.isNullOrEmpty(filedir)) {
+        if (StringUtils.isEmptyOrNullOrNullStr(filedir)) {
             return null;
         }
 
