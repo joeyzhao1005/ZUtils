@@ -10,6 +10,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils {
+    public static String trim(String str, String trim) {
+        if (isEmptyOrNullOrNullStr(str)) {
+            return str;
+        }
+
+        if (str.indexOf(trim) == 0) {
+            str = str.substring(trim.length(), str.length());
+        }
+
+        if (str.lastIndexOf(trim) == str.length() - 1) {
+            str = str.substring(0, str.length() - trim.length());
+        }
+        return str;
+    }
 
     /**
      * 判断一个字符串是否都为数字
@@ -307,10 +321,17 @@ public class StringUtils {
      * @Description 字符串是否为null或空字符或为“null”
      */
     public static boolean isEmptyOrNullOrNullStr(String str) {
-
-        if (str == null || TextUtils.isEmpty(str) || str.equals("null")) {
+        if (TextUtils.isEmpty(str)) {
             return true;
-
+        } else {
+            str = str.trim();
+            if (str.equals("null")
+                    || str.equals("\"null\"")
+                    || str.equals("”null“")
+                    || str.equals("'null'")
+                    || str.equals("’null‘")) {
+                return true;
+            }
         }
         return false;
 
@@ -491,6 +512,15 @@ public class StringUtils {
 
     public static boolean isCharset(String str, String charsetName) {
         return Charset.forName(charsetName).newEncoder().canEncode(str);
+    }
+
+
+    public static String replaceUrlValueReg(String url, String name, String value) {
+        if (!StringUtils.isEmptyOrNullOrNullStr(url) && !StringUtils.isEmptyOrNullOrNullStr(value)) {
+//            url = url.replaceAll( name +"=[^&]*", name + "=" + value);
+            url = url.replaceAll("(" + name + "=[^&]*)", name + "=" + value);
+        }
+        return url;
     }
 
 

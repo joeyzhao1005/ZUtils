@@ -41,7 +41,7 @@ public class ZogUtils {
             String fileName = AppUtils.getAppName(context) + "-" + tag + time + "-" + timestamp + ".zog";
             if (Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
-                String path = AppConfig.DATA_DIR + "zogs/";
+                String path = AppConfig.CACHE_DATA_DIR + "zogs/";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -101,6 +101,54 @@ public class ZogUtils {
         }
     }
 
+
+    /**
+     * @param clazz  Class
+     * @param object
+     * @return void 返回类型
+     * @Title printError
+     * @Description 打印Object
+     */
+    public static void printObj(Class<?> clazz, Object object) {
+
+        String msg = GsonUtils.toJson(object);
+
+        if (AppConfig.LOG) {
+            if (clazz == null) {
+
+                Log.e(LOGUTILS_TAG, msg);
+
+            } else {
+                Log.e(LOGUTILS_TAG, "【" + LOGUTILS_IDENTIFY + clazz.getName()
+                        + "】 " + msg);
+            }
+        }
+    }
+
+    /**
+     * @param clazz  Class
+     * @param object
+     * @return void 返回类型
+     * @Title printError
+     * @Description 打印Object
+     */
+    public static void printObj(Class<?> clazz, Object object, String tag) {
+
+        String msg = GsonUtils.toJson(object);
+
+        if (AppConfig.LOG) {
+            if (clazz == null) {
+
+                Log.e(LOGUTILS_TAG, "tag: " + tag + " " + msg);
+
+            } else {
+                Log.e(LOGUTILS_TAG, "【" + LOGUTILS_IDENTIFY + clazz.getName()
+                        + "】 " + "tag:" + tag + " " + msg);
+            }
+        }
+    }
+
+
     /**
      * @param clazz Class
      * @param msg   String 消息
@@ -157,8 +205,32 @@ public class ZogUtils {
      */
     public static void showException(Exception e) {
         if (AppConfig.SHOW_EXCEPTION) {
-            e.printStackTrace();
+            ZogUtils.printError(ZogUtils.class, GsonUtils.toJson(e));
         }
+    }
+
+
+    /**
+     * 得到Exception所在代码的行数
+     * 如果没有行信息,返回-1
+     */
+    public static int getLineNumber(Exception e) {
+        StackTraceElement[] trace = e.getStackTrace();
+        if (trace == null || trace.length == 0) return -1; //
+        return trace[0].getLineNumber();
+    }
+
+    /**
+     * 得到Exception所在代码的行数
+     * 如果没有行信息,返回-1
+     */
+    public static int getLineNumber() {
+        return getCallerStackTraceElement().getLineNumber();
+    }
+
+
+    private static StackTraceElement getCallerStackTraceElement() {
+        return Thread.currentThread().getStackTrace()[3];
     }
 
 }

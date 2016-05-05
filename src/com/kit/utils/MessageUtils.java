@@ -12,6 +12,7 @@ public class MessageUtils {
 
     /**
      * 发送消息
+     *
      * @param handler
      * @param messageWhat Message.what
      * @return
@@ -24,10 +25,11 @@ public class MessageUtils {
 
     /**
      * 发送消息
+     *
      * @param handler
      * @return
      */
-    public static void sendMessage(Handler handler,int arg1,int arg2,Object obj, int what,Bundle bundle) {
+    public static void sendMessage(Handler handler, int arg1, int arg2, Object obj, int what, Bundle bundle) {
         Message message = Message.obtain();
         message.arg1 = arg1;
         message.arg2 = arg2;

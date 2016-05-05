@@ -1,5 +1,7 @@
 package com.kit.utils;
 
+import com.kit.interfaces.IEqual;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,20 +9,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class ListUtils {
 
     /**
-     *
-     * @param list 被截取list
+     * @param list  被截取list
      * @param start 起始位置
-     * @param size 截取多少个
+     * @param size  截取多少个
      * @param <T>
      * @return
      */
     public static <T> List<T> subList(List<T> list, int start,
-                                             int size) {
+                                      int size) {
         if (list == null || list.isEmpty()) {
             return null;
         }
@@ -37,21 +39,27 @@ public class ListUtils {
 
     /**
      * 深copy
+     *
      * @param src
      * @return
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public static List<?> deepCopy(List<?> src) throws IOException,
-            ClassNotFoundException {
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(byteOut);
-        out.writeObject(src);
+    public static <T> List<T> deepCopy(List<T> src) {
+        List<T> dest = null;
+        try {
 
-        ByteArrayInputStream byteIn = new ByteArrayInputStream(
-                byteOut.toByteArray());
-        ObjectInputStream in = new ObjectInputStream(byteIn);
-        List<?> dest = (List<?>) in.readObject();
+            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(byteOut);
+            out.writeObject(src);
+
+            ByteArrayInputStream byteIn = new ByteArrayInputStream(
+                    byteOut.toByteArray());
+            ObjectInputStream in = new ObjectInputStream(byteIn);
+             dest = (List<T>) in.readObject();
+        }catch (Exception e){
+            ZogUtils.showException(e);
+        }
         return dest;
     }
 
@@ -88,6 +96,21 @@ public class ListUtils {
 //            return newList;
 //        }
 //    }
+
+    /**
+     * @param
+     * @return Object 返回类型
+     * @Title getOne
+     * @Description 得到一个
+     */
+    public static <T> T getLast(List<T> objs) {
+
+        if (ListUtils.isNullOrEmpty(objs))
+            return null;
+
+        return objs.get(objs.size() - 1);
+
+    }
 
     /**
      * @param
@@ -244,4 +267,37 @@ public class ListUtils {
 
         return tempList;
     }
+
+
+    public static <T> T find(List<T> list, IEqual equal) {
+        for (T i : list) {
+            if (equal.equal(i)) {
+                return i;
+            }
+
+        }
+        return null;
+    }
+
+
+    public static <T> List<T> remove(List<T> list, IEqual iEqual) {
+
+
+        for (Iterator<T> it = list.iterator(); it.hasNext(); ) {
+            T t = it.next();
+            if (iEqual.equal(t)) {
+                it.remove();  // ok
+            }
+        }
+
+        Iterator<T> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            if (iEqual.equal(t)) {
+                list.remove(t);
+            }
+        }
+        return list;
+    }
+
 }

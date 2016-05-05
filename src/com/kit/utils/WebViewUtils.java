@@ -17,6 +17,17 @@ import java.lang.reflect.Field;
 
 public class WebViewUtils {
 
+    public static String getStartWith(String url) {
+
+        int end = url.indexOf("://");
+
+        ZogUtils.printError(WebViewUtils.class, "end:" + end);
+
+        if (end == -1)
+            end = url.length();
+        return url.substring(0, end);
+    }
+
 
     /**
      * webview 显示本地图片，自适应布局大小，图片可缩放
@@ -46,7 +57,7 @@ public class WebViewUtils {
      * @param color                0-255
      */
     public static void showLocalImage(Context mContext, final WebView webview,
-                                      final String imageLocalUrl,int color, boolean isAdapterScreenWidth, boolean doubleClickEabled) {
+                                      final String imageLocalUrl, int color, boolean isAdapterScreenWidth, boolean doubleClickEabled) {
 
         boolean fileExist = FileUtils.isExists(imageLocalUrl);
 

@@ -1,6 +1,9 @@
 package com.kit.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,30 +15,174 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FileUtils {
+    private static void beforeSave(String fileName) {
+        mkDir(fileName);
+        File file = new File(fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                ZogUtils.printError(FileUtils.class, "file not exists,create it");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     /**
-     * 讲文件写入本地
-     * @param fileName
-     * @param content
+     * 创建目录
+     *
+     * @param fileName 文件全名 包含文件名
      */
-    public static void saveFile(String fileName, String content) {
-        try {
-            // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
-            FileWriter writer = new FileWriter(fileName, false);
-            writer.write(content);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static boolean mkDir(String fileName) {
+
+        String dir = fileName.substring(0, fileName.lastIndexOf("/"));
+        File directory = new File(dir);
+
+//        ZogUtils.printError(FileUtils.class, "dir::" + dir);
+
+        if (!directory.exists()) {
+            ZogUtils.printError(FileUtils.class, "directory not exists,create it");
+            return directory.mkdirs();//没有目录先创建目录
+        }
+        return false;
+    }
+
+
+    /**
+     * 删除指定文件
+     *
+     * @param fileNames
+     */
+    public static boolean deleteFiles(String... fileNames) {
+        if (fileNames.length <= 0)
+            return false;
+        for (int i = 0; i < fileNames.length; i++) {
+            File file = new File(fileNames[i]);
+            if (file.exists())
+                return file.delete();
+        }
+        return false;
+    }
+    /**
+     * 删除空目录
+     * @param dir 将要删除的目录路径
+     */
+    private static void doDeleteEmptyDir(String dir) {
+        boolean success = (new File(dir)).delete();
+        if (success) {
+            System.out.println("Successfully deleted empty directory: " + dir);
+        } else {
+            System.out.println("Failed to delete empty directory: " + dir);
         }
     }
 
     /**
-     * 讲文件以追加的形式写入本地
+     * 递归删除目录下的所有文件及子目录下所有文件
+     * @param dir 将要删除的文件目录
+     * @return boolean Returns "true" if all deletions were successful.
+     *                 If a deletion fails, the method stops attempting to
+     *                 delete and returns "false".
+     */
+    private static boolean deleteDir(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            //递归删除目录中的子目录下
+            for (int i=0; i<children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        // 目录此时为空，可以删除
+        return dir.delete();
+    }
+
+
+    /**
+     * 打开文件的方式
+     *
+     * @param f 文件对象
+     */
+    public static void openFile(File f, Context context) {
+        if (!f.exists()) {
+
+            Toast.makeText(context, "文件尚未下载，无法查看，请您先下载文件！", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+
+/* 调用getMIMEType()来取得MimeType */
+        String type = getMIMEType(f);
+/* 设置intent的file与MimeType */
+        intent.setDataAndType(Uri.fromFile(f), type);
+        context.startActivity(intent);
+    }
+
+    /* 判断文件MimeType的method */
+    private static String getMIMEType(File f) {
+        String type = "";
+        String fName = f.getName();
+/* 取得扩展名 */
+        String end = fName
+                .substring(fName.lastIndexOf(".") + 1, fName.length())
+                .toLowerCase();
+
+/* 依扩展名的类型决定MimeType */
+        if (end.equals("m4a") || end.equals("mp3") || end.equals("mid")
+                || end.equals("xmf") || end.equals("ogg") || end.equals("wav")
+                || end.equals("wma")) {
+            type = "audio";
+        } else if (end.equals("3gp") || end.equals("mp4")) {
+            type = "video";
+        } else if (end.equals("jpg") || end.equals("gif") || end.equals("png")
+                || end.equals("jpeg") || end.equals("bmp")) {
+            type = "image";
+        } else if (end.equals("apk")) {
+/* android.permission.INSTALL_PACKAGES */
+            type = "application/vnd.android.package-archive";
+        } else {
+            type = "*";
+        }
+/* 如果无法直接打开，就跳出软件列表给用户选择 */
+        if (end.equals("apk")) {
+        } else {
+            type += "/*";
+        }
+        return type;
+    }
+
+    /**
+     * 讲文件写入本地
+     *
      * @param fileName
      * @param content
      */
-     public static void saveEndOfFile(String fileName, String content) {
+    public static void saveFile(String fileName, String content) {
+        beforeSave(fileName);
+        try {
+            FileWriter e = new FileWriter(fileName, false);
+            e.write(content);
+            e.close();
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
+
+    }
+
+
+    /**
+     * 讲文件以追加的形式写入本地
+     *
+     * @param fileName
+     * @param content
+     */
+    public static void saveEndOfFile(String fileName, String content) {
         try {
             // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
             FileWriter writer = new FileWriter(fileName, true);
@@ -121,17 +268,18 @@ public class FileUtils {
     }
 
     /**
-     * 判断图片是存在
+     * 判断文件是存在
      *
      * @param fileName 路径（含文件名）
      * @return
      */
     public static boolean isExists(String fileName) {
-        File f = new File(fileName);
-        if (!f.exists()) {
-            return false;
+        try {
+            File f = new File(fileName);
+            return f.exists();
+        } catch (Exception e) {
         }
-        return true;
+        return false;
     }
 
 
@@ -141,6 +289,21 @@ public class FileUtils {
      * @param file
      */
     public static void deleteFile(File file) {
+        if (file.isFile()) {
+            file.delete();
+            return;
+        } else if (file.isDirectory()) {
+            deleteDir(file);
+        }
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param dir
+     */
+    public static void deleteFile(String dir) {
+        File file = new File(dir);
         if (file.isFile()) {
             file.delete();
             return;
@@ -156,6 +319,7 @@ public class FileUtils {
             file.delete();
         }
     }
+
 
     /**
      * 获取文件名

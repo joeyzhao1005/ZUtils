@@ -11,7 +11,7 @@ import android.text.style.DynamicDrawableSpan;
 
 import com.kit.utils.ZogUtils;
 import com.kit.utils.MathExtend;
-import com.kit.utils.system.DrawableUtils;
+import com.kit.utils.DrawableUtils;
 
 
 public class AnimatedImageSpan extends DynamicDrawableSpan {

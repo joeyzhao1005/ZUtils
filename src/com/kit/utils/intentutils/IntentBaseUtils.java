@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.kit.utils.ZogUtils;
 
@@ -28,11 +29,10 @@ public class IntentBaseUtils {
 
 
     /**
-     *
      * @param packageContext
      * @param cls
-     * @param anmiResIn 进入动画
-     * @param anmiResOut 退出动画
+     * @param anmiResIn      进入动画
+     * @param anmiResOut     退出动画
      */
     public static void gotoNextActivity(Context packageContext, Class<?> cls, int anmiResIn, int anmiResOut) {
         Intent intent = new Intent();
@@ -78,6 +78,19 @@ public class IntentBaseUtils {
         // R.anim.push_left_in, R.anim.push_left_out);
     }
 
+    public static void gotoNextActivity(Fragment fragment, Class<?> cls,
+                                        int RequestFlag) {
+        Intent intent = new Intent();
+        // Bundle bundle = new Bundle();
+        // bundle.putString("USERNAME",
+        // et_username.getText().toString());
+        // intent.putExtras(bundle);
+        intent.setClass(fragment.getActivity(), cls);
+        fragment.startActivityForResult(intent, RequestFlag);
+        // ((Activity) packageContext).overridePendingTransition(
+        // R.anim.push_left_in, R.anim.push_left_out);
+    }
+
     public static void gotoNextActivity(Context packageContext, Class<?> cls,
                                         Bundle bundle, int RequestFlag) {
         Intent intent = new Intent();
@@ -91,17 +104,32 @@ public class IntentBaseUtils {
         // R.anim.push_left_in, R.anim.push_left_out);
     }
 
-    public static void gotoNextActivity(Context packageContext, Bundle bundle,
-                                        int RequestFlag, boolean isCloseThis) {
+
+    public static void gotoNextActivity(Fragment fragment, Class<?> cls,
+                                        Bundle bundle, int RequestFlag) {
+        Intent intent = new Intent();
+        // Bundle bundle = new Bundle();
+        // bundle.putString("USERNAME",
+        // et_username.getText().toString());
+        intent.putExtras(bundle);
+        intent.setClass(fragment.getActivity(), cls);
+        fragment.startActivityForResult(intent, RequestFlag);
+        // ((Activity) packageContext).overridePendingTransition(
+        // R.anim.push_left_in, R.anim.push_left_out);
+    }
+
+
+    public static void setResult(Context packageContext, Bundle bundle,
+                                 int resultCode, boolean isCloseThis) {
 
         Intent intent = new Intent();
-
         intent.putExtras(bundle);
-        ((Activity) packageContext).setResult(RequestFlag, intent);
+        if (packageContext instanceof Activity) {
+            ((Activity) packageContext).setResult(resultCode, intent);
 
-        if (isCloseThis) {
-            ((Activity) packageContext).finish();
-
+            if (isCloseThis) {
+                ((Activity) packageContext).finish();
+            }
         }
     }
 
@@ -235,6 +263,7 @@ public class IntentBaseUtils {
 
     }
 
+
     /**
      * 从Service到Activity
      *
@@ -242,7 +271,7 @@ public class IntentBaseUtils {
      * @param cls
      */
     public static void gotoActivityFromReceiver(Context packageContext,
-                                               Class<?> cls) {
+                                                Class<?> cls) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);

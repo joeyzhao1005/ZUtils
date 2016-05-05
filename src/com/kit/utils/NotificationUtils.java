@@ -6,9 +6,92 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.widget.RemoteViews;
 
+import com.kit.utils.bitmap.BitmapUtils;
+
 public class NotificationUtils {
+
+    /**
+     * 取消通知栏通知
+     *
+     * @param notificationManager
+     * @param id
+     */
+    public static void cancel(NotificationManager notificationManager, int id) {
+        try {
+            notificationManager.cancel(id);
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
+
+    }
+
+    public static void mkNotity(Context context, NotificationManager nm, Intent intent, PendingIntent pendingIntent, String title, String content, int iconLargeDrawableRes, int iconSmallDrawableRes,int notifyId, int requestCode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            Notification.Builder b = new Notification.Builder(context);
+            b.setLargeIcon(BitmapUtils.drawable2Bitmap(context.getResources().getDrawable(iconLargeDrawableRes)));
+            b.setSmallIcon(iconSmallDrawableRes);
+            b.setTicker(title);
+            b.setAutoCancel(true);
+            b.setDefaults(Notification.DEFAULT_SOUND);
+//        Intent i = new Intent(arg0.getContext(), NotificationShow.class);
+//        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            Intent i = intent;
+            if (i == null) {
+                i = new Intent();
+            }
+
+            PendingIntent contentIntent = pendingIntent;
+            //PendingIntent
+            if (contentIntent == null) {
+                contentIntent = PendingIntent.getActivity(
+                        context,
+                        requestCode,
+                        i,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+            b.setContentTitle(title);
+            b.setContentText(content);
+            b.setContentIntent(contentIntent);
+
+            nm.notify(notifyId, b.getNotification());
+
+        } else {
+
+            Notification n = new Notification();
+            n.icon = iconSmallDrawableRes;
+            n.tickerText = title;
+            n.flags = Notification.FLAG_AUTO_CANCEL;
+            n.defaults = Notification.DEFAULT_SOUND;
+//        Intent i = new Intent(arg0.getContext(), NotificationShow.class);
+//        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            Intent i = intent;
+            if (i == null) {
+                i = new Intent();
+            }
+
+            PendingIntent contentIntent = pendingIntent;
+            //PendingIntent
+            if (contentIntent == null) {
+                contentIntent = PendingIntent.getActivity(
+                        context,
+                        requestCode,
+                        i,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+            n.setLatestEventInfo(
+                    context,
+                    title,
+                    content,
+                    contentIntent);
+            nm.notify(notifyId, n);
+
+        }
+    }
 
     /**
      * @param notificationFlag 设置常驻状态栏 Notification.FLAG_ONGOING_EVENT

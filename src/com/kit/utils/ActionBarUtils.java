@@ -2,6 +2,8 @@ package com.kit.utils;
 
 import android.app.Activity;
 import android.os.Build;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.Window;
 
@@ -54,13 +56,22 @@ public class ActionBarUtils {
 
     }
 
+    public static void setHomeActionBar(AppCompatActivity activity,int resBackId) {
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setHomeAsUpIndicator(resBackId);
+    }
 
-    /**
-     * 利用反射让隐藏在Overflow中的MenuItem显示Icon图标
-     *
-     * @param featureId
-     * @param menu      onMenuOpened方法中调用
-     */
+        /**
+         * 利用反射让隐藏在Overflow中的MenuItem显示Icon图标
+         *
+         * @param featureId
+         * @param menu      onMenuOpened方法中调用
+         */
     public static void setOverflowIconVisible(int featureId, Menu menu) {
         if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
             if (menu.getClass().getSimpleName().equals("MenuBuilder")) {

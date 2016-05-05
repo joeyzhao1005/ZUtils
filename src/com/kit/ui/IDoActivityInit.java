@@ -7,17 +7,17 @@ public interface IDoActivityInit {
 
     /**
      * 获得上一个Activity传过来的值
-     * */
-    public boolean getExtra();
+     */
+    boolean getExtra();
 
     /**
      * 初始化界面
-     * */
-    public boolean initWidget();
+     */
+    boolean initWidget();
 
     /**
      * 去网络或者本地加载数据
-     * */
-    public boolean loadData();
+     */
+    boolean loadData();
 
 }

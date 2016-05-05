@@ -44,7 +44,7 @@ public class TextJsonUtils extends TextUtils {
     public void saveData(Object obj, Class clazz) {
 
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + clazz.getSimpleName();
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + clazz.getSimpleName();
         }
 
         ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);
@@ -64,7 +64,7 @@ public class TextJsonUtils extends TextUtils {
     public void saveDataList(List list, Class listIncludeClazz) {
 
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + listIncludeClazz.getSimpleName() + "List";
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + listIncludeClazz.getSimpleName() + "List";
         }
 
         ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);
@@ -84,7 +84,7 @@ public class TextJsonUtils extends TextUtils {
      */
     public Object getData(Class clazz) {
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + clazz.getSimpleName();
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + clazz.getSimpleName();
         }
 
         ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);
@@ -108,7 +108,7 @@ public class TextJsonUtils extends TextUtils {
      */
     public String getDataList(Class listIncludeClazz) {
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + listIncludeClazz.getSimpleName() + "List";
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + listIncludeClazz.getSimpleName() + "List";
         }
 
         ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);

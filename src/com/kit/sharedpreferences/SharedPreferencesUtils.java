@@ -170,4 +170,16 @@ public class SharedPreferencesUtils {
     public boolean contains(String key) {
         return sharedpreferences.contains(key);
     }
+
+
+    /**
+     * 清空
+     *
+     * @return
+     */
+    public void clear() {
+        sharedpreferences.edit().clear().commit();
+    }
+
+
 }
