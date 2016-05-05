@@ -128,6 +128,7 @@ public class JsonUtils {
 
     /**
      * 把对象按照Json格式输出
+     *
      * @param obj
      */
     public static void printAsJson(Object obj) {
@@ -136,9 +137,16 @@ public class JsonUtils {
     }
 
 
+    public static boolean isJSON(String jsonString) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.getJSONObject(jsonString);
+        } catch (Exception e) {
 
-
-
+            return false;
+        }
+        return true;
+    }
 
 
 }

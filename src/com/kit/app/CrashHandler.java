@@ -109,7 +109,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 @Override
                 public void run() {
                     Looper.prepare();
-                    AppUtils.forceExit(mContext);
+                    AppUtils.closeApp(mContext);
                     Looper.loop();
                 }
             }.start();
@@ -225,7 +225,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             String fileName = time + "-" + timestamp + ".log";
             if (Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
-                String path = AppConfig.DATA_DIR+"crash/"
+                String path = AppConfig.CACHE_DATA_DIR +"crash/"
                         + (StringUtils.isNullOrEmpty(appName) ? "" : appName + "/");
                 File dir = new File(path);
                 if (!dir.exists()) {

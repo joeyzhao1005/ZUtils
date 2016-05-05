@@ -1,60 +1,91 @@
 package com.kit.ui;
 
-import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.kit.app.ActivityManager;
+import com.kit.app.UIHandler;
+import com.kit.app.resouce.DrawableId;
+import com.kit.utils.ActionBarUtils;
+import com.kit.utils.ResourceUtils;
 
-public abstract class BaseActivity extends Activity implements IDoActivityInit {
+public abstract class BaseActivity extends AppCompatActivity  implements BaseV4Fragment.OnFragmentInteractionListener{
 
-	public Context mContext;
+    public Context mContext;
 
-	protected void onResume() {
-		super.onResume();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initTheme();
+        init();
+    }
 
-	protected void onPause() {
-		super.onPause();
-	}
+    public void initTheme() {
+        ActionBarUtils.setHomeActionBar(this, ResourceUtils.getDrawableId(this, DrawableId.ic_back));
+    }
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    public void init() {
 
-		mContext = this;
+        this.getExtra();
+        this.initWidget();
+        this.loadData();
+        this.initWidgetWithData();
 
-		getExtra();
-		initWidget();
-		loadData();
-
+        UIHandler.prepare();
         ActivityManager.getInstance().pushActivity(this);
-	}
+    }
 
-	/**
-	 * 获得上一个Activity传过来的值
-	 * */
-	public boolean getExtra() {
-		return true;
-	}
+    protected boolean getExtra() {
+        return true;
+    }
 
-	/**
-	 * 初始化界面
-	 * */
-	public boolean initWidget() {
-		return true;
-	}
+    protected boolean initWidget() {
+        return true;
+    }
 
-	/**
-	 * 去网络或者本地加载数据
-	 * */
-	public boolean loadData() {
-		return true;
-	}
+
+    protected boolean loadData() {
+        return true;
+    }
+
+    protected boolean initWidgetWithData() {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mContext = this;
+    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         ActivityManager.getInstance().popActivity(this);
     }
+
+
 }
+

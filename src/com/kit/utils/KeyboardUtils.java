@@ -25,6 +25,8 @@ public class KeyboardUtils {
 //            LogUtils.printLog(KeyboardUtils.class, "view must visible!!!");
 //        }
 
+
+        view.clearFocus();
         if (context != null && imm != null) {
 
             if (view != null) {
@@ -80,8 +82,7 @@ public class KeyboardUtils {
 
         imm.showSoftInput(view,
                 InputMethodManager.RESULT_UNCHANGED_SHOWN);
-        if (isOpen(context)) {
-        }
+
 //        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
 //                InputMethodManager.HIDE_NOT_ALWAYS);
 

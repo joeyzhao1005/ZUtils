@@ -1,6 +1,8 @@
-package com.kit.utils.system;
+package com.kit.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -8,14 +10,26 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-import com.kit.utils.MathExtend;
 import com.kit.utils.bitmap.BitmapUtils;
+
+import java.io.File;
 
 /**
  * Created by Zhao on 14-8-12.
  */
 public class DrawableUtils {
 
+    public static String saveDrawable(Context context, int drawableID, String filename) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableID);
+        try {
+            BitmapUtils.saveBitmap(bitmap, new File(filename));
+
+        } catch (Exception e) {
+            return null;
+        }
+        return filename;
+
+    }
 
     public static Drawable TextToDrawable(String str) {
         Bitmap bitmap = Bitmap.createBitmap(200, 250, Bitmap.Config.ARGB_8888);

@@ -1,4 +1,4 @@
-package com.kit.utils.system;
+package com.kit.utils;
 
 
 import android.app.Activity;

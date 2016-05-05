@@ -5,61 +5,65 @@ import android.os.Handler;
 import android.widget.Toast;
 
 public class ToastUtils {
-	private static Toast mToast;
-	private static Handler mHandler = new Handler();
-	private static Runnable r = new Runnable() {
-		public void run() {
-			mToast.cancel();
-		}
-	};
+    private static Toast mToast;
+    private static Handler mHandler = new Handler();
+    private static Runnable r = new Runnable() {
+        public void run() {
+            mToast.cancel();
+        }
+    };
 
-	public static void mkLongTimeToast(Context context, String msg) {
+    public static void mkLongTimeToast(Context context, String msg) {
+        try {
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
+    }
 
-		Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-	}
+    public static void mkShortTimeToast(Context context, String msg) {
+        try {
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
+    }
 
-	public static void mkShortTimeToast(Context context, String msg) {
+    /**
+     * @param text     内容string
+     * @param duration 时长
+     * @return void 返回类型
+     * @Title mkToast
+     * @Description 自定义toast内容和时长
+     */
+    public static void mkToast(Context mContext, String text, int duration) {
 
-		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-	}
+        mHandler.removeCallbacks(r);
+        if (mToast != null)
+            mToast.setText(text);
+        else
+            mToast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
+        mHandler.postDelayed(r, duration);
 
-	/**
-	 * 
-	 * @Title mkToast
-	 * @Description 自定义toast内容和时长
-	 * @param text 内容string
-	 * @param duration 时长
-	 * @return void 返回类型
-	 */
-	public static void mkToast(Context mContext, String text, int duration) {
+        mToast.show();
+    }
 
-		mHandler.removeCallbacks(r);
-		if (mToast != null)
-			mToast.setText(text);
-		else
-			mToast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
-		mHandler.postDelayed(r, duration);
+    /**
+     * @param resId    内容string id
+     * @param duration 时长
+     * @return void 返回类型
+     * @Title mkToast
+     * @Description 自定义toast内容和时长
+     */
+    public static void mkToast(Context mContext, int resId, int duration) {
+        String text = mContext.getResources().getString(resId);
+        mHandler.removeCallbacks(r);
+        if (mToast != null)
+            mToast.setText(text);
+        else
+            mToast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
+        mHandler.postDelayed(r, duration);
 
-		mToast.show();
-	}
-
-	/**
-	 * 
-	 * @Title mkToast
-	 * @Description 自定义toast内容和时长
-	 * @param resId 内容string id
-	 * @param duration 时长
-	 * @return void 返回类型
-	 */
-	public static void mkToast(Context mContext, int resId, int duration) {
-		String text = mContext.getResources().getString(resId);
-		mHandler.removeCallbacks(r);
-		if (mToast != null)
-			mToast.setText(text);
-		else
-			mToast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
-		mHandler.postDelayed(r, duration);
-
-		mToast.show();
-	}
+        mToast.show();
+    }
 }

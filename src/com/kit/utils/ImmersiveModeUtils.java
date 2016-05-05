@@ -5,7 +5,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -20,9 +21,52 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
  */
 public class ImmersiveModeUtils {
 
+    /**
+     * 仅对使用了Actionbar的起作用
+     * xml中需使用父控件如LinearLayout框住，并设置为 android:fitsSystemWindows="true"
+     *
+     * 对getActibar设置了hide()的，设置为 android:fitsSystemWindows="false" 并需要手动paddingTop
+     *
+     * @param baseActivity
+     * @param color         状态栏的颜色
+     * @param paddingTop    是否padding上部分(高度为状态栏高度)
+     * @param paddingBottom 是否padding下部分
+     */
+    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, int color, boolean paddingTop, boolean paddingBottom) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+
+            Window window = baseActivity.getWindow();
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//
+            ViewGroup view = (ViewGroup) baseActivity.getWindow().getDecorView();
+            view.setBackgroundColor(color);
+
+            if (paddingTop) {
+                view.setPadding(0, (paddingTop ? DeviceUtils.getStatusBarHeight(baseActivity) : 0), 0,
+                        ((baseActivity.getSupportActionBar() != null && paddingBottom)
+                                ? DeviceUtils.getActionBarHeight(baseActivity) : 0));
+
+                ZogUtils.printError(ImmersiveModeUtils.class, "immersive no actionbar");
+
+            }
+        }
+    }
+
+
+//    private void initSystemBar(int color) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            setTranslucentStatus(true);
+//            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+//            tintManager.setStatusBarTintEnabled(true);
+//            tintManager.setStatusBarTintColor(color);
+//            SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+//        }
+//    }
 
     /**
-     *三大金刚透明
+     * 三大金刚透明
+     *
      * @param activity
      * @param on
      */
@@ -42,6 +86,7 @@ public class ImmersiveModeUtils {
 
     /**
      * 状态栏透明
+     *
      * @param activity
      * @param on
      */
@@ -67,7 +112,7 @@ public class ImmersiveModeUtils {
      * @param isTopMargin        是否margin头部
      * @param isBottomMargin     是否margin底部
      */
-    public static void immersiveModeSystemBar(Activity activity, View container,
+    public static void immersiveModeSystemBar(Activity activity, ViewGroup container,
                                               Integer statusBarColor, Integer navigationBarColor,
                                               boolean isTopMargin, boolean isBottomMargin) {
 
@@ -89,10 +134,11 @@ public class ImmersiveModeUtils {
                 Bitmap bitmap = BitmapUtils.getSingleColorBitmap(30, actionBarHeight, statusBarColor);
 
 //                activity.getActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.transparent));
-
-                activity.getActionBar().setBackgroundDrawable(new BitmapDrawable(bitmap));
-                activity.getActionBar().setStackedBackgroundDrawable(new BitmapDrawable(bitmap));
-                activity.getActionBar().setSplitBackgroundDrawable(new BitmapDrawable(bitmap));
+                if (activity.getActionBar() != null) {
+                    activity.getActionBar().setBackgroundDrawable(new BitmapDrawable(bitmap));
+                    activity.getActionBar().setStackedBackgroundDrawable(new BitmapDrawable(bitmap));
+                    activity.getActionBar().setSplitBackgroundDrawable(new BitmapDrawable(bitmap));
+                }
             }
 
             /**
@@ -110,7 +156,6 @@ public class ImmersiveModeUtils {
             }
 
 
-
             //LogUtils.printLog(ImmersiveModeUtils.class, "isTopMargin:" + isTopMargin
 //                    + " isBottomMargin:" + isBottomMargin +
 //                    " config.getNavigationBarHeight():" + config.getNavigationBarHeight() +
@@ -121,7 +166,7 @@ public class ImmersiveModeUtils {
                     //LogUtils.printLog(ImmersiveModeUtils.class, "isBottomMargin:" + isBottomMargin);
                     //是否下部margin
 
-                    int marginBottomHeight = DensityUtils.dip2px(activity, 48);
+                    int marginBottomHeight = DensityUtils.dip2px(activity, DeviceUtils.getStatusBarHeight(activity));
 
                     if (container instanceof LinearLayout) {
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(

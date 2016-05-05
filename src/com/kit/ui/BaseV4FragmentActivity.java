@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.kit.app.ActivityManager;
 
-public class BaseV4FragmentActivity extends FragmentActivity implements BaseV4Fragment.OnFragmentInteractionListener,IDoActivityInit{
+public class BaseV4FragmentActivity extends FragmentActivity implements BaseV4Fragment.OnFragmentInteractionListener{
 
 
 //    public Context mContext;
@@ -21,12 +21,17 @@ public class BaseV4FragmentActivity extends FragmentActivity implements BaseV4Fr
 
         getExtra();
         initWidget();
-        loadData();
-        initWidgetWithData();
 
         ActivityManager.getInstance().pushActivity(this);
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadData();
+        initWidgetWithData();
     }
 
     /**

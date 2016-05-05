@@ -66,7 +66,7 @@ public class SystemBitmap {
         Drawable wallpaperDrawable = wallpaperManager.getDrawable();
         // 将Drawable,转成Bitmap
         Bitmap bm = ((BitmapDrawable) wallpaperDrawable).getBitmap();
-        bm = BitmapUtils.getAdpterScreenWithBitmap(bm, width, height);
+        bm = BitmapUtils.getAdpterBitmap(bm, width, height);
         bm = BitmapUtils.setAlpha(bm, alpha);
 
         return bm;
@@ -81,7 +81,7 @@ public class SystemBitmap {
         Drawable wallpaperDrawable = wallpaperManager.getDrawable();
         // 将Drawable,转成Bitmap
         Bitmap bm = ((BitmapDrawable) wallpaperDrawable).getBitmap();
-        bm = BitmapUtils.getAdpterScreenWithBitmap(bm, width, height);
+        bm = BitmapUtils.getAdpterBitmap(bm, width, height);
         Drawable d = BitmapUtils.Bitmap2Drawable(bm);
         bm = BitmapUtils.setAlpha(bm, alpha);
         if (bm != null && bm.isRecycled()) {
