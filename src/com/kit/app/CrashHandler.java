@@ -172,7 +172,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             }
         } catch (NameNotFoundException e) {
             ZogUtils.printLog(CrashHandler.class,
-                    "an error occured when collect package info");
+                    "an error occurred when collect package info");
             ZogUtils.showException(e);
         }
         Field[] fields = Build.class.getDeclaredFields();
@@ -184,7 +184,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 //                        field.getName() + " : " + field.get(null));
             } catch (Exception e) {
                 ZogUtils.printLog(CrashHandler.class,
-                        "an error occured when collect crash info" + e);
+                        "an error occurred when collect crash info" + e);
             }
         }
     }
@@ -238,7 +238,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             return fileName;
         } catch (Exception e) {
             ZogUtils.printLog(CrashHandler.class,
-                    "an error occured while writing file...");
+                    "an error occurred while writing file...");
             ZogUtils.showException(e);
         }
         return null;
