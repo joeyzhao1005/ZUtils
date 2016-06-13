@@ -53,7 +53,7 @@ public class ZogUtils {
             return fileName;
         } catch (Exception e) {
             ZogUtils.printLog(ZogUtils.class,
-                    "an error occured while writing file..." + e);
+                    "an error occurred while writing file..." + e);
         }
         return null;
     }
