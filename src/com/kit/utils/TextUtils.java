@@ -94,7 +94,7 @@ public class TextUtils {
         try {
             File file = new File(filename);
 
-            ZogUtils.printLog(TextUtils.class, file.getPath());
+            ZogUtils.i(TextUtils.class, file.getPath());
 
             File path = new File(file.getParent());
             if (!file.exists()) {

@@ -29,7 +29,7 @@ public class ScreenShotUtils {
         view.buildDrawingCache();
         b1 = view.getDrawingCache();
 
-        ZogUtils.printLog(ScreenShotUtils.class, b1 + "");
+        ZogUtils.i(ScreenShotUtils.class, b1 + "");
 
         // 获取状态栏高度
         Rect frame = new Rect();

@@ -18,20 +18,20 @@ public class AsyncTaskExtend extends AsyncTask<Object, Object, Object> {
 
     @Override
     protected void onPreExecute() {
-        ZogUtils.printLog(AsyncTaskExtend.class, "onPreExecute");
+        ZogUtils.i(AsyncTaskExtend.class, "onPreExecute");
 
     }
 
     // doInBackground方法内部执行后台任务,不可在此方法内修改UI
     @Override
     protected Object doInBackground(Object... params) {
-        ZogUtils.printLog(AsyncTaskExtend.class, "doInBackground");
+        ZogUtils.i(AsyncTaskExtend.class, "doInBackground");
 
 
         if (params != null && params.length > 0) {
             for (Object p : params) {
 
-                ZogUtils.printLog(AsyncTaskExtend.class, p.getClass().getName());
+                ZogUtils.i(AsyncTaskExtend.class, p.getClass().getName());
 
 
                 if (p instanceof Button) {
@@ -51,7 +51,7 @@ public class AsyncTaskExtend extends AsyncTask<Object, Object, Object> {
     @Override
     protected void onPostExecute(Object result) {
 
-        ZogUtils.printLog(AsyncTaskExtend.class, "onPostExecute");
+        ZogUtils.i(AsyncTaskExtend.class, "onPostExecute");
 
         for (Button b : btns) {
             b.setClickable(true);

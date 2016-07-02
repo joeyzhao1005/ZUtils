@@ -58,7 +58,7 @@ public class AlarmUtils {
                 .getSystemService(Context.ALARM_SERVICE);
 
 
-        // LogUtils.printLog(AlarmUtils.class, "requestCode:" + requestCode);
+        // LogUtils.i(AlarmUtils.class, "requestCode:" + requestCode);
 
         PendingIntent sender = PendingIntent.getBroadcast(context, 0, intentBroadcast, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -79,7 +79,7 @@ public class AlarmUtils {
                 .getSystemService(Context.ALARM_SERVICE);
 
 
-        // LogUtils.printLog(AlarmUtils.class, "requestCode:" + requestCode);
+        // LogUtils.i(AlarmUtils.class, "requestCode:" + requestCode);
 
 
         // AlarmManager.RTC_WAKEUP休眠时会运行，如果是AlarmManager.RTC,在休眠时不会运行

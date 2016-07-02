@@ -84,7 +84,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     public void init(Context context) {
 
-        ZogUtils.printLog(CrashHandler.class, "init CrashHandler");
+        ZogUtils.i(CrashHandler.class, "init CrashHandler");
 
         mContext = context;
         // 获取系统默认的UncaughtException处理器
@@ -98,7 +98,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        ZogUtils.printLog(CrashHandler.class,
+        ZogUtils.i(CrashHandler.class,
                 "App " + appName + " crash");
 
 
@@ -109,7 +109,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 @Override
                 public void run() {
                     Looper.prepare();
-                    AppUtils.forceExit(mContext);
+                    AppUtils.closeApp(mContext);
                     Looper.loop();
                 }
             }.start();
@@ -171,7 +171,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 infos.put("versionCode", versionCode);
             }
         } catch (NameNotFoundException e) {
-            ZogUtils.printLog(CrashHandler.class,
+            ZogUtils.i(CrashHandler.class,
                     "an error occured when collect package info");
             ZogUtils.showException(e);
         }
@@ -180,10 +180,10 @@ public class CrashHandler implements UncaughtExceptionHandler {
             try {
                 field.setAccessible(true);
                 infos.put(field.getName(), field.get(null).toString());
-//                LogUtils.printLog(CrashHandler.class,
+//                LogUtils.i(CrashHandler.class,
 //                        field.getName() + " : " + field.get(null));
             } catch (Exception e) {
-                ZogUtils.printLog(CrashHandler.class,
+                ZogUtils.i(CrashHandler.class,
                         "an error occured when collect crash info" + e);
             }
         }
@@ -216,7 +216,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         String result = writer.toString();
         sb.append(result);
 
-        ZogUtils.printLog(CrashHandler.class, "\n" + sb.toString());
+        ZogUtils.i(CrashHandler.class, "\n" + sb.toString());
 
 
         try {
@@ -225,7 +225,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             String fileName = time + "-" + timestamp + ".log";
             if (Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
-                String path = AppConfig.DATA_DIR+"crash/"
+                String path = AppConfig.CACHE_DATA_DIR +"crash/"
                         + (StringUtils.isNullOrEmpty(appName) ? "" : appName + "/");
                 File dir = new File(path);
                 if (!dir.exists()) {
@@ -237,7 +237,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             }
             return fileName;
         } catch (Exception e) {
-            ZogUtils.printLog(CrashHandler.class,
+            ZogUtils.i(CrashHandler.class,
                     "an error occured while writing file...");
             ZogUtils.showException(e);
         }

@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +54,25 @@ public class HtmlUtils {
         htmlStr = htmlStr.replaceAll("&nbsp;", "");
         htmlStr = htmlStr.substring(0, htmlStr.indexOf("。") + 1);
         return htmlStr;
+    }
+
+    public static String[] getActUfielddata(String htmlStr) {
+        if (htmlStr == null) {
+            return null;
+        }
+        htmlStr = htmlStr.replaceAll("&nbsp;", "");
+        Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
+        if (p_html != null) {
+            Matcher m_html = p_html.matcher(htmlStr);
+            htmlStr = m_html.replaceAll("w~w~w"); // 过滤html标签
+        }
+
+        Pattern p_space = Pattern.compile(regEx_space, Pattern.CASE_INSENSITIVE);
+        if (p_space != null) {
+            Matcher m_space = p_space.matcher(htmlStr);
+            htmlStr = m_space.replaceAll(""); // 过滤空格回车标签
+        }
+        return htmlStr.trim().split("w~w~w"); // 返回文本字符串
     }
 
     public static void main(String[] args) {

@@ -18,22 +18,31 @@ public class KeyboardUtils {
      * @param view
      */
     public static void hiddenKeyboard(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = null;
+        if (context != null)
+            imm = (InputMethodManager) context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
 
 //        if (view.getVisibility() != View.VISIBLE) {
-//            LogUtils.printLog(KeyboardUtils.class, "view must visible!!!");
+//            LogUtils.i(KeyboardUtils.class, "view must visible!!!");
 //        }
 
-        if (context != null && imm != null) {
+
+        if (imm != null) {
 
             if (view != null) {
+                view.clearFocus();
                 imm.hideSoftInputFromWindow(view.getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
             } else {
-                imm.hideSoftInputFromWindow(((Activity) context)
-                                .getCurrentFocus().getApplicationWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                View view1 = null;
+                if (context instanceof Activity) {
+                    Activity activity = ((Activity) context);
+                    view1 = activity.getCurrentFocus();
+                }
+                if (view1 != null)
+                    imm.hideSoftInputFromWindow(view1.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
     }
@@ -80,8 +89,7 @@ public class KeyboardUtils {
 
         imm.showSoftInput(view,
                 InputMethodManager.RESULT_UNCHANGED_SHOWN);
-        if (isOpen(context)) {
-        }
+
 //        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
 //                InputMethodManager.HIDE_NOT_ALWAYS);
 

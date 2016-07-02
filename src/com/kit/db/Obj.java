@@ -1,5 +1,5 @@
-package com.kit.db;
-
-public class Obj {
-
-}
+//package com.kit.db;
+//
+//public class Obj {
+//
+//}

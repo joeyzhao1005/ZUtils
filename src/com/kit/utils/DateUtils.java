@@ -160,8 +160,8 @@ public class DateUtils {
 		try {
 			create = sdf.parse(date).getTime();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
+			ZogUtils.e(DateUtils.class,e.toString());
 		}
 
 		return create;

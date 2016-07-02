@@ -44,3 +44,5 @@ META-INF
 
 com.kit.basic.iml
 project.properties
+/.settings/
+/lint.xml

@@ -257,7 +257,7 @@ public class ReboundUtils {
 
 		int itemsHeight = ListViewUtils.getListViewHeightBasedOnChildren(list);
 
-		ZogUtils.printLog(null, "APP", listHeight + " " + itemsHeight);
+		ZogUtils.i(null, "APP", listHeight + " " + itemsHeight);
 
 		if (listHeight > itemsHeight) {
 			return;

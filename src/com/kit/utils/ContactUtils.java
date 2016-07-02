@@ -181,7 +181,7 @@ public class ContactUtils {
 			// Log.d(TAG, "getPeople null");
 			return null;
 		}
-		ZogUtils.printLog(ContactUtils.class, "getPeople cursor.getCount() = "
+		ZogUtils.i(ContactUtils.class, "getPeople cursor.getCount() = "
                 + cursor.getCount());
 		for (int i = 0; i < cursor.getCount(); i++) {
 			cursor.moveToPosition(i);

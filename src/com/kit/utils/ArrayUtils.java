@@ -2,7 +2,9 @@ package com.kit.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ArrayUtils {
 
@@ -101,5 +103,18 @@ public class ArrayUtils {
     public static List toList(Object[] arr) {
         List list = Arrays.asList(arr);
         return list;
+    }
+
+    public static <T extends Object> Set<T> toSet(T[] arr) {
+        Set<T> tSet = new HashSet<T>(Arrays.asList(arr));
+        return tSet;
+
+    }
+
+    public static <T> ArrayList<T> toArrayList(Object[] arr) {
+        List list = toList(arr);
+        ArrayList<T> arrayList = new ArrayList<T>();
+        arrayList.addAll(list);
+        return arrayList;
     }
 }

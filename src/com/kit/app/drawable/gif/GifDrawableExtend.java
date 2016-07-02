@@ -80,7 +80,7 @@ public class GifDrawableExtend extends AnimationDrawable {
     public Drawable getDrawable() {
 
         Drawable drawableCurrent = getFrame(mCurrentIndex);
-//        LogUtils.printLog(GifDrawableExtend.class, "drawableCurrent:" + drawableCurrent +
+//        LogUtils.i(GifDrawableExtend.class, "drawableCurrent:" + drawableCurrent +
 //                " mCurrentIndex:" + mCurrentIndex);
 
         return drawableCurrent;
@@ -94,7 +94,7 @@ public class GifDrawableExtend extends AnimationDrawable {
     public Drawable getDrawable(int index) {
 
         Drawable drawableCurrent = getFrame(index);
-//        LogUtils.printLog(GifDrawableExtend.class, "drawableCurrent:" + drawableCurrent +
+//        LogUtils.i(GifDrawableExtend.class, "drawableCurrent:" + drawableCurrent +
 //                " mCurrentIndex:" + mCurrentIndex);
 
         return drawableCurrent;

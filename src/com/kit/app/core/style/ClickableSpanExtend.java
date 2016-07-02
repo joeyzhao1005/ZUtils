@@ -41,7 +41,7 @@ public class ClickableSpanExtend extends ClickableSpan implements View.OnClickLi
     @Override
     public void onClick(View view) {
         this.view = view;
-        ZogUtils.printLog(ClickableSpanExtend.class, "onClick string:" + string);
+        ZogUtils.i(ClickableSpanExtend.class, "onClick string:" + string);
         setClickableSpan.setOnClickListener(text, string);
     }
 

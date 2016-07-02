@@ -41,7 +41,7 @@ public class ZogUtils {
             String fileName = AppUtils.getAppName(context) + "-" + tag + time + "-" + timestamp + ".zog";
             if (Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
-                String path = AppConfig.DATA_DIR + "zogs/";
+                String path = AppConfig.CACHE_DATA_DIR + "zogs/";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -52,7 +52,7 @@ public class ZogUtils {
             }
             return fileName;
         } catch (Exception e) {
-            ZogUtils.printLog(ZogUtils.class,
+            ZogUtils.i(ZogUtils.class,
                     "an error occured while writing file..." + e);
         }
         return null;
@@ -63,10 +63,10 @@ public class ZogUtils {
      * @param clazz Class
      * @param msg   String 消息
      * @return void 返回类型
-     * @Title printLog
+     * @Title i
      * @Description 打印Log
      */
-    public static void printLog(Class<?> clazz, String msg) {
+    public static void i(Class<?> clazz, String msg) {
 
         if (AppConfig.LOG) {
             if (clazz == null) {
@@ -84,10 +84,34 @@ public class ZogUtils {
      * @param clazz Class
      * @param msg   String 消息
      * @return void 返回类型
-     * @Title printError
+     * @Title e
      * @Description 打印Log
      */
-    public static void printError(Class<?> clazz, String msg) {
+    public static void e(Class<?> clazz, String msg) {
+
+        if (AppConfig.LOG) {
+            if (clazz == null) {
+
+                Log.e(LOGUTILS_TAG, msg);
+
+            } else {
+                Log.e(LOGUTILS_TAG, "【" + LOGUTILS_IDENTIFY + clazz.getName()
+                        + "】 " + msg);
+            }
+        }
+    }
+
+
+    /**
+     * @param clazz  Class
+     * @param object
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Object
+     */
+    public static void printObj(Class<?> clazz, Object object) {
+
+        String msg = GsonUtils.toJson(object);
 
         if (AppConfig.LOG) {
             if (clazz == null) {
@@ -102,13 +126,37 @@ public class ZogUtils {
     }
 
     /**
+     * @param clazz  Class
+     * @param object
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Object
+     */
+    public static void printObj(Class<?> clazz, Object object, String tag) {
+
+        String msg = GsonUtils.toJson(object);
+
+        if (AppConfig.LOG) {
+            if (clazz == null) {
+
+                Log.e(LOGUTILS_TAG, "tag: " + tag + " " + msg);
+
+            } else {
+                Log.e(LOGUTILS_TAG, "【" + LOGUTILS_IDENTIFY + clazz.getName()
+                        + "】 " + "tag:" + tag +" "+ msg);
+            }
+        }
+    }
+
+
+    /**
      * @param clazz Class
      * @param msg   String 消息
      * @return void 返回类型
-     * @Title printLog
+     * @Title i
      * @Description 打印Log
      */
-    public static void printLog(Class<?> clazz, String msg, int count) {
+    public static void i(Class<?> clazz, String msg, int count) {
         if (AppConfig.LOG) {
             if (COUNT < count) {
 
@@ -131,10 +179,10 @@ public class ZogUtils {
      * @param tag   String 标志
      * @param msg   String 消息
      * @return void 返回类型
-     * @Title printLog
+     * @Title i
      * @Description 打印Log
      */
-    public static void printLog(Class<?> clazz, String tag, String msg) {
+    public static void i(Class<?> clazz, String tag, String msg) {
 
         if (AppConfig.LOG) {
             if (clazz == null) {
@@ -157,7 +205,7 @@ public class ZogUtils {
      */
     public static void showException(Exception e) {
         if (AppConfig.SHOW_EXCEPTION) {
-            e.printStackTrace();
+            ZogUtils.e(ZogUtils.class, GsonUtils.toJson(e));
         }
     }
 

@@ -31,7 +31,7 @@ public class ServiceManager {
                         Intent i = new Intent(context, s.getClass());
                         context.startService(i);
 
-                        ZogUtils.printLog(ServiceManager.class,
+                        ZogUtils.i(ServiceManager.class,
                                 "start service " + s.getClass().getName());
                     }
 
@@ -54,7 +54,7 @@ public class ServiceManager {
                         Intent i = new Intent(context, c);
                         context.startService(i);
 
-                        ZogUtils.printLog(ServiceManager.class,
+                        ZogUtils.i(ServiceManager.class,
                                 "start service " + c.getName());
                     }
 

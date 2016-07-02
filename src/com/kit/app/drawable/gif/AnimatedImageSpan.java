@@ -11,7 +11,7 @@ import android.text.style.DynamicDrawableSpan;
 
 import com.kit.utils.ZogUtils;
 import com.kit.utils.MathExtend;
-import com.kit.utils.system.DrawableUtils;
+import com.kit.utils.DrawableUtils;
 
 
 public class AnimatedImageSpan extends DynamicDrawableSpan {
@@ -67,7 +67,7 @@ public class AnimatedImageSpan extends DynamicDrawableSpan {
 
         if (lineHeight > 0) {
             scale = MathExtend.divide(lineHeight, drawable.getIntrinsicHeight());
-//            LogUtils.printLog(AnimatedImageSpan.class, "scale:" + scale, 10);
+//            LogUtils.i(AnimatedImageSpan.class, "scale:" + scale, 10);
 
             int w = (int) (drawable.getIntrinsicWidth() * scale);
             int h = (int) (drawable.getIntrinsicHeight() * scale);
@@ -163,7 +163,7 @@ public class AnimatedImageSpan extends DynamicDrawableSpan {
                 transY -= paint.getFontMetricsInt().descent;
             }
 
-            ZogUtils.printLog(AnimatedImageSpan.class, "transY:" + transY + " drawable:" + drawable, 30);
+            ZogUtils.i(AnimatedImageSpan.class, "transY:" + transY + " drawable:" + drawable, 30);
 
             canvas.translate(x, transY);
 

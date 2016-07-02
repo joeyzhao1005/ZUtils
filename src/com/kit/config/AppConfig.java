@@ -1,19 +1,18 @@
 package com.kit.config;
 
+import android.content.Context;
+
+import com.kit.basic.R;
+
 public class AppConfig {
 
-    public static final String DOWNLOAD_URL = "download/pantomobile/";
-    public static final String UPDATE_PATH = "http://180.168.106.102:8000/App_Public/update.json";
     public static final String LOCKNOW = "com.kit.LockNow";
-    public static final String ALARM_BROADCAST = "com.kit.alarm.action";
 
 
-    public static String DATA_DIR = "mnt/sdcard/" + ".data/";
-
-    /**
-     * 超时时间
-     */
-    public static int TIME_OUT = 500;
+    public static String PACKAGE_NAME = "clan";
+    public static String CACHE_DIR = "mnt/sdcard/." + AppConfig.PACKAGE_NAME;
+    public static String CACHE_DATA_DIR = CACHE_DIR + "/data/";
+    public static String CACHE_IMAGE_DIR = CACHE_DIR + "/image/";
 
     /**
      * 是否打印log
@@ -21,18 +20,22 @@ public class AppConfig {
     public static boolean LOG = true;
 
     /**
+     * 是否Debug模式
+     */
+    public static boolean DEBUG = false;
+
+    /**
      * 是否展示Exception
      */
     public static boolean SHOW_EXCEPTION = true;
 
-    /**
-     * 网络请求数据异常时候是否返回默认的值
-     */
-    public static boolean EXCEPTION_RETURN_RES = true;
+    public static String getImageDir() {
+        return CACHE_IMAGE_DIR;
+    }
 
-    /**
-     * 网络请求数据异常时候是否返回默认的错误值
-     */
-    public static boolean EXCEPTION_RETURN_FAIL_RES = false;
+
+    public static String initDataDir(Context context) {
+        return CACHE_DIR;
+    }
 
 }

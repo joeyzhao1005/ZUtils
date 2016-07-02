@@ -62,7 +62,7 @@ public class DB extends SQLiteOpenHelper {
 
 		dbName = assetsName;
 
-//		LogUtils.printLog(getClass(), db_path + "/" + DATABASE_NAME);
+//		LogUtils.i(getClass(), db_path + "/" + DATABASE_NAME);
 
 		this.mDb = this.openDatabase(db_path + "/" + DATABASE_NAME);
 
@@ -73,7 +73,7 @@ public class DB extends SQLiteOpenHelper {
 
 		dbName = DATABASE_NAME;
 
-		ZogUtils.printLog(getClass(), db_path + "/" + DATABASE_NAME);
+		ZogUtils.i(getClass(), db_path + "/" + DATABASE_NAME);
 
 		this.mDb = this.openDatabase(db_path + "/" + DATABASE_NAME);
 
@@ -98,7 +98,7 @@ public class DB extends SQLiteOpenHelper {
 			file = new File(dbfile);
 
 			if (!directory.exists()) {
-				ZogUtils.printLog(getClass(), "can not mkdir: " + db_path);
+				ZogUtils.i(getClass(), "can not mkdir: " + db_path);
 				return null;
 			} else {
 				if (!file.exists()) {
@@ -122,13 +122,13 @@ public class DB extends SQLiteOpenHelper {
 				return mDb;
 			}
 		} catch (FileNotFoundException e) {
-			ZogUtils.printLog(getClass(), "e.getClass():" + e.getClass());
+			ZogUtils.i(getClass(), "e.getClass():" + e.getClass());
 			ZogUtils.showException(e);
 		} catch (IOException e) {
-			ZogUtils.printLog(getClass(), "e.getClass():" + e.getClass());
+			ZogUtils.i(getClass(), "e.getClass():" + e.getClass());
 			ZogUtils.showException(e);
 		} catch (Exception e) {
-			ZogUtils.printLog(getClass(), "e.getClass():" + e.getClass());
+			ZogUtils.i(getClass(), "e.getClass():" + e.getClass());
 			ZogUtils.showException(e);
 		}
 		return null;

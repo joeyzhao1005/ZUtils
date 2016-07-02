@@ -44,10 +44,10 @@ public class TextJsonUtils extends TextUtils {
     public void saveData(Object obj, Class clazz) {
 
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + clazz.getSimpleName();
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + clazz.getSimpleName();
         }
 
-        ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
 
         Gson gson = new Gson();
         String str = gson.toJson(obj);
@@ -64,10 +64,10 @@ public class TextJsonUtils extends TextUtils {
     public void saveDataList(List list, Class listIncludeClazz) {
 
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + listIncludeClazz.getSimpleName() + "List";
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + listIncludeClazz.getSimpleName() + "List";
         }
 
-        ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
 
         Gson gson = new Gson();
         String str = gson.toJson(list);
@@ -84,10 +84,10 @@ public class TextJsonUtils extends TextUtils {
      */
     public Object getData(Class clazz) {
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + clazz.getSimpleName();
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + clazz.getSimpleName();
         }
 
-        ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
 
         String str = TextUtils.readTxtFromLocal(FILE_NAME, CharsetName.UTF_8);
 
@@ -108,10 +108,10 @@ public class TextJsonUtils extends TextUtils {
      */
     public String getDataList(Class listIncludeClazz) {
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.DATA_DIR + listIncludeClazz.getSimpleName() + "List";
+            FILE_NAME = AppConfig.CACHE_DATA_DIR + listIncludeClazz.getSimpleName() + "List";
         }
 
-        ZogUtils.printLog(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
 
         String str = TextUtils.readTxtFromLocal(FILE_NAME, CharsetName.UTF_8);
 //        Gson gson = new Gson();
@@ -119,7 +119,7 @@ public class TextJsonUtils extends TextUtils {
 //                new TypeToken<List>() {
 //                }.getType());
 //
-//        LogUtils.printLog(TextJsonUtils.class, "list.size():" + list.size());
+//        LogUtils.i(TextJsonUtils.class, "list.size():" + list.size());
         return str;
     }
 }

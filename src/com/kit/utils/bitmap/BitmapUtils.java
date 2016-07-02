@@ -16,6 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -41,6 +42,54 @@ import java.util.Random;
 public class BitmapUtils {
 
     public static String TAG = BitmapUtils.class.getName();
+
+    /**
+     * 图像压缩并保存到本地
+     * 返回处理过的图片
+     */
+    public static Bitmap saveImage(String fileName, Bitmap bit, long bytes) {
+
+        File file = new File(fileName);
+
+        String dir = fileName.substring(0, fileName.lastIndexOf("/"));
+        File directory = new File(dir);
+        ZogUtils.e(BitmapUtils.class, dir);
+
+        if (!directory.exists()) {
+            ZogUtils.e(BitmapUtils.class, "directory not exitsts,create it");
+            directory.mkdir();//没有目录先创建目录
+        }
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                ZogUtils.e(BitmapUtils.class, "file not exitsts,create it");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bit.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+            for (int options = 100; baos.toByteArray().length > bytes; options -= 10) {
+                baos.reset();
+                bit.compress(Bitmap.CompressFormat.JPEG, options, baos);
+            }
+
+            ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
+
+//            ByteArrayOutputStream stream = new
+//                    ByteArrayOutputStream();
+            FileOutputStream os = new FileOutputStream(file);
+            os.write(baos.toByteArray());
+            os.close();
+            return bit;
+        } catch (Exception e) {
+            file = null;
+            return null;
+        }
+    }
 
     /**
      * 设置不高于heightMax，不宽于widthMax的options，并维系原有宽高比
@@ -76,7 +125,7 @@ public class BitmapUtils {
         if (be <= 0)
             be = 1;
 
-        ZogUtils.printLog(BitmapUtils.class, "be be be:" + be + " w:" + w + " h:" + h);
+        ZogUtils.i(BitmapUtils.class, "be be be:" + be + " w:" + w + " h:" + h);
 
         options.inSampleSize = be;// 设置缩放比例
 
@@ -295,7 +344,7 @@ public class BitmapUtils {
         Object content = null;
         try {
             try {
-                ZogUtils.printLog(BitmapUtils.class, "address: " + url);
+                ZogUtils.i(BitmapUtils.class, "address: " + url);
                 URL uri = new URL(url);
                 content = uri.getContent();
             } catch (Exception e) {
@@ -327,8 +376,8 @@ public class BitmapUtils {
         return bitmap;
     }
 
-    public static Bitmap getAdpterScreenWithBitmap(Bitmap bmp, int width,
-                                                   int height) {
+    public static Bitmap getAdpterBitmap(Bitmap bmp, int width,
+                                         int height) {
 
         Bitmap outBitmap = null;
 
@@ -482,6 +531,49 @@ public class BitmapUtils {
 
         return bmp;
     }
+
+
+    /**
+     * 如果加载时遇到OutOfMemoryError,则将图片加载尺寸缩小一半并重新加载
+     *
+     * @param opts 注意：opts.inSampleSize 可能会被改变
+     * @return
+     */
+    public static Bitmap loadFromInputStream(InputStream input,
+                                                 @Nullable BitmapFactory.Options opts) {
+
+        BitmapFactory.Options optsTmp = opts;
+        if (optsTmp == null) {
+            optsTmp = new BitmapFactory.Options();
+            optsTmp.inSampleSize = 1;
+        }
+
+        Bitmap bmp = null;
+
+        final int MAX_TRIAL = 5;
+        for (int i = 0; i < MAX_TRIAL; ++i) {
+            try {
+                bmp = BitmapFactory.decodeStream(input, null, opts);
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+                optsTmp.inSampleSize *= 2;
+                try {
+                    input.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+
+        return bmp;
+    }
+
 
     public static Bitmap addBitmap(ArrayList<Integer> listResId, int lineNum,
                                    int columnNum, Context context) {
@@ -673,7 +765,7 @@ public class BitmapUtils {
 
             ZogUtils.showException(e);
 
-            ZogUtils.printLog(BitmapUtils.class, "scale应该取的小一点");
+            ZogUtils.i(BitmapUtils.class, "scale应该取的小一点");
         }
         return bmp;
     }
@@ -1016,7 +1108,7 @@ public class BitmapUtils {
     }
 
     public static Bitmap resizeBitmapFileByWidth(Context context, String filePath,
-                                                  int imageViewWidth) {
+                                                 int imageViewWidth) {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -1141,7 +1233,7 @@ public class BitmapUtils {
 
                 String prefix = file.getName().substring(file.getName().lastIndexOf(".") + 1);
                 String newFileName = System.currentTimeMillis() + "" + new Random().nextInt(9999) + "." + prefix;
-                String newFileDir = AppConfig.DATA_DIR + "images/.temp/" + newFileName;
+                String newFileDir = AppConfig.CACHE_DATA_DIR + "images/.temp/" + newFileName;
                 file = new File(newFileDir);
                 BitmapFactory.Options options = getOptions(filePath, height, width, null);
                 Bitmap bmp = BitmapUtils.loadBitmap(filePath, options, true);

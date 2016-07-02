@@ -1,21 +1,36 @@
 package com.kit.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.kit.app.ActivityManager;
 import com.kit.app.core.task.DoSomeThing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AppUtils {
+
+    public static void restartApp(Context context) {
+        ActivityManager.getInstance().popAllActivity();
+
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
+
+
     public static String getAppVersion(Context context) {
         String versionName = "";
         try {
@@ -85,10 +100,7 @@ public class AppUtils {
     }
 
     public static String getAppPackage(Context context) {
-
         String packageName = context.getPackageName();
-        System.out.println("packageName" + packageName);
-
         return packageName;
     }
 
@@ -101,23 +113,11 @@ public class AppUtils {
         if (info != null) {
             appInfo = info.applicationInfo;
             packageName = appInfo.packageName;
-            System.out.println("packageName" + packageName);
+//            System.out.println("packageName:" + packageName);
         }
         return packageName;
     }
 
-    public static boolean destoryUser(Context context) {
-        try {
-            SharedPreferences userInfo = context.getApplicationContext()
-                    .getSharedPreferences("user_info", 0);
-            userInfo.edit().putString("loginName", "").commit();
-            userInfo.edit().putString("password", "").commit();
-
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
     public static boolean autoChangeAlarm(Context context) {
         try {
@@ -172,7 +172,7 @@ public class AppUtils {
     /**
      * 强制关闭应用程序
      */
-    public static void forceExit(Context context) {
+    public static void closeApp(Context context) {
 
         //目前最为通用的 关闭进程的方法以后的版本使用
 //        Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -180,16 +180,21 @@ public class AppUtils {
 //        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        context.startActivity(startMain);
 
-        ZogUtils.printLog(AppUtils.class, "forceExit 0");
 
-        com.kit.app.ActivityManager.getInstance().popAllActivity();
-        ZogUtils.printLog(AppUtils.class, "forceExit 1");
 
-        System.exit(0);
-        ZogUtils.printLog(AppUtils.class, "forceExit 2");
+
+        ZogUtils.i(AppUtils.class, "forceExit 0");
+
+        ActivityManager.getInstance().popAllActivity();
+        ZogUtils.i(AppUtils.class, "forceExit 1");
+
+//        makeCrash();
+        ((Activity)context).moveTaskToBack(true);
 
         android.os.Process.killProcess(android.os.Process.myPid());
-        ZogUtils.printLog(AppUtils.class, "forceExit 3");
+
+        System.exit(1);
+        ZogUtils.i(AppUtils.class, "forceExit 2");
 
     }
 
@@ -202,7 +207,7 @@ public class AppUtils {
         try {
             Thread.sleep(time);
         } catch (Exception e) {
-            ZogUtils.printLog(AppUtils.class, "Exception:" + e);
+            ZogUtils.i(AppUtils.class, "Exception:" + e);
         }
     }
 
@@ -222,4 +227,32 @@ public class AppUtils {
 
         }, time);
     }
+
+    /**
+     * 改变语言环境
+     *
+     * @param resources
+     * @param lanAtr
+     */
+    public static void changeAppLanguage(Resources resources, String lanAtr) {
+        Configuration config = resources.getConfiguration();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        if (lanAtr.equals("zh-cn")) {
+            config.locale = Locale.SIMPLIFIED_CHINESE;
+        } else {
+            config.locale = Locale.getDefault();
+        }
+        resources.updateConfiguration(config, dm);
+    }
+
+    /**
+     * 改变语言环境
+     *
+     * @param resources
+     */
+    public static Locale getAppLanguage(Resources resources) {
+        Configuration config = resources.getConfiguration();
+        return config.locale ;
+    }
+
 }

@@ -114,7 +114,7 @@ public class JsonUtils {
             }
 
             if (keyName.equals(key)) {      //试剂类型
-                ZogUtils.printLog(JsonUtils.class, "img_url got!!!!!!!!!!!!!!");
+                ZogUtils.i(JsonUtils.class, "img_url got!!!!!!!!!!!!!!");
                 jobj.put(keyName, replaceValue);
             }
         }
@@ -128,17 +128,25 @@ public class JsonUtils {
 
     /**
      * 把对象按照Json格式输出
+     *
      * @param obj
      */
     public static void printAsJson(Object obj) {
         Gson gson = new Gson();
-        ZogUtils.printLog(JsonUtils.class, gson.toJson(obj));
+        ZogUtils.i(JsonUtils.class, gson.toJson(obj));
     }
 
 
+    public static boolean isJSON(String jsonString) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.getJSONObject(jsonString);
+        } catch (Exception e) {
 
-
-
+            return false;
+        }
+        return true;
+    }
 
 
 }

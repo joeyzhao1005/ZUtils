@@ -39,7 +39,7 @@ public class SharedPreferencesExtendUtils extends SharedPreferencesUtils {
                                   int saveLength) {
 
 
-        ZogUtils.printLog(SharedPreferencesExtendUtils.class, "saveObject!!!!!!!");
+        ZogUtils.i(SharedPreferencesExtendUtils.class, "saveObject!!!!!!!");
 
         if (saveLength <= 0)
             saveLength = Integer.MAX_VALUE;
@@ -132,7 +132,7 @@ public class SharedPreferencesExtendUtils extends SharedPreferencesUtils {
         ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
 
 
-        ZogUtils.printLog(SharedPreferencesExtendUtils.class, isExist(context, shaPreName) + "");
+        ZogUtils.i(SharedPreferencesExtendUtils.class, isExist(context, shaPreName) + "");
         if (!isExist(context, shaPreName)) {
             newSP(context, shaPreName);
         }

@@ -167,11 +167,11 @@ public class FlashlightManager {
      */
     public static void setFlashlight(boolean active) {
 
-//        LogUtils.printLog(FlashlightManager.class, "iHardwareService:" + iHardwareService
+//        LogUtils.i(FlashlightManager.class, "iHardwareService:" + iHardwareService
 //                + " setFlashEnabledMethod:" + setFlashEnabledMethod
 //                + " getFlashEnabledMethod:" + getFlashEnabledMethod);
 
-        ZogUtils.printLog(FlashlightManager.class, "active:" + active);
+        ZogUtils.i(FlashlightManager.class, "active:" + active);
 
         if (iHardwareService != null && setFlashEnabledMethod != null
                 && getFlashEnabledMethod != null) {
@@ -210,7 +210,7 @@ public class FlashlightManager {
 //            camera.release(); // 关掉照相机
 //        }
 //
-//        LogUtils.printLog(FlashlightManager.class, "setFlashlightConventional active:" + active);
+//        LogUtils.i(FlashlightManager.class, "setFlashlightConventional active:" + active);
 //    }
 
 
@@ -232,7 +232,7 @@ public class FlashlightManager {
             camera =null;
         }
 
-        ZogUtils.printLog(FlashlightManager.class, "setFlashLightNormal active:" + active);
+        ZogUtils.i(FlashlightManager.class, "setFlashLightNormal active:" + active);
     }
 
 }
