@@ -3,6 +3,9 @@ package com.kit.utils;
 
 import android.graphics.Color;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ColorUtils {
 
     public static String toHex(int a, int r, int g, int b) {
@@ -90,5 +93,25 @@ public class ColorUtils {
         return Color.argb(alpha, r, g, b);
     }
 
+    /**
+     * 将十六进制 颜色代码 转换为 int
+     *
+     * @return
+     */
+    public static int hex2Color(String color) {
+
+        if(StringUtils.isEmptyOrNullOrNullStr(color)){
+            return 0xff000000;
+        }
+        String reg = "#[a-f0-9A-F]{6,8}";
+        Pattern p = Pattern.compile(reg);
+        Matcher matcher = p.matcher(color);
+        boolean isMatch = matcher.matches();
+        if (isMatch) {
+            int c = Color.parseColor(color);
+            return c;
+        }
+        return 0xff000000;
+    }
 
 }
