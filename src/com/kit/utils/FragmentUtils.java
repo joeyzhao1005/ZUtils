@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.kit.utils.intentutils.BundleData;
+import com.kit.utils.log.ZogUtils;
 
 /**
  * Created by Zhao on 14-10-17.

@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -25,34 +24,46 @@ public class ImmersiveModeUtils {
     /**
      * 仅对使用了Actionbar的起作用
      * xml中需使用父控件如LinearLayout框住，并设置为 android:fitsSystemWindows="true"
-     *
+     * <p/>
      * 对getActibar设置了hide()的，设置为 android:fitsSystemWindows="false" 并需要手动paddingTop
      *
      * @param baseActivity
      * @param color         状态栏的颜色
-     * @param paddingTop    是否padding上部分(高度为状态栏高度)
-     * @param paddingBottom 是否padding下部分
      */
-    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, int color, boolean paddingTop, boolean paddingBottom) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, int color) {
 
-            Window window = baseActivity.getWindow();
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//
-            ViewGroup view = (ViewGroup) baseActivity.getWindow().getDecorView();
-            view.setBackgroundColor(color);
 
-            if (paddingTop) {
-                view.setPadding(0, (paddingTop ? DeviceUtils.getStatusBarHeight(baseActivity) : 0), 0,
-                        ((baseActivity.getSupportActionBar() != null && paddingBottom)
-                                ? DeviceUtils.getActionBarHeight(baseActivity) : 0));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                Window window = baseActivity.getWindow();
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
+                        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    return;
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-                ZogUtils.e(ImmersiveModeUtils.class, "immersive no actionbar");
+//                    window.clearFlags(201326592);
+//                    window.getDecorView().setSystemUiVisibility(1280);
+//                    baseActivity.getWindow().addFlags(WindowManager.LayoutParams.class.getField("FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS")
+//                            .getInt(null));
+//                    Window.class.getDeclaredMethod("setStatusBarColor", Integer.TYPE).invoke(window, color);
 
+
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+                    window.setStatusBarColor(color);
+                }
+            } catch (Exception v0) {
+                v0.printStackTrace();
             }
         }
+
     }
+
+
 
 
 //    private void initSystemBar(int color) {

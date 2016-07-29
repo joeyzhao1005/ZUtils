@@ -1,23 +1,43 @@
-package com.kit.utils.camera;
+package com.kit.utils.camera.torch;
 
+import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.hardware.camera2.CameraAccessException;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class FlashlightManager {
-
-    private static final String TAG = FlashlightManager.class.getSimpleName();
+@Deprecated
+public class FlashlightManager2 {
+    private static FlashlightManager2 flashlightManager;
+    private static final String TAG = FlashlightManager2.class.getSimpleName();
     private static Camera camera = null;
 
     private static final Object iHardwareService;
     private static final Method setFlashEnabledMethod;
     private static final Method getFlashEnabledMethod;
+
+
+    private Context context;
+
+    public static FlashlightManager2 getInstance() {
+        if (flashlightManager == null)
+            flashlightManager = new FlashlightManager2();
+
+        return flashlightManager;
+    }
+
+    public FlashlightManager2 setContext(Context context) {
+        getInstance().context = context;
+
+        return flashlightManager;
+    }
 
     /**
      * Use Static Intialize Object,Setting HardwareService Manager Object and
@@ -152,11 +172,11 @@ public class FlashlightManager {
         }
     }
 
-    public static void enableFlashlight() {
+    public void enableFlashlight() {
         setFlashlight(true);
     }
 
-    public static void disableFlashlight() {
+    public void disableFlashlight() {
         setFlashlight(false);
     }
 
@@ -165,33 +185,53 @@ public class FlashlightManager {
      *
      * @param active
      */
-    public static void setFlashlight(boolean active) {
+    private void setFlashlight(boolean active) {
 
 //        LogUtils.i(FlashlightManager.class, "iHardwareService:" + iHardwareService
 //                + " setFlashEnabledMethod:" + setFlashEnabledMethod
 //                + " getFlashEnabledMethod:" + getFlashEnabledMethod);
-
-        ZogUtils.i(FlashlightManager.class, "active:" + active);
-
-        if (iHardwareService != null && setFlashEnabledMethod != null
-                && getFlashEnabledMethod != null) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M
+                && context != null) {
             try {
-                //是否可以通过反射来打开手电筒
-                Boolean enabled = (Boolean) getFlashEnabledMethod.invoke(
-                        iHardwareService, (Object[]) null);
-
-                if (enabled)
-                    setFlashEnabledMethod.invoke(iHardwareService, active);
-                else
-                    setFlashLightNormal(active);
-
+                setFlashlightAbove23(context, active);
             } catch (Exception e) {
-                setFlashLightNormal(active);
+                ZogUtils.showException(e);
             }
         } else {
-            setFlashLightNormal(active);
+            ZogUtils.i( "active:" + active);
+
+            if (iHardwareService != null && setFlashEnabledMethod != null
+                    && getFlashEnabledMethod != null) {
+                try {
+                    //是否可以通过反射来打开手电筒
+                    Boolean enabled = (Boolean) getFlashEnabledMethod.invoke(
+                            iHardwareService, (Object[]) null);
+
+                    if (enabled)
+                        setFlashEnabledMethod.invoke(iHardwareService, active);
+                    else
+                        setFlashLightNormal();
+
+                } catch (Exception e) {
+                    setFlashLightNormal();
+                }
+            } else {
+                setFlashLightNormal();
+            }
         }
+
     }
+
+    public void setFlashlightAbove23(Context context, boolean active) throws CameraAccessException {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M
+                && getInstance().context != null) {
+            Camera2Torch camera2Torch = new Camera2Torch(context);
+            camera2Torch.init();
+            camera2Torch.toggle(active);
+        }
+
+    }
+
 
 //    private static void setFlashlightConventional(boolean active) {
 //        if (camera == null)
@@ -214,25 +254,26 @@ public class FlashlightManager {
 //    }
 
 
-    public static void setFlashLightNormal(boolean active) {
+    public  void setFlashLightNormal() {
 
         if (camera == null)
             camera = getCamera();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                setFlashlightAbove23(context, false);
+            }catch (Exception e){
+                ZogUtils.showException(e);
+            }
 
-        Parameters params = camera.getParameters();
-        if (active) {
-            params.setFlashMode(Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(params);
-            camera.startPreview(); // 开始亮灯;
-        } else {
+        }else {
+            Parameters params = camera.getParameters();
+
             params.setFlashMode(Parameters.FLASH_MODE_OFF);
             camera.stopPreview(); // 关掉亮灯
             camera.release(); // 关掉照相机
-            camera =null;
+            camera = null;
         }
-
-        ZogUtils.i(FlashlightManager.class, "setFlashLightNormal active:" + active);
     }
 
 }

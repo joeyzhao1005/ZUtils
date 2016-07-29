@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.kit.utils.log.ZogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,7 +115,7 @@ public class JsonUtils {
             }
 
             if (keyName.equals(key)) {      //试剂类型
-                ZogUtils.i(JsonUtils.class, "img_url got!!!!!!!!!!!!!!");
+                ZogUtils.i("img_url got!!!!!!!!!!!!!!");
                 jobj.put(keyName, replaceValue);
             }
         }
@@ -133,7 +134,7 @@ public class JsonUtils {
      */
     public static void printAsJson(Object obj) {
         Gson gson = new Gson();
-        ZogUtils.i(JsonUtils.class, gson.toJson(obj));
+        ZogUtils.i(gson.toJson(obj));
     }
 
 

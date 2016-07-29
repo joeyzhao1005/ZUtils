@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.kit.utils.log.ZogUtils;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -45,7 +47,7 @@ public class BadgeUtils {
             count = Math.max(0, Math.min(count, 99));
         }
 
-        ZogUtils.e(BadgeUtils.class, "Build.MANUFACTURER:" + Build.MANUFACTURER);
+        ZogUtils.e("Build.MANUFACTURER:" + Build.MANUFACTURER);
 
         if (Build.MANUFACTURER.equalsIgnoreCase("Xiaomi")) {
             sendToXiaoMi(context, count);

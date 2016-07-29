@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.Window;
 
+import com.kit.utils.log.ZogUtils;
+
 import java.lang.reflect.Method;
 
 /**
@@ -25,7 +27,7 @@ public class ActionBarUtils {
             setHasEmbeddedTabsMethod.setAccessible(true);
             setHasEmbeddedTabsMethod.invoke(actionBar, true);
         } catch (Exception e) {
-            ZogUtils.i(activity.getClass(), e.getMessage().toString());
+            ZogUtils.i( e.getMessage().toString());
 
         }
     }

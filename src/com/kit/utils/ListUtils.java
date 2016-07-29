@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import com.kit.interfaces.IEqual;
+import com.kit.utils.log.ZogUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -118,7 +119,7 @@ public class ListUtils {
      * @Title getOne
      * @Description 得到一个
      */
-    public static Object getOne(List objs) {
+    public static <T>T getOne(List<T> objs) {
 
         int index = RandomUtils.getRandomIntNum(0, objs.size() - 1);
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.kit.utils.log.ZogUtils;
+
 public class ToastUtils {
     private static Toast mToast;
     private static Handler mHandler = new Handler();

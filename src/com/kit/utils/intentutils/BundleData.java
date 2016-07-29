@@ -3,7 +3,7 @@ package com.kit.utils.intentutils;
 import android.os.Bundle;
 
 import com.kit.utils.GsonUtils;
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class BundleData implements Cloneable {
         try {
             Object o = hashMap.get(key);
             String json = GsonUtils.toJson(o);
-            ZogUtils.e(BundleData.class, "json:" + json);
+            ZogUtils.e("json:" + json);
             t = GsonUtils.getArrayList(json, typeOfT);
         } catch (Exception e) {
             ZogUtils.showException(e);

@@ -3,6 +3,7 @@ package com.kit.utils;
 import com.google.gson.Gson;
 import com.kit.app.enums.CharsetName;
 import com.kit.config.AppConfig;
+import com.kit.utils.log.ZogUtils;
 
 import java.io.File;
 import java.util.List;
@@ -44,10 +45,10 @@ public class TextJsonUtils extends TextUtils {
     public void saveData(Object obj, Class clazz) {
 
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.CACHE_DATA_DIR + clazz.getSimpleName();
+            FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + clazz.getSimpleName();
         }
 
-        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(FILE_NAME);
 
         Gson gson = new Gson();
         String str = gson.toJson(obj);
@@ -64,10 +65,10 @@ public class TextJsonUtils extends TextUtils {
     public void saveDataList(List list, Class listIncludeClazz) {
 
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.CACHE_DATA_DIR + listIncludeClazz.getSimpleName() + "List";
+            FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + listIncludeClazz.getSimpleName() + "List";
         }
 
-        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(FILE_NAME);
 
         Gson gson = new Gson();
         String str = gson.toJson(list);
@@ -84,10 +85,10 @@ public class TextJsonUtils extends TextUtils {
      */
     public Object getData(Class clazz) {
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.CACHE_DATA_DIR + clazz.getSimpleName();
+            FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + clazz.getSimpleName();
         }
 
-        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(FILE_NAME);
 
         String str = TextUtils.readTxtFromLocal(FILE_NAME, CharsetName.UTF_8);
 
@@ -108,10 +109,10 @@ public class TextJsonUtils extends TextUtils {
      */
     public String getDataList(Class listIncludeClazz) {
         if (StringUtils.isNullOrEmpty(FILE_NAME)) {
-            FILE_NAME = AppConfig.CACHE_DATA_DIR + listIncludeClazz.getSimpleName() + "List";
+            FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + listIncludeClazz.getSimpleName() + "List";
         }
 
-        ZogUtils.i(TextJsonUtils.class, FILE_NAME);
+        ZogUtils.i(FILE_NAME);
 
         String str = TextUtils.readTxtFromLocal(FILE_NAME, CharsetName.UTF_8);
 //        Gson gson = new Gson();

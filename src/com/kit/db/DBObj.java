@@ -163,7 +163,7 @@
 //		} catch (Exception e) {
 //			ZogUtils.showException(e);
 //		}
-//		ZogUtils.i(getClass(), "list.size():" + list.size());
+//		ZogUtils.i( "list.size():" + list.size());
 //		return list;
 //	}
 //

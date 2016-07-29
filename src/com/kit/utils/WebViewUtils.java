@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ZoomButtonsController;
 
+import com.kit.utils.log.ZogUtils;
+
 import java.lang.reflect.Field;
 
 public class WebViewUtils {
@@ -21,7 +23,6 @@ public class WebViewUtils {
 
         int end = url.indexOf("://");
 
-        ZogUtils.e(WebViewUtils.class, "end:" + end);
 
         if (end == -1)
             end = url.length();
@@ -64,7 +65,7 @@ public class WebViewUtils {
         if (fileExist) {
             String bgcolor = ColorUtils.toBrowserColor(color);
 
-            ZogUtils.i(WebViewUtils.class, "bgcolor:" + bgcolor);
+            ZogUtils.i( "bgcolor:" + bgcolor);
 
             String adapterScreenWidth = "";
             if (isAdapterScreenWidth) {

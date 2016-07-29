@@ -42,7 +42,7 @@ public class ArrayUtils {
      * @Title getOne
      * @Description 得到一个
      */
-    public static Object getOne(Object[] objs) {
+    public static <T>T getOne(T[] objs) {
 
         int index = RandomUtils.getRandomIntNum(0, objs.length - 1);
 

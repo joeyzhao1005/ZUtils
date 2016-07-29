@@ -3,6 +3,8 @@ package com.kit.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.kit.utils.log.ZogUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -141,7 +143,7 @@ public class ZipUtils {
             }
             zipInputStream.close();
         } catch (Exception e) {
-            ZogUtils.e(ZipUtils.class, "unZipFile Error!!!");
+            ZogUtils.showException(e);
         }
 
     }

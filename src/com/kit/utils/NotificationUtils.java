@@ -11,6 +11,7 @@ import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.kit.utils.bitmap.BitmapUtils;
+import com.kit.utils.log.ZogUtils;
 
 public class NotificationUtils {
 

@@ -1,7 +1,5 @@
 package com.kit.utils;
 
-import java.util.ArrayList;
-
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,6 +10,10 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
+
+import com.kit.utils.log.ZogUtils;
+
+import java.util.ArrayList;
 
 public class ContactUtils {
 
@@ -181,7 +183,7 @@ public class ContactUtils {
 			// Log.d(TAG, "getPeople null");
 			return null;
 		}
-		ZogUtils.i(ContactUtils.class, "getPeople cursor.getCount() = "
+		ZogUtils.i("getPeople cursor.getCount() = "
                 + cursor.getCount());
 		for (int i = 0; i < cursor.getCount(); i++) {
 			cursor.moveToPosition(i);

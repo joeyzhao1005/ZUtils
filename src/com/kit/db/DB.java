@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -73,7 +73,7 @@ public class DB extends SQLiteOpenHelper {
 
 		dbName = DATABASE_NAME;
 
-		ZogUtils.i(getClass(), db_path + "/" + DATABASE_NAME);
+		ZogUtils.i( db_path + "/" + DATABASE_NAME);
 
 		this.mDb = this.openDatabase(db_path + "/" + DATABASE_NAME);
 
@@ -98,7 +98,7 @@ public class DB extends SQLiteOpenHelper {
 			file = new File(dbfile);
 
 			if (!directory.exists()) {
-				ZogUtils.i(getClass(), "can not mkdir: " + db_path);
+				ZogUtils.i( "can not mkdir: " + db_path);
 				return null;
 			} else {
 				if (!file.exists()) {
@@ -122,13 +122,13 @@ public class DB extends SQLiteOpenHelper {
 				return mDb;
 			}
 		} catch (FileNotFoundException e) {
-			ZogUtils.i(getClass(), "e.getClass():" + e.getClass());
+			ZogUtils.i( "e.getClass():" + e.getClass());
 			ZogUtils.showException(e);
 		} catch (IOException e) {
-			ZogUtils.i(getClass(), "e.getClass():" + e.getClass());
+			ZogUtils.i( "e.getClass():" + e.getClass());
 			ZogUtils.showException(e);
 		} catch (Exception e) {
-			ZogUtils.i(getClass(), "e.getClass():" + e.getClass());
+			ZogUtils.i( "e.getClass():" + e.getClass());
 			ZogUtils.showException(e);
 		}
 		return null;

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.kit.utils.GsonUtils;
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -310,12 +310,12 @@ public class IntentBaseUtils {
             if (bundle != null) {
                 Set<String> keys = bundle.keySet();
                 Iterator<String> it = keys.iterator();
-                ZogUtils.i(IntentBaseUtils.class, "printIntent start");
+                ZogUtils.i( "printIntent start");
                 while (it.hasNext()) {
                     String key = it.next();
-                    ZogUtils.i(IntentBaseUtils.class, "[" + key + "=" + bundle.get(key) + "]");
+                    ZogUtils.i( "[" + key + "=" + bundle.get(key) + "]");
                 }
-                ZogUtils.i(IntentBaseUtils.class, "printIntent end");
+                ZogUtils.i( "printIntent end");
             }
         } catch (Exception e) {
             ZogUtils.showException(e);

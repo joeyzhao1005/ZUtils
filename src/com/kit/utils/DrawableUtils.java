@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.kit.utils.bitmap.BitmapUtils;
 
@@ -18,6 +20,12 @@ import java.io.File;
  * Created by Zhao on 14-8-12.
  */
 public class DrawableUtils {
+
+    public static Drawable tintDrawable(Drawable drawable, ColorStateList colors) {
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTintList(wrappedDrawable, colors);
+        return wrappedDrawable;
+    }
 
     public static String saveDrawable(Context context, int drawableID, String filename) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableID);

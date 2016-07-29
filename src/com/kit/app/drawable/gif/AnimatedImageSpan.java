@@ -9,7 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.style.DynamicDrawableSpan;
 
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 import com.kit.utils.MathExtend;
 import com.kit.utils.DrawableUtils;
 
@@ -163,7 +163,7 @@ public class AnimatedImageSpan extends DynamicDrawableSpan {
                 transY -= paint.getFontMetricsInt().descent;
             }
 
-            ZogUtils.i(AnimatedImageSpan.class, "transY:" + transY + " drawable:" + drawable, 30);
+            ZogUtils.i("transY:" + transY + " drawable:" + drawable, 30);
 
             canvas.translate(x, transY);
 

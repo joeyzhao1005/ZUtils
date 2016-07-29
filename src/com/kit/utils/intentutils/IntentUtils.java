@@ -7,7 +7,8 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 
 import com.kit.app.ActivityManager;
-import com.kit.utils.ZogUtils;
+import com.kit.utils.StringUtils;
+import com.kit.utils.log.ZogUtils;
 
 public class IntentUtils extends IntentBaseUtils {
 
@@ -283,7 +284,6 @@ public class IntentUtils extends IntentBaseUtils {
         pushData(intent, data);
         intent.setClass(fragment.getActivity(), cls);
         fragment.startActivityForResult(intent, requestFlag);
-        ZogUtils.e(IntentUtils.class, "gotoSingleNextActivity form Fragment");
     }
 
 
@@ -322,8 +322,17 @@ public class IntentUtils extends IntentBaseUtils {
             }
         }
 
-        Uri realUri = Uri.parse(uri);
-        Intent intent = new Intent(action, realUri);
+        Intent intent;
+        if (!StringUtils.isEmptyOrNullOrNullStr(uri)) {
+            Uri realUri = Uri.parse(uri);
+            intent = new Intent(action, realUri);
+
+        } else {
+            intent = new Intent(action);
+        }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         pushData(intent, data);
         packageContext.startActivity(intent);
     }
@@ -340,7 +349,7 @@ public class IntentUtils extends IntentBaseUtils {
     public static void gotoNextActivity(Fragment fragment, Class<?> cls,
                                         BundleData data, boolean isCloseThis, int requestFlag) {
         if (isCloseThis) {
-            ((Activity) fragment.getActivity()).finish();
+            (fragment.getActivity()).finish();
         }
 
         Intent intent = new Intent();

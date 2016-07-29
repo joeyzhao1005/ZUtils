@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.util.ArrayList;
 
@@ -18,20 +18,20 @@ public class AsyncTaskExtend extends AsyncTask<Object, Object, Object> {
 
     @Override
     protected void onPreExecute() {
-        ZogUtils.i(AsyncTaskExtend.class, "onPreExecute");
+        ZogUtils.i("onPreExecute");
 
     }
 
     // doInBackground方法内部执行后台任务,不可在此方法内修改UI
     @Override
     protected Object doInBackground(Object... params) {
-        ZogUtils.i(AsyncTaskExtend.class, "doInBackground");
+        ZogUtils.i("doInBackground");
 
 
         if (params != null && params.length > 0) {
             for (Object p : params) {
 
-                ZogUtils.i(AsyncTaskExtend.class, p.getClass().getName());
+                ZogUtils.i(p.getClass().getName());
 
 
                 if (p instanceof Button) {
@@ -51,7 +51,7 @@ public class AsyncTaskExtend extends AsyncTask<Object, Object, Object> {
     @Override
     protected void onPostExecute(Object result) {
 
-        ZogUtils.i(AsyncTaskExtend.class, "onPostExecute");
+        ZogUtils.i("onPostExecute");
 
         for (Button b : btns) {
             b.setClickable(true);

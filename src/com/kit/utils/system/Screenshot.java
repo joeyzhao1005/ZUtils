@@ -94,7 +94,7 @@ public class Screenshot {
         long start = System.currentTimeMillis();
         try {
             Bitmap bm = getScreenBitmap();
-            saveMyBitmap(bm, AppConfig.CACHE_DATA_DIR + System.currentTimeMillis() + ".jpg");
+            saveMyBitmap(bm, AppConfig.getAppConfig().getCacheDataDir() + System.currentTimeMillis() + ".jpg");
         } catch (IOException e) {
             e.printStackTrace();
         }

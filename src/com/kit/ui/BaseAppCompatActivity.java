@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.kit.app.ActivityManager;
 import com.kit.app.UIHandler;
 
-public class BaseActionBarActivity extends AppCompatActivity implements BaseV4Fragment.OnFragmentInteractionListener{
+public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fragment.OnFragmentInteractionListener{
 
 
 //    public Context mContext;
@@ -23,13 +23,11 @@ public class BaseActionBarActivity extends AppCompatActivity implements BaseV4Fr
         getExtra();
         initWidget();
         loadData();
-        initWidgetWithData();
+        initWidgetWithExtra();
 
         UIHandler.prepare();
 
         ActivityManager.getInstance().pushActivity(this);
-
-
     }
 
     @Override
@@ -48,8 +46,7 @@ public class BaseActionBarActivity extends AppCompatActivity implements BaseV4Fr
     /**
      * 初始化界面
      * */
-    public boolean initWidget() {
-        return true;
+    public void initWidget() {
     }
 
     /**
@@ -60,8 +57,7 @@ public class BaseActionBarActivity extends AppCompatActivity implements BaseV4Fr
     }
 
 
-    public boolean initWidgetWithData(){
-        return true;
+    public void initWidgetWithExtra(){
     }
 
     @Override
@@ -69,6 +65,7 @@ public class BaseActionBarActivity extends AppCompatActivity implements BaseV4Fr
         // Inflate the menu; this adds items to the action bar if it is present.
         return true;
     }
+
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {

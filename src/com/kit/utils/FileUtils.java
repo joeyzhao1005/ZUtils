@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.kit.utils.log.ZogUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,7 +23,7 @@ public class FileUtils {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                ZogUtils.e(FileUtils.class, "file not exists,create it");
+                ZogUtils.e( "file not exists,create it");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -39,10 +41,10 @@ public class FileUtils {
         String dir = fileName.substring(0, fileName.lastIndexOf("/"));
         File directory = new File(dir);
 
-//        ZogUtils.e(FileUtils.class, "dir::" + dir);
+//        ZogUtils.e( "dir::" + dir);
 
         if (!directory.exists()) {
-            ZogUtils.e(FileUtils.class, "directory not exists,create it");
+            ZogUtils.e( "directory not exists,create it");
             return directory.mkdirs();//没有目录先创建目录
         }
         return false;

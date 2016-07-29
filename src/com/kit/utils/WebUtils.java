@@ -1,5 +1,7 @@
 package com.kit.utils;
 
+import com.kit.utils.log.ZogUtils;
+
 public class WebUtils {
 
     public static String getStartWith(String url) {
@@ -7,8 +9,6 @@ public class WebUtils {
             return null;
 
         int end = url.indexOf("://");
-
-        ZogUtils.e(WebUtils.class, "end:" + end);
 
         if (end == -1)
             end = url.length();

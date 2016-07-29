@@ -9,18 +9,27 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.kit.app.ActivityManager;
 import com.kit.app.core.task.DoSomeThing;
+import com.kit.utils.log.ZogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class AppUtils {
+
+    public static boolean isPermission(Context context, String permissionTag) {
+        PackageManager pm = context.getPackageManager();
+        return (PackageManager.PERMISSION_GRANTED ==
+                pm.checkPermission(permissionTag, context.getPackageName()));
+
+    }
 
     public static void restartApp(Context context) {
         ActivityManager.getInstance().popAllActivity();
@@ -181,20 +190,18 @@ public class AppUtils {
 //        context.startActivity(startMain);
 
 
-
-
-        ZogUtils.i(AppUtils.class, "forceExit 0");
+        ZogUtils.i("forceExit 0");
 
         ActivityManager.getInstance().popAllActivity();
-        ZogUtils.i(AppUtils.class, "forceExit 1");
+        ZogUtils.i("forceExit 1");
 
 //        makeCrash();
-        ((Activity)context).moveTaskToBack(true);
+        ((Activity) context).moveTaskToBack(true);
 
         android.os.Process.killProcess(android.os.Process.myPid());
 
         System.exit(1);
-        ZogUtils.i(AppUtils.class, "forceExit 2");
+        ZogUtils.i("forceExit 2");
 
     }
 
@@ -207,7 +214,7 @@ public class AppUtils {
         try {
             Thread.sleep(time);
         } catch (Exception e) {
-            ZogUtils.i(AppUtils.class, "Exception:" + e);
+            ZogUtils.i("Exception:" + e);
         }
     }
 
@@ -252,7 +259,123 @@ public class AppUtils {
      */
     public static Locale getAppLanguage(Resources resources) {
         Configuration config = resources.getConfiguration();
-        return config.locale ;
+        return config.locale;
     }
+
+
+    /**
+     * 查询手机内非系统应用
+     *
+     * @param context
+     * @return
+     */
+    public static List<PackageInfo> getAllApps(Context context) {
+        List<PackageInfo> apps = new ArrayList<PackageInfo>();
+        PackageManager pManager = context.getPackageManager();
+        //获取手机内所有应用
+        List<PackageInfo> paklist = pManager.getInstalledPackages(0);
+        for (int i = 0; i < paklist.size(); i++) {
+            PackageInfo pak = (PackageInfo) paklist.get(i);
+            //判断是否为非系统预装的应用程序
+//            if ((pak.applicationInfo.flags & pak.applicationInfo.FLAG_SYSTEM) <= 0) {
+//                // customs applications
+//                apps.add(pak);
+//            }
+            apps.add(pak);
+
+        }
+        return apps;
+    }
+
+
+    public static String getPackageNameByAppName(Context context, String appName) {
+        if(StringUtils.isEmptyOrNullOrNullStr(appName))
+            return null;
+
+        List<PackageInfo> apps = getAllApps(context);
+        String packageName = null;
+        for (PackageInfo packageInfo : apps) {
+            PackageManager pManager = context.getPackageManager();
+
+            String thisAppName = packageInfo.applicationInfo.loadLabel(pManager).toString();
+            if (appName.equals(thisAppName)) {
+                packageName = packageInfo.packageName;
+                break;
+            }
+        }
+
+        return packageName;
+    }
+
+    /**
+     * 模糊查找
+     * @param context
+     * @param appName
+     * @return
+     */
+    public static ArrayList<String> getPackageNamesByAppName(Context context, String appName) {
+        if(StringUtils.isEmptyOrNullOrNullStr(appName))
+            return null;
+
+        appName = StringUtils.trimPunct(appName).toLowerCase();
+
+        List<PackageInfo> apps = getAllApps(context);
+        ArrayList<String> packageNames = new ArrayList<String>();
+        for (PackageInfo packageInfo : apps) {
+            PackageManager pManager = context.getPackageManager();
+
+            String thisAppName = packageInfo.applicationInfo.loadLabel(pManager).toString().toLowerCase();
+
+            if (thisAppName.contains(appName)) {
+                String packageName = packageInfo.packageName;
+                packageNames.add(packageName);
+                break;
+            }
+        }
+
+        return packageNames;
+    }
+
+    /**
+     * 卸载应用
+     *
+     * @param packageName
+     */
+    public static void uninstallAPK(Context context, String packageName) {
+        Uri uri = Uri.parse("package:" + packageName);
+        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 卸载应用
+     *
+     * @param packageName
+     */
+    public static void seeAppInMarket(Context context, String packageName) {
+        Intent viewIntent = new Intent("android.intent.action.VIEW",
+                Uri.parse("market://details?id="+packageName));
+        context.startActivity(viewIntent);
+    }
+
+
+    /**
+     * 卸载应用
+     *
+     */
+    public static void searchAppInMarketByKeyword(Context context, String keyword) {
+        Intent viewIntent = new Intent("android.intent.action.VIEW",
+                Uri.parse("market://search?q="+keyword));
+        viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(viewIntent);
+    }
+
+
+
+
+
+
+
 
 }

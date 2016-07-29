@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class ServiceManager {
                         Intent i = new Intent(context, s.getClass());
                         context.startService(i);
 
-                        ZogUtils.i(ServiceManager.class,
+                        ZogUtils.i(
                                 "start service " + s.getClass().getName());
                     }
 
@@ -54,7 +54,7 @@ public class ServiceManager {
                         Intent i = new Intent(context, c);
                         context.startService(i);
 
-                        ZogUtils.i(ServiceManager.class,
+                        ZogUtils.i(
                                 "start service " + c.getName());
                     }
 

@@ -63,7 +63,7 @@ public class UIHandler {
                     return false;
                 }
             });
-            printPray();
+//            printPray();
         }
     }
 

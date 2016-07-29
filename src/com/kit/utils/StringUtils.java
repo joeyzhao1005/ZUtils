@@ -2,6 +2,8 @@ package com.kit.utils;
 
 import android.text.TextUtils;
 
+import com.kit.utils.log.ZogUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
@@ -187,6 +189,7 @@ public class StringUtils {
     }
 
 
+
     /**
      * @param
      * @return boolean 返回类型
@@ -206,7 +209,7 @@ public class StringUtils {
                 String first = m.group(0);
                 String second = str.replaceAll(first, "");
 
-                ZogUtils.i(StringUtils.class, first
+                ZogUtils.i( first
                                 + " "
                                 + second
                 );
@@ -395,18 +398,18 @@ public class StringUtils {
 
             isISO = isCharset(resultStr, "ISO-8859-1");
 
-            ZogUtils.i(StringUtils.class, resultStr + " isISO:" + isISO);
+            ZogUtils.i( resultStr + " isISO:" + isISO);
             if (isISO) {
                 try {
 
                     if (isGBK(resultStr)) {
                         GB_Str = new String(resultStr.getBytes("ISO-8859-1"),
                                 "GBK");
-                        ZogUtils.i(StringUtils.class, "GBK：" + GB_Str);
+                        ZogUtils.i( "GBK：" + GB_Str);
                     } else if (isCharset(resultStr, "UTF-8")) {
                         UTF_Str = new String(resultStr.getBytes("ISO-8859-1"),
                                 "UTF-8");
-                        ZogUtils.i(StringUtils.class, "UTF-8：" + UTF_Str);
+                        ZogUtils.i( "UTF-8：" + UTF_Str);
                     }
                 } catch (UnsupportedEncodingException e) {
                     ZogUtils.showException(e);

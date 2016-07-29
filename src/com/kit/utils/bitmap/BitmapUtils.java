@@ -1,5 +1,6 @@
 package com.kit.utils.bitmap;
 
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,7 +22,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.kit.config.AppConfig;
-import com.kit.utils.ZogUtils;
+import com.kit.utils.log.ZogUtils;
 import com.kit.utils.MathExtend;
 import com.kit.utils.StringUtils;
 
@@ -53,17 +54,17 @@ public class BitmapUtils {
 
         String dir = fileName.substring(0, fileName.lastIndexOf("/"));
         File directory = new File(dir);
-        ZogUtils.e(BitmapUtils.class, dir);
+        ZogUtils.e( dir);
 
         if (!directory.exists()) {
-            ZogUtils.e(BitmapUtils.class, "directory not exitsts,create it");
+            ZogUtils.e( "directory not exitsts,create it");
             directory.mkdir();//没有目录先创建目录
         }
 
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                ZogUtils.e(BitmapUtils.class, "file not exitsts,create it");
+                ZogUtils.e( "file not exitsts,create it");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -125,7 +126,7 @@ public class BitmapUtils {
         if (be <= 0)
             be = 1;
 
-        ZogUtils.i(BitmapUtils.class, "be be be:" + be + " w:" + w + " h:" + h);
+        ZogUtils.i( "be be be:" + be + " w:" + w + " h:" + h);
 
         options.inSampleSize = be;// 设置缩放比例
 
@@ -344,7 +345,7 @@ public class BitmapUtils {
         Object content = null;
         try {
             try {
-                ZogUtils.i(BitmapUtils.class, "address: " + url);
+                ZogUtils.i( "address: " + url);
                 URL uri = new URL(url);
                 content = uri.getContent();
             } catch (Exception e) {
@@ -699,6 +700,7 @@ public class BitmapUtils {
     }
 
     // 将Bitmap转换成InputStream
+    @TargetApi(14)
     public static InputStream bitmap2InputStream4Gif(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.WEBP, 100, baos);
@@ -765,7 +767,7 @@ public class BitmapUtils {
 
             ZogUtils.showException(e);
 
-            ZogUtils.i(BitmapUtils.class, "scale应该取的小一点");
+            ZogUtils.i( "scale应该取的小一点");
         }
         return bmp;
     }
@@ -1233,7 +1235,7 @@ public class BitmapUtils {
 
                 String prefix = file.getName().substring(file.getName().lastIndexOf(".") + 1);
                 String newFileName = System.currentTimeMillis() + "" + new Random().nextInt(9999) + "." + prefix;
-                String newFileDir = AppConfig.CACHE_DATA_DIR + "images/.temp/" + newFileName;
+                String newFileDir = AppConfig.getAppConfig().getImageDir() + ".temp/" + newFileName;
                 file = new File(newFileDir);
                 BitmapFactory.Options options = getOptions(filePath, height, width, null);
                 Bitmap bmp = BitmapUtils.loadBitmap(filePath, options, true);
