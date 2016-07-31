@@ -22,6 +22,14 @@ public class ActivityManager {
         return instance;
     }
 
+
+    public int getSize() {
+        if (activities != null)
+            return activities.size();
+
+        return 0;
+    }
+
     /**
      * activity压入activities
      *
@@ -53,7 +61,7 @@ public class ActivityManager {
             }
         }
 
-        ZogUtils.i( "activities.size():"
+        ZogUtils.i("activities.size():"
                 + activities.size());
     }
 
@@ -76,7 +84,7 @@ public class ActivityManager {
             }
         }
 
-        ZogUtils.i( "activities.size():"
+        ZogUtils.i("activities.size():"
                 + activities.size());
     }
 
@@ -84,7 +92,7 @@ public class ActivityManager {
      * 遍历所有Activity并finish（一般用于退出应用，销毁APP）
      */
     public void popAllActivity() {
-        ZogUtils.i( "activities.size():"
+        ZogUtils.i("activities.size():"
                 + activities.size());
         Iterator<Activity> iter = activities.iterator();
         while (iter.hasNext()) {
@@ -96,7 +104,7 @@ public class ActivityManager {
             iter.remove();
         }
 
-        ZogUtils.i( "activities.size():"
+        ZogUtils.i("activities.size():"
                 + activities.size());
     }
 
@@ -106,7 +114,7 @@ public class ActivityManager {
      * @param cls
      */
     public void popAllActivityExceptOne(Class cls) {
-        ZogUtils.i( "activities.size():"
+        ZogUtils.i("activities.size():"
                 + activities.size());
         Iterator<Activity> iter = activities.iterator();
         while (iter.hasNext()) {
@@ -119,7 +127,7 @@ public class ActivityManager {
 
         }
 
-        ZogUtils.i( "activities.size():"
+        ZogUtils.i("activities.size():"
                 + activities.size());
     }
 

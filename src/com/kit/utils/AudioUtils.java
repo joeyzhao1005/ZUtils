@@ -9,8 +9,8 @@ import com.kit.utils.log.ZogUtils;
 
 /**
  * Created by Zhao on 16/7/27.
- *
- *
+ * <p/>
+ * <p/>
  * 注意:切换模式一定要在你播放音频前至少1500ms外,因为切换模式需要耗时。
  */
 public class AudioUtils {
@@ -37,36 +37,47 @@ public class AudioUtils {
     /**
      * 开启耳机发音模式
      *
-     * @param activity
+     * @param context
      */
 
-    public void setHeadsetMode(Activity activity) {
-        setReceiverMode(activity);
+    public void setHeadsetMode(Context context) {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setMode(AudioManager.MODE_NORMAL);
+
+        if (context instanceof Activity)
+            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+
+
+        if (audioManager.isSpeakerphoneOn()) {
+            audioManager.setSpeakerphoneOn(false);
+        }
+
+//        setReceiverMode(context);
     }
 
 
     /**
      * 开启正常模式
      *
-     * @param activity
+     * @param context
      */
-    public void setNormalMode(Activity activity) {
-        setSpeakerMode(activity);
+    public void setNormalMode(Context context) {
+        setSpeakerMode(context);
     }
 
 
     /**
      * 设置听筒模式
      *
-     * @param activity
-     * @param on       是否开启
+     * @param context
+     * @param on      是否开启
      */
-    public void setReceiverMode(Activity activity, boolean on) {
+    public void setReceiverMode(Context context, boolean on) {
 
         if (on) {
-            setReceiverMode(activity);
+            setReceiverMode(context);
         } else {
-            setNormalMode(activity);
+            setNormalMode(context);
         }
     }
 
@@ -74,12 +85,18 @@ public class AudioUtils {
     /**
      * 开启听筒模式
      *
-     * @param activity
+     * @param context
      */
-    public void setReceiverMode(Activity activity) {
+    public void setReceiverMode(Context context) {
         ZogUtils.i("set to receiver mode");
 
-        AudioManager audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        //播放音频流类型
+        if (context instanceof Activity)
+            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
                 audioManager.setMode(AudioManager.MODE_IN_CALL);
@@ -88,26 +105,25 @@ public class AudioUtils {
             }
         } else {
             try {
-                //播放音频流类型
-//                    activity.setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
                 //获得当前类
-//                    Class audioSystemClass = Class.forName("android.media.AudioSystem");
-                //得到这个方法
-//                    Method setForceUse = audioSystemClass.getMethod("setForceUse", int.class, int.class);
+//                Class audioSystemClass = Class.forName("android.media.AudioSystem");
+//                得到这个方法
+//                Method setForceUse = audioSystemClass.getMethod("setForceUse", int.class, int.class);
 
                 audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
                 if (audioManager.isSpeakerphoneOn()) {
                     audioManager.setSpeakerphoneOn(false);
 
-                    audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL);
+//                    audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL);
 
-//                    audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL
-//                            , audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL),
-//                            AudioManager.STREAM_VOICE_CALL);
+                    audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL
+                            , audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL),
+                            AudioManager.STREAM_VOICE_CALL);
                 }
 
 //                    audioManager.setMode(AudioManager.MODE_NORMAL);
-//                    setForceUse.invoke(null, 1, 1);;
+//                setForceUse.invoke(null, 0, 0);
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -119,18 +135,23 @@ public class AudioUtils {
     /**
      * 开启免提模式
      *
-     * @param activity
+     * @param context
      */
-    public void setSpeakerMode(Activity activity) {
+    public void setSpeakerMode(Context context) {
         ZogUtils.i("set to speaker mode");
 
-        AudioManager audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        //播放音频流类型
+        if (context instanceof Activity)
+            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             audioManager.setMode(AudioManager.MODE_NORMAL);
         } else {
             try {
-                //播放音频流类型
-//                activity.setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+
 
                 //获得当前类
 //                Class audioSystemClass = Class.forName("android.media.AudioSystem");
@@ -143,7 +164,7 @@ public class AudioUtils {
                 boolean isWiredHeadsetOn = false;
 
                 if (audioState != null)
-                    isWiredHeadsetOn = audioState.isWiredHeadsetOn();
+                    isWiredHeadsetOn = audioState.isWiredHeadsetOn(context);
                 else
                     isWiredHeadsetOn = audioManager.isWiredHeadsetOn();
 
@@ -167,7 +188,13 @@ public class AudioUtils {
 
 
     public interface AudioState {
-        boolean isWiredHeadsetOn();
+        /**
+         * 是否插入了耳机
+         *
+         * @param context
+         * @return
+         */
+        boolean isWiredHeadsetOn(Context context);
 
     }
 

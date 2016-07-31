@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.PowerManager;
@@ -14,7 +15,6 @@ public class WakeLockUtils {
     private static WakeLockUtils wakeLockUtils;
 
 
-    private Context context;
     PowerManager pm;
 
     PowerManager.WakeLock wakeLockNear;
@@ -30,28 +30,14 @@ public class WakeLockUtils {
     }
 
 
-    public WakeLockUtils setContext(Context context) {
-        wakeLockUtils.context = context;
-        return wakeLockUtils;
-    }
-
     /**
      * 控制点亮屏幕,需要与距离传感器结合
      */
-    public void screenOnWithNear() {
-        pm = (PowerManager) wakeLockUtils.context.getSystemService(Context.POWER_SERVICE);
+    public void screenOn() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (wakeLockNear == null)
-                wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
-
-            wakeLockNear.setReferenceCounted(false);
-
-            if (!wakeLockNear.isHeld()) {
-                ZogUtils.i(wakeLockNear+" acquire");
-                wakeLockNear.acquire();
-            }
+            screenOnAboveAPI23();
         } else {
-            screenOn();
+            screenOnOld();
         }
 
     }
@@ -60,20 +46,69 @@ public class WakeLockUtils {
     /**
      * 控制熄灭屏幕,需要与距离传感器结合
      */
-    public void screenOffWithNear() {
-        pm = (PowerManager) wakeLockUtils.context.getSystemService(Context.POWER_SERVICE);
+    public void screenOff() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (wakeLockNear == null)
-                wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
-
-            wakeLockNear.setReferenceCounted(false);
-
-            if (!wakeLockNear.isHeld()) {
-                ZogUtils.i(wakeLockNear+" release");
-                wakeLockNear.release();
-            }
+            screenOffAboveAPI23();
         } else {
-            screenOff();
+            screenOffOld();
+        }
+    }
+
+
+    /**
+     * 销毁
+     */
+    public void destory() {
+        if (wakeLockScreen != null) {
+            wakeLockScreen.release();
+        }
+        wakeLockScreen = null;
+
+        if (wakeLockNear != null) {
+            wakeLockNear.release();
+        }
+        wakeLockNear = null;
+
+        pm = null;
+
+        wakeLockUtils = null;
+
+    }
+
+    /**
+     * 控制熄灭屏幕,需要与距离传感器结合
+     */
+    @TargetApi(23)
+    private void screenOffAboveAPI23() {
+        pm = (PowerManager) ResWrapper.getInstance().getContext().getSystemService(Context.POWER_SERVICE);
+        if (wakeLockNear == null)
+            wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
+
+        wakeLockNear.setReferenceCounted(false);
+
+        if (!wakeLockNear.isHeld()) {
+            ZogUtils.i(wakeLockNear + " acquire");
+            wakeLockNear.acquire();
+        }
+
+
+    }
+
+
+    /**
+     * 控制点亮屏幕,需要与距离传感器结合
+     */
+    @TargetApi(23)
+    private void screenOnAboveAPI23() {
+        pm = (PowerManager) ResWrapper.getInstance().getContext().getSystemService(Context.POWER_SERVICE);
+        if (wakeLockNear == null)
+            wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
+
+        wakeLockNear.setReferenceCounted(false);
+
+        if (wakeLockNear.isHeld()) {
+            ZogUtils.i(wakeLockNear + " release");
+            wakeLockNear.release();
         }
     }
 
@@ -81,15 +116,16 @@ public class WakeLockUtils {
     /**
      * 点亮屏幕
      */
-    public void screenOn() {
-        pm = (PowerManager) wakeLockUtils.context.getSystemService(Context.POWER_SERVICE);
+
+    private void screenOnOld() {
+        pm = (PowerManager) ResWrapper.getInstance().getContext().getSystemService(Context.POWER_SERVICE);
         if (wakeLockScreen == null)
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");
 
         wakeLockScreen.setReferenceCounted(false);
 
-
         if (!wakeLockScreen.isHeld()) {
+            ZogUtils.i(wakeLockScreen + " acquire");
             wakeLockScreen.acquire();
         }
     }
@@ -98,36 +134,19 @@ public class WakeLockUtils {
     /**
      * 熄灭屏幕
      */
-    public void screenOff() {
-        pm = (PowerManager) wakeLockUtils.context.getSystemService(Context.POWER_SERVICE);
+    private void screenOffOld() {
+        pm = (PowerManager) ResWrapper.getInstance().getContext().getSystemService(Context.POWER_SERVICE);
 
         if (wakeLockScreen == null)
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");
 
         wakeLockScreen.setReferenceCounted(false);
 
-        if (!wakeLockScreen.isHeld()) {
+        if (wakeLockScreen.isHeld()) {
+            ZogUtils.i(wakeLockScreen + " release");
             wakeLockScreen.release();
         }
     }
 
 
-    public void destory() {
-        if (wakeLockScreen != null && !wakeLockScreen.isHeld()) {
-            wakeLockScreen.acquire();
-        }
-
-        wakeLockScreen = null;
-
-        if (wakeLockNear != null && !wakeLockNear.isHeld()) {
-            wakeLockNear.release();
-        }
-
-        wakeLockNear = null;
-
-        pm = null;
-
-        wakeLockUtils = null;
-
-    }
 }

@@ -14,26 +14,12 @@ import android.view.KeyEvent;
 import com.kit.utils.log.ZogUtils;
 
 public class MediaButtonReceiver extends BroadcastReceiver {
-
-
-    private static MediaButtonReceiver mediaButtonReceiver;
-
-
     AudioManager mAudioManager;
     ComponentName mReceiverComponent;
 
 
     protected MediaSession mediaSession;
 
-    Context context;
-
-
-    public static MediaButtonReceiver getInstance() {
-        if (mediaButtonReceiver == null)
-            mediaButtonReceiver = new MediaButtonReceiver();
-
-        return mediaButtonReceiver;
-    }
 
 
     @Override
@@ -52,7 +38,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
         switch (intent.getAction()) {
             case AudioManager.ACTION_AUDIO_BECOMING_NOISY:
                 ZogUtils.i("ACTION_AUDIO_BECOMING_NOISY");
-                onHeadSetPlugOff(context);
+                onHeadsetPlugOff(context);
                 return true;
 
             case AudioManager.ACTION_HEADSET_PLUG:
@@ -64,12 +50,12 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 
                 switch (state) {
                     case 0:
-                        onHeadSetPlugOff(context);
+                        onHeadsetPlugOff(context);
                         return true;
 
 
                     case 1:
-                        onHeadSetPlugIn(context);
+                        onHeadsetPlugIn(context);
                         return true;
 
 
@@ -90,7 +76,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
      *
      * @param context
      */
-    protected void onHeadSetPlugOff(Context context) {
+    public void onHeadsetPlugOff(Context context) {
 
     }
 
@@ -99,7 +85,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
      *
      * @param context
      */
-    protected void onHeadSetPlugIn(Context context) {
+    public void onHeadsetPlugIn(Context context) {
 
     }
 
@@ -211,13 +197,13 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 
 
         mediafilter.setPriority(2147483647);//设置优先级，优先级太低可能被拦截，收不到信息。一般默认优先级为0，通话优先级为1，该优先级的值域是-1000到1000。
-        context.registerReceiver(getInstance(), mediafilter);
+        context.registerReceiver(this, mediafilter);
 
     }
 
     public void unregister(Context context) {
         unregisterMediaButton();
-        context.unregisterReceiver(getInstance());
+        context.unregisterReceiver(this);
     }
 
 
