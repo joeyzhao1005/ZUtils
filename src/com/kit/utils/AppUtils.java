@@ -289,7 +289,7 @@ public class AppUtils {
 
 
     public static String getPackageNameByAppName(Context context, String appName) {
-        if(StringUtils.isEmptyOrNullOrNullStr(appName))
+        if (StringUtils.isEmptyOrNullOrNullStr(appName))
             return null;
 
         List<PackageInfo> apps = getAllApps(context);
@@ -309,30 +309,47 @@ public class AppUtils {
 
     /**
      * 模糊查找
+     *
      * @param context
      * @param appName
      * @return
      */
-    public static ArrayList<String> getPackageNamesByAppName(Context context, String appName) {
-        if(StringUtils.isEmptyOrNullOrNullStr(appName))
+    public static List< PackageInfo> getPackageNamesByAppName(Context context, String appName) {
+        if (StringUtils.isEmptyOrNullOrNullStr(appName))
             return null;
 
         appName = StringUtils.trimPunct(appName).toLowerCase();
 
         List<PackageInfo> apps = getAllApps(context);
-        ArrayList<String> packageNames = new ArrayList<String>();
+        List< PackageInfo> packageNames = new ArrayList<PackageInfo>();
         for (PackageInfo packageInfo : apps) {
             PackageManager pManager = context.getPackageManager();
-
-            String thisAppName = packageInfo.applicationInfo.loadLabel(pManager).toString().toLowerCase();
+            String thisAppName  = packageInfo.applicationInfo.loadLabel(pManager).toString();
 
             if (thisAppName.contains(appName)) {
-                String packageName = packageInfo.packageName;
-                packageNames.add(packageName);
-                break;
+                packageNames.add(packageInfo);
             }
         }
 
+        return packageNames;
+    }
+
+
+    /**
+     * 模糊查找
+     *
+     * @param context
+     * @param appName
+     * @return
+     */
+    public static List<PackageInfo> getPackageNamesByAppNames(Context context, String[] appName) {
+        List<PackageInfo> map = new ArrayList<>();
+        List<PackageInfo> packageNames = new ArrayList<PackageInfo>();
+        for (String name : appName) {
+            List<PackageInfo> inner = getPackageNamesByAppName(context, name);
+            if (!ListUtils.isNullOrEmpty(inner))
+                packageNames.addAll(inner);
+        }
         return packageNames;
     }
 
@@ -355,27 +372,20 @@ public class AppUtils {
      */
     public static void seeAppInMarket(Context context, String packageName) {
         Intent viewIntent = new Intent("android.intent.action.VIEW",
-                Uri.parse("market://details?id="+packageName));
+                Uri.parse("market://details?id=" + packageName));
         context.startActivity(viewIntent);
     }
 
 
     /**
      * 卸载应用
-     *
      */
     public static void searchAppInMarketByKeyword(Context context, String keyword) {
         Intent viewIntent = new Intent("android.intent.action.VIEW",
-                Uri.parse("market://search?q="+keyword));
+                Uri.parse("market://search?q=" + keyword));
         viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(viewIntent);
     }
-
-
-
-
-
-
 
 
 }

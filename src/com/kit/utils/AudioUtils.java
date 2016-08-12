@@ -42,6 +42,9 @@ public class AudioUtils {
 
     public void setHeadsetMode(Context context) {
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if(audioManager.getMode() == AudioManager.MODE_NORMAL)
+            return;
+
         audioManager.setMode(AudioManager.MODE_NORMAL);
 
         if (context instanceof Activity)
@@ -91,6 +94,16 @@ public class AudioUtils {
         ZogUtils.i("set to receiver mode");
 
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            if(audioManager.getMode() == AudioManager.MODE_IN_CALL)
+                return;
+        } else {
+            if(audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION)
+                return;
+        }
+
 
         //播放音频流类型
         if (context instanceof Activity)
@@ -142,6 +155,9 @@ public class AudioUtils {
 
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
+        if(audioManager.getMode() == AudioManager.MODE_NORMAL)
+            return;
+
         //播放音频流类型
         if (context instanceof Activity)
             ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -185,6 +201,9 @@ public class AudioUtils {
             }
         }
     }
+
+
+
 
 
     public interface AudioState {

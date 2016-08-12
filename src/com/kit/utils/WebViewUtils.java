@@ -153,6 +153,9 @@ public class WebViewUtils {
     @SuppressLint("SetJavaScriptEnabled")
     public static void loadUrl(Context mContext, WebView webview, String url,
                                boolean javaScriptEnabled) {
+        if(webview==null)
+            return;
+
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(javaScriptEnabled);
         webview.setWebViewClient(new WebViewClient());

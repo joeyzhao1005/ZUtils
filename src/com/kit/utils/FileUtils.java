@@ -23,7 +23,7 @@ public class FileUtils {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                ZogUtils.e( "file not exists,create it");
+                ZogUtils.e("file not exists,create it");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -44,7 +44,7 @@ public class FileUtils {
 //        ZogUtils.e( "dir::" + dir);
 
         if (!directory.exists()) {
-            ZogUtils.e( "directory not exists,create it");
+            ZogUtils.e("directory not exists,create it");
             return directory.mkdirs();//没有目录先创建目录
         }
         return false;
@@ -66,8 +66,10 @@ public class FileUtils {
         }
         return false;
     }
+
     /**
      * 删除空目录
+     *
      * @param dir 将要删除的目录路径
      */
     private static void doDeleteEmptyDir(String dir) {
@@ -81,16 +83,17 @@ public class FileUtils {
 
     /**
      * 递归删除目录下的所有文件及子目录下所有文件
+     *
      * @param dir 将要删除的文件目录
      * @return boolean Returns "true" if all deletions were successful.
-     *                 If a deletion fails, the method stops attempting to
-     *                 delete and returns "false".
+     * If a deletion fails, the method stops attempting to
+     * delete and returns "false".
      */
     private static boolean deleteDir(File dir) {
         if (dir.isDirectory()) {
             String[] children = dir.list();
             //递归删除目录中的子目录下
-            for (int i=0; i<children.length; i++) {
+            for (int i = 0; i < children.length; i++) {
                 boolean success = deleteDir(new File(dir, children[i]));
                 if (!success) {
                     return false;
@@ -350,6 +353,29 @@ public class FileUtils {
         return name;
     }
 
+
+    /**
+     * 获取文件扩展名（通过文件的路径）
+     *
+     * @param filedir
+     * @return
+     */
+    public static String getFilenameWithoutSuffix(String filedir) {
+
+        if (StringUtils.isEmptyOrNullOrNullStr(filedir)) {
+            return null;
+        }
+
+        String full = getFilename(filedir);
+
+        if (full != null && !StringUtils.isEmptyOrNullOrNullStr(full)) {
+            int end = full.lastIndexOf(".") > 0 ? full.lastIndexOf(".") : 0;
+            return full.substring(0, end);
+        }
+
+        String prefix = filedir.substring(filedir.lastIndexOf(".") + 1);
+        return prefix;
+    }
 
     /**
      * 获取文件扩展名

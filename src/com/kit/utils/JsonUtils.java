@@ -12,7 +12,10 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class JsonUtils {
 
@@ -40,24 +43,17 @@ public class JsonUtils {
 
     // 解析处理过的json字符串，需调用getJosnStr()，以取得处理过的json字符串
     public static JSONArray str2JSONArray(String str) {
-        if (StringUtils.isNullOrEmpty(str))
+        ZogUtils.i(str);
+        if (StringUtils.isEmptyOrNullOrNullStr(str))
             return null;
 
-        String jsonStr = "{jsonStr:" + str + "}";
-
-        System.out.println(jsonStr);
-        JSONObject jsonObject = null;
         JSONArray jsonArray = null;
         try {
-            jsonObject = new JSONObject(jsonStr);
-            jsonArray = jsonObject.getJSONArray("jsonStr");
-            // jsonObject = jsonObject.getJSONObject("jsonStr");
-
-        } catch (JSONException e) {
-
-            e.printStackTrace();
-            Log.e("error", "JsonUtils.str2JSONArray() have something wrong...");
-
+            str = formatJsonStr(str);
+//            str = str.substring(1,str.length()-1);
+            jsonArray = new JSONArray(str);
+        } catch (Exception e) {
+            ZogUtils.showException(e);
         }
         return jsonArray;
     }
@@ -91,6 +87,11 @@ public class JsonUtils {
         paramsStr = paramsStr.replaceAll("\"\\{", "{");
         // System.out.println("UMailMessageData2: " + paramsStr);
         paramsStr = paramsStr.replaceAll("\\}\"", "}");
+
+
+        paramsStr = paramsStr.replaceAll("\"\\[", "[");
+
+        paramsStr = paramsStr.replaceAll("\\]\"", "]");
 
         paramsStr = paramsStr.replaceAll("\\\"", "\"");
 
@@ -126,6 +127,66 @@ public class JsonUtils {
 
 
     }
+    /**
+     * JSONObject转为map
+     * @param object json对象
+     * @return 转化后的Map
+     */
+    public static Map<String, Object> toMap(JSONObject object){
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        Iterator it = object.keys();
+        while(it.hasNext()){
+            String key = it.next().toString();
+            Object value =null;
+            try {
+               value= object.get(key);
+            }catch (JSONException e){}
+
+            if(value==null)
+                continue;
+
+            if(value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            }
+
+            else if(value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            map.put(key, value);
+        }
+
+        return map;
+    }
+
+    /**
+     * JSONArray转为List
+     * @param array json数组
+     * @return 转化后的List
+     */
+    public static List<Object> toList(JSONArray array){
+        List<Object> list = new ArrayList<Object>();
+        for(int i = 0; i < array.length(); i++) {
+            Object value = null ;
+            try {
+                value= array.get(i);
+            }catch (JSONException e){}
+
+            if(value==null)
+                continue;
+
+            if(value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            }
+
+            else if(value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            list.add(value);
+        }
+        return list;
+    }
+
 
     /**
      * 把对象按照Json格式输出
