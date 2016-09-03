@@ -109,7 +109,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 @Override
                 public void run() {
                     Looper.prepare();
-                    AppUtils.closeApp(mContext);
+                    AppUtils.closeApp();
                     Looper.loop();
                 }
             }.start();

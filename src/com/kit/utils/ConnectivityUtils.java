@@ -1,35 +1,40 @@
 package com.kit.utils;
 
+import android.Manifest;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.NetworkInfo.State;
-import android.net.wifi.WifiManager;
+public class ConnectivityUtils {
 
-public class NetWorkUtils {
+    private static ConnectivityUtils connectivityUtils;
+    private ConnectivityManager mConnectivityManager;
+    private WifiManager wm;
 
-    public boolean isNetWorkOpen, isMobileDataEnable;
-    public Context context;
-    public ConnectivityManager mConnectivityManager;
-    public WifiManager wm;
-
-    public NetWorkUtils(Context context) {
-        this.context = context;
-        mConnectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        isMobileDataEnable = isMobileNetWorkEnabled();
+    public static ConnectivityUtils getInstance() {
+        if (connectivityUtils == null) {
+            connectivityUtils = new ConnectivityUtils();
+            Context context = ResWrapper.getInstance().getContext();
+            connectivityUtils.mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityUtils.wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        }
+        return connectivityUtils;
     }
 
     /**
      * WIFI网络开关
      */
+    @SuppressWarnings("MissingPermission")
     public void toggleWiFi(boolean enabled) {
-        wm.setWifiEnabled(enabled);
+        if (AppUtils.isPermission(Manifest.permission.CHANGE_WIFI_STATE)) {
+            connectivityUtils.wm.setWifiEnabled(enabled);
+        }
     }
 
     public boolean isWiFiEnabled() {
@@ -37,13 +42,13 @@ public class NetWorkUtils {
         return wm.isWifiEnabled();
     }
 
-    public boolean isNetWorkAvaliable() {
 
-        if (mConnectivityManager == null) {
-            return false;
-        }
-
-        NetworkInfo networkinfo = mConnectivityManager.getActiveNetworkInfo();
+    /**
+     * 网络是否可用
+     * @return
+     */
+public boolean isNetWorkAvaliable() {
+        NetworkInfo networkinfo = connectivityUtils.mConnectivityManager.getActiveNetworkInfo();
 
         if (networkinfo == null || !networkinfo.isAvailable()) {
             return false;
@@ -51,6 +56,9 @@ public class NetWorkUtils {
 
         return true;
     }
+
+
+
 
     private boolean isMobileNetWorkEnabled() {
 
@@ -156,7 +164,6 @@ public class NetWorkUtils {
             // 调用setMobileDataEnabled方法
             setMobileDataEnabledMethod.invoke(iConMgr, enabled);
 
-            isMobileDataEnable = enabled;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
@@ -174,7 +181,7 @@ public class NetWorkUtils {
         }
     }
 
-    public static String getNetworkTypeReabable(Context context) {
+    public static String getNetworkTypeReadable(Context context) {
         final ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo activeNetInfo = conMgr.getActiveNetworkInfo();
         if (activeNetInfo != null && activeNetInfo.isAvailable() && activeNetInfo.isConnected()) {

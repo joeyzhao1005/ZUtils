@@ -347,7 +347,7 @@ public class IntentBaseUtils {
             String bundleDataStr = intent.getExtras().getString(KEY_DATA);
             bundleData = GsonUtils.getObj(bundleDataStr, BundleData.class);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+//            ZogUtils.showException(e);
         }
         return bundleData;
     }

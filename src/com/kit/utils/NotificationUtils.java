@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.kit.utils.bitmap.BitmapUtils;
@@ -182,6 +183,18 @@ public class NotificationUtils {
 
         return notificationId;
 
+    }
+
+
+    public static Notification creatNotification(int smallIconDrawableRes, CharSequence title, CharSequence content) {
+        Context context = ResWrapper.getInstance().getContext();
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(smallIconDrawableRes)
+                        .setContentTitle(title)
+                        .setContentText(content);
+
+        return builder.build();
     }
 
     public static void startForegroundNotification(Context context,

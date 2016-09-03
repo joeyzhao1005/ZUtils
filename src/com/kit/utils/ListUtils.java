@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -57,8 +58,8 @@ public class ListUtils {
             ByteArrayInputStream byteIn = new ByteArrayInputStream(
                     byteOut.toByteArray());
             ObjectInputStream in = new ObjectInputStream(byteIn);
-             dest = (List<T>) in.readObject();
-        }catch (Exception e){
+            dest = (List<T>) in.readObject();
+        } catch (Exception e) {
             ZogUtils.showException(e);
         }
         return dest;
@@ -71,8 +72,9 @@ public class ListUtils {
      * @param list
      * @return
      */
-    public static Object[] toArray(List list) {
-        Object[] array = new String[list.size()];
+    @SuppressWarnings("unchecked")
+    public static <T> T[] toArray(List<T> list, Class<T> clazz) {
+        T[] array = (T[]) Array.newInstance(clazz, list.size());
         list.toArray(array);
         return array;
     }
@@ -119,7 +121,7 @@ public class ListUtils {
      * @Title getOne
      * @Description 得到一个
      */
-    public static <T>T getOne(List<T> objs) {
+    public static <T> T getOne(List<T> objs) {
 
         int index = RandomUtils.getRandomIntNum(0, objs.size() - 1);
 
@@ -219,7 +221,7 @@ public class ListUtils {
 
     public static List<Object> replace(List<Object> objs, Object obj, Comparator comparator) {
 
-        Object[] objects = ListUtils.toArray(objs);
+        Object[] objects = ListUtils.toArray(objs, Object.class);
 
         for (int i = 0; i < objs.size(); i++) {
             int compare = comparator.compare(i, obj);

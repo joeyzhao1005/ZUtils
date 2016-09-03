@@ -4,11 +4,12 @@ import android.app.Activity;
 
 import com.kit.utils.log.ZogUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.Stack;
 
 public class ActivityManager {
-    private LinkedList<Activity> activities = new LinkedList<Activity>();
+    private Stack<WeakReference<Activity>> activities = new Stack<WeakReference<Activity>>();
     private static ActivityManager instance;
 
     private ActivityManager() {
@@ -26,7 +27,6 @@ public class ActivityManager {
     public int getSize() {
         if (activities != null)
             return activities.size();
-
         return 0;
     }
 
@@ -36,12 +36,10 @@ public class ActivityManager {
      * @param activity
      */
     public void pushActivity(Activity activity) {
-        synchronized (activities) {
-            if (activity != null) {
-                activities.add(activity);
-            }
-            ZogUtils.i("activities.size():" + activities.size());
+        if (activity != null) {
+            activities.push(new WeakReference<Activity>(activity));
         }
+        ZogUtils.i("pushActivity size:" + getSize());
     }
 
     /**
@@ -50,19 +48,23 @@ public class ActivityManager {
      * @param cls
      */
     public void popActivity(Class cls) {
-        Iterator<Activity> iter = activities.iterator();
+        Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
-            Activity activity = iter.next();
-            if (activity.getClass().equals(cls)) {
-                if (activity != null) {
-                    activity.finish();
-                }
+
+            WeakReference<Activity> weakReference = iter.next();
+            Activity activity = weakReference.get();
+
+            if (activity != null && activity.getClass().equals(cls)) {
+
+                activity.finish();
+                weakReference.clear();
+                activity = null;
+
                 iter.remove();
             }
         }
 
-        ZogUtils.i("activities.size():"
-                + activities.size());
+        ZogUtils.i("popActivity size:" + getSize());
     }
 
     /**
@@ -72,40 +74,43 @@ public class ActivityManager {
      */
     public void popActivity(Activity activity) {
 
-        Iterator<Activity> iter = activities.iterator();
+        Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
-            Activity act = iter.next();
+            WeakReference<Activity> weakReference = iter.next();
+            Activity act = weakReference.get();
             if (act != null && activity != null) {
                 if (act.getClass().equals(activity.getClass())) {
-                    activity.finish();
+                    act.finish();
+                    act = null;
                     activity = null;
+                    weakReference.clear();
                     iter.remove();
                 }
             }
         }
 
-        ZogUtils.i("activities.size():"
-                + activities.size());
+        ZogUtils.i("popActivity(activity) size:" + getSize());
+
     }
 
     /**
      * 遍历所有Activity并finish（一般用于退出应用，销毁APP）
      */
     public void popAllActivity() {
-        ZogUtils.i("activities.size():"
-                + activities.size());
-        Iterator<Activity> iter = activities.iterator();
+        Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
-            Activity activity = iter.next();
+
+            WeakReference<Activity> weakReference = iter.next();
+            Activity activity = weakReference.get();
             if (activity != null) {
                 activity.finish();
                 activity = null;
+                weakReference.clear();
             }
             iter.remove();
         }
+        ZogUtils.i("popAllActivity size:" + getSize());
 
-        ZogUtils.i("activities.size():"
-                + activities.size());
     }
 
     /**
@@ -116,77 +121,79 @@ public class ActivityManager {
     public void popAllActivityExceptOne(Class cls) {
         ZogUtils.i("activities.size():"
                 + activities.size());
-        Iterator<Activity> iter = activities.iterator();
+        Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
-            Activity activity = iter.next();
+            WeakReference<Activity> weakReference = iter.next();
+            Activity activity = weakReference.get();
             if (activity != null && !activity.getClass().equals(cls)) {
                 activity.finish();
-                activity = null;
+                weakReference.clear();
                 iter.remove();
             }
 
         }
+        ZogUtils.i("popAllActivityExceptOne size:" + getSize());
 
-        ZogUtils.i("activities.size():"
-                + activities.size());
     }
 
     /**
-     * 获取最新压入list的activity
+     * 获取最新压入activity
      *
      * @return
      */
     public Activity getCurrActivity() {
 
-        Activity activity = null;
+        WeakReference<Activity> activity = null;
         try {
-            activity = activities.get(activities.size() - 1);
+            activity = activities.peek();
+            return activity.get();
+
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            ZogUtils.i("none activity.");
+
+//            ZogUtils.showException(e);
+            return null;
         }
-        return activity;
     }
 
     /**
-     * 获取压入list的特定activity
+     * 获取压入特定activity
      *
      * @return
      */
     public Activity getActivity(Class cls) {
-        Activity activity = null;
-        Iterator<Activity> iter = activities.iterator();
+        Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
-            Activity act = iter.next();
-            if (act.getClass().equals(cls)) {
-                activity = act;
-                break;
+            WeakReference<Activity> weakReference = iter.next();
+            Activity activity = weakReference.get();
+
+            if (activity != null && activity.getClass().equals(cls)) {
+                return activity;
             }
         }
-        return activity;
+        return null;
     }
 
 
     /**
-     * 判断list是否存在类名为cls的activity
+     * 判断是否存在类名为cls的activity
      *
      * @param cls
      * @return
      */
     public boolean isExistActivity(Class cls) {
 
-        int i = 0;
-        Iterator<Activity> iter = activities.iterator();
+        Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
-            Activity activity = iter.next();
+            WeakReference<Activity> weakReference = iter.next();
+            Activity activity = weakReference.get();
+
             if (activity != null && activity.getClass().equals(cls)) {
-                i++;
+                return true;
             }
         }
 
-        if (i > 0)
-            return true;
-        else
-            return false;
+        return false;
     }
 
 }

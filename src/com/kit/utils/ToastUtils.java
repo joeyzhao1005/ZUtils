@@ -15,16 +15,18 @@ public class ToastUtils {
         }
     };
 
-    public static void mkLongTimeToast(Context context, String msg) {
+    public static void mkLongTimeToast(String msg) {
         try {
+            Context context = ResWrapper.getInstance().getContext();
             Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             ZogUtils.showException(e);
         }
     }
 
-    public static void mkShortTimeToast(Context context, String msg) {
+    public static void mkShortTimeToast(String msg) {
         try {
+            Context context = ResWrapper.getInstance().getContext();
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             ZogUtils.showException(e);
@@ -38,13 +40,15 @@ public class ToastUtils {
      * @Title mkToast
      * @Description 自定义toast内容和时长
      */
-    public static void mkToast(Context mContext, String text, int duration) {
+    public static void mkToast(String text, int duration) {
 
         mHandler.removeCallbacks(r);
         if (mToast != null)
             mToast.setText(text);
-        else
-            mToast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
+        else {
+            Context context = ResWrapper.getInstance().getContext();
+            mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        }
         mHandler.postDelayed(r, duration);
 
         mToast.show();
@@ -57,13 +61,15 @@ public class ToastUtils {
      * @Title mkToast
      * @Description 自定义toast内容和时长
      */
-    public static void mkToast(Context mContext, int resId, int duration) {
-        String text = mContext.getResources().getString(resId);
+    public static void mkToast(int resId, int duration) {
+        Context context = ResWrapper.getInstance().getContext();
+
+        String text = context.getResources().getString(resId);
         mHandler.removeCallbacks(r);
         if (mToast != null)
             mToast.setText(text);
         else
-            mToast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
         mHandler.postDelayed(r, duration);
 
         mToast.show();

@@ -10,7 +10,12 @@ import android.telephony.SmsManager;
 import com.kit.utils.log.ZogUtils;
 
 public class CallAndSmsUtils {
-    public static void mkCall(Context context, String strPhone) {
+
+
+
+
+    public static void mkCall(String strPhone) {
+        Context context = ResWrapper.getInstance().getContext();
         Uri uri = Uri.parse("tel:" + strPhone);
         Intent intent = new Intent(Intent.ACTION_CALL, uri);// 注意：call是直接就打出去了，dial是经过系统的确定才能打
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

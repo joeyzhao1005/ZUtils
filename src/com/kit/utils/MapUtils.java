@@ -112,18 +112,32 @@ public class MapUtils {
      * @param map 数据源
      * @return 返回的值
      */
-    public static <K, V> V getFirst(Map<K, V> map) {
+    public static <K, V> V getFirstValue(Map<K, V> map) {
         V obj = null;
         for (Map.Entry<K, V> entry : map.entrySet()) {
             obj = entry.getValue();
-            if (obj != null) {
-                break;
-            }
+            return obj;
         }
-        return obj;
+        return null;
     }
 
 
+    /**
+     * 获取map中第一个数据值
+     *
+     * @param <K> Key的类型
+     * @param <V> Value的类型
+     * @param map 数据源
+     * @return 返回的值
+     */
+    public static <K, V> K getFirstKey(Map<K, V> map) {
+        K obj = null;
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            obj = entry.getKey();
+            return obj;
+        }
+        return null;
+    }
 
 
     /**
@@ -219,7 +233,6 @@ public class MapUtils {
     }
 
 
-
     /**
      * 根据comparator判定是否包含
      *
@@ -283,7 +296,7 @@ public class MapUtils {
         while (it.hasNext()) {
             Map.Entry<?, ?> entry = it.next();
 //            System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
-            if (iEqual.equal(entry.getValue())) {
+            if (iEqual.equal(entry.getKey())) {
 
                 Map<Object, Object> get = new HashMap<>();
                 get.put(entry.getKey(), entry.getValue());
@@ -316,7 +329,6 @@ public class MapUtils {
         }
         return map;
     }
-
 
 
     public static Map removeByValue(Map map, IEqual iEqual) {

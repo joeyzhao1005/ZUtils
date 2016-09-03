@@ -22,6 +22,16 @@ public class BrowserUtils {
         context.startActivity(browserIntent);
     }
 
+    public static void gotoBrowser( String url) {
+        Context context =  ResWrapper.getInstance().getContext();
+        Uri uri = Uri.parse(url);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+        //下面这句会让用户自行选择浏览器打开
+        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        browserIntent.addCategory(Intent.CATEGORY_BROWSABLE);
+        context.startActivity(browserIntent);
+    }
+
     /**
      * 值为true时，使用传统方法让用户选择。<br/>
      * 值为false时，程序自动为用户选定浏览器浏览。<br/>

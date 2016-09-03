@@ -12,14 +12,11 @@ import com.kit.app.UIHandler;
 public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fragment.OnFragmentInteractionListener{
 
 
-//    public Context mContext;
+    private boolean isShowing =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        mContext = this;
-
         getExtra();
         initWidget();
         loadData();
@@ -35,6 +32,17 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
         super.onStart();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isShowing = true;
+    }
+
+
+    public boolean isShowing() {
+        return isShowing;
+    }
+
     /**
      * 获得上一个Activity传过来的值
      * */
@@ -48,6 +56,15 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
      * */
     public void initWidget() {
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isShowing = false;
+    }
+
+
+
 
     /**
      * 去网络或者本地加载数据
@@ -98,6 +115,7 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isShowing = false;
 
         ActivityManager.getInstance().popActivity(this);
     }

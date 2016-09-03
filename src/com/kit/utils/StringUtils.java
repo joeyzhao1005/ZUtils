@@ -175,19 +175,13 @@ public class StringUtils {
      */
     public static String trimPunct(String str) {
 
-        String tempStr = "";
-        char[] chars = str.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            if ((chars[i] >= 19968 && chars[i] <= 40869) || (chars[i] >= 97 && chars[i] <= 122) || (chars[i] >= 65 && chars[i] <= 90)) {
-//                LogUtils.i(StringUtils.class, chars[i] + "");
-                tempStr += chars[i];
-            }
+        return str
+                .replaceAll(
+                        "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……& amp;*（）——+|{}【】‘；：”“’。，、？|-]"
+                        , "");
 
-        }
 
-        return tempStr;
     }
-
 
 
     /**
@@ -209,9 +203,9 @@ public class StringUtils {
                 String first = m.group(0);
                 String second = str.replaceAll(first, "");
 
-                ZogUtils.i( first
-                                + " "
-                                + second
+                ZogUtils.i(first
+                        + " "
+                        + second
                 );
 
                 isStartWith = true;
@@ -398,18 +392,18 @@ public class StringUtils {
 
             isISO = isCharset(resultStr, "ISO-8859-1");
 
-            ZogUtils.i( resultStr + " isISO:" + isISO);
+            ZogUtils.i(resultStr + " isISO:" + isISO);
             if (isISO) {
                 try {
 
                     if (isGBK(resultStr)) {
                         GB_Str = new String(resultStr.getBytes("ISO-8859-1"),
                                 "GBK");
-                        ZogUtils.i( "GBK：" + GB_Str);
+                        ZogUtils.i("GBK：" + GB_Str);
                     } else if (isCharset(resultStr, "UTF-8")) {
                         UTF_Str = new String(resultStr.getBytes("ISO-8859-1"),
                                 "UTF-8");
-                        ZogUtils.i( "UTF-8：" + UTF_Str);
+                        ZogUtils.i("UTF-8：" + UTF_Str);
                     }
                 } catch (UnsupportedEncodingException e) {
                     ZogUtils.showException(e);

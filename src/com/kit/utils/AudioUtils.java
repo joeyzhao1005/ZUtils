@@ -18,7 +18,6 @@ public class AudioUtils {
 
     AudioState audioState;
 
-
     public void setAudioState(AudioState audioState) {
         this.audioState = audioState;
     }
@@ -34,64 +33,24 @@ public class AudioUtils {
     }
 
 
-    /**
-     * 开启耳机发音模式
-     *
-     * @param context
-     */
-
-    public void setHeadsetMode(Context context) {
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        if(audioManager.getMode() == AudioManager.MODE_NORMAL)
-            return;
-
-        audioManager.setMode(AudioManager.MODE_NORMAL);
-
-        if (context instanceof Activity)
-            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
-
-
-        if (audioManager.isSpeakerphoneOn()) {
-            audioManager.setSpeakerphoneOn(false);
-        }
-
-//        setReceiverMode(context);
-    }
-
 
     /**
      * 开启正常模式
      *
-     * @param context
      */
-    public void setNormalMode(Context context) {
-        setSpeakerMode(context);
+    public void setNormalMode() {
+        setSpeakerMode();
     }
 
-
-    /**
-     * 设置听筒模式
-     *
-     * @param context
-     * @param on      是否开启
-     */
-    public void setReceiverMode(Context context, boolean on) {
-
-        if (on) {
-            setReceiverMode(context);
-        } else {
-            setNormalMode(context);
-        }
-    }
 
 
     /**
      * 开启听筒模式
      *
-     * @param context
      */
-    public void setReceiverMode(Context context) {
+    public void setReceiverMode() {
         ZogUtils.i("set to receiver mode");
+        Context context = ResWrapper.getInstance().getContext();
 
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
@@ -107,7 +66,7 @@ public class AudioUtils {
 
         //播放音频流类型
         if (context instanceof Activity)
-            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -127,11 +86,11 @@ public class AudioUtils {
                 if (audioManager.isSpeakerphoneOn()) {
                     audioManager.setSpeakerphoneOn(false);
 
-//                    audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL);
+//                    audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
-                    audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL
-                            , audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL),
-                            AudioManager.STREAM_VOICE_CALL);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
+                            , audioManager.getStreamVolume(AudioManager.STREAM_MUSIC),
+                            AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                 }
 
 //                    audioManager.setMode(AudioManager.MODE_NORMAL);
@@ -144,14 +103,37 @@ public class AudioUtils {
         }
     }
 
+    /**
+     * 开启耳机发音模式
+     *
+     */
+    public void setHeadsetMode() {
+        Context context = ResWrapper.getInstance().getContext();
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if(audioManager.getMode() == AudioManager.MODE_NORMAL)
+            return;
+
+        audioManager.setMode(AudioManager.MODE_NORMAL);
+
+        if (context instanceof Activity)
+            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+
+        if (audioManager.isSpeakerphoneOn()) {
+            audioManager.setSpeakerphoneOn(false);
+        }
+
+//        setReceiverMode(context);
+    }
+
 
     /**
      * 开启免提模式
      *
-     * @param context
      */
-    public void setSpeakerMode(Context context) {
+    public void setSpeakerMode() {
         ZogUtils.i("set to speaker mode");
+        Context context  = ResWrapper.getInstance().getContext();
 
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
@@ -203,7 +185,10 @@ public class AudioUtils {
     }
 
 
-
+    public void release() {
+        AudioUtils.getInstance().setNormalMode();
+        audioUtils = null;
+    }
 
 
     public interface AudioState {

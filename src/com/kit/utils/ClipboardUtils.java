@@ -13,8 +13,9 @@ public class ClipboardUtils {
      *
      * @param content
      */
-    public static void copy(Context context, String content) {
+    public static void copy(String content) {
 // 得到剪贴板管理器
+        Context context = ResWrapper.getInstance().getContext();
         ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         if (!StringUtils.isEmptyOrNullOrNullStr(content)) {
             cmb.setText(content.trim());

@@ -101,13 +101,11 @@ public class ArrayUtils {
 
 
     public static List toList(Object[] arr) {
-        List list = Arrays.asList(arr);
-        return list;
+        return Arrays.asList(arr);
     }
 
     public static <T extends Object> Set<T> toSet(T[] arr) {
-        Set<T> tSet = new HashSet<T>(Arrays.asList(arr));
-        return tSet;
+        return new HashSet<T>(Arrays.asList(arr));
 
     }
 

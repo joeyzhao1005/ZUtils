@@ -1,6 +1,6 @@
 package com.kit.utils;
 
-import android.app.Activity;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -24,13 +25,36 @@ import java.util.Locale;
 
 public class AppUtils {
 
-    public static boolean isPermission(Context context, String permissionTag) {
+
+    /**
+     * 从manifest里获取metadata
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getMetaDataFromManifest(String key) {
+        try {
+            Context context = ResWrapper.getInstance().getContext();
+            return (T) context.getPackageManager().getApplicationInfo(context.getPackageName()
+                    , PackageManager.GET_META_DATA).metaData.get(key);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static boolean isPermission(String permissionTag) {
+        Context context = ResWrapper.getInstance().getContext();
         PackageManager pm = context.getPackageManager();
         return (PackageManager.PERMISSION_GRANTED ==
                 pm.checkPermission(permissionTag, context.getPackageName()));
 
     }
 
+    @TargetApi(3)
     public static void restartApp(Context context) {
         ActivityManager.getInstance().popAllActivity();
 
@@ -93,6 +117,7 @@ public class AppUtils {
     /**
      * @return null may be returned if the specified process not found
      */
+    @TargetApi(3)
     public static String getProcessName(Context cxt, int pid) {
         android.app.ActivityManager am = (android.app.ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
         List<android.app.ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
@@ -149,7 +174,8 @@ public class AppUtils {
     }
 
     // 判断手机已安装某程序的方法：
-    public static boolean isAvilible(Context context, String packageName) {
+    public static boolean isAvilible(String packageName) {
+        Context context = ResWrapper.getInstance().getContext();
         final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
         List<String> pName = new ArrayList<String>();// 用于存储所有已安装程序的包名
@@ -164,12 +190,16 @@ public class AppUtils {
     }
 
     @SuppressWarnings("unused")
-    public static void launchApk(Context context, String launchApkUrl) {
-
+    @TargetApi(3)
+    public static void launchApk(String launchApkUrl) {
+        Context context = ResWrapper.getInstance().getContext();
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(launchApkUrl);
-        context.startActivity(intent);
-
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
     }
 
 
@@ -181,27 +211,16 @@ public class AppUtils {
     /**
      * 强制关闭应用程序
      */
-    public static void closeApp(Context context) {
+    public static void closeApp() {
+//        makeCrash();
 
-        //目前最为通用的 关闭进程的方法以后的版本使用
-//        Intent startMain = new Intent(Intent.ACTION_MAIN);
-//        startMain.addCategory(Intent.CATEGORY_HOME);
-//        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.startActivity(startMain);
-
-
-        ZogUtils.i("forceExit 0");
 
         ActivityManager.getInstance().popAllActivity();
-        ZogUtils.i("forceExit 1");
 
-//        makeCrash();
-        ((Activity) context).moveTaskToBack(true);
+        System.exit(0);
 
         android.os.Process.killProcess(android.os.Process.myPid());
 
-        System.exit(1);
-        ZogUtils.i("forceExit 2");
 
     }
 
@@ -238,16 +257,24 @@ public class AppUtils {
     /**
      * 改变语言环境
      *
-     * @param resources
      * @param lanAtr
      */
-    public static void changeAppLanguage(Resources resources, String lanAtr) {
+    public static void setAppLanguage(String lanAtr) {
+        Resources resources = ResWrapper.getInstance().getResouce();
         Configuration config = resources.getConfiguration();
         DisplayMetrics dm = resources.getDisplayMetrics();
         if (lanAtr.equals("zh-cn")) {
-            config.locale = Locale.SIMPLIFIED_CHINESE;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                config.setLocale(Locale.SIMPLIFIED_CHINESE);
+            } else {
+                config.locale = Locale.SIMPLIFIED_CHINESE;
+            }
         } else {
-            config.locale = Locale.getDefault();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                config.setLocale(Locale.getDefault());
+            } else {
+                config.locale = Locale.getDefault();
+            }
         }
         resources.updateConfiguration(config, dm);
     }
@@ -314,17 +341,17 @@ public class AppUtils {
      * @param appName
      * @return
      */
-    public static List< PackageInfo> getPackageNamesByAppName(Context context, String appName) {
+    public static List<PackageInfo> getPackageNamesByAppName(Context context, String appName) {
         if (StringUtils.isEmptyOrNullOrNullStr(appName))
             return null;
 
         appName = StringUtils.trimPunct(appName).toLowerCase();
 
         List<PackageInfo> apps = getAllApps(context);
-        List< PackageInfo> packageNames = new ArrayList<PackageInfo>();
+        List<PackageInfo> packageNames = new ArrayList<PackageInfo>();
         for (PackageInfo packageInfo : apps) {
             PackageManager pManager = context.getPackageManager();
-            String thisAppName  = packageInfo.applicationInfo.loadLabel(pManager).toString();
+            String thisAppName = packageInfo.applicationInfo.loadLabel(pManager).toString();
 
             if (thisAppName.contains(appName)) {
                 packageNames.add(packageInfo);

@@ -16,10 +16,25 @@ public class AnimUtils {
      * @param view
      * @param resAnimId
      */
-    public static void show(Context context, View view, int resAnimId) {
+    public static void show(Context context, final View view, int resAnimId) {
         if (view.getVisibility() != View.VISIBLE) {
-            view.startAnimation(loadAnimation(context, resAnimId));
             view.setVisibility(View.VISIBLE);
+            view.startAnimation(loadAnimation(context, resAnimId, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    view.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            }));
         }
     }
 
@@ -30,10 +45,24 @@ public class AnimUtils {
      * @param view
      * @param resAnimId
      */
-    public static void hidden(Context context, View view, int resAnimId) {
+    public static void hidden(Context context, final View view, int resAnimId) {
         if (view.getVisibility() == View.VISIBLE) {
-            view.startAnimation(loadAnimation(context, resAnimId));
-            view.setVisibility(View.GONE);
+            view.startAnimation(loadAnimation(context, resAnimId, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    view.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            }));
         }
     }
 
@@ -41,15 +70,15 @@ public class AnimUtils {
      * 开始动画
      *
      * @param context
-     * @param resId
+     * @param viewId
      * @param resAnimId
      */
-    public static void startAnim(Context context, int resId, int resAnimId) {
+    public static void startAnim(Context context, int viewId, int resAnimId) {
 //		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 //		findViewById(R.id.xxx).startAnimation(shake);
 
         Animation shake = AnimationUtils.loadAnimation(context, resAnimId);
-        ((Activity) context).findViewById(resId).startAnimation(shake);
+        ((Activity) context).findViewById(viewId).startAnimation(shake);
     }
 
 
@@ -60,9 +89,10 @@ public class AnimUtils {
      * @param id
      * @return
      */
-    public static Animation loadAnimation(Context context, int id) {
+    public static Animation loadAnimation(Context context, int id, Animation.AnimationListener animationListener) {
 
         Animation myAnimation = AnimationUtils.loadAnimation(context, id);
+        myAnimation.setAnimationListener(animationListener);
         return myAnimation;
     }
 }

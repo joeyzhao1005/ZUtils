@@ -1,11 +1,9 @@
 package com.kit.utils;
 
-import com.kit.utils.log.ZogUtils;
-
 public class WebUtils {
 
     public static String getStartWith(String url) {
-        if(StringUtils.isEmptyOrNullOrNullStr(url))
+        if (StringUtils.isEmptyOrNullOrNullStr(url))
             return null;
 
         int end = url.indexOf("://");
@@ -15,7 +13,6 @@ public class WebUtils {
 
         return url.substring(0, end);
     }
-
 
 
 }
