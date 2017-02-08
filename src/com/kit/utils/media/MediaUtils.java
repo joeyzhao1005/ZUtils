@@ -2,6 +2,7 @@ package com.kit.utils.media;
 
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 
 import com.kit.utils.ResWrapper;
@@ -85,18 +87,41 @@ public class MediaUtils {
         }
     }
 
-    public static void playMusic(String url) {
-        if (StringUtils.isEmptyOrNullOrNullStr(url))
+    public static void playMusic(String dir) {
+        if (StringUtils.isEmptyOrNullOrNullStr(dir))
             return;
 
-        Intent it = new Intent(Intent.ACTION_VIEW);
-        it.setDataAndType(Uri.parse(url), "audio/mp3");
-        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            Intent it = new Intent(Intent.ACTION_VIEW);
+            it.setDataAndType(Uri.parse("file://" + dir), "audio/mp3");
+            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        try {
-            ResWrapper.getInstance().getContext().startActivity(it);
-        } catch (ActivityNotFoundException e) {
-            ZogUtils.showException(e);
+            try {
+                ResWrapper.getInstance().getContext().startActivity(it);
+            } catch (ActivityNotFoundException e) {
+                ZogUtils.showException(e);
+            }
+        } else {
+            Context context = ResWrapper.getInstance().getContext();
+            ContentValues contentValues = new ContentValues(1);
+            contentValues.put(MediaStore.Images.Media.DATA, dir);
+            Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+            Intent it = new Intent(Intent.ACTION_VIEW);
+            it.addCategory("android.intent.category.APP_MUSIC");
+            it.setDataAndType(uri, "audio/*");
+            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            it.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+
+            Intent chooser = Intent.createChooser(it,
+                    "");
+
+            try {
+                ResWrapper.getInstance().getContext().startActivity(it);
+            } catch (ActivityNotFoundException e) {
+                ZogUtils.showException(e);
+            }
         }
     }
 

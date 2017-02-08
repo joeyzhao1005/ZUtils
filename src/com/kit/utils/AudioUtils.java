@@ -13,7 +13,7 @@ import com.kit.utils.log.ZogUtils;
  * <p/>
  * 注意:切换模式一定要在你播放音频前至少1500ms外,因为切换模式需要耗时。
  */
-public class AudioUtils {
+public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
 
 
     AudioState audioState;
@@ -22,44 +22,42 @@ public class AudioUtils {
         this.audioState = audioState;
     }
 
+    Context context;
+
+    AudioManager audioManager;
 
     private static AudioUtils audioUtils;
 
     public static AudioUtils getInstance() {
         if (audioUtils == null)
             audioUtils = new AudioUtils();
-
         return audioUtils;
     }
 
 
-
     /**
      * 开启正常模式
-     *
      */
     public void setNormalMode() {
-        setSpeakerMode();
+        release();
     }
-
 
 
     /**
      * 开启听筒模式
-     *
      */
     public void setReceiverMode() {
         ZogUtils.i("set to receiver mode");
-        Context context = ResWrapper.getInstance().getContext();
+        context = ResWrapper.getInstance().getContext();
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-
+        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            if(audioManager.getMode() == AudioManager.MODE_IN_CALL)
+            if (audioManager.getMode() == AudioManager.MODE_IN_CALL)
                 return;
         } else {
-            if(audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION)
+            if (audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION)
                 return;
         }
 
@@ -105,12 +103,14 @@ public class AudioUtils {
 
     /**
      * 开启耳机发音模式
-     *
      */
     public void setHeadsetMode() {
-        Context context = ResWrapper.getInstance().getContext();
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        if(audioManager.getMode() == AudioManager.MODE_NORMAL)
+        context = ResWrapper.getInstance().getContext();
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+        if (audioManager.getMode() == AudioManager.MODE_NORMAL)
             return;
 
         audioManager.setMode(AudioManager.MODE_NORMAL);
@@ -129,16 +129,16 @@ public class AudioUtils {
 
     /**
      * 开启免提模式
-     *
      */
     public void setSpeakerMode() {
         ZogUtils.i("set to speaker mode");
-        Context context  = ResWrapper.getInstance().getContext();
+        context = ResWrapper.getInstance().getContext();
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-
-        if(audioManager.getMode() == AudioManager.MODE_NORMAL)
+        if (audioManager.getMode() == AudioManager.MODE_NORMAL)
             return;
+
+        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         //播放音频流类型
         if (context instanceof Activity)
@@ -182,11 +182,17 @@ public class AudioUtils {
                 e.printStackTrace();
             }
         }
+
+
     }
 
 
     public void release() {
-        AudioUtils.getInstance().setNormalMode();
+        ZogUtils.i("release release release");
+        if (audioManager != null) {
+            audioManager.abandonAudioFocus(this);
+        }
+        audioManager = null;
         audioUtils = null;
     }
 
@@ -202,5 +208,10 @@ public class AudioUtils {
 
     }
 
+
+    @Override
+    public void onAudioFocusChange(int i) {
+
+    }
 
 }

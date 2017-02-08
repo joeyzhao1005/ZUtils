@@ -2,6 +2,8 @@ package com.kit.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -49,8 +51,6 @@ public class ResWrapper {
     }
 
 
-
-
     public Drawable getDrawable(int drawableId, Resources.Theme theme) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
             return context.getResources().getDrawable(drawableId, theme);
@@ -61,6 +61,12 @@ public class ResWrapper {
     public Drawable getDrawable(int drawableId) {
         return context.getResources().getDrawable(drawableId);
     }
+
+
+    public Bitmap getBitmap(int drawableId) {
+        return BitmapFactory.decodeResource(context.getResources(), drawableId);
+    }
+
 
     public String getString(int stringId) {
         return context.getResources().getString(stringId);

@@ -139,6 +139,7 @@ public class NotificationUtils {
 
         notification.contentIntent = contentIntent;
 
+
         nm.notify(notificationId, notification);
 
     }
@@ -185,6 +186,16 @@ public class NotificationUtils {
 
     }
 
+    public static NotificationCompat.Builder creatNotificationBuilder(int smallIconDrawableRes, CharSequence title, CharSequence content) {
+        Context context = ResWrapper.getInstance().getContext();
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(smallIconDrawableRes)
+                        .setContentTitle(title)
+                        .setContentText(content);
+
+        return builder;
+    }
 
     public static Notification creatNotification(int smallIconDrawableRes, CharSequence title, CharSequence content) {
         Context context = ResWrapper.getInstance().getContext();

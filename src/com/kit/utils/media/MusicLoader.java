@@ -16,11 +16,8 @@ public class MusicLoader {
 
     private static final String TAG = "com.example.nature.MusicLoader";
 
-    private static List<MusicInfo> musicList = new ArrayList<MusicInfo>();
-
     private static MusicLoader musicLoader;
 
-    private static ContentResolver contentResolver;
     //Uri，指向external的database
     private Uri contentUri = Media.EXTERNAL_CONTENT_URI;
     //projection：选择的列; where：过滤条件; sortOrder：排序。
@@ -38,7 +35,6 @@ public class MusicLoader {
 
     public static MusicLoader getInstance() {
         if (musicLoader == null) {
-            contentResolver = ResWrapper.getInstance().getContext().getContentResolver();
             musicLoader = new MusicLoader();
         }
         return musicLoader;
@@ -49,6 +45,9 @@ public class MusicLoader {
     }
 
     public List<MusicInfo> getMusicList() {
+        List<MusicInfo> musicList = null;
+        ContentResolver contentResolver = ResWrapper.getInstance().getContext().getContentResolver();
+
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
             ZogUtils.e("Music Loader cursor == null.");
@@ -56,6 +55,7 @@ public class MusicLoader {
             ZogUtils.e("Music Loader cursor.moveToFirst() returns false.");
         } else {
             cursor.moveToFirst();
+            musicList = new ArrayList<MusicInfo>();
 
             int displayNameCol = cursor.getColumnIndex(Media.DISPLAY_NAME);
             int albumCol = cursor.getColumnIndex(Media.ALBUM);
@@ -91,9 +91,12 @@ public class MusicLoader {
 
 
     public List<MusicInfo> getMusicInfoByName(String name) {
+        List<MusicInfo> musicList = null;
+
         where = "mime_type in ('audio/mpeg','audio/x-ms-wma') and _display_name like '%"
                 + name
                 + "%' and is_music > 0 ";
+        ContentResolver contentResolver = ResWrapper.getInstance().getContext().getContentResolver();
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
             ZogUtils.e("Music Loader cursor == null.");
@@ -110,6 +113,7 @@ public class MusicLoader {
             int artistCol = cursor.getColumnIndex(Media.ARTIST);
             int urlCol = cursor.getColumnIndex(Media.DATA);
             do {
+                musicList = new ArrayList<MusicInfo>();
                 String title = cursor.getString(displayNameCol);
                 String album = cursor.getString(albumCol);
                 long id = cursor.getLong(idCol);

@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
+import com.kit.utils.ResWrapper;
+import com.kit.utils.intentutils.BundleData;
+import com.kit.utils.intentutils.IntentUtils;
 import com.kit.utils.log.ZogUtils;
 
 import java.util.ArrayList;
@@ -42,7 +46,8 @@ public class ServiceManager {
     }
 
 
-    public void startService(final Context context, final Class... clazzes) {
+    public void startService(final Class... clazzes) {
+        final Context context = ResWrapper.getInstance().getContext();
 
         Thread serviceThread = new Thread(new Runnable() {
             @Override
@@ -54,11 +59,41 @@ public class ServiceManager {
                         Intent i = new Intent(context, c);
                         context.startService(i);
 
-                        ZogUtils.i(
-                                "start service " + c.getName());
+                        ZogUtils.i("start service " + c.getName());
                     }
 
                 }
+            }
+        });
+        serviceThread.start();
+    }
+
+    public void startService(final Class clazzes, final BundleData bundleData) {
+
+        Thread serviceThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Context context = ResWrapper.getInstance().getContext();
+                ZogUtils.i("start service " + clazzes.getName());
+
+                IntentUtils.gotoService(context, clazzes, bundleData);
+
+
+            }
+        });
+        serviceThread.start();
+    }
+
+    public void startService(final Class clazzes, final Bundle bundle) {
+
+        Thread serviceThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Context context = ResWrapper.getInstance().getContext();
+                ZogUtils.i("start service " + clazzes.getName());
+                IntentUtils.gotoService(context, clazzes, bundle, false);
+
+
             }
         });
         serviceThread.start();
@@ -90,7 +125,9 @@ public class ServiceManager {
     }
 
 
-    public void stopService(final Context context, final Class... clazzes) {
+    public void stopService(final Class... clazzes) {
+        final Context context = ResWrapper.getInstance().getContext();
+
         for (Class c : clazzes) {
             Intent service = new Intent(context, c);
             context.stopService(service);

@@ -205,16 +205,15 @@ public class IntentBaseUtils {
      *
      * @param packageContext
      * @param cls
-     * @param bundle
      */
     public static void gotoService(Context packageContext, Class<?> cls,
-                                   Bundle bundle) {
+                                   BundleData bundleData) {
 
         Intent intent = new Intent();
         // Bundle bundle = new Bundle();
         // bundle.putString("USERNAME",
         // et_username.getText().toString());
-        intent.putExtras(bundle);
+        pushData(intent, bundleData);
         intent.setClass(packageContext, cls);
         packageContext.startService(intent);
 
