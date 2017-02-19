@@ -51,7 +51,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
         context = ResWrapper.getInstance().getContext();
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+//        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             if (audioManager.getMode() == AudioManager.MODE_IN_CALL)
@@ -63,8 +63,8 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
 
 
         //播放音频流类型
-        if (context instanceof Activity)
-            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+//        if (context instanceof Activity)
+//            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -86,9 +86,9 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
 
 //                    audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
-                            , audioManager.getStreamVolume(AudioManager.STREAM_MUSIC),
-                            AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+//                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
+//                            , audioManager.getStreamVolume(AudioManager.STREAM_MUSIC),
+//                            AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                 }
 
 //                    audioManager.setMode(AudioManager.MODE_NORMAL);
@@ -108,15 +108,15 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
         context = ResWrapper.getInstance().getContext();
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+//        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         if (audioManager.getMode() == AudioManager.MODE_NORMAL)
             return;
 
         audioManager.setMode(AudioManager.MODE_NORMAL);
 
-        if (context instanceof Activity)
-            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+//        if (context instanceof Activity)
+//            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 
         if (audioManager.isSpeakerphoneOn()) {
@@ -138,11 +138,11 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
         if (audioManager.getMode() == AudioManager.MODE_NORMAL)
             return;
 
-        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+//        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         //播放音频流类型
-        if (context instanceof Activity)
-            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+//        if (context instanceof Activity)
+//            ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -190,6 +190,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
     public void release() {
         ZogUtils.i("release release release");
         if (audioManager != null) {
+            audioManager.setMode(AudioManager.MODE_NORMAL);
             audioManager.abandonAudioFocus(this);
         }
         audioManager = null;
