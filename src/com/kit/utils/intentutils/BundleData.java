@@ -2,6 +2,7 @@ package com.kit.utils.intentutils;
 
 import android.os.Bundle;
 
+import com.google.gson.Gson;
 import com.kit.utils.GsonUtils;
 import com.kit.utils.log.ZogUtils;
 
@@ -22,6 +23,7 @@ public class BundleData implements Cloneable {
     public void put(String key, Object value) {
         hashMap.put(key, value);
     }
+
 
     /**
      * 获取Object
@@ -60,6 +62,9 @@ public class BundleData implements Cloneable {
         }
         return t;
     }
+
+
+
 
 
     /**
