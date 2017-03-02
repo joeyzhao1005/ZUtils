@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 
 import com.kit.app.ActivityManager;
@@ -53,14 +55,16 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoSingleNextActivity(Context packageContext, Class<?> cls,
                                               BundleData data) {
-        if (ActivityManager.getInstance().isExistActivity(cls)) {
-            ActivityManager.getInstance().popActivity(cls);
-        }
+
 
         Intent intent = new Intent();
         pushData(intent, data);
         intent.setClass(packageContext, cls);
         packageContext.startActivity(intent);
+
+        if (ActivityManager.getInstance().isExistActivity(cls)) {
+            ActivityManager.getInstance().popActivity(cls);
+        }
     }
 
     /**
@@ -89,15 +93,41 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoNextActivity(Context packageContext, Class<?> cls,
                                         BundleData data, boolean isCloseThis) {
-        if (isCloseThis) {
-            ((Activity) packageContext).finish();
-        }
+
         Intent intent = new Intent();//创建Intent对象
         pushData(intent, data);
         intent.setClass(packageContext, cls);
         packageContext.startActivity(intent);
+
+        if (isCloseThis) {
+            ((Activity) packageContext).finish();
+        }
     }
 
+
+
+    /**
+     * 跳转界面并传值
+     *
+     * @param packageContext
+     * @param cls
+     * @param data
+     * @param isCloseThis    是否关闭当前界面
+     */
+    public static void gotoNextActivity(Context packageContext, Class<?> cls,
+                                        BundleData data, ActivityOptionsCompat transitionActivityOptions, boolean isCloseThis) {
+
+        Intent intent = new Intent();//创建Intent对象
+        pushData(intent, data);
+        intent.setClass(packageContext, cls);
+
+        ActivityCompat.startActivity(packageContext,
+                intent, transitionActivityOptions.toBundle());
+
+        if (isCloseThis) {
+            ((Activity) packageContext).finish();
+        }
+    }
 
     /**
      * 跳转界面并传值
@@ -141,9 +171,6 @@ public class IntentUtils extends IntentBaseUtils {
      * @param isCloseThis
      */
     public static void gotoSingleNextActivity(Context packageContext, Class<?> cls, boolean isCloseThis) {
-        if (isCloseThis) {
-            ((Activity) packageContext).finish();
-        }
 
         if (ActivityManager.getInstance().isExistActivity(cls)) {
             ActivityManager.getInstance().popActivity(cls);
@@ -152,7 +179,14 @@ public class IntentUtils extends IntentBaseUtils {
         Intent intent = new Intent();
         intent.setClass(packageContext, cls);
         ((Activity) packageContext).startActivity(intent);
+
+        if (isCloseThis) {
+            ((Activity) packageContext).finish();
+        }
+
     }
+
+
 
     /**
      * 从Service到Activity
@@ -162,15 +196,17 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoSingleNextActivityFromReceiver(Context packageContext,
                                                           Class<?> cls, BundleData data, boolean isCloseThis) {
-        if (isCloseThis && (packageContext instanceof Activity)) {
-            ((Activity) packageContext).finish();
-        }
+
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         pushData(intent, data);
         intent.setClass(packageContext, cls);
         packageContext.startActivity(intent);
+
+        if (isCloseThis && (packageContext instanceof Activity)) {
+            ((Activity) packageContext).finish();
+        }
     }
 
     /**
@@ -182,6 +218,12 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoSingleNextActivity(Context packageContext, Class<?> cls,
                                               BundleData data, boolean isCloseThis) {
+
+        Intent intent = new Intent();
+        pushData(intent, data);
+        intent.setClass(packageContext, cls);
+        ((Activity) packageContext).startActivity(intent);
+
         if (isCloseThis && (packageContext instanceof Activity)) {
             ((Activity) packageContext).finish();
         }
@@ -190,10 +232,6 @@ public class IntentUtils extends IntentBaseUtils {
             ActivityManager.getInstance().popActivity(cls);
         }
 
-        Intent intent = new Intent();
-        pushData(intent, data);
-        intent.setClass(packageContext, cls);
-        ((Activity) packageContext).startActivity(intent);
     }
 
 
@@ -206,14 +244,16 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoSingleNextActivity(Context packageContext, Class<?> cls,
                                               BundleData data, int requestFlag) {
-        if (ActivityManager.getInstance().isExistActivity(cls)) {
-            ActivityManager.getInstance().popActivity(cls);
-        }
 
         Intent intent = new Intent();
         pushData(intent, data);
         intent.setClass(packageContext, cls);
         ((Activity) packageContext).startActivityForResult(intent, requestFlag);
+
+        if (ActivityManager.getInstance().isExistActivity(cls)) {
+            ActivityManager.getInstance().popActivity(cls);
+        }
+
     }
 
 
@@ -226,14 +266,16 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoSingleNextActivity(Fragment fragment, Class<?> cls,
                                               BundleData data, int requestFlag) {
-        if (ActivityManager.getInstance().isExistActivity(cls)) {
-            ActivityManager.getInstance().popActivity(cls);
-        }
+
 
         Intent intent = new Intent();
         pushData(intent, data);
         intent.setClass(fragment.getActivity(), cls);
         fragment.startActivityForResult(intent, requestFlag);
+
+        if (ActivityManager.getInstance().isExistActivity(cls)) {
+            ActivityManager.getInstance().popActivity(cls);
+        }
     }
 
 
@@ -247,6 +289,13 @@ public class IntentUtils extends IntentBaseUtils {
     public static void gotoSingleNextActivity(Context packageContext, Class<?> cls,
                                               BundleData data, boolean isCloseThis, int requestFlag) {
 
+
+        Intent intent = new Intent();
+        pushData(intent, data);
+        intent.setClass(packageContext, cls);
+        ((Activity) packageContext).startActivityForResult(intent, requestFlag);
+
+
         if (isCloseThis) {
             ((Activity) packageContext).finish();
         }
@@ -254,11 +303,6 @@ public class IntentUtils extends IntentBaseUtils {
         if (ActivityManager.getInstance().isExistActivity(cls)) {
             ActivityManager.getInstance().popActivity(cls);
         }
-
-        Intent intent = new Intent();
-        pushData(intent, data);
-        intent.setClass(packageContext, cls);
-        ((Activity) packageContext).startActivityForResult(intent, requestFlag);
     }
 
 
@@ -272,6 +316,13 @@ public class IntentUtils extends IntentBaseUtils {
     public static void gotoSingleNextActivity(Fragment fragment, Class<?> cls,
                                               BundleData data, int requestFlag, boolean isCloseThis) {
 
+
+        Intent intent = new Intent();
+        pushData(intent, data);
+        intent.setClass(fragment.getActivity(), cls);
+        fragment.startActivityForResult(intent, requestFlag);
+
+
         if (isCloseThis) {
             fragment.getActivity().finish();
         }
@@ -279,11 +330,6 @@ public class IntentUtils extends IntentBaseUtils {
         if (ActivityManager.getInstance().isExistActivity(cls)) {
             ActivityManager.getInstance().popActivity(cls);
         }
-
-        Intent intent = new Intent();
-        pushData(intent, data);
-        intent.setClass(fragment.getActivity(), cls);
-        fragment.startActivityForResult(intent, requestFlag);
     }
 
 
@@ -297,14 +343,16 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoNextActivity(Context packageContext, Class<?> cls,
                                         BundleData data, boolean isCloseThis, int requestFlag) {
-        if (isCloseThis) {
-            ((Activity) packageContext).finish();
-        }
+
 
         Intent intent = new Intent();
         pushData(intent, data);
         intent.setClass(packageContext, cls);
         ((Activity) packageContext).startActivityForResult(intent, requestFlag);
+
+        if (isCloseThis) {
+            ((Activity) packageContext).finish();
+        }
     }
 
     /**
@@ -316,11 +364,7 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoNextActivity(Context packageContext, String action, String uri,
                                         BundleData data, boolean isCloseThis) {
-        if (packageContext instanceof Activity) {
-            if (isCloseThis) {
-                ((Activity) packageContext).finish();
-            }
-        }
+
 
         Intent intent;
         if (!StringUtils.isEmptyOrNullOrNullStr(uri)) {
@@ -335,6 +379,12 @@ public class IntentUtils extends IntentBaseUtils {
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         pushData(intent, data);
         packageContext.startActivity(intent);
+
+        if (packageContext instanceof Activity) {
+            if (isCloseThis) {
+                ((Activity) packageContext).finish();
+            }
+        }
     }
 
 
@@ -348,14 +398,16 @@ public class IntentUtils extends IntentBaseUtils {
      */
     public static void gotoNextActivity(Fragment fragment, Class<?> cls,
                                         BundleData data, boolean isCloseThis, int requestFlag) {
-        if (isCloseThis) {
-            (fragment.getActivity()).finish();
-        }
 
         Intent intent = new Intent();
         pushData(intent, data);
         intent.setClass(fragment.getActivity(), cls);
         fragment.startActivityForResult(intent, requestFlag);
+
+        if (isCloseThis) {
+            (fragment.getActivity()).finish();
+        }
+
     }
 
 
