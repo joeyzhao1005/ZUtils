@@ -1235,7 +1235,7 @@ public class BitmapUtils {
 
                 String prefix = file.getName().substring(file.getName().lastIndexOf(".") + 1);
                 String newFileName = System.currentTimeMillis() + "" + new Random().nextInt(9999) + "." + prefix;
-                String newFileDir = AppConfig.getAppConfig().getImageDir() + ".temp/" + newFileName;
+                String newFileDir = AppConfig.getAppConfig().getCacheImageDir() + ".temp/" + newFileName;
                 file = new File(newFileDir);
                 BitmapFactory.Options options = getOptions(filePath, height, width, null);
                 Bitmap bmp = BitmapUtils.loadBitmap(filePath, options, true);

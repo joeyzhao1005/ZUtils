@@ -32,7 +32,7 @@ public class ResWrapper {
     }
 
     public Context getContext() {
-        return context.getApplicationContext();
+        return context;
     }
 
     public void setBackground(View view, Drawable drawable) {
@@ -50,6 +50,9 @@ public class ResWrapper {
             return ContextCompat.getColor(context, colorId);
     }
 
+    public float getDimension(int dimensionId) {
+        return context.getResources().getDimension(dimensionId);
+    }
 
     public Drawable getDrawable(int drawableId, Resources.Theme theme) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
@@ -85,7 +88,7 @@ public class ResWrapper {
 
     }
 
-    public Resources getResouce() {
+    public Resources getResources() {
         return context.getResources();
     }
 }

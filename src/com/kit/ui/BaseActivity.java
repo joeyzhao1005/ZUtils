@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.kit.app.resouce.DrawableId;
 import com.kit.utils.ActionBarUtils;
+import com.kit.utils.ResWrapper;
 import com.kit.utils.ResourceUtils;
 
 public abstract class BaseActivity extends BaseAppCompatActivity  implements BaseV4Fragment.OnFragmentInteractionListener{
@@ -12,7 +13,9 @@ public abstract class BaseActivity extends BaseAppCompatActivity  implements Bas
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ResWrapper.getInstance().setContext(this);
         initTheme();
+
     }
 
     public void initTheme() {

@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import android.annotation.TargetApi;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -259,8 +260,8 @@ public class AppUtils {
      *
      * @param lanAtr
      */
-    public static void setAppLanguage(String lanAtr) {
-        Resources resources = ResWrapper.getInstance().getResouce();
+    public static void setAppLanguage(Application app,String lanAtr) {
+        Resources resources = app.getApplicationContext().getResources();
         Configuration config = resources.getConfiguration();
         DisplayMetrics dm = resources.getDisplayMetrics();
         if (lanAtr.equals("zh-cn")) {

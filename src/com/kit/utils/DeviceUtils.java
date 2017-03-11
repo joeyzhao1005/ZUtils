@@ -32,15 +32,12 @@ public class DeviceUtils {
     }
 
 
-
     /**
      * Get the screen height.
      *
      * @param context
      * @return the screen height
      */
-    @SuppressWarnings("deprecation")
-    @SuppressLint("NewApi")
     public static int getScreenHeight(Context context) {
 
         Display display = ((Activity) context).getWindowManager()
@@ -49,8 +46,23 @@ public class DeviceUtils {
             Point size = new Point();
             display.getSize(size);
             return size.y;
+        } else {
+            return display.getHeight();
         }
-        return display.getHeight();
+    }
+
+
+    public static int getRealScreenHeight(Context context) {
+
+        Display display = ((Activity) context).getWindowManager()
+                .getDefaultDisplay();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Point size = new Point();
+            display.getRealSize(size);
+            return size.y;
+        } else {
+            return display.getHeight();
+        }
     }
 
     /**
@@ -69,13 +81,34 @@ public class DeviceUtils {
             Point size = new Point();
             display.getSize(size);
             return size.x;
+        } else {
+            return display.getWidth();
         }
-        return display.getWidth();
     }
 
 
     /**
+     * Get the screen width.
+     *
+     * @param context
+     * @return the screen width
+     */
+    public static int getRealScreenWidth(Context context) {
+
+        Display display = ((Activity) context).getWindowManager()
+                .getDefaultDisplay();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Point size = new Point();
+            display.getRealSize(size);
+            return size.x;
+        } else {
+            return display.getWidth();
+        }
+    }
+
+    /**
      * 获取虚拟按键高度
+     *
      * @param context
      * @return
      */
@@ -90,10 +123,11 @@ public class DeviceUtils {
 
     /**
      * 获取虚拟按键宽度
+     *
      * @param context
      * @return
      */
-    public static int getNavigationBarWidth(Context context){
+    public static int getNavigationBarWidth(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_width", "dimen", "android");
         if (resourceId > 0) {
@@ -105,10 +139,11 @@ public class DeviceUtils {
 
     /**
      * 获取虚拟按键横向时候的高度
+     *
      * @param context
      * @return
      */
-    public static int getNavigationBarHeithtLandscape(Context context){
+    public static int getNavigationBarHeithtLandscape(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height_landscape", "dimen", "android");
         if (resourceId > 0) {

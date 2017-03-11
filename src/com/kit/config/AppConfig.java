@@ -26,6 +26,6 @@ public class AppConfig {
 
         String getCacheDataDir();
 
-        String getImageDir();
+        String getCacheImageDir();
     }
 }

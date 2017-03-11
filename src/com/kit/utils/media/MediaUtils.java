@@ -49,7 +49,7 @@ public class MediaUtils {
         }
         Drawable drawable = null;
         if (bitmap != null) {
-            drawable = new BitmapDrawable(ResWrapper.getInstance().getResouce(), bitmap);
+            drawable = new BitmapDrawable(ResWrapper.getInstance().getResources(), bitmap);
         }
         return drawable;
     }
