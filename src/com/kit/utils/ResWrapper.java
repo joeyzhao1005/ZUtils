@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -17,6 +18,8 @@ public class ResWrapper {
 
     private static ResWrapper resWrapper;
 
+    private static Context applicationContext;
+
     public static ResWrapper getInstance() {
 
         if (resWrapper == null)
@@ -31,8 +34,15 @@ public class ResWrapper {
         return resWrapper;
     }
 
+
+    public Context getApplicationContext() {
+        if (applicationContext == null)
+            applicationContext = context.getApplicationContext();
+        return applicationContext;
+    }
+
     public Context getContext() {
-        return context;
+        return context.getApplicationContext();
     }
 
     public void setBackground(View view, Drawable drawable) {
