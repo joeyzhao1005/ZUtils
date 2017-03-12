@@ -163,4 +163,12 @@ public class DrawableUtils {
 //        return drawable;
     }
 
+
+    private static final int[] EMPTY_STATE = new int[] {};
+
+    public static void clearState(Drawable drawable) {
+        if (drawable != null) {
+            drawable.setState(EMPTY_STATE);
+        }
+    }
 }
