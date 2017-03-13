@@ -4,8 +4,7 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
-import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
-import net.sourceforge.pinyin4j.format.exception.*;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 /**
  * 拼音工具类
@@ -13,18 +12,31 @@ import net.sourceforge.pinyin4j.format.exception.*;
  * @author 龚刚
  */
 public class PingYinUtils {
+
+
+    private static PingYinUtils pingYinUtils;
+
+
+    public static PingYinUtils getInstance() {
+        if (pingYinUtils == null)
+            pingYinUtils = new PingYinUtils();
+
+
+        return pingYinUtils;
+    }
+
     /**
      * 将字符串中的中文转化为拼音,其他字符不变
      *
      * @param inputString
      * @return
      */
-    public static String getPingYin(String inputString) {
+    public String getPingYin(String inputString) {
         HanyuPinyinOutputFormat format = new
                 HanyuPinyinOutputFormat();
         format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        format.setVCharType(HanyuPinyinVCharType.WITH_V);
+//        format.setVCharType(HanyuPinyinVCharType.WITH_V);
 
         char[] input = inputString.trim().toCharArray();
         String output = "";

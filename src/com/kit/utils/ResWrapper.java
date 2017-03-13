@@ -1,6 +1,5 @@
 package com.kit.utils;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -42,7 +41,7 @@ public class ResWrapper {
     }
 
     public Context getContext() {
-        return context.getApplicationContext();
+        return context;
     }
 
     public void setBackground(View view, Drawable drawable) {
@@ -54,7 +53,7 @@ public class ResWrapper {
 
 
     public int getColor(int colorId) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             return context.getResources().getColor(colorId, null);
         else
             return ContextCompat.getColor(context, colorId);
