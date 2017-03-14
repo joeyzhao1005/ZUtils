@@ -17,6 +17,7 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initWindow();
         getExtra();
         initWidget();
         loadData();
@@ -49,6 +50,12 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
     public boolean getExtra() {
 
         return true;
+    }
+
+    /**
+     * 初始化界面
+     * */
+    public void initWindow() {
     }
 
     /**

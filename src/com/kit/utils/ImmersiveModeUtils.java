@@ -28,7 +28,7 @@ public class ImmersiveModeUtils {
      * <p/>
      * 对getActibar设置了hide()的，设置为 android:fitsSystemWindows="false" 并需要手动paddingTop
      *
-     * @param baseActivity
+     * @param baseActivity       这个会留出来状态栏和底栏的空白
      * @param statusBarColor     状态栏的颜色
      * @param navigationBarColor 导航栏的颜色
      */
@@ -51,6 +51,95 @@ public class ImmersiveModeUtils {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(statusBarColor);
                 window.setNavigationBarColor(navigationBarColor);
+            }
+        } catch (Exception e) {
+        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            try {
+//                Window window = baseActivity.getWindow();
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
+//                        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//                    return;
+//                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//
+////                    window.clearFlags(201326592);
+////                    window.getDecorView().setSystemUiVisibility(1280);
+////                    baseActivity.getWindow().addFlags(WindowManager.LayoutParams.class.getField("FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS")
+////                            .getInt(null));
+////                    Window.class.getDeclaredMethod("setStatusBarColor", Integer.TYPE).invoke(window, color);
+//
+//
+//                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//
+//                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//                    window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//                    window.setStatusBarColor(color);
+//                }
+//            } catch (Exception v0) {
+//                v0.printStackTrace();
+//            }
+//        }
+
+    }
+
+
+    /**
+     * 仅对使用了Actionbar的起作用
+     * xml中需使用父控件如LinearLayout框住，并设置为 android:fitsSystemWindows="true"
+     * <p/>
+     * 对getActibar设置了hide()的，设置为 android:fitsSystemWindows="false" 并需要手动paddingTop
+     *
+     * @param baseActivity
+     * @param statusBarColor     状态栏的颜色
+     * @param navigationBarColor 导航栏的颜色
+     */
+    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, boolean isMarginStatusBar, boolean isMarginNavigationBar, int statusBarColor, int navigationBarColor) {
+        try {
+            Window window = baseActivity.getWindow();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                //4.4版本及以上 5.0版本及以下
+
+                window.setFlags(
+                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (isMarginStatusBar && isMarginNavigationBar) {
+                    //5.0版本及以上
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                            | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                } else if (!isMarginStatusBar && !isMarginNavigationBar) {
+                    window.requestFeature(Window.FEATURE_NO_TITLE);
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                            | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+
+                } else if (!isMarginStatusBar && isMarginNavigationBar) {
+                    window.requestFeature(Window.FEATURE_NO_TITLE);
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                            | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+
+                } else {
+                    //留出来状态栏 不留出来导航栏 没找到办法。。
+                    return;
+                }
+
+                window.setStatusBarColor(statusBarColor);
+                window.setNavigationBarColor(navigationBarColor);
+
             }
         } catch (Exception e) {
         }
