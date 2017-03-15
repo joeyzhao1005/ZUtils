@@ -3,7 +3,6 @@ package com.kit.utils;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -174,6 +173,23 @@ public class ImmersiveModeUtils {
 
     }
 
+
+    public static void setStatusBarColor(AppCompatActivity baseActivity, int color) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = baseActivity.getWindow();
+            window.setStatusBarColor(color);
+        }
+    }
+
+
+    public static void setNavigationBarColor(AppCompatActivity baseActivity, int color) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = baseActivity.getWindow();
+            window.setNavigationBarColor(color);
+        }
+    }
 
 //    private void initSystemBar(int color) {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

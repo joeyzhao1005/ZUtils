@@ -14,6 +14,10 @@ import android.view.Display;
 import java.lang.reflect.Field;
 
 public class DeviceUtils {
+
+
+    private static int statusBarHeight = 0;
+
     /**
      * 判定是否有虚拟按键
      *
@@ -159,22 +163,27 @@ public class DeviceUtils {
      * @return
      */
     public static int getStatusBarHeight(Context context) {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0, sbar = 38;//默认为38，貌似大部分是这样的
 
-        try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            sbar = context.getResources().getDimensionPixelSize(x);
+        if (statusBarHeight == 0) {
+            Class<?> c = null;
+            Object obj = null;
+            Field field = null;
+            int x = 0, sbar = 38;//默认为38，貌似大部分是这样的
 
-        } catch (Exception e1) {
-            e1.printStackTrace();
+            try {
+                c = Class.forName("com.android.internal.R$dimen");
+                obj = c.newInstance();
+                field = c.getField("status_bar_height");
+                x = Integer.parseInt(field.get(obj).toString());
+                sbar = context.getResources().getDimensionPixelSize(x);
+
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            statusBarHeight = sbar;
         }
-        return sbar;
+        return statusBarHeight;
     }
 
 
