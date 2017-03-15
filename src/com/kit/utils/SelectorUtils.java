@@ -9,15 +9,14 @@ import android.graphics.drawable.StateListDrawable;
 
 public class SelectorUtils {
 
-    public static StateListDrawable getStateListDrawable4Press(int normalColor, int pressedColor, int focusColor) {
+    public static StateListDrawable getStateListDrawable(int normalColor, int focusColor, int pressedColor) {
 
 
         StateListDrawable sd = new StateListDrawable();
 
-
+        ColorDrawable normal = new ColorDrawable(normalColor);
         ColorDrawable focus = new ColorDrawable(focusColor);
         ColorDrawable pressed = new ColorDrawable(pressedColor);
-        ColorDrawable normal = new ColorDrawable(normalColor);
 
         //注意该处的顺序，只要有一个状态与之相配，背景就会被换掉
         //所以不要把大范围放在前面了，如果sd.addState(new[]{},normal)放在第一个的话，就没有什么效果了
