@@ -54,17 +54,17 @@ public class BitmapUtils {
 
         String dir = fileName.substring(0, fileName.lastIndexOf("/"));
         File directory = new File(dir);
-        ZogUtils.e( dir);
+        ZogUtils.e(dir);
 
         if (!directory.exists()) {
-            ZogUtils.e( "directory not exitsts,create it");
+            ZogUtils.e("directory not exitsts,create it");
             directory.mkdir();//没有目录先创建目录
         }
 
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                ZogUtils.e( "file not exitsts,create it");
+                ZogUtils.e("file not exitsts,create it");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,7 +126,7 @@ public class BitmapUtils {
         if (be <= 0)
             be = 1;
 
-        ZogUtils.i( "be be be:" + be + " w:" + w + " h:" + h);
+        ZogUtils.i("be be be:" + be + " w:" + w + " h:" + h);
 
         options.inSampleSize = be;// 设置缩放比例
 
@@ -345,7 +345,7 @@ public class BitmapUtils {
         Object content = null;
         try {
             try {
-                ZogUtils.i( "address: " + url);
+                ZogUtils.i("address: " + url);
                 URL uri = new URL(url);
                 content = uri.getContent();
             } catch (Exception e) {
@@ -541,7 +541,7 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap loadFromInputStream(InputStream input,
-                                                 @Nullable BitmapFactory.Options opts) {
+                                             @Nullable BitmapFactory.Options opts) {
 
         BitmapFactory.Options optsTmp = opts;
         if (optsTmp == null) {
@@ -767,7 +767,7 @@ public class BitmapUtils {
 
             ZogUtils.showException(e);
 
-            ZogUtils.i( "scale应该取的小一点");
+            ZogUtils.i("scale应该取的小一点");
         }
         return bmp;
     }
@@ -1194,12 +1194,17 @@ public class BitmapUtils {
         if (bmp == null)
             return null;
 
-        System.out.println("file.getPath():" + file.getPath());
 
-        if (new File(file.getParent()).mkdirs()) {//多级目录
-            System.out.println("建立目录成功");
-        } else {
-            System.out.println("建立目录失败");
+
+        File dir = new File(file.getParent());
+
+
+        boolean mkdirResult = false;
+        if (!dir.exists())
+            mkdirResult = dir.mkdirs();
+
+        if (!mkdirResult && !dir.exists()) {//多级目录
+            return null;
         }
 
         FileOutputStream fos = null;
@@ -1215,6 +1220,9 @@ public class BitmapUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("file.getPath():" + file.getPath());
+
         return file;
     }
 
