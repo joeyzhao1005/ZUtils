@@ -407,26 +407,71 @@ public class FileUtils {
     /**
      * 文件copy
      *
-     * @param oldFilePath
-     * @param newFilePath
-     * @param cover       新目录存在，是否覆盖
+     * @param srcFileName
+     * @param destFileName
+     * @param overlay      新目录存在，是否覆盖
      */
-    public static String copy(String oldFilePath, String newFilePath, boolean cover) {
-        if (!oldFilePath.equals(newFilePath)) {
-            File oldfile = new File(oldFilePath);
-            File newfile = new File(newFilePath);
-            if (newfile.exists()) {//若在待转移目录下，已经存在待转移文件
-                if (cover)//覆盖
-                    oldfile.renameTo(newfile);
-                else
-                    System.out.println("在新目录下已经存在：" + newFilePath);
-            } else {
-                oldfile.renameTo(newfile);
-            }
+    public static boolean copy(String srcFileName, String destFileName,
+                               boolean overlay) {
+        File srcFile = new File(srcFileName);
 
-            return newFilePath;
+        // 判断源文件是否存在
+        if (!srcFile.exists()) {
+            ZogUtils.i("源文件：" + srcFileName + "不存在！");
+            return false;
+        } else if (!srcFile.isFile()) {
+            ZogUtils.i("复制文件失败，源文件：" + srcFileName + "不是一个文件！");
+            return false;
         }
-        return null;
+
+        // 判断目标文件是否存在
+        File destFile = new File(destFileName);
+        if (destFile.exists()) {
+            // 如果目标文件存在并允许覆盖
+            if (overlay) {
+                // 删除已经存在的目标文件，无论目标文件是目录还是单个文件
+                new File(destFileName).delete();
+            }
+        } else {
+            // 如果目标文件所在目录不存在，则创建目录
+            if (!destFile.getParentFile().exists()) {
+                // 目标文件所在目录不存在
+                if (!destFile.getParentFile().mkdirs()) {
+                    // 复制文件失败：创建目标文件所在目录失败
+                    return false;
+                }
+            }
+        }
+
+        // 复制文件
+        int byteread = 0; // 读取的字节数
+        InputStream in = null;
+        OutputStream out = null;
+
+        try {
+            in = new FileInputStream(srcFile);
+            out = new FileOutputStream(destFile);
+            byte[] buffer = new byte[1024];
+
+            while ((byteread = in.read(buffer)) != -1) {
+                out.write(buffer, 0, byteread);
+            }
+            return true;
+        } catch (FileNotFoundException e) {
+            return false;
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {
+                if (out != null)
+                    out.close();
+                if (in != null)
+                    in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
 }
