@@ -44,7 +44,7 @@ public class JsonUtils {
     // 解析处理过的json字符串，需调用getJosnStr()，以取得处理过的json字符串
     public static JSONArray str2JSONArray(String str) {
         ZogUtils.i(str);
-        if (StringUtils.isEmptyOrNullOrNullStr(str))
+        if (StringUtils.isEmptyOrNullStr(str))
             return null;
 
         JSONArray jsonArray = null;

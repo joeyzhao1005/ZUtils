@@ -88,7 +88,7 @@ public class MediaUtils {
     }
 
     public static void playMusic(String dir) {
-        if (StringUtils.isEmptyOrNullOrNullStr(dir))
+        if (StringUtils.isEmptyOrNullStr(dir))
             return;
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
@@ -126,7 +126,7 @@ public class MediaUtils {
     }
 
     public static void playVideo(String url) {
-        if (StringUtils.isEmptyOrNullOrNullStr(url))
+        if (StringUtils.isEmptyOrNullStr(url))
             return;
 
         Intent intent = new Intent(Intent.ACTION_VIEW);

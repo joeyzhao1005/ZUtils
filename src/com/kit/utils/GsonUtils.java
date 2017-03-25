@@ -63,7 +63,7 @@ public class GsonUtils {
      * @return
      */
     public static <T> List<T> getList(String jsonStr, Type type) {
-        if (StringUtils.isEmptyOrNullOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
             return null;
 
         Gson gson = new Gson();
@@ -82,7 +82,7 @@ public class GsonUtils {
      * @return
      */
     public static <T> Map<String, T> getMap(String jsonStr, Type type) {
-        if (StringUtils.isEmptyOrNullOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
             return null;
 
         Gson gson = new Gson();
@@ -98,7 +98,7 @@ public class GsonUtils {
      * @return
      */
     public static <T> ArrayList<T> getArrayList(String jsonStr, Type typeOfT) {
-        if (StringUtils.isEmptyOrNullOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
             return null;
 
         Gson gson = new Gson();
@@ -114,7 +114,7 @@ public class GsonUtils {
      */
     public static <T> ArrayList<T> getArrayList(String jsonStr) {
 
-        if (StringUtils.isEmptyOrNullOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
             return null;
 
         Type type = new TypeToken<ArrayList<T>>() {
@@ -132,7 +132,7 @@ public class GsonUtils {
      * @return
      */
     public static <T> T getObj(String jsonStr, Class<T> clazz) {
-        if (StringUtils.isEmptyOrNullOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
             return null;
 
         Gson gson = new Gson();

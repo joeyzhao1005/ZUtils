@@ -362,13 +362,13 @@ public class FileUtils {
      */
     public static String getFilenameWithoutSuffix(String filedir) {
 
-        if (StringUtils.isEmptyOrNullOrNullStr(filedir)) {
+        if (StringUtils.isEmptyOrNullStr(filedir)) {
             return null;
         }
 
         String full = getFilename(filedir);
 
-        if (full != null && !StringUtils.isEmptyOrNullOrNullStr(full)) {
+        if (full != null && !StringUtils.isEmptyOrNullStr(full)) {
             int end = full.lastIndexOf(".") > 0 ? full.lastIndexOf(".") : 0;
             return full.substring(0, end);
         }
@@ -396,7 +396,7 @@ public class FileUtils {
      */
     public static String getSuffix(String filedir) {
 
-        if (StringUtils.isEmptyOrNullOrNullStr(filedir)) {
+        if (StringUtils.isEmptyOrNullStr(filedir)) {
             return null;
         }
 

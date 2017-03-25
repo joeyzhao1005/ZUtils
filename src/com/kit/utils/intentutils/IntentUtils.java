@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 
 import com.kit.app.ActivityManager;
 import com.kit.utils.StringUtils;
-import com.kit.utils.log.ZogUtils;
 
 public class IntentUtils extends IntentBaseUtils {
 
@@ -367,7 +366,7 @@ public class IntentUtils extends IntentBaseUtils {
 
 
         Intent intent;
-        if (!StringUtils.isEmptyOrNullOrNullStr(uri)) {
+        if (!StringUtils.isEmptyOrNullStr(uri)) {
             Uri realUri = Uri.parse(uri);
             intent = new Intent(action, realUri);
 

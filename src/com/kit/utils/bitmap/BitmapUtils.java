@@ -197,7 +197,7 @@ public class BitmapUtils {
      * @return degree旋转的角度
      */
     public static int getDegree(String path) {
-        if (StringUtils.isEmptyOrNullOrNullStr(path)) {
+        if (StringUtils.isEmptyOrNullStr(path)) {
             return 0;
         }
 
@@ -1131,7 +1131,7 @@ public class BitmapUtils {
 
     public static Bitmap generateBitmapFile(String filePath,
                                             BitmapFactory.Options options) {
-        if (StringUtils.isEmptyOrNullOrNullStr(filePath)) {
+        if (StringUtils.isEmptyOrNullStr(filePath)) {
             return null;
         }
 

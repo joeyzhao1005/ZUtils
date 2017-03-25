@@ -31,7 +31,7 @@ public class DebugInfo extends Exception {
 
     public String simpleClassName() {
         String className = className();
-        if (!StringUtils.isEmptyOrNullOrNullStr(className)) {
+        if (!StringUtils.isEmptyOrNullStr(className)) {
             className = className.substring(className.lastIndexOf(".") + 1);
         }
 

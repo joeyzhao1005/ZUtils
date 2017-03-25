@@ -396,7 +396,7 @@ public class MathExtend {
 
         }
 
-        BigDecimal b = new BigDecimal(StringUtils.isEmptyOrNullOrNullStr(v) ? "0" : v);
+        BigDecimal b = new BigDecimal(StringUtils.isEmptyOrNullStr(v) ? "0" : v);
 
         return b.setScale(scale, round_mode).toString();
 

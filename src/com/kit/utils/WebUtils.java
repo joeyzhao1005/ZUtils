@@ -3,7 +3,7 @@ package com.kit.utils;
 public class WebUtils {
 
     public static String getStartWith(String url) {
-        if (StringUtils.isEmptyOrNullOrNullStr(url))
+        if (StringUtils.isEmptyOrNullStr(url))
             return null;
 
         int end = url.indexOf("://");

@@ -17,7 +17,7 @@ public class ClipboardUtils {
 // 得到剪贴板管理器
         Context context = ResWrapper.getInstance().getContext();
         ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        if (!StringUtils.isEmptyOrNullOrNullStr(content)) {
+        if (!StringUtils.isEmptyOrNullStr(content)) {
             cmb.setText(content.trim());
         }
     }

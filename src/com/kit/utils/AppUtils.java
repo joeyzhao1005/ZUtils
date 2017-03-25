@@ -317,7 +317,7 @@ public class AppUtils {
 
 
     public static String getPackageNameByAppName(Context context, String appName) {
-        if (StringUtils.isEmptyOrNullOrNullStr(appName))
+        if (StringUtils.isEmptyOrNullStr(appName))
             return null;
 
         List<PackageInfo> apps = getAllApps(context);
@@ -343,7 +343,7 @@ public class AppUtils {
      * @return
      */
     public static List<PackageInfo> getPackageNamesByAppName(Context context, String appName) {
-        if (StringUtils.isEmptyOrNullOrNullStr(appName))
+        if (StringUtils.isEmptyOrNullStr(appName))
             return null;
 
         appName = StringUtils.trimPunct(appName).toLowerCase();

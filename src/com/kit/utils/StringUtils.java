@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
     public static String trim(String str, String trim) {
-        if (isEmptyOrNullOrNullStr(str)) {
+        if (isEmptyOrNullStr(str)) {
             return str;
         }
 
@@ -314,10 +314,10 @@ public class StringUtils {
     /**
      * @param
      * @return boolean 返回类型
-     * @Title isEmptyOrNullOrNullStr
+     * @Title isEmptyOrNullStr
      * @Description 字符串是否为null或空字符或为“null”
      */
-    public static boolean isEmptyOrNullOrNullStr(String str) {
+    public static boolean isEmptyOrNullStr(String str) {
         if (TextUtils.isEmpty(str)) {
             return true;
         } else {
@@ -513,7 +513,7 @@ public class StringUtils {
 
 
     public static String replaceUrlValueReg(String url, String name, String value) {
-        if (!StringUtils.isEmptyOrNullOrNullStr(url) && !StringUtils.isEmptyOrNullOrNullStr(value)) {
+        if (!StringUtils.isEmptyOrNullStr(url) && !StringUtils.isEmptyOrNullStr(value)) {
 //            url = url.replaceAll( name +"=[^&]*", name + "=" + value);
             url = url.replaceAll("(" + name + "=[^&]*)", name + "=" + value);
         }

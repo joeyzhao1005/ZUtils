@@ -100,7 +100,7 @@ public class ColorUtils {
      */
     public static int hex2Color(String color) {
 
-        if(StringUtils.isEmptyOrNullOrNullStr(color)){
+        if(StringUtils.isEmptyOrNullStr(color)){
             return 0xff000000;
         }
         String reg = "#[a-f0-9A-F]{6,8}";
