@@ -1221,7 +1221,7 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
-        System.out.println("file.getPath():" + file.getPath());
+        ZogUtils.i("save file.getPath():" + file.getPath());
 
         return file;
     }
