@@ -307,22 +307,39 @@ public class FileUtils {
      *
      * @param dir
      */
-    public static void deleteFile(String dir) {
-        File file = new File(dir);
+    public static boolean deleteFile(String dir) {
+        boolean isSuccess = false;
+
+        if(StringUtils.isEmptyOrNullStr(dir))
+            return isSuccess;
+
+        File file = null;
+
+        try {
+            file = new File(dir);
+        } catch (Exception e) {
+        }
+
+        if (file == null)
+            return isSuccess;
+
+
         if (file.isFile()) {
-            file.delete();
-            return;
+            isSuccess = file.delete();
+            return isSuccess;
         } else if (file.isDirectory()) {
             File[] childFile = file.listFiles();
             if (childFile == null || childFile.length == 0) {
-                file.delete();
-                return;
+                isSuccess = file.delete();
+                return isSuccess;
             }
             for (File f : childFile) {
                 deleteFile(f);
             }
-            file.delete();
+            isSuccess = file.delete();
         }
+
+        return isSuccess;
     }
 
 
