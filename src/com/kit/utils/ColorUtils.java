@@ -7,6 +7,44 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColorUtils {
+    /**
+     * 得到更深的颜色
+     *
+     * @param color
+     * @return
+     */
+    public static int getDarkerColor(int color, float range) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv); // convert to hsv
+        // make darker
+
+        hsv[1] = hsv[1] + range; // more saturation
+        hsv[2] = hsv[2] - range; // less brightness
+//        hsv[1] = hsv[1] + 0.1f; // more saturation
+//        hsv[2] = hsv[2] - 0.1f; // less brightness
+        int darkerColor = Color.HSVToColor(hsv);
+        return darkerColor;
+    }
+
+
+    /**
+     * 得到更浅的颜色
+     * @param color
+     * @param range
+     * @return
+     */
+    public static int getLighterColor(int color,float range) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv); // convert to hsv
+
+        hsv[1] = hsv[1] - range; // less saturation
+        hsv[2] = hsv[2] + range; // more brightness
+//        hsv[1] = hsv[1] - 0.1f; // less saturation
+//        hsv[2] = hsv[2] + 0.1f; // more brightness
+        int lightColor = Color.HSVToColor(hsv);
+        return lightColor;
+    }
+
 
     public static String toHex(int a, int r, int g, int b) {
         return toBrowserHexValue(a) + toBrowserHexValue(r)
