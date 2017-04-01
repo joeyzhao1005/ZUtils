@@ -58,4 +58,39 @@ public class PingYinUtils {
         }
         return output;
     }
+
+
+
+    // 返回中文的首字母
+    /**
+     * 首字母
+     *
+     * @param str
+     * @return
+     */
+    public  String getPinYinHeadChar(String str) {
+
+        String convert = "";
+        for (int j = 0; j < str.length(); j++) {
+            char word = str.charAt(j);
+            String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
+            if (pinyinArray != null) {
+                convert += pinyinArray[0].charAt(0);
+            } else {
+                convert += word;
+            }
+        }
+        return convert;
+    }
+
+    // 将字符串转移为ASCII码
+    public  String getCnASCII(String cnStr) {
+        StringBuffer strBuf = new StringBuffer();
+        byte[] bGBK = cnStr.getBytes();
+        for (int i = 0; i < bGBK.length; i++) {
+            strBuf.append(Integer.toHexString(bGBK[i] & 0xff));
+        }
+        return strBuf.toString();
+    }
+
 }
