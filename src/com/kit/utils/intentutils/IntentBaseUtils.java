@@ -16,6 +16,21 @@ import java.util.Set;
 public class IntentBaseUtils {
     private static final String KEY_DATA = "zhao_bundle_data";
 
+
+    public static void gotoNextActivityAsNewTask(Context packageContext, Class<?> cls) {
+        Intent intent = new Intent();
+        // Bundle bundle = new Bundle();
+        // bundle.putString("USERNAME",
+        // et_username.getText().toString());
+        // intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClass(packageContext, cls);
+        packageContext.startActivity(intent);
+
+        // overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+        // ((Activity) packageContext).overridePendingTransition(
+        // R.anim.push_left_in, R.anim.push_left_out);
+    }
     public static void gotoNextActivity(Context packageContext, Class<?> cls) {
         Intent intent = new Intent();
         // Bundle bundle = new Bundle();

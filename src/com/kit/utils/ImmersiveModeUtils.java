@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.kit.utils.bitmap.BitmapUtils;
+import com.kit.utils.log.ZogUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
@@ -141,6 +142,7 @@ public class ImmersiveModeUtils {
 
             }
         } catch (Exception e) {
+            ZogUtils.showException(e);
         }
 //
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
