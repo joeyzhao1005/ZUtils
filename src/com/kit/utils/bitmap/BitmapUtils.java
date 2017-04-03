@@ -1190,7 +1190,7 @@ public class BitmapUtils {
      * @param bmp
      * @param file
      */
-    public static File saveBitmap(Bitmap bmp, File file) throws IOException {
+    public static File saveBitmap(Bitmap bmp, File file) {
         if (bmp == null)
             return null;
 

@@ -13,8 +13,12 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.kit.utils.bitmap.BitmapUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Zhao on 14-8-12.
@@ -25,6 +29,23 @@ public class DrawableUtils {
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTintList(wrappedDrawable, colors);
         return wrappedDrawable;
+    }
+
+
+    /**
+     * 保存位图到filepath路径
+     *
+     * @param drawable
+     * @param file
+     */
+    public static File saveDrawable(Drawable drawable, File file) {
+        Bitmap bmp = BitmapUtils.drawable2Bitmap(drawable);
+        if (bmp == null)
+            return null;
+
+        BitmapUtils.saveBitmap(bmp, file);
+
+        return file;
     }
 
     public static String saveDrawable(Context context, int drawableID, String filename) {
@@ -164,7 +185,7 @@ public class DrawableUtils {
     }
 
 
-    private static final int[] EMPTY_STATE = new int[] {};
+    private static final int[] EMPTY_STATE = new int[]{};
 
     public static void clearState(Drawable drawable) {
         if (drawable != null) {
