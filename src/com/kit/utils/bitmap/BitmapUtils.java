@@ -750,10 +750,10 @@ public class BitmapUtils {
      * @param path  文件路径
      * @param scale 缩放倍数，1为不缩放，小数为缩放到多少倍
      * @return Bitmap 返回类型
-     * @Title getBitmapThumbnailFromFile
+     * @Title getBitmapFromFile
      * @Description 从文件路径，获取图片缩略图
      */
-    public static Bitmap getBitmapThumbnailFromFile(String path, double scale) {
+    public static Bitmap getBitmapFromFile(String path, double scale) {
         Bitmap bmp = null;
         try {
             int digree = getDegree(path);
@@ -777,11 +777,11 @@ public class BitmapUtils {
      * @param uri     相册选取得到的路径
      * @param scale   缩放倍数，1为不缩放，小数为缩放到多少倍
      * @return Bitmap 返回类型
-     * @Title getBitmapThumbnailFromUri
+     * @Title getBitmapFromUri
      * @Description 从相册选择图片，获取图片缩略图
      */
-    public static Bitmap getBitmapThumbnailFromUri(Context context, Uri uri,
-                                                   double scale) {
+    public static Bitmap getBitmapFromUri(Context context, Uri uri,
+                                          double scale) {
 
         Bitmap result = null;
         if (uri != null) {
