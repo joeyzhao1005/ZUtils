@@ -451,7 +451,7 @@ public class FileUtils {
             }
         } else {
             // 如果目标文件所在目录不存在，则创建目录
-            if (!destFile.getParentFile().exists()) {
+            if (destFile.getParentFile() != null && !destFile.getParentFile().exists()) {
                 // 目标文件所在目录不存在
                 if (!destFile.getParentFile().mkdirs()) {
                     // 复制文件失败：创建目标文件所在目录失败
