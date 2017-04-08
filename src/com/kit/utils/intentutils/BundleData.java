@@ -1,18 +1,22 @@
 package com.kit.utils.intentutils;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.Gson;
 import com.kit.utils.GsonUtils;
 import com.kit.utils.log.ZogUtils;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BundleData implements Cloneable {
+public class BundleData implements Cloneable,Parcelable {
     HashMap<String, Object> hashMap = new HashMap();
+
 
     /**
      * 压入数据
@@ -119,4 +123,33 @@ public class BundleData implements Cloneable {
         return sb.toString();
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(this.hashMap);
+    }
+
+    public BundleData() {
+    }
+
+    protected BundleData(Parcel in) {
+        this.hashMap = (HashMap<String, Object>) in.readSerializable();
+    }
+
+    public static final Creator<BundleData> CREATOR = new Creator<BundleData>() {
+        @Override
+        public BundleData createFromParcel(Parcel source) {
+            return new BundleData(source);
+        }
+
+        @Override
+        public BundleData[] newArray(int size) {
+            return new BundleData[size];
+        }
+    };
 }
