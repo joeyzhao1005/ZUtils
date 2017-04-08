@@ -14,9 +14,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BundleData implements Cloneable,Parcelable {
+public class BundleData implements Cloneable, Parcelable {
     HashMap<String, Object> hashMap = new HashMap();
 
+
+    public boolean containsKey(String key) {
+
+        if (hashMap == null)
+            return false;
+
+        return hashMap.containsKey(key);
+    }
 
     /**
      * 压入数据
@@ -66,9 +74,6 @@ public class BundleData implements Cloneable,Parcelable {
         }
         return t;
     }
-
-
-
 
 
     /**
@@ -124,6 +129,14 @@ public class BundleData implements Cloneable,Parcelable {
     }
 
 
+    public HashMap<String, Object> getHashMap() {
+        return hashMap;
+    }
+
+    public void setHashMap(HashMap<String, Object> hashMap) {
+        this.hashMap = hashMap;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -131,14 +144,14 @@ public class BundleData implements Cloneable,Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(this.hashMap);
+        dest.writeMap(this.hashMap);
     }
 
     public BundleData() {
     }
 
     protected BundleData(Parcel in) {
-        this.hashMap = (HashMap<String, Object>) in.readSerializable();
+        this.hashMap = (HashMap<String, Object>) in.readHashMap(HashMap.class.getClassLoader());
     }
 
     public static final Creator<BundleData> CREATOR = new Creator<BundleData>() {

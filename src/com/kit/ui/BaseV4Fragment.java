@@ -74,7 +74,7 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
         View view = initWidget(inflater, container,
                 savedInstanceState);
 
-        initWidgetWithData();
+        initWidgetWithExtra();
 
         return view;
     }
@@ -143,8 +143,7 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     /**
      * 去网络或者本地加载数据
      */
-    public boolean initWidgetWithData() {
-        return true;
+    public void initWidgetWithExtra() {
     }
 
 }
