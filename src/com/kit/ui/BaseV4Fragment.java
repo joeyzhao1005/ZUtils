@@ -146,4 +146,12 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     public void initWidgetWithExtra() {
     }
 
+    public void destory(){
+        onPause();
+        onStop();
+        onDestroyView();
+        onDestroy();
+        onDetach();
+    }
+
 }
