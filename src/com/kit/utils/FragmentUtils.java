@@ -1,7 +1,5 @@
 package com.kit.utils;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
@@ -27,11 +25,8 @@ public class FragmentUtils {
      */
     public static void replace(FragmentManager fragmentManager, int idContainer, Fragment fragement) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-// Replace whatever is in thefragment_container view with this fragment,
-// and add the transaction to the backstack
         transaction.replace(idContainer, fragement);
         transaction.addToBackStack(null);
-//提交修改
         transaction.commitAllowingStateLoss();
     }
 
@@ -39,14 +34,10 @@ public class FragmentUtils {
     public static void replace(FragmentManager fragmentManager, int idContainer, Fragment fragement, @AnimRes int enter,
                                @AnimRes int exit, @AnimRes int popEnter, @AnimRes int popExit) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-// Replace whatever is in thefragment_container view with this fragment,
-// and add the transaction to the backstack
+        transaction.setCustomAnimations(enter, exit, popEnter, popExit);
         transaction.replace(idContainer, fragement);
         transaction.addToBackStack(null);
-        transaction.setCustomAnimations(enter, exit, popEnter, popExit);
-//提交修改
         transaction.commitAllowingStateLoss();
-
     }
 
 
