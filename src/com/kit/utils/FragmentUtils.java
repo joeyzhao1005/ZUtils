@@ -188,4 +188,13 @@ public class FragmentUtils {
     }
 
 
+    /**
+     * v4的replace
+     *
+     * @param fragement
+     */
+    public static boolean isShowing(Fragment fragement) {
+        return (fragement != null && fragement.isVisible() && !fragement.isRemoving() && !fragement.isDetached() && fragement.isResumed());
+    }
+
 }
