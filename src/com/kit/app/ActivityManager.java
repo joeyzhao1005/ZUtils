@@ -35,7 +35,7 @@ public class ActivityManager {
      *
      * @param activity
      */
-    public void pushActivity(Activity activity) {
+    public synchronized void pushActivity(Activity activity) {
         if (activity != null) {
             activities.push(new WeakReference<Activity>(activity));
         }
@@ -47,7 +47,7 @@ public class ActivityManager {
      *
      * @param cls
      */
-    public void popActivity(Class cls) {
+    public synchronized void popActivity(Class cls) {
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
 
@@ -72,7 +72,7 @@ public class ActivityManager {
      *
      * @param activity
      */
-    public void popActivity(Activity activity) {
+    public synchronized void  popActivity(Activity activity) {
 
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
@@ -96,7 +96,7 @@ public class ActivityManager {
     /**
      * 遍历所有Activity并finish（一般用于退出应用，销毁APP）
      */
-    public void popAllActivity() {
+    public synchronized void popAllActivity() {
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
 
@@ -118,7 +118,7 @@ public class ActivityManager {
      *
      * @param cls
      */
-    public void popAllActivityExceptOne(Class cls) {
+    public synchronized void popAllActivityExceptOne(Class cls) {
         ZogUtils.i("activities.size():"
                 + activities.size());
         Iterator<WeakReference<Activity>> iter = activities.iterator();
@@ -141,7 +141,7 @@ public class ActivityManager {
      *
      * @return
      */
-    public Activity getCurrActivity() {
+    public synchronized Activity getCurrActivity() {
 
         WeakReference<Activity> activity = null;
         try {
@@ -161,7 +161,7 @@ public class ActivityManager {
      *
      * @return
      */
-    public Activity getActivity(Class cls) {
+    public synchronized Activity getActivity(Class cls) {
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
             WeakReference<Activity> weakReference = iter.next();
@@ -181,7 +181,7 @@ public class ActivityManager {
      * @param cls
      * @return
      */
-    public boolean isExistActivity(Class cls) {
+    public synchronized boolean isExistActivity(Class cls) {
 
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
