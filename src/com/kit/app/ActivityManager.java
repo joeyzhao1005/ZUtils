@@ -80,11 +80,11 @@ public class ActivityManager {
             Activity act = weakReference.get();
             if (act != null && activity != null) {
                 if (act.getClass().equals(activity.getClass())) {
+                    iter.remove();
+                    weakReference.clear();
                     act.finish();
                     act = null;
                     activity = null;
-                    weakReference.clear();
-                    iter.remove();
                 }
             }
         }
@@ -104,8 +104,9 @@ public class ActivityManager {
             Activity activity = weakReference.get();
             if (activity != null) {
                 activity.finish();
-                activity = null;
+
                 weakReference.clear();
+                activity = null;
             }
             iter.remove();
         }
@@ -126,9 +127,10 @@ public class ActivityManager {
             WeakReference<Activity> weakReference = iter.next();
             Activity activity = weakReference.get();
             if (activity != null && !activity.getClass().equals(cls)) {
-                activity.finish();
-                weakReference.clear();
                 iter.remove();
+                weakReference.clear();
+
+                activity.finish();
             }
 
         }
