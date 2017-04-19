@@ -31,6 +31,15 @@ public class FragmentUtils {
     }
 
 
+    public static void replace(FragmentManager fragmentManager, int idContainer, Fragment fragement,String name, @AnimRes int enter,
+                               @AnimRes int exit, @AnimRes int popEnter, @AnimRes int popExit) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(enter, exit, popEnter, popExit);
+        transaction.replace(idContainer, fragement);
+        transaction.addToBackStack(name);
+        transaction.commitAllowingStateLoss();
+    }
+
     public static void replace(FragmentManager fragmentManager, int idContainer, Fragment fragement, @AnimRes int enter,
                                @AnimRes int exit, @AnimRes int popEnter, @AnimRes int popExit) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();

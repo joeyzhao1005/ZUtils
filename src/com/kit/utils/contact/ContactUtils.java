@@ -333,7 +333,7 @@ public class ContactUtils {
                             + " like ? ", // WHERE clause.
                     selectionArgs, // WHERE clause value substitution
                     null); // Sort order.
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             ZogUtils.showException(e);
         }
         if (cursor == null || cursor.getCount() < 1) {
