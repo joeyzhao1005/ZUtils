@@ -900,10 +900,9 @@ public class BitmapUtils {
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(path, options);
 
-            Log.d(TAG, " round=" + width + "x" + height + ", crop=" + crop);
+
             final double beY = options.outHeight * 1.0 / height;
             final double beX = options.outWidth * 1.0 / width;
-            Log.d(TAG, " extract beX = " + beX + ", beY = " + beY);
             options.inSampleSize = (int) (crop ? (beY > beX ? beX : beY) : (beY < beX ? beX : beY));
             if (options.inSampleSize <= 1) {
                 options.inSampleSize = 1;
@@ -932,15 +931,13 @@ public class BitmapUtils {
 
             options.inJustDecodeBounds = false;
 
-            Log.i(TAG, "bitmap required size=" + newWidth + "x" + newHeight + ", orig="
-                    + options.outWidth + "x" + options.outHeight + ", sample=" + options.inSampleSize);
+
             Bitmap bm = BitmapFactory.decodeFile(path, options);
             if (bm == null) {
                 Log.e(TAG, "bitmap decode failed");
                 return null;
             }
 
-            Log.i(TAG, "bitmap decoded size=" + bm.getWidth() + "x" + bm.getHeight());
             final Bitmap scale = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
             if (scale != null) {
                 bm.recycle();
@@ -955,7 +952,6 @@ public class BitmapUtils {
 
                 bm.recycle();
                 bm = cropped;
-                Log.i(TAG, "bitmap croped size=" + bm.getWidth() + "x" + bm.getHeight());
             }
             return bm;
 
@@ -1221,7 +1217,7 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
-        ZogUtils.i("save file.getPath():" + file.getPath());
+//        ZogUtils.i("save file.getPath():" + file.getPath());
 
         return file;
     }
