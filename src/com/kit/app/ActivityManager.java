@@ -7,9 +7,10 @@ import com.kit.utils.log.ZogUtils;
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Stack;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ActivityManager {
-    private Stack<WeakReference<Activity>> activities = new Stack<WeakReference<Activity>>();
+    private CopyOnWriteArrayList<WeakReference<Activity>> activities = new CopyOnWriteArrayList<WeakReference<Activity>>();
     private static ActivityManager instance;
 
     private ActivityManager() {
@@ -37,7 +38,7 @@ public class ActivityManager {
      */
     public synchronized void pushActivity(Activity activity) {
         if (activity != null) {
-            activities.push(new WeakReference<Activity>(activity));
+            activities.add(new WeakReference<Activity>(activity));
         }
         ZogUtils.i("pushActivity size:" + getSize());
     }
@@ -58,9 +59,8 @@ public class ActivityManager {
 
                 activity.finish();
                 weakReference.clear();
+                activities.remove(weakReference);
                 activity = null;
-
-                iter.remove();
             }
         }
 
@@ -72,7 +72,7 @@ public class ActivityManager {
      *
      * @param activity
      */
-    public synchronized void  popActivity(Activity activity) {
+    public synchronized void popActivity(Activity activity) {
 
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
@@ -80,7 +80,7 @@ public class ActivityManager {
             Activity act = weakReference.get();
             if (act != null && activity != null) {
                 if (act.getClass().equals(activity.getClass())) {
-                    iter.remove();
+                    activities.remove(weakReference);
                     weakReference.clear();
                     act.finish();
                     act = null;
@@ -108,7 +108,8 @@ public class ActivityManager {
                 weakReference.clear();
                 activity = null;
             }
-            iter.remove();
+            activities.remove(weakReference);
+
         }
         ZogUtils.i("popAllActivity size:" + getSize());
 
@@ -127,7 +128,8 @@ public class ActivityManager {
             WeakReference<Activity> weakReference = iter.next();
             Activity activity = weakReference.get();
             if (activity != null && !activity.getClass().equals(cls)) {
-                iter.remove();
+                activities.remove(weakReference);
+
                 weakReference.clear();
 
                 activity.finish();
@@ -147,7 +149,7 @@ public class ActivityManager {
 
         WeakReference<Activity> activity = null;
         try {
-            activity = activities.peek();
+            activity = activities.get(activities.size() - 1);
             return activity.get();
 
         } catch (Exception e) {

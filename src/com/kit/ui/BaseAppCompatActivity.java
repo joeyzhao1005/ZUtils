@@ -121,9 +121,10 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        ActivityManager.getInstance().popActivity(this);
         isShowing = false;
 
-        ActivityManager.getInstance().popActivity(this);
+        super.onDestroy();
+
     }
 }
