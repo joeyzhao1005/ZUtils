@@ -1,7 +1,12 @@
 package com.kit.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -72,8 +77,6 @@ public class GsonUtils {
     }
 
 
-
-
     /**
      * 解析成list
      *
@@ -137,6 +140,35 @@ public class GsonUtils {
 
         Gson gson = new Gson();
         return gson.fromJson(jsonStr, clazz);
+    }
+
+
+    /**
+     * 根据 key 获取 json 数据
+     *
+     * @return
+     */
+    public static String getJsonByKey(Object object, String key) {
+        if (object == null)
+            return null;
+
+        String jsonStr = GsonUtils.toJson(object);
+
+
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
+            return null;
+
+        JSONObject jsonObject = JsonUtils.str2JSONObj(jsonStr);
+
+        String value = null;
+        if (jsonObject != null && jsonObject.has(key)) {
+            try {
+                value = jsonObject.get(key).toString();
+            } catch (JSONException e) {
+            }
+        }
+
+        return value;
     }
 
 

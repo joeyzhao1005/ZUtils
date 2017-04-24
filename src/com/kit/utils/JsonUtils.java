@@ -127,30 +127,31 @@ public class JsonUtils {
 
 
     }
+
     /**
      * JSONObject转为map
+     *
      * @param object json对象
      * @return 转化后的Map
      */
-    public static Map<String, Object> toMap(JSONObject object){
+    public static Map<String, Object> toMap(JSONObject object) {
         Map<String, Object> map = new HashMap<String, Object>();
 
         Iterator it = object.keys();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             String key = it.next().toString();
-            Object value =null;
+            Object value = null;
             try {
-               value= object.get(key);
-            }catch (JSONException e){}
-
-            if(value==null)
-                continue;
-
-            if(value instanceof JSONArray) {
-                value = toList((JSONArray) value);
+                value = object.get(key);
+            } catch (JSONException e) {
             }
 
-            else if(value instanceof JSONObject) {
+            if (value == null)
+                continue;
+
+            if (value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            } else if (value instanceof JSONObject) {
                 value = toMap((JSONObject) value);
             }
             map.put(key, value);
@@ -161,25 +162,25 @@ public class JsonUtils {
 
     /**
      * JSONArray转为List
+     *
      * @param array json数组
      * @return 转化后的List
      */
-    public static List<Object> toList(JSONArray array){
+    public static List<Object> toList(JSONArray array) {
         List<Object> list = new ArrayList<Object>();
-        for(int i = 0; i < array.length(); i++) {
-            Object value = null ;
+        for (int i = 0; i < array.length(); i++) {
+            Object value = null;
             try {
-                value= array.get(i);
-            }catch (JSONException e){}
-
-            if(value==null)
-                continue;
-
-            if(value instanceof JSONArray) {
-                value = toList((JSONArray) value);
+                value = array.get(i);
+            } catch (JSONException e) {
             }
 
-            else if(value instanceof JSONObject) {
+            if (value == null)
+                continue;
+
+            if (value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            } else if (value instanceof JSONObject) {
                 value = toMap((JSONObject) value);
             }
             list.add(value);
@@ -209,6 +210,5 @@ public class JsonUtils {
         }
         return true;
     }
-
-
 }
+
