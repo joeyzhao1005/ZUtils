@@ -430,6 +430,10 @@ public class FileUtils {
      */
     public static boolean copy(String srcFileName, String destFileName,
                                boolean overlay) {
+
+        if (StringUtils.isEmptyOrNullStr(srcFileName))
+            return false;
+
         File srcFile = new File(srcFileName);
 
         // 判断源文件是否存在
