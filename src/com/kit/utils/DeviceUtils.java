@@ -3,7 +3,10 @@ package com.kit.utils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
@@ -11,12 +14,54 @@ import android.os.PowerManager;
 import android.util.TypedValue;
 import android.view.Display;
 
+import com.kit.receiver.DeviceAdminManagerReceiver;
+
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class DeviceUtils {
 
 
     private static int statusBarHeight = 0;
+
+
+    public static final int DEVICE_ADMIN = 70 + 1;
+
+
+
+    public static void lockScreen(Activity activity) {
+        //获取设备管理服务
+        DevicePolicyManager policyManager = (DevicePolicyManager) activity
+                .getSystemService(Context.DEVICE_POLICY_SERVICE);
+
+        //AdminReceiver 继承自 DeviceAdminReceiver
+        ComponentName componentName = new ComponentName(activity, DeviceAdminManagerReceiver.class);
+
+        boolean active = policyManager.isAdminActive(componentName);
+        if (!active) {//若无权限
+            // 启动设备管理(隐式Intent) - 在AndroidManifest.xml中设定相应过滤器
+            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+
+            //权限列表
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+
+            //描述(additional explanation)
+//        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "------------");
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivityForResult(intent, DEVICE_ADMIN);
+
+            // 判断该组件是否有系统管理员的权限
+            active = policyManager.isAdminActive(componentName);
+            if (active) {
+                policyManager.lockNow();//并锁屏
+            }
+        }
+        if (active) {
+            policyManager.lockNow();//直接锁屏
+        }
+    }
+
 
     /**
      * 判定是否有虚拟按键

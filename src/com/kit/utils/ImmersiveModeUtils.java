@@ -96,7 +96,8 @@ public class ImmersiveModeUtils {
      * @param statusBarColor     状态栏的颜色
      * @param navigationBarColor 导航栏的颜色
      */
-    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, boolean isMarginStatusBar, boolean isMarginNavigationBar, int statusBarColor, int navigationBarColor) {
+    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, boolean isMarginStatusBar
+            , boolean isMarginNavigationBar, int statusBarColor, int navigationBarColor) {
         try {
             Window window = baseActivity.getWindow();
 

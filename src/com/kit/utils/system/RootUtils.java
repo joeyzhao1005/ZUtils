@@ -1,5 +1,7 @@
 package com.kit.utils.system;
 
+import android.content.Context;
+
 import com.kit.utils.log.ZogUtils;
 
 import java.io.BufferedReader;
@@ -25,11 +27,11 @@ public class RootUtils {
      *
      * @return 应用程序是/否获取Root权限
      */
-    public static boolean upgradeRootPermission(String pkgCodePath) {
+    public static boolean upgradeRootPermission(Context context) {
         Process process = null;
         DataOutputStream os = null;
         try {
-            String cmd = "chmod 777 " + pkgCodePath;
+            String cmd = "chmod 777 " + context.getPackageCodePath();
             process = Runtime.getRuntime().exec("su"); // 切换到root帐号
             os = new DataOutputStream(process.getOutputStream());
             os.writeBytes(cmd + "\n");
@@ -51,30 +53,22 @@ public class RootUtils {
         return true;
     }
 
-    // 判定是否root
-//    public static boolean isRoot() {
-//        Process process = null;
-//        DataOutputStream os = null;
-//        try {
-//            process = Runtime.getRuntime().exec("su");
-//            os = new DataOutputStream(process.getOutputStream());
-//            os.writeBytes(" exit \n");
-//            os.writeBytes(" exit \n");
-//            os.flush();
-//            process.waitFor();
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
+
 
 
     /**
-     * 判断手机是否root，不弹出root请求框<br/>
+     * 模拟按键
+     *
+     * @param key KeyEvent.KEYCODE_MENU
      */
-    public static boolean isRoot() {
-        String cmdStr = "uiautomator dump";
-        return execCmdWithRoot(cmdStr);
+    public static boolean simulateKey(int key) {
+        try {
+            String keyCommand = "input keyevent " + key;
+            return execCmdWithRoot(keyCommand);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
@@ -111,6 +105,14 @@ public class RootUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * 判断手机是否root，会弹出root请求框
+     */
+    public static boolean isRootDevice() {
+        String cmdStr = "uiautomator dump";
+        return execCmdWithRoot(cmdStr);
     }
 
     /**
