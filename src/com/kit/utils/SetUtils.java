@@ -14,7 +14,30 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class SetUtils {
+    /**
+     * 转换为数组
+     *
+     * @param set
+     * @return
+     */
+    public static <T> T getItem(Set<T> set, int index) {
+        Object[] array = new Object[set.size()];
+        set.toArray(array);
 
+        if (index >= array.length) {
+            return null;
+        }
+
+        if (array[index] == null)
+            return null;
+        else {
+            try {
+                return (T) array[index];
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
 
 
     /**
@@ -228,7 +251,7 @@ public class SetUtils {
     public static <T> Set<T> remove(Set<T> set, IEqual iEqual) {
 
 
-        for (Iterator<T> it = set.iterator(); it.hasNext();) {
+        for (Iterator<T> it = set.iterator(); it.hasNext(); ) {
             T t = it.next();
             if (iEqual.equal(t)) {
                 it.remove();  // ok
