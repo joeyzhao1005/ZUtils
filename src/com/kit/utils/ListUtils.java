@@ -272,6 +272,15 @@ public class ListUtils {
     }
 
 
+    public static ArrayList addTop(ArrayList list, Object obj) {
+        ArrayList tempList = new ArrayList();
+        tempList.add(obj);
+        tempList.addAll(list);
+
+        return tempList;
+    }
+
+
     public static <T> T find(List<T> list, IEqual equal) {
         for (T i : list) {
             if (equal.equal(i)) {
