@@ -3,6 +3,7 @@ package com.kit.utils.bitmap;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -17,14 +18,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.kit.config.AppConfig;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.FileUtils;
 import com.kit.utils.MathExtend;
+import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
+import com.kit.utils.log.ZogUtils;
 
 import junit.framework.Assert;
 
@@ -1191,7 +1195,6 @@ public class BitmapUtils {
             return null;
 
 
-
         File dir = new File(file.getParent());
 
 
@@ -1219,6 +1222,8 @@ public class BitmapUtils {
 
 //        ZogUtils.i("save file.getPath():" + file.getPath());
 
+
+        notifySystemSavedPic(ResWrapper.getInstance().getContext(), file);
         return file;
     }
 
@@ -1248,5 +1253,26 @@ public class BitmapUtils {
             }
         }
         return null;
+    }
+
+
+    /**
+     * 通知系统保存了图片到相册
+     *
+     * @param context
+     * @param file
+     */
+    public static void notifySystemSavedPic(Context context, File file) {
+        // 其次把文件插入到系统图库
+        try {
+            String fileName = FileUtils.getFilename(file);
+
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    file.getAbsolutePath(), fileName, null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 最后通知图库更新
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
     }
 }

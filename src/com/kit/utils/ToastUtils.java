@@ -33,6 +33,14 @@ public class ToastUtils {
         }
     }
 
+    public static void mkLongTimeToast(Context context,int msgStringId) {
+        try {
+            Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
+    }
+
     public static void mkShortTimeToast(String msg) {
         try {
             Context context = ResWrapper.getInstance().getContext();
@@ -46,6 +54,15 @@ public class ToastUtils {
     public static void mkShortTimeToast(int msgStringId) {
         try {
             Context context = ResWrapper.getInstance().getContext();
+            Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
+    }
+
+
+    public static void mkShortTimeToast(Context context,int msgStringId) {
+        try {
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             ZogUtils.showException(e);
