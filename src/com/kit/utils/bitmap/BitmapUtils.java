@@ -1183,6 +1183,20 @@ public class BitmapUtils {
         return sourceImg;
     }
 
+    /**
+     * 保存位图到filepath路径
+     *
+     * @param bmp
+     * @param file
+     */
+    public static File saveBitmap(Bitmap bmp, File file, boolean isNotify) {
+
+        File fileSaved = saveBitmap(bmp, file);
+        if (fileSaved != null && isNotify) {
+            notifySystemSavedPic(ResWrapper.getInstance().getContext(), file);
+        }
+        return fileSaved;
+    }
 
     /**
      * 保存位图到filepath路径
@@ -1223,7 +1237,6 @@ public class BitmapUtils {
 //        ZogUtils.i("save file.getPath():" + file.getPath());
 
 
-        notifySystemSavedPic(ResWrapper.getInstance().getContext(), file);
         return file;
     }
 
