@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 public class FileUtils {
     private static void beforeSave(String fileName) {
@@ -62,6 +63,23 @@ public class FileUtils {
         for (int i = 0; i < fileNames.length; i++) {
             File file = new File(fileNames[i]);
             if (file.exists())
+                return file.delete();
+        }
+        return false;
+    }
+
+
+    /**
+     * 删除指定文件
+     *
+     * @param fileList
+     */
+    public static boolean deleteFiles(List<String> fileList) {
+        if (fileList.size() <= 0)
+            return false;
+        for (int i = 0; i < fileList.size(); i++) {
+            File file = new File(fileList.get(i));
+            if (file != null && file.exists())
                 return file.delete();
         }
         return false;

@@ -221,7 +221,7 @@ public class BitmapUtils {
                     break;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            ZogUtils.showException(e);
         }
         return degree;
     }
