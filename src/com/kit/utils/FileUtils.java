@@ -431,7 +431,7 @@ public class FileUtils {
      */
     public static String getSuffix(String filedir) {
 
-        if (StringUtils.isEmptyOrNullStr(filedir)) {
+        if (StringUtils.isEmptyOrNullStr(filedir) && !filedir.contains(".")) {
             return null;
         }
 
