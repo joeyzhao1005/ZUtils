@@ -1,12 +1,32 @@
 package com.kit.utils;
 
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColorUtils {
+
+
+    /**
+     * 不同状态时其颜色
+     */
+    public static ColorStateList createColorStateList(int normal, int pressed, int focused, int unable) {
+        int[] colors = new int[]{pressed, focused, normal, focused, unable, normal};
+        int[][] states = new int[6][];
+        states[0] = new int[]{android.R.attr.state_pressed, android.R.attr.state_enabled};
+        states[1] = new int[]{android.R.attr.state_enabled, android.R.attr.state_focused};
+        states[2] = new int[]{android.R.attr.state_enabled};
+        states[3] = new int[]{android.R.attr.state_focused};
+        states[4] = new int[]{android.R.attr.state_window_focused};
+        states[5] = new int[]{};
+        ColorStateList colorList = new ColorStateList(states, colors);
+        return colorList;
+    }
+
+
     /**
      * 得到更深的颜色
      *
@@ -29,11 +49,12 @@ public class ColorUtils {
 
     /**
      * 得到更浅的颜色
+     *
      * @param color
      * @param range
      * @return
      */
-    public static int getLighterColor(int color,float range) {
+    public static int getLighterColor(int color, float range) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv); // convert to hsv
 
@@ -120,6 +141,7 @@ public class ColorUtils {
 
     /**
      * 将纯色转化为透明色
+     *
      * @param color
      * @param alpha
      * @return
@@ -138,7 +160,7 @@ public class ColorUtils {
      */
     public static int hex2Color(String color) {
 
-        if(StringUtils.isEmptyOrNullStr(color)){
+        if (StringUtils.isEmptyOrNullStr(color)) {
             return 0xff000000;
         }
         String reg = "#[a-f0-9A-F]{6,8}";
