@@ -431,12 +431,11 @@ public class FileUtils {
      */
     public static String getSuffix(String filedir) {
 
-        if (StringUtils.isEmptyOrNullStr(filedir) && !filedir.contains(".")) {
+        if (StringUtils.isEmptyOrNullStr(filedir) || !filedir.contains(".")) {
             return null;
         }
 
-        String prefix = filedir.substring(filedir.lastIndexOf(".") + 1);
-        return prefix;
+        return filedir.substring(filedir.lastIndexOf(".") + 1);
     }
 
     /**
