@@ -111,6 +111,18 @@ public class ZogUtils {
             Log.e(LOGUTILS_TAG, getTitle() + msg);
         }
     }
+    /**
+     * @param msg String 消息
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void d(String msg) {
+
+        if (AppConfig.getAppConfig().isShowLog()) {
+            Log.d(LOGUTILS_TAG, getTitle() + msg);
+        }
+    }
 
 
     private static String getTitle() {

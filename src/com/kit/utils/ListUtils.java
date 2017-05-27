@@ -291,6 +291,22 @@ public class ListUtils {
         return null;
     }
 
+    public static int findPosition(List list, IEqual eq) {
+
+        if (eq == null)
+            return -1;
+
+        if (ListUtils.isNullOrEmpty(list))
+            return -1;
+
+        for (int i = 0; i < list.size(); i++) {
+            if (eq.equal(list.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     public static <T> List<T> remove(List<T> list, IEqual iEqual) {
 

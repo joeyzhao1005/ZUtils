@@ -331,6 +331,24 @@ public class MapUtils {
     }
 
 
+    public static Map removePosition(Map map, int position) {
+        if (MapUtils.isNullOrEmpty(map))
+            return map;
+
+        Iterator<Map.Entry<?, ?>> it = map.entrySet().iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            Map.Entry<?, ?> entry = it.next();
+            if (i == position) {
+                map.remove(entry.getKey());
+                return map;
+            }
+            i++;
+        }
+        return map;
+    }
+
+
     public static Map removeByValue(Map map, IEqual iEqual) {
 
         Iterator<Map.Entry<?, ?>> it = map.entrySet().iterator();
