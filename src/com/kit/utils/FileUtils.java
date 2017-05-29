@@ -293,12 +293,12 @@ public class FileUtils {
     /**
      * 判断文件是存在
      *
-     * @param fileName 路径（含文件名）
+     * @param filePath 路径（含文件名）
      * @return
      */
-    public static boolean isExists(String fileName) {
+    public static boolean isExists(String filePath) {
         try {
-            File f = new File(fileName);
+            File f = new File(filePath);
             return f.exists();
         } catch (Exception e) {
         }

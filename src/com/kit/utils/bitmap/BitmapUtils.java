@@ -1236,6 +1236,7 @@ public class BitmapUtils {
 
 //        ZogUtils.i("save file.getPath():" + file.getPath());
 
+        bmp.recycle();
 
         return file;
     }

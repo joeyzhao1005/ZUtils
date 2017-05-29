@@ -10,8 +10,10 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Zhao on 14/11/20.
@@ -93,6 +95,39 @@ public class GsonUtils {
         return list;
     }
 
+    /**
+     * 解析成list
+     *
+     * @param jsonStr
+     * @return
+     */
+    public static <T> Set<T> getSet(String jsonStr, Type typeOfT) {
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
+            return null;
+
+        Gson gson = new Gson();
+        Set<T> list = gson.fromJson(jsonStr, typeOfT);
+        return list;
+    }
+
+
+    /**
+     * 解析成list
+     *
+     * @param jsonStr
+     * @return
+     */
+    public static <T> LinkedHashSet<T> getLinkedHashSet(String jsonStr, Type typeOfT) {
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
+            return null;
+
+        Gson gson = new Gson();
+        LinkedHashSet<T> list = gson.fromJson(jsonStr, typeOfT);
+        return list;
+    }
+
+
+
 
     /**
      * 解析成list
@@ -126,6 +161,46 @@ public class GsonUtils {
         return GsonUtils.getArrayList(jsonStr, type);
     }
 
+
+
+
+    /**
+     * 解析成ArrayList
+     *
+     * @param jsonStr
+     * @return
+     */
+    public static <T> Set<T> getSet(String jsonStr) {
+
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
+            return null;
+
+        Type type = new TypeToken<Set<T>>() {
+        }.getType();
+
+        return GsonUtils.getSet(jsonStr, type);
+    }
+
+
+
+
+
+    /**
+     * 解析成ArrayList
+     *
+     * @param jsonStr
+     * @return
+     */
+    public static <T> LinkedHashSet<T> getLinkedHashSet(String jsonStr) {
+
+        if (StringUtils.isEmptyOrNullStr(jsonStr))
+            return null;
+
+        Type type = new TypeToken<LinkedHashSet<T>>() {
+        }.getType();
+
+        return GsonUtils.getLinkedHashSet(jsonStr, type);
+    }
 
     /**
      * 解析成对象
