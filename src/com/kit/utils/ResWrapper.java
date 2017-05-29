@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
@@ -80,8 +81,13 @@ public class ResWrapper {
     }
 
 
-    public String getString(int stringId) {
+    public String getString(@StringRes int stringId) {
         return context.getResources().getString(stringId);
+    }
+
+
+    public String getString(@StringRes int stringId, Object... formatArgs) {
+        return context.getResources().getString(stringId, formatArgs);
     }
 
 
