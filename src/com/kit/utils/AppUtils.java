@@ -43,11 +43,6 @@ public class AppUtils {
             if (metaData == null) {
                 return null;
             } else {
-                try {
-                    String s = (String) metaData.get(key);
-                    ZogUtils.i(s);
-                } catch (Exception e) {
-                }
                 return (T) metaData.get(key);
             }
         } catch (Exception e) {
