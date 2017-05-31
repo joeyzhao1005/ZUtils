@@ -2,11 +2,14 @@ package com.kit.utils;
 
 import android.annotation.TargetApi;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
@@ -26,6 +29,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class AppUtils {
+
+
+
     /**
      * 从manifest里获取metadata
      *
@@ -34,7 +40,84 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getMetaDataFromManifest(String key, String packageName) {
+    public static <T> T getReceiverInfoMetaDataFromManifest(String key, ComponentName componentName) {
+        try {
+            Context context = ResWrapper.getInstance().getContext();
+            ActivityInfo info = context.getPackageManager().getReceiverInfo(componentName
+                    , PackageManager.GET_META_DATA);
+            Bundle metaData = info.metaData;
+            if (metaData == null) {
+                return null;
+            } else {
+                return (T) metaData.get(key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * 从manifest里获取metadata
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getServiceInfoMetaDataFromManifest(String key, ComponentName componentName) {
+        try {
+            Context context = ResWrapper.getInstance().getContext();
+            ServiceInfo info = context.getPackageManager().getServiceInfo(componentName
+                    , PackageManager.GET_META_DATA);
+            Bundle metaData = info.metaData;
+            if (metaData == null) {
+                return null;
+            } else {
+                return (T) metaData.get(key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 从manifest里获取metadata
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getActivityInfoMetaDataFromManifest(String key, ComponentName componentName) {
+        try {
+            Context context = ResWrapper.getInstance().getContext();
+            ActivityInfo info = context.getPackageManager().getActivityInfo(componentName
+                    , PackageManager.GET_META_DATA);
+            Bundle metaData = info.metaData;
+            if (metaData == null) {
+                return null;
+            } else {
+                return (T) metaData.get(key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * 从manifest里获取metadata
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getAppMetaDataFromManifest(String key, String packageName) {
         try {
             Context context = ResWrapper.getInstance().getContext();
             ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName
@@ -59,7 +142,7 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getMetaDataFromManifest(String key) {
+    public static <T> T getAppMetaDataFromManifest(String key) {
         try {
             Context context = ResWrapper.getInstance().getContext();
             return (T) context.getPackageManager().getApplicationInfo(context.getPackageName()
