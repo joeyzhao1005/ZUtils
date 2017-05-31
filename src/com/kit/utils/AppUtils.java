@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,7 +26,35 @@ import java.util.List;
 import java.util.Locale;
 
 public class AppUtils {
-
+    /**
+     * 从manifest里获取metadata
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getMetaDataFromManifest(String key, String packageName) {
+        try {
+            Context context = ResWrapper.getInstance().getContext();
+            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName
+                    , PackageManager.GET_META_DATA);
+            Bundle metaData = applicationInfo.metaData;
+            if (metaData == null) {
+                return null;
+            } else {
+                try {
+                    String s = (String) metaData.get(key);
+                    ZogUtils.i(s);
+                } catch (Exception e) {
+                }
+                return (T) metaData.get(key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      * 从manifest里获取metadata
@@ -260,7 +289,7 @@ public class AppUtils {
      *
      * @param lanAtr
      */
-    public static void setAppLanguage(Application app,String lanAtr) {
+    public static void setAppLanguage(Application app, String lanAtr) {
         Resources resources = app.getApplicationContext().getResources();
         Configuration config = resources.getConfiguration();
         DisplayMetrics dm = resources.getDisplayMetrics();
