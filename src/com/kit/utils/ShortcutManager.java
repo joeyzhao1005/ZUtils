@@ -43,6 +43,10 @@ public class ShortcutManager {
                         if (StringUtils.isEmptyOrNullStr(xmlParser.getName()))
                             continue;
                         ZogUtils.d("标签：" + xmlParser.getName() + "开始");
+                        if ("shortcut".equals(xmlParser.getName()) && shortcutInfo == null) {
+                            shortcutInfo = new ZShortcutInfo();
+                        }
+
                         parseTag(xmlParser.getName(), shortcutInfo, extra, xmlParser);
 
                         break;
@@ -97,6 +101,7 @@ public class ShortcutManager {
 
             case "shortcut":
                 try {
+
                     int attCount = xmlParser.getAttributeCount();
                     ZogUtils.d("shortcut 有" + attCount + "个属性");
 
