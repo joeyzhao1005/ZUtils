@@ -3,7 +3,6 @@ package com.kit.utils;
 import android.content.ComponentName;
 import android.content.res.XmlResourceParser;
 
-import com.kit.model.shortcut.Categories;
 import com.kit.model.shortcut.Extra;
 import com.kit.model.shortcut.ZShortcutInfo;
 import com.kit.utils.log.ZogUtils;
@@ -199,7 +198,7 @@ public class ShortcutManager {
                     for (int i = 0; i < attCount; i++) {
 
                         String attrName = xmlParser.getAttributeName(i);
-
+                        ZogUtils.d("intent 属性:" + attrName);
                         if (StringUtils.isEmptyOrNullStr(attrName))
                             continue;
 
@@ -218,6 +217,20 @@ public class ShortcutManager {
                                 String targetPackage = xmlParser.getAttributeValue(i);
                                 shortcutInfo.setTargetPackage(targetPackage);
                                 break;
+
+                            case "data":
+                                int attCountData = xmlParser.getAttributeCount();
+                                ZogUtils.d("data 属性:" + xmlParser.getAttributeName(i));
+                                ZogUtils.d("data 值:" + xmlParser.getAttributeValue(i));
+                                shortcutInfo.setData(xmlParser.getAttributeValue(i));
+                                break;
+
+                            case "intent-filter":
+                                ZogUtils.e("intent-filter");
+                                int attCountIntentFilter = xmlParser.getAttributeCount();
+                                ZogUtils.d("intent-filter 有" + attCountIntentFilter + "个属性");
+                                break;
+
                         }
                     }
                 } catch (Exception e) {
@@ -226,15 +239,25 @@ public class ShortcutManager {
 
             case "categories":
                 try {
-                    int attCount = xmlParser.getAttributeCount();
-                    if (attCount > 0) {
-                        shortcutInfo.setCategories(xmlParser.getAttributeValue(0));
+                    int attCountCategories = xmlParser.getAttributeCount();
+                    ZogUtils.d("categories 有" + attCountCategories + "个属性");
+
+                    if (attCountCategories > 0) {
+
+                        ArrayList<String> cats = new ArrayList<>();
+                        for (int j = 0; j < attCountCategories; j++) {
+                            ZogUtils.d("categories 属性：" + xmlParser.getAttributeName(0)
+                                    + ": " + xmlParser.getAttributeValue(0));
+                            String cat = xmlParser.getAttributeValue(j);
+                            if (StringUtils.isEmptyOrNullStr(cat))
+                                continue;
+
+                            cats.add(cat);
+                        }
+                        shortcutInfo.setCategories(cats);
+
                     }
-                    ZogUtils.d("categories 有" + attCount + "个属性");
-                    ZogUtils.d("categories 第一个属性：" + xmlParser.getAttributeName(0)
-                            + ": " + xmlParser.getAttributeValue(0));
-                    ZogUtils.d("categories 第二个属性：" + xmlParser.getAttributeName(1) + ": "
-                            + xmlParser.getAttributeValue(1));
+
                 } catch (Exception e) {
                 }
                 break;

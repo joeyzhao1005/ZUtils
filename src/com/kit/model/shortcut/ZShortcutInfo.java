@@ -3,7 +3,7 @@ package com.kit.model.shortcut;
 import android.content.ComponentName;
 import android.graphics.drawable.Drawable;
 
-import com.kit.utils.GsonUtils;
+import java.util.ArrayList;
 
 /**
  * Created by Zhao on 2017/5/31.
@@ -18,6 +18,14 @@ public class ZShortcutInfo implements Cloneable {
 
     public void setComponentName(ComponentName componentName) {
         this.componentName = componentName;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getShortcutId() {
@@ -93,11 +101,11 @@ public class ZShortcutInfo implements Cloneable {
         this.targetClass = targetClass;
     }
 
-    public String getCategories() {
+    public ArrayList<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(String categories) {
+    public void setCategories(ArrayList<String> categories) {
         this.categories = categories;
     }
 
@@ -141,6 +149,8 @@ public class ZShortcutInfo implements Cloneable {
         this.longLabel = longLabel;
     }
 
+
+
     ComponentName componentName;
 
 
@@ -161,9 +171,10 @@ public class ZShortcutInfo implements Cloneable {
     String targetPackage;
     String targetClass;
 
-    String categories;
+    ArrayList<String> categories;
     Extra extra;
 
+    String data;
 
     @Override
     public ZShortcutInfo clone() throws CloneNotSupportedException {
@@ -184,7 +195,7 @@ public class ZShortcutInfo implements Cloneable {
         zShortcutInfo.setTargetClass(this.targetClass);
         zShortcutInfo.setCategories(this.categories);
         zShortcutInfo.setExtra(this.extra);
-
+        zShortcutInfo.setData(this.data);
         return zShortcutInfo;
     }
 }
