@@ -1208,7 +1208,6 @@ public class BitmapUtils {
         if (bmp == null)
             return null;
 
-
         File dir = new File(file.getParent());
 
 
@@ -1219,6 +1218,9 @@ public class BitmapUtils {
         if (!mkdirResult && !dir.exists()) {//多级目录
             return null;
         }
+
+        if (file.exists())
+            file.delete();
 
         FileOutputStream fos = null;
         try {
@@ -1234,9 +1236,7 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
-//        ZogUtils.i("save file.getPath():" + file.getPath());
-
-        bmp.recycle();
+//
 
         return file;
     }
