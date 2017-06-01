@@ -1,4 +1,4 @@
-package com;
+package com.kit.utils;
 
 import android.content.Context;
 import android.content.Intent;
