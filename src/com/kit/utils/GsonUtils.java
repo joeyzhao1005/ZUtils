@@ -3,6 +3,7 @@ package com.kit.utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import com.kit.utils.log.ZogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,8 +128,6 @@ public class GsonUtils {
     }
 
 
-
-
     /**
      * 解析成list
      *
@@ -162,8 +161,6 @@ public class GsonUtils {
     }
 
 
-
-
     /**
      * 解析成ArrayList
      *
@@ -180,9 +177,6 @@ public class GsonUtils {
 
         return GsonUtils.getSet(jsonStr, type);
     }
-
-
-
 
 
     /**
@@ -233,7 +227,12 @@ public class GsonUtils {
         if (StringUtils.isEmptyOrNullStr(jsonStr))
             return null;
 
-        JSONObject jsonObject = JsonUtils.str2JSONObj(jsonStr);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(jsonStr);
+        } catch (JSONException e) {
+            ZogUtils.showException(e);
+        }
 
         String value = null;
         if (jsonObject != null && jsonObject.has(key)) {

@@ -35,7 +35,7 @@ public class JsonUtils {
 
         } catch (JSONException e) {
 
-            Log.e("error", "JsonUtils.resolveJson() have something wrong...");
+            Log.e("error", "JsonUtils.str2JSONObj() have something wrong...");
 
         }
         return jsonObject;
