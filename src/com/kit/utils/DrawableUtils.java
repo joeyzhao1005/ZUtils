@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -24,6 +25,24 @@ import java.io.IOException;
  * Created by Zhao on 14-8-12.
  */
 public class DrawableUtils {
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap(
+                drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        //canvas.setBitmap(bitmap);
+
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        drawable.draw(canvas);
+
+        return bitmap;
+
+    }
 
     public static Drawable tintDrawable(Drawable drawable, ColorStateList colors) {
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
@@ -78,7 +97,7 @@ public class DrawableUtils {
 
     }
 
-    public static Drawable TextToDrawable(String str) {
+    public static Drawable textToDrawable(String str) {
         Bitmap bitmap = Bitmap.createBitmap(200, 250, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
