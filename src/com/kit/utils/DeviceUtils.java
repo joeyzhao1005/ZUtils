@@ -11,15 +11,20 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
+import android.telephony.TelephonyManager;
 import android.util.TypedValue;
 import android.view.Display;
 
 import com.kit.receiver.DeviceAdminManagerReceiver;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class DeviceUtils {
+
+    public static String getDeviceId(Context context){
+        TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getDeviceId();
+    }
 
 
     private static int statusBarHeight = 0;
