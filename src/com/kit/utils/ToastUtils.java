@@ -2,6 +2,7 @@ package com.kit.utils;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 import com.kit.utils.log.ZogUtils;
@@ -60,7 +61,7 @@ public class ToastUtils {
     }
 
 
-    public static void mkShortTimeToast(int msgStringId) {
+    public static void mkShortTimeToast(@StringRes int msgStringId) {
         try {
             Context context = ResWrapper.getInstance().getContext();
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
@@ -70,7 +71,7 @@ public class ToastUtils {
     }
 
 
-    public static void mkShortTimeToast(Context context, int msgStringId) {
+    public static void mkShortTimeToast(Context context, @StringRes int msgStringId) {
         try {
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
