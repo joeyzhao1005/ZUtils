@@ -21,8 +21,8 @@ import java.lang.reflect.Field;
 
 public class DeviceUtils {
 
-    public static String getDeviceId(Context context){
-        TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+    public static String getDeviceId(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
     }
 
@@ -31,7 +31,6 @@ public class DeviceUtils {
 
 
     public static final int DEVICE_ADMIN = 70 + 1;
-
 
 
     public static void lockScreen(Activity activity) {
@@ -172,6 +171,9 @@ public class DeviceUtils {
                 "dimen", "android");
         //获取NavigationBar的高度
         int height = resources.getDimensionPixelSize(resourceId);
+
+        if (height == 0)
+            height = DensityUtils.dip2px(context, 44);
         return height;
     }
 
@@ -233,6 +235,8 @@ public class DeviceUtils {
 
             statusBarHeight = sbar;
         }
+        if (statusBarHeight <= 0)
+            statusBarHeight = DensityUtils.dip2px(context, 25);
         return statusBarHeight;
     }
 

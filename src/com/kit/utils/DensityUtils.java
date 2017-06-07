@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import android.content.Context;
+import android.support.annotation.DimenRes;
 
 public class DensityUtils {
 
@@ -12,6 +13,16 @@ public class DensityUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dipRes2px(Context context, @DimenRes int dpResId) {
+        final float scale = getScale(context);
+        return (int) (context.getResources().getDimension(dpResId) / scale + 0.5f);
+    }
+
+
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
@@ -20,6 +31,14 @@ public class DensityUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static int pxRes2dip(Context context, @DimenRes int pxResId) {
+        final float scale = getScale(context);
+        return (int) (context.getResources().getDimensionPixelSize(pxResId) / scale + 0.5f);
+    }
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
@@ -37,13 +56,13 @@ public class DensityUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static float getScale(Context context){
+    public static float getScale(Context context) {
         final float scale = context.getResources().getDisplayMetrics().density;
 
         return scale;
     }
 
-    public static float getScale(){
+    public static float getScale() {
         final float scale = ResWrapper.getInstance().getResources().getDisplayMetrics().density;
 
         return scale;
