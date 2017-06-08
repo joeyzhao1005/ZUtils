@@ -11,8 +11,30 @@ import android.support.v4.app.Fragment;
 import com.kit.app.ActivityManager;
 import com.kit.utils.StringUtils;
 
+import java.net.URISyntaxException;
+
 public class IntentUtils extends IntentBaseUtils {
 
+
+    public static Intent getIntentFromString(String string) {
+        if (string == null || string.isEmpty()) {
+            return new Intent();
+        } else {
+            try {
+                return new Intent().parseUri(string, 0);
+            } catch (URISyntaxException e) {
+                return new Intent();
+            }
+        }
+    }
+
+    public static String getIntentAsString(Intent intent) {
+        if (intent == null) {
+            return "";
+        } else {
+            return intent.toUri(0);
+        }
+    }
 
     /**
      * 发送广播
