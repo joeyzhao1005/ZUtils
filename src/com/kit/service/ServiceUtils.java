@@ -168,7 +168,7 @@ public class ServiceUtils {
         ActivityManager activityManager = (ActivityManager) mContext
                 .getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> serviceList = activityManager
-                .getRunningServices(30);
+                .getRunningServices(1000);
         if (!(serviceList.size() > 0)) {
             return false;
         }
