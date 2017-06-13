@@ -1,5 +1,7 @@
 package com.kit.utils.pinyin;
 
+import com.kit.utils.log.ZogUtils;
+
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -61,31 +63,35 @@ public class PingYinUtils {
     }
 
 
-
     // 返回中文的首字母
+
     /**
      * 首字母
      *
      * @param str
      * @return
      */
-    public  String getPinYinHeadChar(String str) {
+    public String getPinYinHeadChar(String str) {
 
         String convert = "";
-        for (int j = 0; j < str.length(); j++) {
-            char word = str.charAt(j);
-            String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
-            if (pinyinArray != null) {
-                convert += pinyinArray[0].charAt(0);
-            } else {
-                convert += word;
+        try {
+            for (int j = 0; j < str.length(); j++) {
+                char word = str.charAt(j);
+                String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
+                if (pinyinArray != null) {
+                    convert += pinyinArray[0].charAt(0);
+                } else {
+                    convert += word;
+                }
             }
+        } catch (Exception e) {
+            ZogUtils.showException(e);
         }
         return convert;
     }
 
     // 将字符串转移为ASCII码
-    public  String getCnASCII(String cnStr) {
+    public String getCnASCII(String cnStr) {
         StringBuffer strBuf = new StringBuffer();
         byte[] bGBK = cnStr.getBytes();
         for (int i = 0; i < bGBK.length; i++) {
