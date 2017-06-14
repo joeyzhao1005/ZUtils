@@ -35,13 +35,13 @@ public class ShortcutManager {
 
                 switch (event) {
                     case XmlPullParser.START_DOCUMENT:
-                        //ZogUtils.d("xml解析开始");
+                        ZogUtils.d("xml解析开始");
                         break;
                     case XmlPullParser.START_TAG:
                         //一般都是获取标签的属性值，所以在这里数据你需要的数据
                         if (StringUtils.isEmptyOrNullStr(xmlParser.getName()))
                             continue;
-                        //ZogUtils.d("标签：" + xmlParser.getName() + "开始");
+                        ZogUtils.d("标签：" + xmlParser.getName() + "开始");
                         if ("shortcut".equals(xmlParser.getName()) && shortcutInfo == null) {
                             shortcutInfo = new ZShortcutInfo();
                         }
@@ -50,13 +50,13 @@ public class ShortcutManager {
 
                         break;
                     case XmlPullParser.TEXT:
-                        //ZogUtils.d("Text:" + xmlParser.getText());
+                        ZogUtils.d("Text:" + xmlParser.getText());
                         break;
                     case XmlPullParser.END_TAG:
                         if (StringUtils.isEmptyOrNullStr(xmlParser.getName()))
                             continue;
                         if ("shortcut".equals(xmlParser.getName())) {
-                            //ZogUtils.d("标签：" + xmlParser.getName() + "结束");
+                            ZogUtils.d("标签：" + xmlParser.getName() + "结束");
                             ZShortcutInfo info = null;
                             try {
                                 info = shortcutInfo.clone();
@@ -93,8 +93,9 @@ public class ShortcutManager {
             case "shortcuts":
                 try {
                     int attCount = xmlParser.getAttributeCount();
-                    //ZogUtils.d("shortcuts 有" + attCount + "个属性");
+                    ZogUtils.d("shortcuts 有" + attCount + "个属性");
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
 
@@ -102,7 +103,7 @@ public class ShortcutManager {
                 try {
 
                     int attCount = xmlParser.getAttributeCount();
-                    //ZogUtils.d("shortcut 有" + attCount + "个属性");
+                    ZogUtils.d("shortcut 有" + attCount + "个属性");
 
                     for (int i = 0; i < attCount; i++) {
 
@@ -154,6 +155,7 @@ public class ShortcutManager {
                     }
 
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
 
@@ -185,6 +187,7 @@ public class ShortcutManager {
                     }
 
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 shortcutInfo.setExtra(extra);
 
@@ -193,12 +196,12 @@ public class ShortcutManager {
             case "intent":
                 try {
                     int attCount = xmlParser.getAttributeCount();
-                    //ZogUtils.d("intent 有" + attCount + "个属性");
+                    ZogUtils.d("intent 有" + attCount + "个属性");
 
                     for (int i = 0; i < attCount; i++) {
 
                         String attrName = xmlParser.getAttributeName(i);
-                        //ZogUtils.d("intent 属性:" + attrName);
+                        ZogUtils.d("intent 属性:" + attrName);
                         if (StringUtils.isEmptyOrNullStr(attrName))
                             continue;
 
@@ -220,34 +223,35 @@ public class ShortcutManager {
 
                             case "data":
                                 int attCountData = xmlParser.getAttributeCount();
-                                //ZogUtils.d("data 属性:" + xmlParser.getAttributeName(i));
-                                //ZogUtils.d("data 值:" + xmlParser.getAttributeValue(i));
+                                ZogUtils.d("data 属性:" + xmlParser.getAttributeName(i));
+                                ZogUtils.d("data 值:" + xmlParser.getAttributeValue(i));
                                 shortcutInfo.setData(xmlParser.getAttributeValue(i));
                                 break;
 
                             case "intent-filter":
-                                //ZogUtils.e("intent-filter");
+                                ZogUtils.e("intent-filter");
                                 int attCountIntentFilter = xmlParser.getAttributeCount();
-                                //ZogUtils.d("intent-filter 有" + attCountIntentFilter + "个属性");
+                                ZogUtils.d("intent-filter 有" + attCountIntentFilter + "个属性");
                                 break;
 
                         }
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
 
             case "categories":
                 try {
                     int attCountCategories = xmlParser.getAttributeCount();
-                    //ZogUtils.d("categories 有" + attCountCategories + "个属性");
+                    ZogUtils.d("categories 有" + attCountCategories + "个属性");
 
                     if (attCountCategories > 0) {
 
                         ArrayList<String> cats = new ArrayList<>();
                         for (int j = 0; j < attCountCategories; j++) {
-                            //ZogUtils.d("categories 属性：" + xmlParser.getAttributeName(0)
-                            //        + ": " + xmlParser.getAttributeValue(0));
+                            ZogUtils.d("categories 属性：" + xmlParser.getAttributeName(0)
+                                    + ": " + xmlParser.getAttributeValue(0));
                             String cat = xmlParser.getAttributeValue(j);
                             if (StringUtils.isEmptyOrNullStr(cat))
                                 continue;
@@ -259,6 +263,7 @@ public class ShortcutManager {
                     }
 
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }
