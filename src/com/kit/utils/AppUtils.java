@@ -91,9 +91,8 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getActivityInfoMetaDataFromManifest(String key, ComponentName componentName) {
+    public static <T> T getActivityInfoMetaDataFromManifest(Context context,String key, ComponentName componentName) {
         try {
-            Context context = ResWrapper.getInstance().getContext();
             ActivityInfo info = context.getPackageManager().getActivityInfo(componentName
                     , PackageManager.GET_META_DATA);
             Bundle metaData = info.metaData;
@@ -117,9 +116,8 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getAppMetaDataFromManifest(String key, String packageName) {
+    public static <T> T getAppMetaDataFromManifest(Context context,String key, String packageName) {
         try {
-            Context context = ResWrapper.getInstance().getContext();
             ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName
                     , PackageManager.GET_META_DATA);
             Bundle metaData = applicationInfo.metaData;
@@ -134,6 +132,7 @@ public class AppUtils {
         return null;
     }
 
+
     /**
      * 从manifest里获取metadata
      *
@@ -142,9 +141,10 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getAppMetaDataFromManifest(String key) {
+    public static <T> T getAppMetaDataFromManifest(Context context,String key) {
         try {
-            Context context = ResWrapper.getInstance().getContext();
+            if(context==null)
+                return null;
             return (T) context.getPackageManager().getApplicationInfo(context.getPackageName()
                     , PackageManager.GET_META_DATA).metaData.get(key);
         } catch (PackageManager.NameNotFoundException e) {
@@ -152,6 +152,8 @@ public class AppUtils {
         }
         return null;
     }
+
+
 
 
     public static boolean isPermission(String permissionTag) {
@@ -461,7 +463,7 @@ public class AppUtils {
             PackageManager pManager = context.getPackageManager();
             String thisAppName = packageInfo.applicationInfo.loadLabel(pManager).toString();
 
-            if (thisAppName.contains(appName)) {
+            if (thisAppName.contains(appName)||thisAppName.equalsIgnoreCase(appName)) {
                 packageNames.add(packageInfo);
             }
         }
