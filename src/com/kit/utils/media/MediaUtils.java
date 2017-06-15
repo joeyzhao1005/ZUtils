@@ -37,14 +37,16 @@ public class MediaUtils {
         try {
             retriever.setDataSource(filePath); //设置数据源
             byte[] embedPic = retriever.getEmbeddedPicture(); //得到字节型数据
+            if(embedPic==null||embedPic.length<=0)
+                return null;
             bitmap = BitmapFactory.decodeByteArray(embedPic, 0, embedPic.length); //转换为图片
         } catch (Exception e) {
-            e.printStackTrace();
+            ZogUtils.showException(e);
         } finally {
             try {
                 retriever.release();
             } catch (Exception e2) {
-                e2.printStackTrace();
+                ZogUtils.showException(e2);
             }
         }
         Drawable drawable = null;
