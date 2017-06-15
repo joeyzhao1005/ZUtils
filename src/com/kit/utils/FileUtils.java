@@ -401,9 +401,18 @@ public class FileUtils {
             return null;
         }
 
-        String full = getFilename(filedir);
 
-        if (full != null && !StringUtils.isEmptyOrNullStr(full)) {
+        if (!filedir.contains("."))
+            return filedir;
+
+        String full = getFilename(filedir);
+        if (full == null)
+            return null;
+
+        if (!full.contains("."))
+            return filedir;
+
+        if (!StringUtils.isEmptyOrNullStr(full)) {
             int end = full.lastIndexOf(".") > 0 ? full.lastIndexOf(".") : 0;
             return full.substring(0, end);
         }
