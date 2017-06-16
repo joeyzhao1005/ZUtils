@@ -27,5 +27,6 @@ public abstract class BaseActivity extends BaseAppCompatActivity  implements Bas
         ActionBarUtils.setHomeActionBar(this, ResourceUtils.getDrawableId(this, DrawableId.ic_back));
     }
 
+
 }
 
