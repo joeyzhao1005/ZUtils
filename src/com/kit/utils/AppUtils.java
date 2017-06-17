@@ -31,7 +31,6 @@ import java.util.Locale;
 public class AppUtils {
 
 
-
     /**
      * 从manifest里获取metadata
      *
@@ -91,10 +90,20 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getActivityInfoMetaDataFromManifest(Context context,String key, ComponentName componentName) {
+    public static <T> T getActivityInfoMetaDataFromManifest(Context context, String key, ComponentName componentName) {
         try {
+            if (context == null)
+                return null;
+
+            if (context.getPackageManager() == null)
+                return null;
+
             ActivityInfo info = context.getPackageManager().getActivityInfo(componentName
                     , PackageManager.GET_META_DATA);
+
+            if (info == null)
+                return null;
+
             Bundle metaData = info.metaData;
             if (metaData == null) {
                 return null;
@@ -116,7 +125,7 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getAppMetaDataFromManifest(Context context,String key, String packageName) {
+    public static <T> T getAppMetaDataFromManifest(Context context, String key, String packageName) {
         try {
             ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName
                     , PackageManager.GET_META_DATA);
@@ -141,9 +150,9 @@ public class AppUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getAppMetaDataFromManifest(Context context,String key) {
+    public static <T> T getAppMetaDataFromManifest(Context context, String key) {
         try {
-            if(context==null)
+            if (context == null)
                 return null;
             return (T) context.getPackageManager().getApplicationInfo(context.getPackageName()
                     , PackageManager.GET_META_DATA).metaData.get(key);
@@ -152,8 +161,6 @@ public class AppUtils {
         }
         return null;
     }
-
-
 
 
     public static boolean isPermission(String permissionTag) {
@@ -463,7 +470,7 @@ public class AppUtils {
             PackageManager pManager = context.getPackageManager();
             String thisAppName = packageInfo.applicationInfo.loadLabel(pManager).toString();
 
-            if (thisAppName.contains(appName)||thisAppName.equalsIgnoreCase(appName)) {
+            if (thisAppName.contains(appName) || thisAppName.equalsIgnoreCase(appName)) {
                 packageNames.add(packageInfo);
             }
         }
