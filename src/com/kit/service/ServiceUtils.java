@@ -19,7 +19,6 @@ import java.util.List;
 public class ServiceUtils {
 
 
-    public SharedPreferences sharedPrefs;
 
     public ServiceUtils() {
     }
@@ -147,13 +146,9 @@ public class ServiceUtils {
 
     }
 
-    public SharedPreferences getSharedPrefs() {
-        return sharedPrefs;
-    }
 
-    public void setSharedPrefs(SharedPreferences sharedPrefs) {
-        this.sharedPrefs = sharedPrefs;
-    }
+
+
 
 
     /**
