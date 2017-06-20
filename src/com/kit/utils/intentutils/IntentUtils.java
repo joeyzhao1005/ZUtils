@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 
 import com.kit.app.ActivityManager;
 import com.kit.utils.StringUtils;
+import com.kit.utils.log.ZogUtils;
 
 import java.net.URISyntaxException;
 
@@ -218,16 +219,21 @@ public class IntentUtils extends IntentBaseUtils {
     public static void gotoSingleNextActivityFromReceiver(Context packageContext,
                                                           Class<?> cls, BundleData data, boolean isCloseThis) {
 
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        pushData(intent, data);
-        intent.setClass(packageContext, cls);
-        packageContext.startActivity(intent);
+        try {
+            Intent intent = new Intent();
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            pushData(intent, data);
+            intent.setClass(packageContext, cls);
+            packageContext.startActivity(intent);
 
-        if (isCloseThis && (packageContext instanceof Activity)) {
-            ((Activity) packageContext).finish();
+            if (isCloseThis && (packageContext instanceof Activity)) {
+                ((Activity) packageContext).finish();
+            }
+        }catch (Exception e){
+            ZogUtils.showException(e);
         }
+
     }
 
     /**

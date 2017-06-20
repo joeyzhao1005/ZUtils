@@ -76,7 +76,7 @@ public class DrawableUtils {
      */
     public static File saveDrawable(Drawable drawable, File file, boolean isNofify) {
         Bitmap bmp = BitmapUtils.drawable2Bitmap(drawable);
-        if (bmp == null)
+        if (bmp == null || bmp.isRecycled())
             return null;
 
         BitmapUtils.saveBitmap(bmp, file, isNofify);
@@ -88,6 +88,9 @@ public class DrawableUtils {
     public static String saveDrawable(Context context, int drawableID, String filename) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableID);
         try {
+            if (bitmap == null || bitmap.isRecycled())
+                return null;
+
             BitmapUtils.saveBitmap(bitmap, new File(filename));
 
         } catch (Exception e) {
