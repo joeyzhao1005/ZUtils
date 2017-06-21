@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.kit.config.AppConfig;
 import com.kit.utils.FileUtils;
@@ -47,6 +48,31 @@ import java.util.Random;
 public class BitmapUtils {
 
     public static String TAG = BitmapUtils.class.getName();
+
+
+    public static Bitmap getViewBitmap(View addViewContent) {
+        addViewContent.setDrawingCacheEnabled(true);
+
+        addViewContent.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        addViewContent.layout(0, 0,
+                addViewContent.getMeasuredWidth(),
+                addViewContent.getMeasuredHeight());
+
+        addViewContent.buildDrawingCache();
+
+        Bitmap bitmap = null;
+
+        try {
+            Bitmap cacheBitmap = addViewContent.getDrawingCache();
+            bitmap = Bitmap.createBitmap(cacheBitmap);
+        } catch (Exception e) {
+
+        }
+        return bitmap;
+    }
+
 
     /**
      * 图像压缩并保存到本地
