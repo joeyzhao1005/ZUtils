@@ -149,10 +149,15 @@ public class ZShortcutInfo implements Cloneable {
         this.longLabel = longLabel;
     }
 
+    public boolean isRootLaunch() {
+        return isRootLaunch;
+    }
 
+    public void setRootLaunch(boolean rootLaunch) {
+        isRootLaunch = rootLaunch;
+    }
 
     ComponentName componentName;
-
 
     String shortcutId;
     boolean enabled;
@@ -176,6 +181,8 @@ public class ZShortcutInfo implements Cloneable {
 
     String data;
 
+    boolean isRootLaunch;
+
     @Override
     public ZShortcutInfo clone() throws CloneNotSupportedException {
         ZShortcutInfo zShortcutInfo = new ZShortcutInfo();
@@ -196,6 +203,7 @@ public class ZShortcutInfo implements Cloneable {
         zShortcutInfo.setCategories(this.categories);
         zShortcutInfo.setExtra(this.extra);
         zShortcutInfo.setData(this.data);
+        zShortcutInfo.setRootLaunch(this.isRootLaunch);
         return zShortcutInfo;
     }
 }
