@@ -153,7 +153,7 @@ public class BundleData implements Cloneable, Parcelable {
     protected BundleData(Parcel in) {
         try {
             this.hashMap = (HashMap<String, Object>) in.readHashMap(HashMap.class.getClassLoader());
-        }catch (Exception e){
+        } catch (Exception e) {
             ZogUtils.showException(e);
         }
     }
@@ -161,7 +161,11 @@ public class BundleData implements Cloneable, Parcelable {
     public static final Creator<BundleData> CREATOR = new Creator<BundleData>() {
         @Override
         public BundleData createFromParcel(Parcel source) {
-            return new BundleData(source);
+            try {
+                return new BundleData(source);
+            } catch (Exception e) {
+                return null;
+            }
         }
 
         @Override
