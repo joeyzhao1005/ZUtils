@@ -16,6 +16,7 @@ import android.util.TypedValue;
 import android.view.Display;
 
 import com.kit.receiver.DeviceAdminManagerReceiver;
+import com.kit.utils.log.ZogUtils;
 
 import java.lang.reflect.Field;
 
@@ -23,7 +24,15 @@ public class DeviceUtils {
 
 
     public static String getDeviceModel() {
-        return android.os.Build.MODEL;
+        String model = null;
+
+        try {
+            model = android.os.Build.MODEL;
+        }catch (Exception e){
+            ZogUtils.showException(e);
+        }
+
+        return model;
     }
 
     public static String getDeviceId(Context context) {
