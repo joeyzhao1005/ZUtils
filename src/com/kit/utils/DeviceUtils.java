@@ -21,6 +21,11 @@ import java.lang.reflect.Field;
 
 public class DeviceUtils {
 
+
+    public static String getDeviceModel() {
+        return android.os.Build.MODEL;
+    }
+
     public static String getDeviceId(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();

@@ -27,17 +27,41 @@ import java.io.IOException;
 public class DrawableUtils {
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
+
+        int width = 0;
+        try {
+            width = drawable.getIntrinsicWidth();
+        } catch (Exception e) {
+            ZogUtils.e("error in drawableToBitmap when getIntrinsicWidth");
+        }
+        int height = 0;
+
+        try {
+            height = drawable.getIntrinsicHeight();
+        } catch (Exception e) {
+            ZogUtils.e("error in drawableToBitmap when getIntrinsicHeight");
+        }
+
+
+        if (width <= 0) {
+            width = DensityUtils.dip2px(120f);
+        }
+
+        if (height <= 0) {
+            height = DensityUtils.dip2px(120f);
+        }
+
         Bitmap bitmap = Bitmap.createBitmap(
-                drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(),
+                width,
+                height,
                 Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(bitmap);
 
         //canvas.setBitmap(bitmap);
 
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 
+        drawable.setBounds(0, 0, width, height);
         drawable.draw(canvas);
 
         return bitmap;
