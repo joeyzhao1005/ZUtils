@@ -515,9 +515,13 @@ public class AppUtils {
      * @param packageName
      */
     public static void seeAppInMarket(Context context, String packageName) {
-        Intent viewIntent = new Intent("android.intent.action.VIEW",
-                Uri.parse("market://details?id=" + packageName));
-        context.startActivity(viewIntent);
+        try {
+            final Intent intentPlayStore = new Intent(Intent.ACTION_VIEW);
+            intentPlayStore.setData(Uri.parse("market://details?id=" + packageName));
+            context.startActivity(intentPlayStore);
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+        }
     }
 
 
