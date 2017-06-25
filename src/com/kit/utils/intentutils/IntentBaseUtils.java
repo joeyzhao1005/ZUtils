@@ -10,12 +10,13 @@ import android.support.v4.app.Fragment;
 import com.kit.utils.GsonUtils;
 import com.kit.utils.log.ZogUtils;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
 public class IntentBaseUtils {
-    private static final String KEY_DATA = "zhao_bundle_data";
 
+    private static HashMap<String, BundleData> map = new HashMap<>();
 
     public static void gotoNextActivityAsNewTask(Context packageContext, Class<?> cls) {
         Intent intent = new Intent();
@@ -31,6 +32,7 @@ public class IntentBaseUtils {
         // ((Activity) packageContext).overridePendingTransition(
         // R.anim.push_left_in, R.anim.push_left_out);
     }
+
     public static void gotoNextActivity(Context packageContext, Class<?> cls) {
         Intent intent = new Intent();
         // Bundle bundle = new Bundle();
@@ -324,12 +326,12 @@ public class IntentBaseUtils {
             if (bundle != null) {
                 Set<String> keys = bundle.keySet();
                 Iterator<String> it = keys.iterator();
-                ZogUtils.i( "printIntent start");
+                ZogUtils.i("printIntent start");
                 while (it.hasNext()) {
                     String key = it.next();
-                    ZogUtils.i( "[" + key + "=" + bundle.get(key) + "]");
+                    ZogUtils.i("[" + key + "=" + bundle.get(key) + "]");
                 }
-                ZogUtils.i( "printIntent end");
+                ZogUtils.i("printIntent end");
             }
         } catch (Exception e) {
             ZogUtils.showException(e);
@@ -344,8 +346,24 @@ public class IntentBaseUtils {
      * @param data
      */
     public static void pushData(Intent intent, BundleData data) {
-        String value = GsonUtils.toJson(data);
-        intent.putExtra(KEY_DATA, value);
+        map.put(data.getFlag(), data);
+    }
+
+
+    /**
+     * 获取传过去的值
+     *
+     * @return
+     */
+    public static BundleData getData(String flag) {
+        BundleData bundleData = null;
+
+        try {
+            bundleData = map.get(flag);
+        } catch (Exception e) {
+//            ZogUtils.showException(e);
+        }
+        return bundleData;
     }
 
 
@@ -358,8 +376,7 @@ public class IntentBaseUtils {
         BundleData bundleData = null;
 
         try {
-            String bundleDataStr = intent.getExtras().getString(KEY_DATA);
-            bundleData = GsonUtils.getObj(bundleDataStr, BundleData.class);
+            bundleData = map.get(intent);
         } catch (Exception e) {
 //            ZogUtils.showException(e);
         }

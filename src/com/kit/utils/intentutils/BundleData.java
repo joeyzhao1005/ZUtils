@@ -41,15 +41,13 @@ public class BundleData implements Cloneable, Parcelable {
      * 获取Object
      *
      * @param key
-     * @param clazz
      * @param <T>
      * @return
      */
-    public <T> T getObject(String key, Class<T> clazz) {
+    public <T> T getObject(String key) {
         T t = null;
         try {
-            Object o = hashMap.get(key);
-            t = GsonUtils.getObj(GsonUtils.toJson(o), clazz);
+            t = (T)hashMap.get(key);
         } catch (Exception e) {
             ZogUtils.showException(e);
         }
@@ -63,12 +61,11 @@ public class BundleData implements Cloneable, Parcelable {
      * @param <T>
      * @return
      */
-    public <T> List<T> getList(String key, Type typeOfT) {
+    public <T> List<T> getList(String key) {
         List<T> t = null;
 
         try {
-            Object o = hashMap.get(key);
-            t = GsonUtils.getList(GsonUtils.toJson(o), typeOfT);
+            t = (List<T>) hashMap.get(key);
         } catch (Exception e) {
             ZogUtils.showException(e);
         }
@@ -83,14 +80,11 @@ public class BundleData implements Cloneable, Parcelable {
      * @param <T>
      * @return
      */
-    public <T> ArrayList<T> getArrayList(String key, Type typeOfT) {
+    public <T> ArrayList<T> getArrayList(String key) {
         ArrayList<T> t = null;
 
         try {
-            Object o = hashMap.get(key);
-            String json = GsonUtils.toJson(o);
-            ZogUtils.e("json:" + json);
-            t = GsonUtils.getArrayList(json, typeOfT);
+            t = (ArrayList<T>) hashMap.get(key);
         } catch (Exception e) {
             ZogUtils.showException(e);
         }
@@ -147,8 +141,14 @@ public class BundleData implements Cloneable, Parcelable {
         dest.writeMap(this.hashMap);
     }
 
-    public BundleData() {
+    public BundleData(String flag) {
+        this.flag = flag;
     }
+
+    public String getFlag() {
+        return flag;
+    }
+
 
     protected BundleData(Parcel in) {
         try {
@@ -157,6 +157,8 @@ public class BundleData implements Cloneable, Parcelable {
             ZogUtils.showException(e);
         }
     }
+
+    String flag;
 
     public static final Creator<BundleData> CREATOR = new Creator<BundleData>() {
         @Override
