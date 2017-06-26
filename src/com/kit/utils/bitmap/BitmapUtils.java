@@ -1092,14 +1092,29 @@ public class BitmapUtils {
         return result;
     }
 
+    public static Bitmap resize(String  path, int imageViewHeight) {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        int ratio = (int) (options.outHeight / (float) imageViewHeight);
+
+        if (ratio <= 0)
+            ratio = 1;
+
+        options.inSampleSize = ratio;
+
+        options.inJustDecodeBounds = false;
+
+        Bitmap bitmap = generateBitmapFile(path, options);
+
+        return bitmap;
+    }
+
 
     public static Bitmap resize(Context context, int res, int imageViewHeight) {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-
-        BitmapFactory.decodeResource(context.getResources(),
-                res, options);
 
         int ratio = (int) (options.outHeight / (float) imageViewHeight);
 
@@ -1120,9 +1135,6 @@ public class BitmapUtils {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-
-        BitmapFactory.decodeFile(filePath, options);
-
         int ratio = (int) (options.outHeight / (float) imageViewHeight);
 
         if (ratio <= 0)
