@@ -17,6 +17,8 @@ public class BaseFragment extends android.support.v4.app.Fragment implements IDo
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getExtra(savedInstanceState);
+
         super.onCreate(savedInstanceState);
         mContext = getActivity();
     }
@@ -24,7 +26,6 @@ public class BaseFragment extends android.support.v4.app.Fragment implements IDo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getExtra();
 
         View view = initWidget(inflater, container,
                 savedInstanceState);
@@ -33,7 +34,6 @@ public class BaseFragment extends android.support.v4.app.Fragment implements IDo
 
         return view;
     }
-
 
 
     @Override
@@ -45,7 +45,7 @@ public class BaseFragment extends android.support.v4.app.Fragment implements IDo
     /**
      * 获得Activity传过来的值
      */
-    public boolean getExtra() {
+    public boolean getExtra(Bundle savedInstanceState) {
         if (getArguments() != null) {
             //TODO
         }

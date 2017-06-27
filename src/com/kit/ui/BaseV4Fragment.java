@@ -55,6 +55,7 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getExtra(savedInstanceState);
         super.onCreate(savedInstanceState);
         mContext = getActivity();
 
@@ -68,7 +69,6 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getExtra();
 
         // Inflate the layout for this fragment
         View view = initWidget(inflater, container,
@@ -120,10 +120,11 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public boolean getExtra() {
+    public boolean getExtra(Bundle savedInstanceState){
 
         return true;
     }
+
 
     /**
      * 去网络或者本地加载数据
