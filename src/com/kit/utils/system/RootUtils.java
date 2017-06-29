@@ -106,37 +106,38 @@ public class RootUtils {
 
 
     public static boolean execCmdWithRoot(String cmdStr) {
-        if (null == cmdStr || "".equals(cmdStr)) {
-            return false;
-        }
-        Process process = null;
-        String[] cmds = new String[]{cmdStr};
-        try {
-            process = Runtime.getRuntime().exec("su");
-
-            DataOutputStream os = new DataOutputStream(process.getOutputStream());
-            for (String cmd : cmds) {
-                os.write((cmd + "\n").getBytes());
-            }
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            ZogUtils.showException(e);
-        }
-
-        if (process != null) {
-            try {
-                int status = process.waitFor();
-                process.getOutputStream().close();
-                process.getErrorStream().close();
-                process.getInputStream().close();
-                //这里是关键代码，其实只有status为1的时候是没有权限，这里个人直接把所有运行shell命令的异常都归为失败
-
-                return 0 == status;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        if (null == cmdStr || "".equals(cmdStr)) {
+//            return false;
+//        }
+//        Process process = null;
+//        String[] cmds = new String[]{cmdStr};
+//        try {
+//            process = Runtime.getRuntime().exec("su");
+//
+//            DataOutputStream os = new DataOutputStream(process.getOutputStream());
+//            for (String cmd : cmds) {
+//                os.write((cmd + "\n").getBytes());
+//            }
+//            os.flush();
+//            os.close();
+//        } catch (Exception e) {
+//            ZogUtils.showException(e);
+//        }
+//
+//        if (process != null) {
+//            try {
+//                int status = process.waitFor();
+//                process.getOutputStream().close();
+//                process.getErrorStream().close();
+//                process.getInputStream().close();
+//                //这里是关键代码，其实只有status为1的时候是没有权限，这里个人直接把所有运行shell命令的异常都归为失败
+//
+//                return 0 == status;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+        ShellUtils.execCommand(cmdStr,true);
         return false;
     }
 

@@ -3,6 +3,7 @@ package com.kit.utils;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -32,57 +33,34 @@ public class ImmersiveModeUtils {
      * @param statusBarColor     状态栏的颜色
      * @param navigationBarColor 导航栏的颜色
      */
-    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, int statusBarColor, int navigationBarColor) {
-        try {
-
-            Window window = baseActivity.getWindow();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                //4.4版本及以上 5.0版本及以下
-
-                window.setFlags(
-                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //5.0版本及以上
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(statusBarColor);
-                window.setNavigationBarColor(navigationBarColor);
-            }
-        } catch (Exception e) {
-        }
+    public static void immersiveAboveAPI19(AppCompatActivity baseActivity, int statusBarColor, int navigationBarColor, boolean isDarkStatusBarIcon) {
+//        try {
+//            Window window = baseActivity.getWindow();
 //
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            try {
-//                Window window = baseActivity.getWindow();
-//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
-//                        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//                    return;
-//                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//                //4.4版本及以上 5.0版本及以下
 //
-////                    window.clearFlags(201326592);
-////                    window.getDecorView().setSystemUiVisibility(1280);
-////                    baseActivity.getWindow().addFlags(WindowManager.LayoutParams.class.getField("FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS")
-////                            .getInt(null));
-////                    Window.class.getDeclaredMethod("setStatusBarColor", Integer.TYPE).invoke(window, color);
-//
-//
-//                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//
-//                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//                    window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-//                    window.setStatusBarColor(color);
+//                window.setFlags(
+//                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+//                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                //5.0版本及以上
+//                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+//                        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//                if (isDarkStatusBarIcon && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                            | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//                } else {
+//                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 //                }
-//            } catch (Exception v0) {
-//                v0.printStackTrace();
+//                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//                window.setStatusBarColor(statusBarColor);
+//                window.setNavigationBarColor(navigationBarColor);
 //            }
+//        } catch (Exception e) {
 //        }
 
+        immersiveAboveAPI19(baseActivity, false, false, statusBarColor, navigationBarColor, isDarkStatusBarIcon);
     }
 
 
@@ -97,13 +75,11 @@ public class ImmersiveModeUtils {
      * @param navigationBarColor 导航栏的颜色
      */
     public static void immersiveAboveAPI19(AppCompatActivity baseActivity, boolean isMarginStatusBar
-            , boolean isMarginNavigationBar, int statusBarColor, int navigationBarColor) {
+            , boolean isMarginNavigationBar, int statusBarColor, int navigationBarColor, boolean isDarkStatusBarIcon) {
         try {
             Window window = baseActivity.getWindow();
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 //4.4版本及以上 5.0版本及以下
-
                 window.setFlags(
                         WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                         WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -112,15 +88,21 @@ public class ImmersiveModeUtils {
                     //5.0版本及以上
                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                             | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    LightStatusBarUtils.setLightStatusBar(baseActivity, isMarginStatusBar
+                            , isMarginNavigationBar
+                            , statusBarColor == Color.TRANSPARENT
+                            , isDarkStatusBarIcon);
+
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 } else if (!isMarginStatusBar && !isMarginNavigationBar) {
                     window.requestFeature(Window.FEATURE_NO_TITLE);
                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                             | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    LightStatusBarUtils.setLightStatusBar(baseActivity, isMarginStatusBar
+                            , isMarginNavigationBar
+                            , statusBarColor == Color.TRANSPARENT
+                            , isDarkStatusBarIcon);
+
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 
@@ -128,8 +110,11 @@ public class ImmersiveModeUtils {
                     window.requestFeature(Window.FEATURE_NO_TITLE);
                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                             | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    LightStatusBarUtils.setLightStatusBar(baseActivity, isMarginStatusBar
+                            , isMarginNavigationBar
+                            , statusBarColor == Color.TRANSPARENT
+                            , isDarkStatusBarIcon);
+
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 
