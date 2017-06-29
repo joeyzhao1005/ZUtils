@@ -6,12 +6,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.kit.utils.log.ZogUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-/**
- * Created by Loyea.com on 7月20日.
- */
 public class LightStatusBarUtils {
 
     public static void setLightStatusBar(Activity activity, boolean dark) {
@@ -45,7 +44,8 @@ public class LightStatusBarUtils {
             extraFlagField.invoke(activity.getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ZogUtils.showException(e);
+            setAndroidNativeLightStatusBar(activity,darkmode);
         }
         return false;
     }
@@ -72,6 +72,8 @@ public class LightStatusBarUtils {
                 activity.getWindow().setAttributes(lp);
                 result = true;
             } catch (Exception e) {
+                ZogUtils.showException(e);
+                setAndroidNativeLightStatusBar(activity,dark);
             }
         }
         return result;

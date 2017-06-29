@@ -7,9 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Created by Loyea.com on 7月20日.
- */
 public class RomUtils {
 
     class AvailableRomType {
