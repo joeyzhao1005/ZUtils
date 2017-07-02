@@ -23,6 +23,45 @@ import java.lang.reflect.Field;
 public class DeviceUtils {
 
 
+    /**
+     * 设备厂商
+     * @return
+     */
+    public static String getDeviceManufacturer() {
+        String model = null;
+
+        try {
+            model = android.os.Build.MANUFACTURER;
+        }catch (Exception e){
+            ZogUtils.showException(e);
+        }
+
+        return model;
+    }
+
+
+    /**
+     * 系统版本代号
+     * @return
+     */
+    public static String getDeviceDisplay() {
+        String model = null;
+
+        try {
+            model = android.os.Build.DISPLAY;
+        }catch (Exception e){
+            ZogUtils.showException(e);
+        }
+
+        return model;
+    }
+
+
+
+    /**
+     * 设备型号
+     * @return
+     */
     public static String getDeviceModel() {
         String model = null;
 

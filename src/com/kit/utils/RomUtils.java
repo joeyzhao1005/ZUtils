@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 public class RomUtils {
 
-    class AvailableRomType {
+    public class AvailableRomType {
         public static final int MIUI = 1;
         public static final int FLYME = 2;
         public static final int ANDROID_NATIVE = 3;
