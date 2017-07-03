@@ -25,6 +25,7 @@ public class DeviceUtils {
 
     /**
      * 设备厂商
+     *
      * @return
      */
     public static String getDeviceManufacturer() {
@@ -32,7 +33,7 @@ public class DeviceUtils {
 
         try {
             model = android.os.Build.MANUFACTURER;
-        }catch (Exception e){
+        } catch (Exception e) {
             ZogUtils.showException(e);
         }
 
@@ -42,6 +43,7 @@ public class DeviceUtils {
 
     /**
      * 系统版本代号
+     *
      * @return
      */
     public static String getDeviceDisplay() {
@@ -49,7 +51,7 @@ public class DeviceUtils {
 
         try {
             model = android.os.Build.DISPLAY;
-        }catch (Exception e){
+        } catch (Exception e) {
             ZogUtils.showException(e);
         }
 
@@ -57,9 +59,9 @@ public class DeviceUtils {
     }
 
 
-
     /**
      * 设备型号
+     *
      * @return
      */
     public static String getDeviceModel() {
@@ -67,7 +69,7 @@ public class DeviceUtils {
 
         try {
             model = android.os.Build.MODEL;
-        }catch (Exception e){
+        } catch (Exception e) {
             ZogUtils.showException(e);
         }
 
@@ -145,30 +147,34 @@ public class DeviceUtils {
      * @return the screen height
      */
     public static int getScreenHeight(Context context) {
-
-        Display display = ((Activity) context).getWindowManager()
-                .getDefaultDisplay();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            Point size = new Point();
-            display.getSize(size);
-            return size.y;
-        } else {
-            return display.getHeight();
+        if (context instanceof Activity) {
+            Display display = ((Activity) context).getWindowManager()
+                    .getDefaultDisplay();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+                Point size = new Point();
+                display.getSize(size);
+                return size.y;
+            } else {
+                return display.getHeight();
+            }
         }
+        return 0;
     }
 
 
     public static int getRealScreenHeight(Context context) {
-
-        Display display = ((Activity) context).getWindowManager()
-                .getDefaultDisplay();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            Point size = new Point();
-            display.getRealSize(size);
-            return size.y;
-        } else {
-            return display.getHeight();
+        if (context instanceof Activity) {
+            Display display = ((Activity) context).getWindowManager()
+                    .getDefaultDisplay();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                Point size = new Point();
+                display.getRealSize(size);
+                return size.y;
+            } else {
+                return display.getHeight();
+            }
         }
+        return 0;
     }
 
     /**
@@ -180,16 +186,19 @@ public class DeviceUtils {
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     public static int getScreenWidth(Context context) {
+        if (context instanceof Activity) {
 
-        Display display = ((Activity) context).getWindowManager()
-                .getDefaultDisplay();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            Point size = new Point();
-            display.getSize(size);
-            return size.x;
-        } else {
-            return display.getWidth();
+            Display display = ((Activity) context).getWindowManager()
+                    .getDefaultDisplay();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+                Point size = new Point();
+                display.getSize(size);
+                return size.x;
+            } else {
+                return display.getWidth();
+            }
         }
+        return 0;
     }
 
 
@@ -200,16 +209,18 @@ public class DeviceUtils {
      * @return the screen width
      */
     public static int getRealScreenWidth(Context context) {
-
-        Display display = ((Activity) context).getWindowManager()
-                .getDefaultDisplay();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            Point size = new Point();
-            display.getRealSize(size);
-            return size.x;
-        } else {
-            return display.getWidth();
+        if (context instanceof Activity) {
+            Display display = ((Activity) context).getWindowManager()
+                    .getDefaultDisplay();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                Point size = new Point();
+                display.getRealSize(size);
+                return size.x;
+            } else {
+                return display.getWidth();
+            }
         }
+        return 0;
     }
 
     /**
