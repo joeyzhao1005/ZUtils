@@ -78,6 +78,10 @@ public class ColorUtils {
 
     }
 
+    public static String  getHtmlColor(int color){
+        return String.format("%06X", (0xFFFFFF & color));
+    }
+
     public static String toBrowserHexValue(int number) {
         StringBuilder builder = new StringBuilder(
                 Integer.toHexString(number & 0xff));
