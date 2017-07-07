@@ -15,9 +15,86 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FileUtils {
+
+
+    /**
+     * 得到某目录下的所有文件的路径
+     *
+     * @param dir
+     * @return
+     */
+    public static ArrayList<String> getFilesInDir(String dir, String suffix) {
+
+        File file = new File(dir);
+        ArrayList<String> map = new ArrayList<>();
+        if (file.isDirectory()) {
+            //判断file是否是目录
+            File[] lists = file.listFiles();
+            if (lists == null)
+                return null;
+
+            for (int i = 0; i < lists.length; i++) {
+                if (lists[i] == null)
+                    continue;
+                if (lists[i].isDirectory()) {//是目录就递归进入目录内再进行判断
+                    ArrayList<String> innerMap = getFilesInDir(lists[i].getPath(), suffix);
+                    if (innerMap != null)
+                        map.addAll(innerMap);
+                } else {
+                    if (lists[i].getPath().length() < 1)
+                        continue;
+
+                    if (lists[i].getPath().endsWith(suffix)) {
+                        map.add(lists[i].getPath());
+                    }
+                }
+            }
+        }
+
+        return map;
+    }
+
+    /**
+     * 得到某目录下的所有文件的路径
+     *
+     * @param dir
+     * @return
+     */
+    public static ArrayList<String> getFilesInDir(String dir) {
+
+        File file = new File(dir);
+        ArrayList<String> map = new ArrayList<>();
+        if (file.isDirectory()) {
+            //判断file是否是目录
+            File[] lists = file.listFiles();
+            if (lists == null)
+                return null;
+
+            for (int i = 0; i < lists.length; i++) {
+                if (lists[i] == null)
+                    continue;
+                if (lists[i].isDirectory()) {//是目录就递归进入目录内再进行判断
+                    ArrayList<String> innerMap = getFilesInDir(lists[i].getPath());
+                    if (innerMap != null)
+                        map.addAll(innerMap);
+                } else {
+                    if (lists[i].getPath().length() < 1)
+                        continue;
+
+                    map.add(lists[i].getPath());
+                }
+            }
+        }
+
+        return map;
+    }
+
+
     private static void beforeSave(String fileName) {
         mkDir(fileName);
         File file = new File(fileName);
