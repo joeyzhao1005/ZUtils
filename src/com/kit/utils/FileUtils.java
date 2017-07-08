@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.kit.utils.log.ZogUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,13 +15,58 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 public class FileUtils {
+//
+//    /**
+//     * 读取文件创建时间
+//     */
+//    public static long getCreateTime(String filePath){
+//        String strTime = null;
+//        try {
+//            Process p = Runtime.getRuntime().exec("cmd /C dir "
+//                    + filePath
+//                    + "/tc" );
+//            InputStream is = p.getInputStream();
+//            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//            String line;
+//            while((line = br.readLine()) != null){
+//                if(line.endsWith(".txt")){
+//                    strTime = line.substring(0,17);
+//                    break;
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("创建时间    " + strTime);
+//        //输出：创建时间   2009-08-17  10:21
+//    }
 
+
+    /**
+     * 读取修改时间的方法2
+     */
+    public static long getModifiedTime(String filePath) {
+
+
+        File file = new File(filePath);
+        Calendar cal = Calendar.getInstance();
+        long time = file.lastModified();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        cal.setTimeInMillis(time);
+//        System.out.println("修改时间[2] " + formatter.format(cal.getTime()));
+//        //输出：修改时间[2]    2009-08-17 10:32:38
+
+        return time;
+    }
 
     /**
      * 得到某目录下的所有文件的路径
