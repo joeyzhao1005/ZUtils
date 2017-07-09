@@ -26,9 +26,8 @@ public class ShortcutManager {
 
         ArrayList<ZShortcutInfo> shortcutInfos = new ArrayList<>();
 
-        ZShortcutInfo shortcutInfo = new ZShortcutInfo();
-        shortcutInfo.setComponentName(componentName);
-        Extra extra = new Extra();
+        ZShortcutInfo shortcutInfo = null;
+
         try {
             int event = xmlParser.getEventType();   //先获取当前解析器光标在哪
             while (event != XmlPullParser.END_DOCUMENT) {    //如果还没到文档的结束标志，那么就继续往下处理
@@ -42,11 +41,15 @@ public class ShortcutManager {
                         if (StringUtils.isEmptyOrNullStr(xmlParser.getName()))
                             continue;
                         //ZogUtils.d("标签：" + xmlParser.getName() + "开始");
-                        if ("shortcut".equals(xmlParser.getName()) && shortcutInfo == null) {
+                        if ("shortcut".equals(xmlParser.getName())) {
                             shortcutInfo = new ZShortcutInfo();
+                            shortcutInfo.setComponentName(componentName);
                         }
 
-                        parseTag(xmlParser.getName(), shortcutInfo, extra, xmlParser);
+                        if (shortcutInfo != null) {
+                            parseTag(xmlParser.getName(), shortcutInfo, xmlParser);
+                        }
+
 
                         break;
                     case XmlPullParser.TEXT:
@@ -59,7 +62,7 @@ public class ShortcutManager {
                             //ZogUtils.d("标签：" + xmlParser.getName() + "结束");
                             ZShortcutInfo info = null;
                             try {
-                                info = shortcutInfo.clone();
+                                info = shortcutInfo != null ? shortcutInfo.clone() : null;
                             } catch (Exception e) {
                             }
                             if (info != null) {
@@ -85,7 +88,7 @@ public class ShortcutManager {
     }
 
 
-    private static void parseTag(String tag, ZShortcutInfo shortcutInfo, Extra extra, XmlResourceParser xmlParser) {
+    private static void parseTag(String tag, ZShortcutInfo shortcutInfo, XmlResourceParser xmlParser) {
         if (StringUtils.isEmptyOrNullStr(tag))
             return;
 
@@ -160,7 +163,10 @@ public class ShortcutManager {
                 break;
 
             case "extra":
+                Extra extra = new Extra();
+
                 try {
+
                     int attCount = xmlParser.getAttributeCount();
                     for (int i = 0; i < attCount; i++) {
 
@@ -179,8 +185,6 @@ public class ShortcutManager {
                                 String value = xmlParser.getAttributeValue(i);
                                 extra.setValue(value);
                                 break;
-
-
                         }
 
 
