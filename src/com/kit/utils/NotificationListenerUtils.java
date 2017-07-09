@@ -17,21 +17,29 @@ public class NotificationListenerUtils {
 
     /**
      * 进入设置让用户开启通知监听服务相关权限
+     *
      * @param context
      */
     public void enableNotificationListenerListener(Context context) {
-        if (!isNotificationListenerListenerEnabled(context)) {
-            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
-            context.startActivity(intent);
-        } else {
-            ZogUtils.i("已开启通知监听服务权限");
+
+        try {
+            if (!isNotificationListenerListenerEnabled(context)) {
+                Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+                context.startActivity(intent);
+            } else {
+                ZogUtils.i("已开启通知监听服务权限");
 //            Toast.makeText(context, "已开启服务权限", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+
         }
     }
 
 
     /**
      * 当前应用是否启用了通知监听服务
+     *
      * @param context
      * @return
      */
@@ -41,8 +49,6 @@ public class NotificationListenerUtils {
 
         return packageNames.contains(pkgName);
     }
-
-
 
 
     public static NotificationListenerUtils getInstance() {
