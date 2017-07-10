@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.View;
 
 /**
@@ -51,6 +52,8 @@ public class ResWrapper {
         else
             view.setBackgroundDrawable(drawable);
     }
+
+
 
 
     public int getColor(int colorId) {
