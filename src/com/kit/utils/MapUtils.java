@@ -130,6 +130,26 @@ public class MapUtils {
      * @param map 数据源
      * @return 返回的值
      */
+    public static <K, V> Map removeFirst(Map<K, V> map) {
+
+        if (isNullOrEmpty(map))
+            return map;
+
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            map.remove(entry.getKey());
+            return map;
+        }
+        return map;
+    }
+
+    /**
+     * 获取map中第一个数据值
+     *
+     * @param <K> Key的类型
+     * @param <V> Value的类型
+     * @param map 数据源
+     * @return 返回的值
+     */
     public static <K, V> K getFirstKey(Map<K, V> map) {
         K obj = null;
         for (Map.Entry<K, V> entry : map.entrySet()) {

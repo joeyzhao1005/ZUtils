@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import com.google.gson.Gson;
 import com.kit.utils.GsonUtils;
+import com.kit.utils.MapUtils;
 import com.kit.utils.log.ZogUtils;
 
 import java.io.Serializable;
@@ -34,6 +35,10 @@ public class BundleData implements Cloneable, Parcelable {
      */
     public void put(String key, Object value) {
         hashMap.put(key, value);
+
+        if (hashMap.size() > 20) {
+            MapUtils.removeFirst(hashMap);
+        }
     }
 
 
@@ -47,7 +52,7 @@ public class BundleData implements Cloneable, Parcelable {
     public <T> T getObject(String key) {
         T t = null;
         try {
-            t = (T)hashMap.get(key);
+            t = (T) hashMap.get(key);
         } catch (Exception e) {
             ZogUtils.showException(e);
         }
