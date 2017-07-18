@@ -8,11 +8,12 @@ import android.view.MenuItem;
 
 import com.kit.app.ActivityManager;
 import com.kit.app.UIHandler;
+import com.kit.utils.log.ZogUtils;
 
-public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fragment.OnFragmentInteractionListener{
+public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fragment.OnFragmentInteractionListener {
 
 
-    private boolean isShowing =false;
+    private boolean isShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
 
     /**
      * 获得上一个Activity传过来的值
-     * */
+     */
     public boolean getExtra() {
 
         return true;
@@ -54,13 +55,13 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
 
     /**
      * 初始化界面
-     * */
+     */
     public void initWindow() {
     }
 
     /**
      * 初始化界面
-     * */
+     */
     public void initWidget() {
     }
 
@@ -71,17 +72,15 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
     }
 
 
-
-
     /**
      * 去网络或者本地加载数据
-     * */
+     */
     public boolean loadData() {
         return true;
     }
 
 
-    public void initWidgetWithExtra(){
+    public void initWidgetWithExtra() {
     }
 
     @Override
@@ -124,7 +123,10 @@ public class BaseAppCompatActivity extends AppCompatActivity implements BaseV4Fr
         ActivityManager.getInstance().popActivity(this);
         isShowing = false;
 
-        super.onDestroy();
-
+        try {
+            super.onDestroy();
+        } catch (RuntimeException e) {
+            ZogUtils.showException(e);
+        }
     }
 }
