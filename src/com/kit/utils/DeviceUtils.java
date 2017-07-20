@@ -284,7 +284,7 @@ public class DeviceUtils {
             Class<?> c = null;
             Object obj = null;
             Field field = null;
-            int x = 0, sbar = 38;//默认为38，貌似大部分是这样的
+            int x = 0, sbar = 0;
 
             try {
                 c = Class.forName("com.android.internal.R$dimen");
@@ -296,11 +296,16 @@ public class DeviceUtils {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-
             statusBarHeight = sbar;
         }
-        if (statusBarHeight <= 0)
-            statusBarHeight = DensityUtils.dip2px(context, 25);
+        if (statusBarHeight <= 0) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                statusBarHeight = DensityUtils.dip2px(context, 24);
+            } else {
+                statusBarHeight = DensityUtils.dip2px(context, 25);
+
+            }
+        }
         return statusBarHeight;
     }
 
