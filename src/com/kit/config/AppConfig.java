@@ -1,5 +1,6 @@
 package com.kit.config;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 public class AppConfig {
@@ -18,6 +19,7 @@ public class AppConfig {
     }
 
     public interface IAppConfig {
+
         boolean isShowLog();
 
         boolean isShowException();
@@ -27,5 +29,8 @@ public class AppConfig {
         String getCacheDataDir();
 
         String getCacheImageDir();
+
+        Bitmap.Config getPicLevel();
+
     }
 }
