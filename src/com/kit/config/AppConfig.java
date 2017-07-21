@@ -31,9 +31,6 @@ public class AppConfig {
         String getCacheDataDir();
 
         String getCacheImageDir();
-
-        Bitmap.Config getPicLevel();
-
     }
 
 
