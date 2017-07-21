@@ -24,6 +24,8 @@ public class AppConfig {
 
         boolean isShowException();
 
+        Bitmap.Config getPicLevel();//图片清晰度
+
         String getCacheDir();
 
         String getCacheDataDir();
@@ -33,4 +35,6 @@ public class AppConfig {
         Bitmap.Config getPicLevel();
 
     }
+
+
 }
