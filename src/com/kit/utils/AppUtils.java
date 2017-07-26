@@ -95,7 +95,7 @@ public class AppUtils {
             if (context == null)
                 return null;
 
-            if (context.getPackageManager() == null)
+            if (context.getPackageManager() == null || componentName == null)
                 return null;
 
             ActivityInfo info = context.getPackageManager().getActivityInfo(componentName
@@ -111,7 +111,7 @@ public class AppUtils {
                 return (T) metaData.get(key);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ZogUtils.showException(e);
         }
         return null;
     }
