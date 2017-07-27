@@ -111,6 +111,7 @@ public class ZogUtils {
             Log.e(LOGUTILS_TAG, getTitle() + msg);
         }
     }
+
     /**
      * @param msg String 消息
      * @return void 返回类型
@@ -205,7 +206,7 @@ public class ZogUtils {
      */
     public static void showException(Exception e) {
         if (AppConfig.getAppConfig().isShowException()) {
-            ZogUtils.e(GsonUtils.toJson(e));
+            ZogUtils.e(e == null ? "ERROR!!!" : e.toString());
         }
     }
 
