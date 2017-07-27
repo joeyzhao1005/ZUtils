@@ -198,6 +198,19 @@ public class ZogUtils {
     }
 
 
+
+
+    /**
+     * @param
+     * @return void 返回类型
+     * @Title showException
+     * @Description 显示Exception
+     */
+    public static void showException(Throwable e) {
+        if (AppConfig.getAppConfig().isShowException()) {
+            ZogUtils.e(e == null ? "ERROR!!!" : e.toString());
+        }
+    }
     /**
      * @param
      * @return void 返回类型
