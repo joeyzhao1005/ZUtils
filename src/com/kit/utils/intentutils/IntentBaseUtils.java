@@ -34,17 +34,14 @@ public class IntentBaseUtils {
     }
 
     public static void gotoNextActivity(Context packageContext, Class<?> cls) {
-        Intent intent = new Intent();
-        // Bundle bundle = new Bundle();
-        // bundle.putString("USERNAME",
-        // et_username.getText().toString());
-        // intent.putExtras(bundle);
-        intent.setClass(packageContext, cls);
-        packageContext.startActivity(intent);
+        try {
+            Intent intent = new Intent();
 
-        // overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
-        // ((Activity) packageContext).overridePendingTransition(
-        // R.anim.push_left_in, R.anim.push_left_out);
+            intent.setClass(packageContext, cls);
+            packageContext.startActivity(intent);
+        }catch (Exception e){
+            ZogUtils.showException(e);
+        }
     }
 
 

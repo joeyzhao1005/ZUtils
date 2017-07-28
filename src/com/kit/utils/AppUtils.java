@@ -518,6 +518,7 @@ public class AppUtils {
         try {
             final Intent intentPlayStore = new Intent(Intent.ACTION_VIEW);
             intentPlayStore.setData(Uri.parse("market://details?id=" + packageName));
+            intentPlayStore.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             context.startActivity(intentPlayStore);
         } catch (Exception e) {
             ZogUtils.showException(e);
@@ -529,9 +530,9 @@ public class AppUtils {
      * 卸载应用
      */
     public static void searchAppInMarketByKeyword(Context context, String keyword) {
-        Intent viewIntent = new Intent("android.intent.action.VIEW",
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("market://search?q=" + keyword));
-        viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         context.startActivity(viewIntent);
     }
 
