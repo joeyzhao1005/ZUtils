@@ -2,6 +2,7 @@ package com.kit.utils.system;
 
 import android.content.Context;
 
+import com.kit.utils.StringUtils;
 import com.kit.utils.log.ZogUtils;
 
 import java.io.BufferedReader;
@@ -18,7 +19,12 @@ public class RootUtils {
      */
     public static boolean killProcess(String packageName) {
         String cmd = "am force-stop " + packageName + " \n";
-        return execCmdWithRoot(cmd);
+        try {
+            return execCmdWithRoot(cmd);
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+            return false;
+        }
     }
 
 
@@ -105,7 +111,7 @@ public class RootUtils {
     }
 
 
-    public static boolean execCmdWithRoot(String cmdStr) {
+    public static boolean execCmdWithRoot(String cmdStr) throws Exception {
 //        if (null == cmdStr || "".equals(cmdStr)) {
 //            return false;
 //        }
@@ -137,8 +143,12 @@ public class RootUtils {
 //                e.printStackTrace();
 //            }
 //        }
-        ShellUtils.execCommand(cmdStr,true);
-        return false;
+        ShellUtils.CommandResult commandResult = ShellUtils.execCommand(cmdStr, true);
+        if (!StringUtils.isEmptyOrNullStr(commandResult.errorMsg)) {
+            throw new Exception(commandResult.errorMsg);
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -146,7 +156,12 @@ public class RootUtils {
      */
     public static boolean isRootDevice() {
         String cmdStr = "uiautomator dump";
-        return execCmdWithRoot(cmdStr);
+        try {
+            return execCmdWithRoot(cmdStr);
+        } catch (Exception e) {
+            ZogUtils.showException(e);
+            return false;
+        }
     }
 
     /**
