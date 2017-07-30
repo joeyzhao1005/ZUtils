@@ -21,21 +21,21 @@ public class ScreenBroadcastReceiver extends BroadcastReceiver {
         if (Intent.ACTION_SCREEN_ON.equals(action)) {
             // 开屏
             ZogUtils.i("开屏");
-            onScreenOn(intent);
+            onScreenOn(context,intent);
         } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
             // 锁屏
             ZogUtils.i("锁屏");
-            onScreenOff(intent);
+            onScreenOff(context,intent);
 
         } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
             // 解锁
             ZogUtils.i("解锁");
-            onScreenUnlock(intent);
+            onScreenUnlock(context,intent);
 
         } else if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(action)) {
             // 当长按电源键弹出“关机”对话或者锁屏时系统会发出这个广播
             ZogUtils.i("锁屏");
-            onScreenLock(intent);
+            onScreenLock(context,intent);
 
             // example：有时候会用到系统对话框，权限可能很高，会覆盖在锁屏界面或者“关机”对话框之上，
             // 所以监听这个广播，当收到时就隐藏自己的对话，如点击pad右下角部分弹出的对话框
@@ -43,21 +43,21 @@ public class ScreenBroadcastReceiver extends BroadcastReceiver {
     }
 
 
-    public void onScreenOn(Intent intent) {
+    public void onScreenOn(Context context,Intent intent) {
 
     }
 
 
-    public void onScreenOff(Intent intent) {
+    public void onScreenOff(Context context,Intent intent) {
 
     }
 
 
-    public void onScreenUnlock(Intent intent) {
+    public void onScreenUnlock(Context context,Intent intent) {
 
     }
 
-    public void onScreenLock(Intent intent) {
+    public void onScreenLock(Context context,Intent intent) {
 
     }
 
