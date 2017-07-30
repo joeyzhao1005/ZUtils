@@ -1,9 +1,16 @@
 package com.kit.model.shortcut;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
+
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by Zhao on 2017/5/31.
@@ -13,6 +20,12 @@ public class ZShortcutInfo implements Cloneable {
 
 
     public ComponentName getComponentName() {
+        if (componentName == null) {
+            try {
+                componentName = new ComponentName(targetPackage, targetClass);
+            } catch (Exception e) {
+            }
+        }
         return componentName;
     }
 
@@ -101,19 +114,19 @@ public class ZShortcutInfo implements Cloneable {
         this.targetClass = targetClass;
     }
 
-    public ArrayList<String> getCategories() {
+    public Set<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(ArrayList<String> categories) {
+    public void setCategories(Set<String> categories) {
         this.categories = categories;
     }
 
-    public Extra getExtra() {
+    public PersistableBundle getExtra() {
         return extra;
     }
 
-    public void setExtra(Extra extra) {
+    public void setExtra(PersistableBundle extra) {
         this.extra = extra;
     }
 
@@ -157,6 +170,68 @@ public class ZShortcutInfo implements Cloneable {
         isRootLaunch = rootLaunch;
     }
 
+
+    public Intent getIntent() {
+        return intent;
+    }
+
+    public void setIntent(Intent intent) {
+        this.intent = intent;
+    }
+
+    public String getIntentStr() {
+        return intentStr;
+    }
+
+    public void setIntentStr(String intentStr) {
+        this.intentStr = intentStr;
+    }
+
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
+    }
+
+    public boolean isDynamic() {
+        return isDynamic;
+    }
+
+    public void setDynamic(boolean dynamic) {
+        isDynamic = dynamic;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public long getSerialNumberForUser() {
+        return serialNumberForUser;
+    }
+
+    public void setSerialNumberForUser(long serialNumberForUser) {
+        this.serialNumberForUser = serialNumberForUser;
+    }
+
+    long serialNumberForUser;
+
+
+    @Expose(serialize = false)
+    Intent intent;
+
+    String intentStr;
+
+    boolean isPinned;
+    boolean isDynamic;
+
+    int rank;
+
     ComponentName componentName;
 
     String shortcutId;
@@ -176,8 +251,8 @@ public class ZShortcutInfo implements Cloneable {
     String targetPackage;
     String targetClass;
 
-    ArrayList<String> categories;
-    Extra extra;
+    Set<String> categories;
+    PersistableBundle extra;
 
     String data;
 
@@ -204,6 +279,12 @@ public class ZShortcutInfo implements Cloneable {
         zShortcutInfo.setExtra(this.extra);
         zShortcutInfo.setData(this.data);
         zShortcutInfo.setRootLaunch(this.isRootLaunch);
+        zShortcutInfo.setIntentStr(this.intentStr);
+        zShortcutInfo.setIntent(this.intent);
+        zShortcutInfo.setDynamic(this.isDynamic);
+        zShortcutInfo.setPinned(this.isPinned);
+        zShortcutInfo.setRank(this.rank);
+        zShortcutInfo.setSerialNumberForUser(this.serialNumberForUser);
         return zShortcutInfo;
     }
 }

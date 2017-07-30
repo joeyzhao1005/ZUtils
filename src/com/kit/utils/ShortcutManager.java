@@ -2,6 +2,10 @@ package com.kit.utils;
 
 import android.content.ComponentName;
 import android.content.res.XmlResourceParser;
+import android.os.BaseBundle;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 
 import com.kit.model.shortcut.Extra;
 import com.kit.model.shortcut.ZShortcutInfo;
@@ -12,6 +16,8 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Created by Zhao on 2017/5/31.
@@ -193,8 +199,11 @@ public class ShortcutManager {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                shortcutInfo.setExtra(extra);
-
+                if (Build.VERSION.SDK_INT >= 21) {
+                    PersistableBundle bundle = new PersistableBundle();
+                    bundle.putString(extra.getName(), extra.getValue());
+                    shortcutInfo.setExtra(bundle);
+                }
                 break;
 
             case "intent":
@@ -252,7 +261,7 @@ public class ShortcutManager {
 
                     if (attCountCategories > 0) {
 
-                        ArrayList<String> cats = new ArrayList<>();
+                        Set<String> cats = new LinkedHashSet<>();
                         for (int j = 0; j < attCountCategories; j++) {
                             //ZogUtils.d("categories 属性：" + xmlParser.getAttributeName(0)
 //                                    + ": " + xmlParser.getAttributeValue(0));
