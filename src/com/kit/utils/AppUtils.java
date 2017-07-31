@@ -360,15 +360,18 @@ public class AppUtils {
      * @param time
      * @param doSomeThing
      */
-    public static void delay(long time, final DoSomeThing doSomeThing) {
+    public static Handler delay(long time, final DoSomeThing doSomeThing) {
 
-        new Handler().postDelayed(new Runnable() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             public void run() {
                 //execute the task
                 doSomeThing.execute();
             }
 
         }, time);
+
+        return handler;
     }
 
     /**
