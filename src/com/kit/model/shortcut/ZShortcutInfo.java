@@ -122,11 +122,11 @@ public class ZShortcutInfo implements Cloneable {
         this.categories = categories;
     }
 
-    public PersistableBundle getExtra() {
+    public Extra getExtra() {
         return extra;
     }
 
-    public void setExtra(PersistableBundle extra) {
+    public void setExtra(Extra extra) {
         this.extra = extra;
     }
 
@@ -252,7 +252,7 @@ public class ZShortcutInfo implements Cloneable {
     String targetClass;
 
     Set<String> categories;
-    PersistableBundle extra;
+    Extra extra;
 
     String data;
 

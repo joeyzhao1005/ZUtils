@@ -199,11 +199,8 @@ public class ShortcutManager {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (Build.VERSION.SDK_INT >= 21) {
-                    PersistableBundle bundle = new PersistableBundle();
-                    bundle.putString(extra.getName(), extra.getValue());
-                    shortcutInfo.setExtra(bundle);
-                }
+                shortcutInfo.setExtra(extra);
+
                 break;
 
             case "intent":
