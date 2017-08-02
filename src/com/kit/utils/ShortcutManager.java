@@ -199,8 +199,7 @@ public class ShortcutManager {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                shortcutInfo.setExtra(extra);
-
+                shortcutInfo.putExtra(extra);
                 break;
 
             case "intent":

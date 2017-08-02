@@ -8,8 +8,10 @@ import android.os.Parcelable;
 import android.os.PersistableBundle;
 
 import com.google.gson.annotations.Expose;
+import com.kit.utils.SetUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -122,12 +124,23 @@ public class ZShortcutInfo implements Cloneable {
         this.categories = categories;
     }
 
-    public Extra getExtra() {
-        return extra;
+    public Set<Extra> getExtras() {
+        return extras;
     }
 
-    public void setExtra(Extra extra) {
-        this.extra = extra;
+
+    public void setExtras(Set<Extra> extras) {
+        this.extras = extras;
+    }
+
+    public void putExtra(Extra extra) {
+        if (extra == null)
+            return;
+
+        if (this.extras == null) {
+            this.extras = new HashSet<>();
+        }
+        this.extras.add(extra);
     }
 
     public String getDisabledMessage() {
@@ -252,7 +265,7 @@ public class ZShortcutInfo implements Cloneable {
     String targetClass;
 
     Set<String> categories;
-    Extra extra;
+    Set<Extra> extras;
 
     String data;
 
@@ -276,7 +289,7 @@ public class ZShortcutInfo implements Cloneable {
         zShortcutInfo.setTargetPackage(this.targetPackage);
         zShortcutInfo.setTargetClass(this.targetClass);
         zShortcutInfo.setCategories(this.categories);
-        zShortcutInfo.setExtra(this.extra);
+        zShortcutInfo.setExtras(this.extras);
         zShortcutInfo.setData(this.data);
         zShortcutInfo.setRootLaunch(this.isRootLaunch);
         zShortcutInfo.setIntentStr(this.intentStr);
