@@ -9,6 +9,7 @@ import android.os.PersistableBundle;
 
 import com.google.gson.annotations.Expose;
 import com.kit.utils.SetUtils;
+import com.kit.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -270,6 +271,14 @@ public class ZShortcutInfo implements Cloneable {
     String data;
 
     boolean isRootLaunch;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && (obj instanceof ZShortcutInfo) && !StringUtils.isEmptyOrNullStr(shortcutId)) {
+            return shortcutId.equals(((ZShortcutInfo) obj).shortcutId);
+        }
+        return false;
+    }
 
     @Override
     public ZShortcutInfo clone() throws CloneNotSupportedException {

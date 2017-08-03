@@ -44,40 +44,57 @@ public class ShortcutManager {
                         break;
                     case XmlPullParser.START_TAG:
                         //一般都是获取标签的属性值，所以在这里数据你需要的数据
-                        if (StringUtils.isEmptyOrNullStr(xmlParser.getName()))
+                        String startTag = xmlParser.getName();
+
+                        if (StringUtils.isEmptyOrNullStr(startTag))
                             continue;
                         //ZogUtils.d("标签：" + xmlParser.getName() + "开始");
-                        if ("shortcut".equals(xmlParser.getName())) {
-                            shortcutInfo = new ZShortcutInfo();
-                            shortcutInfo.setComponentName(componentName);
-                        }
-
-                        if (shortcutInfo != null) {
-                            parseTag(xmlParser.getName(), shortcutInfo, xmlParser);
-                        }
-
-
-                        break;
-                    case XmlPullParser.TEXT:
-                        //ZogUtils.d("Text:" + xmlParser.getText());
-                        break;
-                    case XmlPullParser.END_TAG:
-                        if (StringUtils.isEmptyOrNullStr(xmlParser.getName()))
-                            continue;
-                        if ("shortcut".equals(xmlParser.getName())) {
-                            //ZogUtils.d("标签：" + xmlParser.getName() + "结束");
+                        if ("shortcut".equals(startTag)) {
                             ZShortcutInfo info = null;
                             try {
                                 info = shortcutInfo != null ? shortcutInfo.clone() : null;
                             } catch (Exception e) {
                             }
-                            if (info != null) {
+                            if (info != null && !shortcutInfos.contains(info)) {
                                 shortcutInfos.add(info);
                             }
-                            shortcutInfo = null;
-                        } else if ("shortcuts".equals(xmlParser.getName())) {
-                            return shortcutInfos;
+
+                            shortcutInfo = new ZShortcutInfo();
+                            shortcutInfo.setComponentName(componentName);
                         }
+
+                        if (shortcutInfo != null) {
+                            parseTag(startTag, shortcutInfo, xmlParser);
+                        }
+                        break;
+
+                    case XmlPullParser.TEXT:
+                        ZogUtils.d("Text:" + xmlParser.getText());
+                        break;
+
+                    case XmlPullParser.END_TAG:
+                        String endTag = xmlParser.getName();
+                        if (StringUtils.isEmptyOrNullStr(endTag))
+                            continue;
+
+                        switch (endTag) {
+                            case "shortcut":
+                                ZShortcutInfo info = null;
+                                try {
+                                    info = shortcutInfo != null ? shortcutInfo.clone() : null;
+                                } catch (Exception e) {
+                                }
+                                if (info != null && !shortcutInfos.contains(info)) {
+                                    shortcutInfos.add(info);
+                                }
+                                shortcutInfo = null;
+                                break;
+
+                            case "shortcuts":
+                                return shortcutInfos;
+
+                        }
+
                         break;
                     default:
                         break;
@@ -234,7 +251,8 @@ public class ShortcutManager {
                                 int attCountData = xmlParser.getAttributeCount();
                                 //ZogUtils.d("data 属性:" + xmlParser.getAttributeName(i));
                                 //ZogUtils.d("data 值:" + xmlParser.getAttributeValue(i));
-                                shortcutInfo.setData(xmlParser.getAttributeValue(i));
+                                String data = xmlParser.getAttributeValue(i);
+                                shortcutInfo.setData(data);
                                 break;
 
                             case "intent-filter":
