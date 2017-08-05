@@ -73,11 +73,19 @@ public class SharedPreferencesUtils {
         return sharedpreferences.getInt(key, 0);
     }
 
+
+    public boolean saveSharedPreferences(String key, long value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putLong(key, value);
+        return editor.commit();
+    }
+
     public boolean saveSharedPreferences(String key, float value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putFloat(key, value);
         return editor.commit();
     }
+
 
     public float loadFloatSharedPreference(String key, Float floatValue) {
         return sharedpreferences.getFloat(key, floatValue);
@@ -95,6 +103,11 @@ public class SharedPreferencesUtils {
 
     public long loadLongSharedPreference(String key, long longValue) {
         return sharedpreferences.getLong(key, longValue);
+    }
+
+
+    public float loadLongSharedPreference(String key, float longValue) {
+        return sharedpreferences.getFloat(key, longValue);
     }
 
     public long loadLongSharedPreference(String key) {
