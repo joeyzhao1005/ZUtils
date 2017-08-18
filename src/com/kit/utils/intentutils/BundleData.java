@@ -146,6 +146,11 @@ public class BundleData implements Cloneable, Parcelable {
         dest.writeMap(this.hashMap);
     }
 
+    /**
+     * 尽量跳转到哪个界面传哪个
+     *
+     * @param flag
+     */
     public BundleData(String flag) {
         this.flag = flag;
     }
