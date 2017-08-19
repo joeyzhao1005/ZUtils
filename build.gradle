@@ -1,10 +1,14 @@
 apply plugin: 'com.android.library'
 
 dependencies {
-    compile fileTree(include: '*.jar', dir: 'libs')
-    compile 'com.android.support:support-v4:26.0.1'
-    compile 'com.android.support:appcompat-v7:26.0.1'
-    compile 'com.google.code.gson:gson:2.8.0'
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    implementation 'com.android.support:support-v4:26.0.1'
+    implementation 'com.android.support:appcompat-v7:26.0.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation ('commons-httpclient:commons-httpclient:3.1') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+    implementation 'com.belerweb:pinyin4j:2.5.1'
 }
 
 android {
@@ -13,7 +17,7 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
     }
 
     sourceSets {
