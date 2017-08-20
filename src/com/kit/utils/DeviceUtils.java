@@ -11,10 +11,13 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 import android.telephony.TelephonyManager;
 import android.util.TypedValue;
 import android.view.Display;
 
+import com.kit.app.ActivityManager;
 import com.kit.receiver.DeviceAdminManagerReceiver;
 import com.kit.utils.log.ZogUtils;
 
@@ -76,9 +79,11 @@ public class DeviceUtils {
         return model;
     }
 
+
     public static String getDeviceId(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
+
     }
 
 
@@ -88,7 +93,11 @@ public class DeviceUtils {
     public static final int DEVICE_ADMIN = 70 + 1;
 
 
-    public static void lockScreen(Activity activity) {
+    public static void lockScreen(@Nullable Activity activity) {
+
+        if (activity == null)
+            activity = ActivityManager.getInstance().getCurrActivity();
+
         //获取设备管理服务
         DevicePolicyManager policyManager = (DevicePolicyManager) activity
                 .getSystemService(Context.DEVICE_POLICY_SERVICE);
