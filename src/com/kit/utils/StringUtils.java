@@ -28,7 +28,6 @@ public class StringUtils {
     }
 
 
-
     /**
      * Trims the string, removing all whitespace at the beginning and end of the string.
      * Non-breaking whitespaces are also removed.
@@ -526,6 +525,23 @@ public class StringUtils {
         }
         return true;
     }
+
+
+    /**
+     * 判断是否为数字
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isAlphabet(String str) {
+        if (StringUtils.isEmptyOrNullStr(str))
+            return false;
+
+        boolean isAlphabet = str.matches("[a-zA-Z]+");
+
+        return isAlphabet;
+    }
+
 
     public static boolean isCharset(String str, String charsetName) {
         return Charset.forName(charsetName).newEncoder().canEncode(str);
