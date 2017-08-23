@@ -1,7 +1,10 @@
 package com.kit.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.TypedValue;
+import android.view.View;
 
 /**
  * Created by Zhao on 14-10-1.
@@ -21,6 +24,22 @@ public class ResourceUtils {
 //
 //        return indentify;
 //    }
+
+
+    public static void setSelectableItemBackgroundBorderless(Activity activity,View view) {
+
+        TypedValue typedValue = new TypedValue();
+        // I used getActivity() as if you were calling from a fragment.
+        // You just want to call getTheme() on the current activity, however you can get it
+        activity.getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, typedValue, true);
+        // it's probably a good idea to check if the color wasn't specified as a resource
+        if (typedValue.resourceId != 0) {
+            view.setBackgroundResource(typedValue.resourceId);
+        } else {
+            // this should work whether there was a resource id or not
+            view.setBackgroundColor(typedValue.data);
+        }
+    }
 
     /**
      * 根据资源的名字获取它的ID
@@ -114,7 +133,6 @@ public class ResourceUtils {
     public static int getStyleId(Context context, String name) {
         return getResId(context, name, "style");
     }
-
 
 
 }
