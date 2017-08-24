@@ -2,6 +2,9 @@ package com.kit.utils;
 
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.kit.utils.log.ZogUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +19,7 @@ public class RomUtils {
         public static final int NA = 4;
     }
 
-    public static boolean isLightStatusBarAvailable () {
+    public static boolean isLightStatusBarAvailable() {
         if (isMIUIV6OrAbove() || isFlymeV4OrAbove() || isAndroidMOrAbove()) {
             return true;
         }
@@ -65,7 +68,8 @@ public class RomUtils {
                 if (miuiVersionCode >= 4) {
                     return true;
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
         return false;
     }
@@ -78,7 +82,25 @@ public class RomUtils {
         return false;
     }
 
-    private static String getSystemProperty(String propName) {
+    /**
+     * 获取小米 rom 版本号，获取失败返回 -1
+     *
+     * @return miui rom version code, if fail , return -1
+     */
+    public static int getMiuiVersion() {
+        String version = RomUtils.getSystemProperty("ro.miui.ui.version.name");
+        if (version != null) {
+            try {
+                return Integer.parseInt(version.substring(1));
+            } catch (Exception e) {
+                ZogUtils.i("get miui version code error, version : " + version);
+                ZogUtils.e(Log.getStackTraceString(e));
+            }
+        }
+        return -1;
+    }
+
+    public static String getSystemProperty(String propName) {
         String line;
         BufferedReader input = null;
         try {

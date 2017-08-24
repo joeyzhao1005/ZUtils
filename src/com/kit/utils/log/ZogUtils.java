@@ -208,7 +208,7 @@ public class ZogUtils {
      */
     public static void showException(Throwable e) {
         if (AppConfig.getAppConfig().isShowException()) {
-            ZogUtils.e(e == null ? "ERROR!!!" : e.toString());
+            ZogUtils.e(e == null ? "ERROR!!!" : Log.getStackTraceString(e));
         }
     }
     /**
@@ -219,7 +219,7 @@ public class ZogUtils {
      */
     public static void showException(Exception e) {
         if (AppConfig.getAppConfig().isShowException()) {
-            ZogUtils.e(e == null ? "ERROR!!!" : e.toString());
+            ZogUtils.e(e == null ? "ERROR!!!" : Log.getStackTraceString(e));
         }
     }
 
