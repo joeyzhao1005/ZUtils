@@ -26,7 +26,10 @@ public class ResourceUtils {
 //    }
 
 
-    public static void setSelectableItemBackgroundBorderless(Activity activity,View view) {
+    public static void setSelectableItemBackgroundBorderless(Activity activity, View view) {
+
+        if (activity == null)
+            return;
 
         TypedValue typedValue = new TypedValue();
         // I used getActivity() as if you were calling from a fragment.
@@ -49,6 +52,7 @@ public class ResourceUtils {
      * @return 资源的id
      */
     public static int getResId(Context context, String name, String defType) {
+
 
 //        ZogUtils.i(ResourceUtils.class, "context:" + context);
         Resources resources = context.getApplicationContext().getResources();
