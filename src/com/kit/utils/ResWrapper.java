@@ -54,8 +54,6 @@ public class ResWrapper {
     }
 
 
-
-
     public int getColor(int colorId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             return context.getResources().getColor(colorId, null);
