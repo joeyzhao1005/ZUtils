@@ -111,7 +111,8 @@ public class AppUtils {
                 return (T) metaData.get(key);
             }
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            //可能获取不到 报异常
+//            ZogUtils.showException(e);
         }
         return null;
     }
