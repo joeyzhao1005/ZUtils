@@ -56,55 +56,55 @@ public class ResWrapper {
 
     public int getColor(int colorId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            return context.getResources().getColor(colorId, null);
+            return getResources().getColor(colorId, null);
         else
-            return ContextCompat.getColor(context, colorId);
+            return ContextCompat.getColor(getApplicationContext(), colorId);
     }
 
     public float getDimension(int dimensionId) {
-        return context.getResources().getDimension(dimensionId);
+        return getResources().getDimension(dimensionId);
     }
 
     public Drawable getDrawable(int drawableId, Resources.Theme theme) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
-            return context.getResources().getDrawable(drawableId, theme);
+            return getResources().getDrawable(drawableId, theme);
         else
             return getDrawable(drawableId);
     }
 
     public Drawable getDrawable(int drawableId) {
-        return context.getResources().getDrawable(drawableId);
+        return getResources().getDrawable(drawableId);
     }
 
 
     public Bitmap getBitmap(int drawableId) {
-        return BitmapFactory.decodeResource(context.getResources(), drawableId);
+        return BitmapFactory.decodeResource(getResources(), drawableId);
     }
 
 
     public String getString(@StringRes int stringId) {
-        return context.getResources().getString(stringId);
+        return getResources().getString(stringId);
     }
 
 
     public String getString(@StringRes int stringId, Object... formatArgs) {
-        return context.getResources().getString(stringId, formatArgs);
+        return getResources().getString(stringId, formatArgs);
     }
 
 
     public String[] getStringArray(int stringId) {
-        return context.getResources().getStringArray(stringId);
+        return getResources().getStringArray(stringId);
     }
 
 
     public String getText4ResStringArray(int intR) {
-        String[] hibernate_copy = context.getResources().getStringArray(intR);
+        String[] hibernate_copy = getResources().getStringArray(intR);
         String textStr = (String) ArrayUtils.getOne(hibernate_copy);
         return textStr;
 
     }
 
     public Resources getResources() {
-        return context.getResources();
+        return getApplicationContext().getResources();
     }
 }
