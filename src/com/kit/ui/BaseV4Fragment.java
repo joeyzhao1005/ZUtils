@@ -63,6 +63,12 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     }
 
     @Override
+    public void onDestroy() {
+        destory();
+        super.onDestroy();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -144,11 +150,11 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     }
 
     public void destory(){
-        onPause();
-        onStop();
-        onDestroyView();
-        onDestroy();
-        onDetach();
+//        onPause();
+//        onStop();
+//        onDestroyView();
+//        onDestroy();
+//        onDetach();
     }
 
 }
