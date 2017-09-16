@@ -19,7 +19,6 @@ public class DensityUtils {
      */
     public static int dip2px(Context context, float dpValue) {
         final float scale = getScale(context);
-        ZogUtils.i("scale:" + scale);
         return (int) (dpValue * scale + 0.5f);
     }
 
