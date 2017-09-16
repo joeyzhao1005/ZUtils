@@ -46,9 +46,7 @@ public class LightStatusBarUtils {
         initStatusBarStyle(activity, isMarginStatusBar, isMarginNavigationBar);
 
         Class<? extends Window> clazz = activity.getWindow().getClass();
-        try
-
-        {
+        try {
             int darkModeFlag = 0;
             Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
             Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
@@ -56,10 +54,7 @@ public class LightStatusBarUtils {
             Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
             extraFlagField.invoke(activity.getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
             return true;
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             ZogUtils.showException(e);
             setAndroidNativeLightStatusBar(activity, isMarginStatusBar, isMarginNavigationBar, isTransStatusBar, darkmode);
         }
