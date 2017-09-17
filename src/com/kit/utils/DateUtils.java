@@ -25,6 +25,7 @@ public class DateUtils {
 
     public static String WEIBO_DATE = "EEE MMM d HH:mm:ss Z yyyy";
 
+	public static String HOUR_MIN = "HH:mm";
 
 	/**
 	 * 获取随机日期
