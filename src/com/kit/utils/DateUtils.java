@@ -26,8 +26,8 @@ public class DateUtils {
     public static String WEIBO_DATE = "EEE MMM d HH:mm:ss Z yyyy";
 
 	public static String HOUR_MIN = "HH:mm";
-	public static String WEAK_SIMPLE = "EEE";
-	public static String WEAK_FULL = "EEEE";
+	public static String WEEK_SIMPLE = "EEE";
+	public static String WEEK_FULL = "EEEE";
 
 	/**
 	 * 获取随机日期
