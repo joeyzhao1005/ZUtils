@@ -351,6 +351,23 @@ public class MapUtils {
     }
 
 
+    public static Object getPosition(Map map, int position) {
+        if (MapUtils.isNullOrEmpty(map))
+            return map;
+
+        Iterator<Map.Entry<?, ?>> it = map.entrySet().iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            Map.Entry<?, ?> entry = it.next();
+            if (i == position) {
+                return entry.getKey();
+            }
+            i++;
+        }
+        return map;
+    }
+
+
     public static Map removePosition(Map map, int position) {
         if (MapUtils.isNullOrEmpty(map))
             return map;
