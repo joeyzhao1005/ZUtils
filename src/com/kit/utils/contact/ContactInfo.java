@@ -2,13 +2,15 @@ package com.kit.utils.contact;
 
 import android.graphics.Bitmap;
 
+import java.util.List;
+
 /**
  * Created by Zhao on 16/8/9.
  */
 public class ContactInfo {
 
     private String displayName;
-    private String number;
+    private List<String> number;
 
     private Bitmap avatar;
 
@@ -20,11 +22,11 @@ public class ContactInfo {
         this.displayName = displayName;
     }
 
-    public String getNumber() {
+    public List<String> getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(List<String> number) {
         this.number = number;
     }
 

@@ -1,8 +1,10 @@
 package com.kit.utils.contact;
 
+import android.Manifest;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,11 +14,16 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
+import android.support.v4.content.ContextCompat;
 
+import com.kit.utils.ArrayUtils;
+import com.kit.utils.StringUtils;
 import com.kit.utils.log.ZogUtils;
 
 import java.io.InputStream;
+import java.security.Permission;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactUtils {
 
@@ -96,6 +103,162 @@ public class ContactUtils {
         return cur;
     }
 
+
+    /**
+     * @param
+     * @return String 返回类型
+     * @Title getPhoneFromName
+     * @Description 根据姓名取得手机号码
+     */
+    public static ArrayList<ContactInfo> getAllContacts(Context context) {
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        ArrayList<ContactInfo> phone = new ArrayList<ContactInfo>();
+
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(
+                    ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        } catch (SecurityException e) {
+            ZogUtils.showException(e);
+        }
+        if (cursor == null) {
+            // Log.d(TAG, "getPeople null");
+            return null;
+        }
+
+        if (cursor.moveToFirst()) {
+            int idColumn = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+
+            int displayNameColumn = cursor
+                    .getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+
+            String disPlayName = "";
+            do {
+
+                // 获得联系人的ID号
+                String contactId = cursor.getString(idColumn);
+                // Log.i("contactId",contactId);
+                // 获得联系人姓名
+                disPlayName = cursor.getString(displayNameColumn);
+                // Log.i("disPlayName",disPlayName);
+
+//                查看该联系人有多少个电话号码。如果没有这返回值为0
+//                int phoneCount = cursor
+//                        .getInt(cursor
+//                                .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+//                if (phoneCount > 0) {
+                // 获得联系人的电话号码
+                Cursor phones = context.getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+                                + " = " + contactId, null, null);
+
+                List<String> phoneNumbers = new ArrayList<>();
+                if (phones != null) {
+                    if (phones.moveToFirst()) {
+                        do {
+                            // 遍历所有的电话号码
+                            String phoneNumber = phones
+                                    .getString(phones
+                                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            // Log.i("phoneNumber",phoneNumber);
+                            phoneNumbers.add(phoneNumber);
+                        } while (phones.moveToNext());
+                    }
+                    phones.close();
+                }
+
+//                }
+
+                Bitmap bitmap = null;
+                if (cursor
+                        .getColumnIndex(Phone.CONTACT_ID) != -1) {
+                    try {
+                        String contact_id = cursor
+                                .getString(cursor
+                                        .getColumnIndex(Phone.CONTACT_ID));
+
+                        Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,
+                                Long.parseLong(contact_id));
+                        // 打开头像图片的InputStream
+                        InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), uri);
+                        // 从InputStream获得bitmap
+                        bitmap = BitmapFactory.decodeStream(input);
+                    } catch (Exception e) {
+
+                    }
+                }
+
+                if (StringUtils.isEmptyOrNullStr(disPlayName))
+                    continue;
+
+                ContactInfo contactInfo = new ContactInfo();
+                contactInfo.setDisplayName(disPlayName);
+                contactInfo.setNumber(phoneNumbers);
+                if (bitmap != null)
+                    contactInfo.setAvatar(bitmap);
+
+                phone.add(contactInfo);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+//        ZogUtils.i("getPeople cursor.getCount() = "
+//                + cursor.getCount());
+//        for (int i = 0; i < cursor.getCount(); i++) {
+//            cursor.moveToPosition(i);
+//
+//            int nameFieldColumnIndex = cursor
+//                    .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
+//            String name = cursor.getString(nameFieldColumnIndex);
+//
+//            String phoneNumber = cursor
+//                    .getString(cursor
+//                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+//
+//
+//            // Log.i(TAG, "" + name + " .... " + nameFieldColumnIndex);
+//
+//
+//            Bitmap bitmap = null;
+//            if (cursor
+//                    .getColumnIndex(Phone.CONTACT_ID) != -1) {
+//                try {
+//                    String contact_id = cursor
+//                            .getString(cursor
+//                                    .getColumnIndex(Phone.CONTACT_ID));
+//
+//                    Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,
+//                            Long.parseLong(contact_id));
+//                    // 打开头像图片的InputStream
+//                    InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), uri);
+//                    // 从InputStream获得bitmap
+//                    bitmap = BitmapFactory.decodeStream(input);
+//                }catch (Exception e){
+//
+//                }
+//            }
+//
+//            ContactInfo contactInfo = new ContactInfo();
+//            contactInfo.setDisplayName(name);
+//            contactInfo.setNumber(phoneNumber);
+//            if (bitmap != null)
+//                contactInfo.setAvatar(bitmap);
+//
+//            phone.add(contactInfo);
+//
+//        }
+//        cursor.close();
+        return phone;
+
+    }
+
+
     // 查找联系人
     public void getUserInfo(Context context) {
         Cursor cursor = context.getContentResolver().query(
@@ -170,17 +333,20 @@ public class ContactUtils {
      */
     public static ArrayList<ContactInfo> getContactInfoFromNameLike(Context context,
                                                                     String name) {
-        ArrayList<ContactInfo> phone = new ArrayList<ContactInfo>();
+        ArrayList<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
         String[] projection = {ContactsContract.PhoneLookup.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.NUMBER};
-        String[] selectionArgs = new String[]{"%" + name + "%"};
+        String[] selectionArgs = new String[]{"%" + name + "%", "%" + name + "%"};
         Cursor cursor = null;
         try {
             cursor = context.getContentResolver().query(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     projection, // Which columns to return.
                     ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
-                            + " like ? ", // WHERE clause.
+                            + " like ?" +
+                            " or "
+                            + ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
+                            + " like ？", // WHERE clause.
                     selectionArgs, // WHERE clause value substitution
                     null); // Sort order.
         } catch (SecurityException e) {
@@ -199,10 +365,31 @@ public class ContactUtils {
                     .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
             name = cursor.getString(nameFieldColumnIndex);
 
-            String phoneNumber = cursor
-                    .getString(cursor
-                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            // 获得联系人的电话号码
 
+//            String phoneNumber = cursor
+//                    .getString(cursor
+//                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String contactId = cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.Contacts._ID));
+
+            Cursor phones = context.getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+                            + " = " + contactId, null, null);
+
+            List<String> phoneNumbers = new ArrayList<>();
+            if (phones != null && phones.moveToFirst()) {
+                do {
+                    // 遍历所有的电话号码
+                    String phoneNumber = phones
+                            .getString(phones
+                                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    // Log.i("phoneNumber",phoneNumber);
+                    phoneNumbers.add(phoneNumber);
+                } while (phones.moveToNext());
+            }
 
             // Log.i(TAG, "" + name + " .... " + nameFieldColumnIndex);
 
@@ -223,17 +410,20 @@ public class ContactUtils {
                 bitmap = BitmapFactory.decodeStream(input);
             }
 
+            if (StringUtils.isEmptyOrNullStr(name))
+                continue;
+
             ContactInfo contactInfo = new ContactInfo();
             contactInfo.setDisplayName(name);
-            contactInfo.setNumber(phoneNumber);
+            contactInfo.setNumber(phoneNumbers);
             if (bitmap != null)
                 contactInfo.setAvatar(bitmap);
 
-            phone.add(contactInfo);
+            contactInfos.add(contactInfo);
 
         }
         cursor.close();
-        return phone;
+        return contactInfos;
 
     }
 
@@ -275,10 +465,32 @@ public class ContactUtils {
                     .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
             name = cursor.getString(nameFieldColumnIndex);
 
-            String phoneNumber = cursor
-                    .getString(cursor
-                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
+            // 获得联系人的电话号码
+
+//            String phoneNumber = cursor
+//                    .getString(cursor
+//                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String contactId = cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.Contacts._ID));
+
+            Cursor phones = context.getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+                            + " = " + contactId, null, null);
+
+            List<String> phoneNumbers = new ArrayList<>();
+            if (phones != null && phones.moveToFirst()) {
+                do {
+                    // 遍历所有的电话号码
+                    String phoneNumber = phones
+                            .getString(phones
+                                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    // Log.i("phoneNumber",phoneNumber);
+                    phoneNumbers.add(phoneNumber);
+                } while (phones.moveToNext());
+            }
 
             // Log.i(TAG, "" + name + " .... " + nameFieldColumnIndex);
 
@@ -301,7 +513,7 @@ public class ContactUtils {
 
             ContactInfo contactInfo = new ContactInfo();
             contactInfo.setDisplayName(name);
-            contactInfo.setNumber(phoneNumber);
+            contactInfo.setNumber(phoneNumbers);
             if (bitmap != null)
                 contactInfo.setAvatar(bitmap);
 
