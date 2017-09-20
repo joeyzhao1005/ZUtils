@@ -10,6 +10,14 @@ import android.view.inputmethod.InputMethodManager;
  * @date 2014年3月20日
  */
 public class KeyboardUtils {
+    /**
+     * 一定要注意，隐藏键盘的时候，要保证view可见
+     *
+     * @param view
+     */
+    public static void hiddenKeyboard(View view) {
+        hiddenKeyboard(null,view);
+    }
 
     /**
      * 一定要注意，隐藏键盘的时候，要保证view可见
@@ -18,6 +26,11 @@ public class KeyboardUtils {
      * @param view
      */
     public static void hiddenKeyboard(Context context, View view) {
+
+        if(context==null){
+            context = ResWrapper.getInstance().getApplicationContext();
+        }
+
         InputMethodManager imm = null;
         if (context != null)
             imm = (InputMethodManager) context
