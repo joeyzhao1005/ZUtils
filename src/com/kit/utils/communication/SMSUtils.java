@@ -1,13 +1,16 @@
 package com.kit.utils.communication;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 
@@ -26,7 +29,12 @@ import java.util.Date;
  */
 
 public class SMSUtils {
-    public static ArrayList<SMSInfo> getSMSInPhone(Context context) {
+    public static ArrayList<SMSInfo> getAllSMS(Context context) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+
         final String SMS_URI_ALL = "content://sms/";
         final String SMS_URI_INBOX = "content://sms/inbox";
         final String SMS_URI_SEND = "content://sms/sent";
@@ -94,43 +102,7 @@ public class SMSUtils {
         return smsInfos;
     }
 
-    public static ArrayList<SMSInfo> getAllSMS() {
-        Uri SMS_INBOX = Uri.parse("content://sms/");
-        ContentResolver cr = ResWrapper.getInstance().getContext().getContentResolver();
-        String[] projection = new String[]{"_id", "person", "address", "date", "body"};
 
-
-//        String[] projection = new String[]{"body"};//"_id", "address", "person",, "date", "type
-//        String where = " body like ?";
-        Cursor cur = cr.query(SMS_INBOX, projection, null, null, "date desc");
-        if (null == cur)
-            return null;
-
-        ArrayList<SMSInfo> smsInfos = new ArrayList<SMSInfo>();
-        for (int i = 0; i < cur.getCount(); i++) {
-            cur.moveToPosition(i);
-            String address = cur.getString(cur.getColumnIndex("address"));//手机号
-            String person = cur.getString(cur.getColumnIndex("person"));//联系人姓名列表
-            String body = cur.getString(cur.getColumnIndex("body"));
-            long date = cur.getLong(cur.getColumnIndex("date"));
-
-
-            SMSInfo info = new SMSInfo();
-            info.setAddress(address);
-            info.setPerson(person);
-            info.setBody(body);
-            info.setDate(date);
-
-            smsInfos.add(info);
-        }
-
-        cur.close();
-
-        if (ListUtils.isNullOrContainEmpty(smsInfos)) {
-            return null;
-        } else
-            return smsInfos;
-    }
 
     public static ArrayList<SMSInfo> getSmsByKeyWord(String keyword) {
         Uri SMS_INBOX = Uri.parse("content://sms/");
