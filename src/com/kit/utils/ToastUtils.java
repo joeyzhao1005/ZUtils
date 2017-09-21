@@ -18,7 +18,7 @@ public class ToastUtils {
 
     public static void mkLongTimeToast(String msg) {
         try {
-            Context context = ResWrapper.getInstance().getContext();
+            Context context = ResWrapper.getInstance().getApplicationContext();
             Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             ZogUtils.showException(e);
@@ -27,7 +27,7 @@ public class ToastUtils {
 
     public static void mkLongTimeToast(int msgStringId) {
         try {
-            Context context = ResWrapper.getInstance().getContext();
+            Context context = ResWrapper.getInstance().getApplicationContext();
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             ZogUtils.showException(e);
@@ -53,7 +53,7 @@ public class ToastUtils {
 
     public static void mkShortTimeToast(String msg) {
         try {
-            Context context = ResWrapper.getInstance().getContext();
+            Context context = ResWrapper.getInstance().getApplicationContext();
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             ZogUtils.showException(e);
@@ -62,8 +62,10 @@ public class ToastUtils {
 
 
     public static void mkShortTimeToast(@StringRes int msgStringId) {
+
         try {
-            Context context = ResWrapper.getInstance().getContext();
+            Context context = ResWrapper.getInstance().getApplicationContext();
+
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             ZogUtils.showException(e);
@@ -72,6 +74,9 @@ public class ToastUtils {
 
 
     public static void mkShortTimeToast(Context context, @StringRes int msgStringId) {
+        if (context == null) {
+            context = ResWrapper.getInstance().getApplicationContext();
+        }
         try {
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
@@ -101,7 +106,7 @@ public class ToastUtils {
         if (mToast != null)
             mToast.setText(text);
         else {
-            Context context = ResWrapper.getInstance().getContext();
+            Context context = ResWrapper.getInstance().getApplicationContext();
             mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
         }
         mHandler.postDelayed(r, duration);
@@ -117,7 +122,7 @@ public class ToastUtils {
      * @Description 自定义toast内容和时长
      */
     public static void mkToast(int resId, int duration) {
-        Context context = ResWrapper.getInstance().getContext();
+        Context context = ResWrapper.getInstance().getApplicationContext();
 
         String text = context.getResources().getString(resId);
         mHandler.removeCallbacks(r);
