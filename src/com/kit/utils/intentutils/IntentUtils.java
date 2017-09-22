@@ -1,14 +1,23 @@
 package com.kit.utils.intentutils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.kit.app.ActivityManager;
+import com.kit.utils.DensityUtils;
 import com.kit.utils.StringUtils;
 import com.kit.utils.log.ZogUtils;
 
@@ -127,7 +136,6 @@ public class IntentUtils extends IntentBaseUtils {
     }
 
 
-
     /**
      * 跳转界面并传值
      *
@@ -167,6 +175,62 @@ public class IntentUtils extends IntentBaseUtils {
 
     }
 
+
+
+
+
+    public static ActivityOptions getActivityOptions(Context context, View v, int enterResId, int exitResId) {
+        ActivityOptions opts = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int left = 0, top = 0;
+            int width = DensityUtils.dip2px(100);
+            int height = DensityUtils.dip2px(100);
+
+
+            if (v != null) {
+                width = v.getMeasuredWidth();
+                height = v.getMeasuredHeight();
+                top = v.getPaddingTop();
+                left = v.getLeft();
+            }
+
+            if (v instanceof ImageView) {
+                Drawable icon = ((ImageView) v).getDrawable();
+                if (icon != null) {
+                    Rect bounds = icon.getBounds();
+                    left = (width - bounds.width()) / 2;
+                    top = v.getPaddingTop();
+                    width = bounds.width();
+                    height = bounds.height();
+                }
+            }
+
+            opts = ActivityOptions.makeClipRevealAnimation(v, left, top, width, height);
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Below L, we use a scale up animation
+            opts = ActivityOptions.makeScaleUpAnimation(v, 0, 0,
+                    v.getMeasuredWidth(), v.getMeasuredHeight());
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            // On L devices, we use the device default slide-up transition.
+            // On L MR1 devices, we a custom version of the slide-up transition witch
+            // doesn't have the delay present in the device default.
+            opts = ActivityOptions.makeCustomAnimation(context,
+                    enterResId, exitResId);
+        }
+
+        if (opts == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                // On L devices, we use the device default slide-up transition.
+                // On L MR1 devices, we a custom version of the slide-up transition witch
+                // doesn't have the delay present in the device default.
+                opts = ActivityOptions.makeCustomAnimation(context,
+                        enterResId, exitResId);
+            }
+        }
+        return opts;
+    }
 
     /**
      * 跳转界面并传值
@@ -209,7 +273,6 @@ public class IntentUtils extends IntentBaseUtils {
     }
 
 
-
     /**
      * 从Service到Activity
      *
@@ -230,7 +293,7 @@ public class IntentUtils extends IntentBaseUtils {
             if (isCloseThis && (packageContext instanceof Activity)) {
                 ((Activity) packageContext).finish();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             ZogUtils.showException(e);
         }
 
@@ -437,5 +500,43 @@ public class IntentUtils extends IntentBaseUtils {
 
     }
 
+    public static Bundle gotoNextActivity4JellyBean(Context context, Class<?> cls, View v, int enterResId, int exitResId) {
+
+        Intent intent = new Intent();//创建Intent对象
+        intent.setClass(context, cls);
+
+        ActivityOptions activityOptions = getActivityOptions(context, v, enterResId, exitResId);
+
+        Bundle bundle = null;
+        if (activityOptions != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            bundle = activityOptions.toBundle();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            context.startActivity(intent, bundle);
+        }else {
+            context.startActivity(intent);
+        }
+        return bundle;
+    }
+
+    public static Bundle gotoNextActivity4JellyBean(Context context, Class<?> cls, BundleData data, View v, int enterResId, int exitResId) {
+
+        Intent intent = new Intent();//创建Intent对象
+        pushData(intent, data);
+        intent.setClass(context, cls);
+
+        ActivityOptions activityOptions = getActivityOptions(context, v, enterResId, exitResId);
+
+        Bundle bundle = null;
+        if (activityOptions != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            bundle = activityOptions.toBundle();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            context.startActivity(intent, bundle);
+        }else {
+            context.startActivity(intent);
+        }
+        return bundle;
+    }
 
 }
