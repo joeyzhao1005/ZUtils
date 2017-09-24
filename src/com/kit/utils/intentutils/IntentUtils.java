@@ -192,7 +192,7 @@ public class IntentUtils extends IntentBaseUtils {
                 width = v.getMeasuredWidth();
                 height = v.getMeasuredHeight();
                 top = v.getPaddingTop();
-                left = v.getLeft();
+                left = v.getPaddingLeft();
             }
 
             if (v instanceof ImageView) {
