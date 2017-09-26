@@ -35,12 +35,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout.LayoutParams;
 
+import com.kit.utils.ResWrapper;
+
 import java.lang.reflect.Method;
 
 /**
- * Class to manage status and navigation bar tint effects when using KitKat 
+ * Class to manage status and navigation bar tint effects when using KitKat
  * translucent system UI modes.
- *
  */
 public class SystemBarTintManager {
 
@@ -130,7 +131,7 @@ public class SystemBarTintManager {
 
     /**
      * Enable tinting of the system status bar.
-     *
+     * <p>
      * If the platform is running Jelly Bean or earlier, or translucent system
      * UI modes have not been enabled in either the theme or via window flags,
      * then this method does nothing.
@@ -146,7 +147,7 @@ public class SystemBarTintManager {
 
     /**
      * Enable tinting of the system navigation bar.
-     *
+     * <p>
      * If the platform does not have soft navigation keys, is running Jelly Bean
      * or earlier, or translucent system UI modes have not been enabled in either
      * the theme or via window flags, then this method does nothing.
@@ -351,7 +352,6 @@ public class SystemBarTintManager {
     /**
      * Class which describes system bar sizing and other characteristics for the current
      * device configuration.
-     *
      */
     public static class SystemBarConfig {
 
@@ -373,15 +373,18 @@ public class SystemBarTintManager {
 
         private SystemBarConfig(Activity activity, boolean translucentStatusBar, boolean traslucentNavBar) {
             Resources res = activity.getResources();
-            mInPortrait = (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
-            mSmallestWidthDp = getSmallestWidthDp(activity);
-            mStatusBarHeight = getInternalDimensionSize(res, STATUS_BAR_HEIGHT_RES_NAME);
-            mActionBarHeight = getActionBarHeight(activity);
-            mNavigationBarHeight = getNavigationBarHeight(activity);
-            mNavigationBarWidth = getNavigationBarWidth(activity);
-            mHasNavigationBar = (mNavigationBarHeight > 0);
-            mTranslucentStatusBar = translucentStatusBar;
-            mTranslucentNavBar = traslucentNavBar;
+            if (res == null) {
+                res = ResWrapper.getInstance().getResources();
+            }
+                mInPortrait = (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
+                mSmallestWidthDp = getSmallestWidthDp(activity);
+                mStatusBarHeight = getInternalDimensionSize(res, STATUS_BAR_HEIGHT_RES_NAME);
+                mActionBarHeight = getActionBarHeight(activity);
+                mNavigationBarHeight = getNavigationBarHeight(activity);
+                mNavigationBarWidth = getNavigationBarWidth(activity);
+                mHasNavigationBar = (mNavigationBarHeight > 0);
+                mTranslucentStatusBar = translucentStatusBar;
+                mTranslucentNavBar = traslucentNavBar;
         }
 
         @TargetApi(14)

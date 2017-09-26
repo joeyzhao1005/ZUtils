@@ -404,6 +404,9 @@ public class AppUtils {
      */
     public static void setAppLanguage(Application app, String lanAtr) {
         Resources resources = app.getApplicationContext().getResources();
+        if(resources==null){
+            resources = app.getResources();
+        }
         Configuration config = resources.getConfiguration();
         DisplayMetrics dm = resources.getDisplayMetrics();
         if (lanAtr.equals("zh-cn")) {
@@ -428,6 +431,9 @@ public class AppUtils {
      * @param resources
      */
     public static Locale getAppLanguage(Resources resources) {
+        if(resources==null){
+            resources = ResWrapper.getInstance().getResources();
+        }
         Configuration config = resources.getConfiguration();
         return config.locale;
     }
