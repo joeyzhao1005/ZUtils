@@ -176,9 +176,6 @@ public class IntentUtils extends IntentBaseUtils {
     }
 
 
-
-
-
     public static ActivityOptions getActivityOptions(Context context, View v, int enterResId, int exitResId) {
         ActivityOptions opts = null;
 
@@ -189,10 +186,11 @@ public class IntentUtils extends IntentBaseUtils {
 
 
             if (v != null) {
-                width = v.getMeasuredWidth();
-                height = v.getMeasuredHeight();
                 top = v.getPaddingTop();
                 left = v.getPaddingLeft();
+                width = (v.getMeasuredWidth() - left) / 2;
+                height = (v.getMeasuredHeight() - top) / 2;
+
             }
 
             if (v instanceof ImageView) {
@@ -513,7 +511,7 @@ public class IntentUtils extends IntentBaseUtils {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             context.startActivity(intent, bundle);
-        }else {
+        } else {
             context.startActivity(intent);
         }
         return bundle;
@@ -533,7 +531,7 @@ public class IntentUtils extends IntentBaseUtils {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             context.startActivity(intent, bundle);
-        }else {
+        } else {
             context.startActivity(intent);
         }
         return bundle;
