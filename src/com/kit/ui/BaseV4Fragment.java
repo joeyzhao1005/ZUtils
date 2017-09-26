@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kit.utils.ResWrapper;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -53,6 +55,9 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         getExtra(savedInstanceState);
+        if (getActivity() != null) {
+            ResWrapper.getInstance().setContext(getActivity());
+        }
         super.onCreate(savedInstanceState);
 
 //        if (getArguments() != null) {
@@ -60,6 +65,14 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
         loadData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() != null) {
+            ResWrapper.getInstance().setContext(getActivity());
+        }
     }
 
     @Override
@@ -82,7 +95,6 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     }
 
 
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -90,9 +102,19 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
         }
     }
 
+
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+    }
+
+    @Override
+    public void onAttach(Context activity) {
         super.onAttach(activity);
+
+        if (getActivity() != null) {
+            ResWrapper.getInstance().setContext(getActivity());
+        }
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
@@ -122,10 +144,11 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public boolean getExtra(Bundle savedInstanceState){
+    public boolean getExtra(Bundle savedInstanceState) {
 
         return true;
     }
+
 
 
     /**
@@ -149,7 +172,7 @@ public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
     public void initWidgetWithExtra() {
     }
 
-    public void destory(){
+    public void destory() {
 //        onPause();
 //        onStop();
 //        onDestroyView();
