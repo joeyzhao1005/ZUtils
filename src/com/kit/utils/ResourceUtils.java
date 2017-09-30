@@ -26,15 +26,17 @@ public class ResourceUtils {
 //    }
 
 
-    public static void setSelectableItemBackgroundBorderless(Activity activity, View view) {
-
-        if (activity == null)
-            return;
+    public static void setSelectableItemBackgroundBorderless(Context context, View view) {
+        if (context == null) {
+            context = ResWrapper.getInstance().getApplicationContext();
+        } else {
+            context = context.getApplicationContext();
+        }
 
         TypedValue typedValue = new TypedValue();
         // I used getActivity() as if you were calling from a fragment.
         // You just want to call getTheme() on the current activity, however you can get it
-        activity.getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, typedValue, true);
+        context.getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, typedValue, true);
         // it's probably a good idea to check if the color wasn't specified as a resource
         if (typedValue.resourceId != 0) {
             view.setBackgroundResource(typedValue.resourceId);
@@ -53,9 +55,14 @@ public class ResourceUtils {
      */
     public static int getResId(Context context, String name, String defType) {
 
+        if (context == null) {
+            context = ResWrapper.getInstance().getApplicationContext();
+        } else {
+            context = context.getApplicationContext();
+        }
 
 //        ZogUtils.i(ResourceUtils.class, "context:" + context);
-        Resources resources = context.getApplicationContext().getResources();
+        Resources resources = context.getResources();
 
         String packageName = context.getApplicationInfo().packageName;
 
