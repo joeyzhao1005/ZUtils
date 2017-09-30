@@ -30,6 +30,61 @@ import java.util.Locale;
 
 public class AppUtils {
 
+    public static boolean isSysApp(String packageName) {
+        PackageManager packageManager = null;
+
+        try {
+            packageManager = ResWrapper.getInstance().getApplicationContext().getPackageManager();
+        } catch (Exception e) {
+        }
+
+        if (packageManager == null) {
+            try {
+                packageManager = ActivityManager.getInstance().getCurrActivity().getPackageManager();
+            } catch (Exception e) {
+            }
+        }
+
+        if (packageManager == null)
+            return false;
+
+        ApplicationInfo applicationInfo = null;
+        try {
+            applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+        } catch (Exception e) {
+        }
+
+        if (applicationInfo == null)
+            return false;
+
+        return isSysApp(applicationInfo);
+
+    }
+
+
+    public static boolean isSysApp(ApplicationInfo applicationInfo) {
+        boolean flag = false;
+//        if ((applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+//            // Updated system app
+//            flag = true;
+//        } else if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+//            // Non-system app
+//            flag = true;
+//        }
+
+        //判断是否系统应用
+        if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0
+                || (applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
+            //非系统应用
+            flag = false;
+        } else {
+            //系统应用　　　　　　　　
+            flag = true;
+        }
+
+
+        return flag;
+    }
 
     /**
      * 从manifest里获取metadata
@@ -404,7 +459,7 @@ public class AppUtils {
      */
     public static void setAppLanguage(Application app, String lanAtr) {
         Resources resources = app.getApplicationContext().getResources();
-        if(resources==null){
+        if (resources == null) {
             resources = app.getResources();
         }
         Configuration config = resources.getConfiguration();
@@ -431,7 +486,7 @@ public class AppUtils {
      * @param resources
      */
     public static Locale getAppLanguage(Resources resources) {
-        if(resources==null){
+        if (resources == null) {
             resources = ResWrapper.getInstance().getResources();
         }
         Configuration config = resources.getConfiguration();
