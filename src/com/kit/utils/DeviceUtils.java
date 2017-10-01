@@ -156,6 +156,10 @@ public class DeviceUtils {
      * @return the screen height
      */
     public static int getScreenHeight(Context context) {
+        if (context == null) {
+            context = ActivityManager.getInstance().getCurrActivity();
+        }
+
         if (context instanceof Activity) {
             Display display = ((Activity) context).getWindowManager()
                     .getDefaultDisplay();
@@ -172,6 +176,10 @@ public class DeviceUtils {
 
 
     public static int getRealScreenHeight(Context context) {
+        if (context == null) {
+            context = ActivityManager.getInstance().getCurrActivity();
+        }
+
         if (context instanceof Activity) {
             Display display = ((Activity) context).getWindowManager()
                     .getDefaultDisplay();
@@ -195,12 +203,11 @@ public class DeviceUtils {
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     public static int getScreenWidth(Context context) {
-        if(context==null){
+        if (context == null) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context instanceof Activity) {
-
             Display display = ((Activity) context).getWindowManager()
                     .getDefaultDisplay();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
@@ -222,6 +229,10 @@ public class DeviceUtils {
      * @return the screen width
      */
     public static int getRealScreenWidth(Context context) {
+        if (context == null) {
+            context = ActivityManager.getInstance().getCurrActivity();
+        }
+
         if (context instanceof Activity) {
             Display display = ((Activity) context).getWindowManager()
                     .getDefaultDisplay();
