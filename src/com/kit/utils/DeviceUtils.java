@@ -195,6 +195,10 @@ public class DeviceUtils {
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     public static int getScreenWidth(Context context) {
+        if(context==null){
+            context = ActivityManager.getInstance().getCurrActivity();
+        }
+
         if (context instanceof Activity) {
 
             Display display = ((Activity) context).getWindowManager()
