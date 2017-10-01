@@ -74,7 +74,7 @@ public class AppUtils {
 
         //判断是否系统应用
         if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0
-                || (applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
+                /*|| (applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0*/) {
             //非系统应用
             flag = false;
         } else {
