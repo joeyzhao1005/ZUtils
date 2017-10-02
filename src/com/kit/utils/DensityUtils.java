@@ -66,15 +66,14 @@ public class DensityUtils {
     }
 
     public static float getScale(Context context) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-
-        return scale;
+        if (context == null) {
+            return getScale();
+        }
+        return context.getResources().getDisplayMetrics().density;
     }
 
     public static float getScale() {
-        final float scale = ResWrapper.getInstance().getResources().getDisplayMetrics().density;
-
-        return scale;
+        return ResWrapper.getInstance().getResources().getDisplayMetrics().density;
     }
 
 }

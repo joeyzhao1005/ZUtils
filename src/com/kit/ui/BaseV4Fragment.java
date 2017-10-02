@@ -21,14 +21,6 @@ import com.kit.utils.ResWrapper;
  */
 public class BaseV4Fragment extends Fragment implements IDoFragmentInit {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    public static final String ARG_PARAM1 = "param1";
-//    public static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    public String mParam1;
-    public String mParam2;
 
     public OnFragmentInteractionListener mListener;
 
