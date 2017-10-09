@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -62,4 +63,6 @@ public class AccessbilityUtils {
         }
         return false;
     }
+
+
 }

@@ -305,18 +305,14 @@ public class DeviceUtils {
     public static int getStatusBarHeight(Context context) {
 
         if (statusBarHeight == 0) {
-            Class<?> c = null;
-            Object obj = null;
-            Field field = null;
-            int x = 0, sbar = 0;
+            int sbar = 0;
 
             try {
-                c = Class.forName("com.android.internal.R$dimen");
-                obj = c.newInstance();
-                field = c.getField("status_bar_height");
-                x = Integer.parseInt(field.get(obj).toString());
+                Class<?> c = Class.forName("com.android.internal.R$dimen");
+                Object obj = c.newInstance();
+                Field field = c.getField("status_bar_height");
+                int x = (Integer)(field.get(obj));
                 sbar = context.getResources().getDimensionPixelSize(x);
-
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
