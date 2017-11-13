@@ -21,6 +21,9 @@ public class ResWrapper {
 
     private static Context applicationContext;
 
+    private ResWrapper() {
+    }
+
     public static ResWrapper getInstance() {
 
         if (resWrapper == null)
