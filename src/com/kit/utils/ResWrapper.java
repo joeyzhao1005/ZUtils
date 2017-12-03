@@ -8,8 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import android.util.TypedValue;
 import android.view.View;
+
+import java.util.List;
 
 /**
  * Created by Zhao on 16/7/17.
@@ -97,6 +98,14 @@ public class ResWrapper {
 
     public String[] getStringArray(int stringId) {
         return getResources().getStringArray(stringId);
+    }
+
+    public List<String> getStringList(int stringId) {
+        try {
+            return ArrayUtils.toList(getResources().getStringArray(stringId));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 
