@@ -14,14 +14,20 @@ import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresPermission;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.ViewConfiguration;
+import android.view.WindowManager;
 
 import com.kit.app.ActivityManager;
 import com.kit.receiver.DeviceAdminManagerReceiver;
 import com.kit.utils.log.ZogUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class DeviceUtils {
 
@@ -132,20 +138,71 @@ public class DeviceUtils {
 
 
     /**
-     * 判定是否有虚拟按键
+     * 获取是否存在NavigationBar
      *
      * @param context
      * @return
      */
-    public static boolean isShowNavigationBar(Context context) {
-        if (getAPIVersion() >= 14) {
-            Resources resources = context.getResources();
-            int resourceId = resources.getIdentifier("config_showNavigationBar", "bool", "android");
-            if (resourceId > 0) {
-                return resources.getBoolean(resourceId);
+    public static boolean isDeviceHasNavigationBar(Context context) {
+        boolean hasNavigationBar = false;
+        Resources rs = context.getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
             }
+        } catch (Exception e) {
+
+        }
+        return hasNavigationBar || checkDeviceHasNavigationBar(context);
+    }
+
+
+    public static boolean checkDeviceHasNavigationBar(Context context) {
+        //通过判断设备是否有返回键、菜单键(不是虚拟键,是手机屏幕外的按键)来确定是否有navigation bar
+        boolean hasMenuKey = ViewConfiguration.get(context)
+                .hasPermanentMenuKey();
+        boolean hasBackKey = KeyCharacterMap
+                .deviceHasKey(KeyEvent.KEYCODE_BACK);
+
+        if (!hasMenuKey && !hasBackKey) {
+            // 做任何你需要做的,这个设备有一个导航栏
+            return true;
         }
         return false;
+    }
+
+
+    /**
+     * 获取虚拟功能键高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getVirtualBarHeigh(Context context) {
+        int vh = 0;
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        try {
+            @SuppressWarnings("rawtypes")
+            Class c = Class.forName("android.view.Display");
+            @SuppressWarnings("unchecked")
+            Method method = c.getMethod("getRealMetrics", DisplayMetrics.class);
+            method.invoke(display, dm);
+            vh = dm.heightPixels - windowManager.getDefaultDisplay().getHeight();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return vh;
     }
 
 
@@ -311,7 +368,7 @@ public class DeviceUtils {
                 Class<?> c = Class.forName("com.android.internal.R$dimen");
                 Object obj = c.newInstance();
                 Field field = c.getField("status_bar_height");
-                int x = (Integer)(field.get(obj));
+                int x = (Integer) (field.get(obj));
                 sbar = context.getResources().getDimensionPixelSize(x);
             } catch (Exception e1) {
                 e1.printStackTrace();
