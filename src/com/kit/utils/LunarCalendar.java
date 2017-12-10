@@ -1,5 +1,7 @@
 package com.kit.utils;
 
+import android.annotation.TargetApi;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -602,11 +604,11 @@ public class LunarCalendar implements Serializable {
 		this.month = month;
 	}
 
-	public int getDate() {
+	public int getDay() {
 		return day;
 	}
 
-	public void setDate(int date) {
+	public void setDay(int date) {
 		this.day = date;
 	}
 
@@ -760,6 +762,7 @@ public class LunarCalendar implements Serializable {
 			super();
 		}
 
+		@TargetApi(24)
 		public LunarException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 			super(message, cause, writableStackTrace, writableStackTrace);
 		}

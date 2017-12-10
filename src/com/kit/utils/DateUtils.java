@@ -25,6 +25,11 @@ public class DateUtils {
 
     public static String WEIBO_DATE = "EEE MMM d HH:mm:ss Z yyyy";
 
+
+    public static String YEAR_MONTH_DAY_WEEK_CHINA = "yyyy年MM月dd日 EEE";
+    public static String MONTH_DAY_WEEK_CHINA = "MM月dd日 EEE";
+
+
     public static String HOUR_MIN = "HH:mm";
     public static String WEEK_SIMPLE = "EEE";
     public static String WEEK_FULL = "EEEE";
