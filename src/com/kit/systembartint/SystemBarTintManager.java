@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.readystatesoftware.systembartint;
+package com.kit.systembartint;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

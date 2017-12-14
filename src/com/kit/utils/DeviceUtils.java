@@ -12,8 +12,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
-import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -23,7 +21,6 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import com.kit.app.ActivityManager;
-import com.kit.receiver.DeviceAdminManagerReceiver;
 import com.kit.utils.log.ZogUtils;
 
 import java.lang.reflect.Field;
@@ -86,11 +83,6 @@ public class DeviceUtils {
     }
 
 
-    public static String getDeviceId(Context context) {
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return tm.getDeviceId();
-
-    }
 
 
     private static int statusBarHeight = 0;
@@ -99,7 +91,7 @@ public class DeviceUtils {
     public static final int DEVICE_ADMIN = 70 + 1;
 
 
-    public static void lockScreen(@Nullable Activity activity) {
+    public static void lockScreen(@Nullable Activity activity,Class<?> adminManagerReceiver) {
 
         if (activity == null)
             activity = ActivityManager.getInstance().getCurrActivity();
@@ -109,7 +101,7 @@ public class DeviceUtils {
                 .getSystemService(Context.DEVICE_POLICY_SERVICE);
 
         //AdminReceiver 继承自 DeviceAdminReceiver
-        ComponentName componentName = new ComponentName(activity, DeviceAdminManagerReceiver.class);
+        ComponentName componentName = new ComponentName(activity, adminManagerReceiver);
 
         boolean active = policyManager.isAdminActive(componentName);
         if (!active) {//若无权限

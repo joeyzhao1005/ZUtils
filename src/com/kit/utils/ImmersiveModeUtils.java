@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.kit.utils.bitmap.BitmapUtils;
 import com.kit.utils.log.ZogUtils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.kit.systembartint.SystemBarTintManager;
 
 /**
  * Created by Zhao on 14-9-30.
