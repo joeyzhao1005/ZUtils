@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import static com.kit.utils.FileUtils.getSuffix;
+
 /**
  * Created by Zhao on 14-9-1.
  */
@@ -139,5 +141,16 @@ public class ImageSelectorUtils {
      */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+
+    public static boolean isGif(String filedir) {
+        if (StringUtils.isEmptyOrNullStr(filedir)) {
+            return false;
+        } else {
+            String sub = getSuffix(filedir);
+            boolean isGifPic = ("gif".equals(sub) || "GIF".equals(sub));
+            return isGifPic;
+        }
     }
 }
