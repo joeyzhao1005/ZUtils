@@ -5,5 +5,9 @@ package com.kit.app.constant;
  */
 public class RequestResultCode {
 //    startActivityForResult参数的requestCode不能太大了,所以不能超过2的16次方
-    public static final int INDEX_REQUEST_RESULT_CODE = 9000;
+public static final int INDEX_REQUEST_RESULT_CODE = 9000;
+
+
+
+
 }
