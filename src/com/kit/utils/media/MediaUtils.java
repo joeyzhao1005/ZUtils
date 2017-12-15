@@ -99,12 +99,12 @@ public class MediaUtils {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             try {
-                ResWrapper.getInstance().getContext().startActivity(it);
+                ResWrapper.getInstance().getApplicationContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
                 ZogUtils.showException(e);
             }
         } else {
-            Context context = ResWrapper.getInstance().getContext();
+            Context context = ResWrapper.getInstance().getApplicationContext();
             ContentValues contentValues = new ContentValues(1);
             contentValues.put(MediaStore.Images.Media.DATA, dir);
             Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
@@ -120,7 +120,7 @@ public class MediaUtils {
                     "");
 
             try {
-                ResWrapper.getInstance().getContext().startActivity(it);
+                ResWrapper.getInstance().getApplicationContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
                 ZogUtils.showException(e);
             }
@@ -136,7 +136,7 @@ public class MediaUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
-            ResWrapper.getInstance().getContext().startActivity(intent);
+            ResWrapper.getInstance().getApplicationContext().startActivity(intent);
         } catch (ActivityNotFoundException e) {
             ZogUtils.showException(e);
         }

@@ -19,7 +19,7 @@ public class ConnectivityUtils {
     public static ConnectivityUtils getInstance() {
         if (connectivityUtils == null) {
             connectivityUtils = new ConnectivityUtils();
-            Context context = ResWrapper.getInstance().getContext();
+            Context context = ResWrapper.getInstance().getApplicationContext();
             connectivityUtils.mConnectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             connectivityUtils.wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);

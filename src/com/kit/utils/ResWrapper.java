@@ -10,13 +10,14 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
  * Created by Zhao on 16/7/17.
  */
 public class ResWrapper {
-    private Context context;
+    private WeakReference<Context> context;
 
     private static ResWrapper resWrapper;
 
@@ -35,20 +36,22 @@ public class ResWrapper {
 
 
     public ResWrapper setContext(Context context) {
-        this.context = context;
+        this.context = new WeakReference<Context>(context);
+        getApplicationContext();
         return resWrapper;
     }
 
 
     public Context getApplicationContext() {
-        if (applicationContext == null)
-            applicationContext = context.getApplicationContext();
+        if (applicationContext == null && context != null && context.get() != null) {
+            applicationContext = context.get().getApplicationContext();
+        }
         return applicationContext;
     }
 
-    public Context getContext() {
-        return context;
-    }
+//    public Context getContext() {
+//        return applicationContext;
+//    }
 
     public void setBackground(View view, Drawable drawable) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)

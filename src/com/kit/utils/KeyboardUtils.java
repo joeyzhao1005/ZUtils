@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.kit.app.ActivityManager;
+
 /**
  * @author Joey.Zhao Email: laozhao1005@gmail.com
  * @date 2014年3月20日
@@ -28,7 +30,7 @@ public class KeyboardUtils {
     public static void hiddenKeyboard(Context context, View view) {
 
         if(context==null){
-            context = ResWrapper.getInstance().getApplicationContext();
+            context = ActivityManager.getInstance().getCurrActivity();
         }
 
         InputMethodManager imm = null;

@@ -23,7 +23,7 @@ public class PhoneUtils {
      */
     public static boolean isTelephonyCalling() {
         boolean calling = false;
-        TelephonyManager telephonyManager = (TelephonyManager) ResWrapper.getInstance().getContext()
+        TelephonyManager telephonyManager = (TelephonyManager) ResWrapper.getInstance().getApplicationContext()
                 .getSystemService(Context.TELEPHONY_SERVICE);
         if (TelephonyManager.CALL_STATE_OFFHOOK == telephonyManager.getCallState()
                 || TelephonyManager.CALL_STATE_RINGING == telephonyManager.getCallState()) {
@@ -42,7 +42,7 @@ public class PhoneUtils {
             return;
         }
 
-        Context context = ResWrapper.getInstance().getContext();
+        Context context = ResWrapper.getInstance().getApplicationContext();
         Uri uri = Uri.parse("tel:" + strPhone);
         Intent intent = new Intent(Intent.ACTION_CALL, uri);// 注意：call是直接就打出去了，dial是经过系统的确定才能打
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

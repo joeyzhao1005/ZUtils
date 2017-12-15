@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -36,6 +37,7 @@ import junit.framework.Assert;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -49,6 +51,48 @@ public class BitmapUtils {
 
     public static String TAG = BitmapUtils.class.getName();
 
+    public static Bitmap loadGifFirstBitmap(FileDescriptor fd) {
+        Bitmap bitmap = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(fd);
+            Movie movie = Movie.decodeStream(fileInputStream);
+            //Bitmap.Config.ARGB_8888 这里是核心，如果出现图片显示不正确，就换编码试试
+            bitmap = Bitmap.createBitmap(movie.width(), movie.height(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            movie.draw(canvas, 0, 0);
+            canvas.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+        return bitmap;
+
+
+//        try {
+//            GifImageDecoder   gifDecoder = new GifImageDecoder();
+//
+//            gifDecoder.read();  //这是Gif图片资源
+//            int size =gifDecoder.getFrameCount();
+//            for(int i=0;i<size;i++)
+//            {
+//
+//                ImageView iv_image = new ImageView(CustomActivity.this);
+//                iv_image.setPadding(5, 5, 5, 5);
+//                LayoutParams lparams = new LayoutParams(100,100);
+//                iv_image.setLayoutParams(lparams);
+//                iv_image.setImageBitmap(gifDecoder.getFrame(i));
+//                ll_decodeimages.addView(iv_image);
+////                gifFrame.nextFrame();
+//            }
+//        } catch (NotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+    }
 
     public static Bitmap getViewBitmap(View addViewContent) {
         addViewContent.setDrawingCacheEnabled(true);
@@ -1092,7 +1136,7 @@ public class BitmapUtils {
         return result;
     }
 
-    public static Bitmap resize(String  path, int imageViewHeight) {
+    public static Bitmap resize(String path, int imageViewHeight) {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -1231,7 +1275,7 @@ public class BitmapUtils {
 
         File fileSaved = saveBitmap(bmp, file);
         if (fileSaved != null && isNotify) {
-            notifySystemSavedPic(ResWrapper.getInstance().getContext(), file);
+            notifySystemSavedPic(ResWrapper.getInstance().getApplicationContext(), file);
         }
         return fileSaved;
     }
