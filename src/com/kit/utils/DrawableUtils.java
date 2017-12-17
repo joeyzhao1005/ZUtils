@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -17,9 +16,6 @@ import com.kit.utils.bitmap.BitmapUtils;
 import com.kit.utils.log.ZogUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * Created by Zhao on 14-8-12.
@@ -68,10 +64,23 @@ public class DrawableUtils {
 
     }
 
+
+    /**
+     * 改变 drawable 的颜色
+     * @param drawable
+     * @param colors
+     * @return
+     */
     public static Drawable tintDrawable(Drawable drawable, ColorStateList colors) {
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTintList(wrappedDrawable, colors);
         return wrappedDrawable;
+    }
+
+
+    public static Drawable tintDrawable( int resDrawaleId, ColorStateList colors) {
+        Drawable drawableSource = ResWrapper.getInstance().getDrawable(resDrawaleId);
+        return tintDrawable(drawableSource,colors);
     }
 
 
