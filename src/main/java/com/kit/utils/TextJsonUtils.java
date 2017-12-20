@@ -3,7 +3,7 @@ package com.kit.utils;
 import com.google.gson.Gson;
 import com.kit.app.enums.CharsetName;
 import com.kit.config.AppConfig;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.File;
 import java.util.List;
@@ -48,7 +48,7 @@ public class TextJsonUtils extends TextUtils {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + clazz.getSimpleName();
         }
 
-        ZogUtils.i(FILE_NAME);
+        Zog.i(FILE_NAME);
 
         Gson gson = new Gson();
         String str = gson.toJson(obj);
@@ -68,7 +68,7 @@ public class TextJsonUtils extends TextUtils {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + listIncludeClazz.getSimpleName() + "List";
         }
 
-        ZogUtils.i(FILE_NAME);
+        Zog.i(FILE_NAME);
 
         Gson gson = new Gson();
         String str = gson.toJson(list);
@@ -88,7 +88,7 @@ public class TextJsonUtils extends TextUtils {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + clazz.getSimpleName();
         }
 
-        ZogUtils.i(FILE_NAME);
+        Zog.i(FILE_NAME);
 
         String str = TextUtils.readTxtFromLocal(FILE_NAME, CharsetName.UTF_8);
 
@@ -112,7 +112,7 @@ public class TextJsonUtils extends TextUtils {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + listIncludeClazz.getSimpleName() + "List";
         }
 
-        ZogUtils.i(FILE_NAME);
+        Zog.i(FILE_NAME);
 
         String str = TextUtils.readTxtFromLocal(FILE_NAME, CharsetName.UTF_8);
 //        Gson gson = new Gson();

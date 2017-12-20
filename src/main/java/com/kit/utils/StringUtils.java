@@ -2,7 +2,7 @@ package com.kit.utils;
 
 import android.text.TextUtils;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -222,7 +222,7 @@ public class StringUtils {
                 String first = m.group(0);
                 String second = str.replaceAll(first, "");
 
-                ZogUtils.i(first
+                Zog.i(first
                         + " "
                         + second
                 );
@@ -411,26 +411,26 @@ public class StringUtils {
 
             isISO = isCharset(resultStr, "ISO-8859-1");
 
-            ZogUtils.i(resultStr + " isISO:" + isISO);
+            Zog.i(resultStr + " isISO:" + isISO);
             if (isISO) {
                 try {
 
                     if (isGBK(resultStr)) {
                         GB_Str = new String(resultStr.getBytes("ISO-8859-1"),
                                 "GBK");
-                        ZogUtils.i("GBK：" + GB_Str);
+                        Zog.i("GBK：" + GB_Str);
                     } else if (isCharset(resultStr, "UTF-8")) {
                         UTF_Str = new String(resultStr.getBytes("ISO-8859-1"),
                                 "UTF-8");
-                        ZogUtils.i("UTF-8：" + UTF_Str);
+                        Zog.i("UTF-8：" + UTF_Str);
                     }
                 } catch (UnsupportedEncodingException e) {
-                    ZogUtils.showException(e);
+                    Zog.showException(e);
                 }
 
             }
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         return resultStr;

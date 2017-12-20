@@ -21,7 +21,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import com.kit.app.ActivityManager;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -40,7 +40,7 @@ public class DeviceUtils {
         try {
             model = android.os.Build.MANUFACTURER;
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         return model;
@@ -58,7 +58,7 @@ public class DeviceUtils {
         try {
             model = android.os.Build.DISPLAY;
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         return model;
@@ -76,7 +76,7 @@ public class DeviceUtils {
         try {
             model = android.os.Build.MODEL;
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         return model;

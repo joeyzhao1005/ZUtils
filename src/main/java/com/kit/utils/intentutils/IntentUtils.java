@@ -1,6 +1,5 @@
 package com.kit.utils.intentutils;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 import com.kit.app.ActivityManager;
 import com.kit.utils.DensityUtils;
 import com.kit.utils.StringUtils;
-import com.kit.utils.log.ZogUtils;
 
 import java.net.URISyntaxException;
 

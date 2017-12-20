@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -195,10 +195,10 @@ public class FlashlightManager2 {
             try {
                 setFlashlightAbove23(context, active);
             } catch (Exception e) {
-                ZogUtils.showException(e);
+                Zog.showException(e);
             }
         } else {
-            ZogUtils.i( "active:" + active);
+            Zog.i( "active:" + active);
 
             if (iHardwareService != null && setFlashEnabledMethod != null
                     && getFlashEnabledMethod != null) {
@@ -263,7 +263,7 @@ public class FlashlightManager2 {
             try {
                 setFlashlightAbove23(context, false);
             }catch (Exception e){
-                ZogUtils.showException(e);
+                Zog.showException(e);
             }
 
         }else {

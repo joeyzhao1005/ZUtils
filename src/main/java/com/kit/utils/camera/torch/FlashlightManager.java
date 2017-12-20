@@ -5,7 +5,7 @@ import android.hardware.camera2.CameraAccessException;
 import android.os.Build;
 import android.util.Log;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -114,14 +114,14 @@ public class FlashlightManager {
 //        LogUtils.i(FlashlightManager.class, "iHardwareService:" + iHardwareService
 //                + " setFlashEnabledMethod:" + setFlashEnabledMethod
 //                + " getFlashEnabledMethod:" + getFlashEnabledMethod);
-        ZogUtils.i("active:" + active);
+        Zog.i("active:" + active);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && context != null) {
             try {
                 setFlashlightAbove23(context, active);
             } catch (Exception e) {
-                ZogUtils.showException(e);
+                Zog.showException(e);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
                 && getInstance().context != null) {
@@ -174,7 +174,7 @@ public class FlashlightManager {
             try {
                 setFlashlightAbove23(context, false);
             } catch (Exception e) {
-                ZogUtils.showException(e);
+                Zog.showException(e);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
                 && getInstance().context != null) {

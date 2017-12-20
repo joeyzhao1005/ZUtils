@@ -16,7 +16,7 @@ public class DebugInfo extends Exception {
         StackTraceElement stackTraceElement = null;
 
         for (StackTraceElement e : trace) {
-            if (!ZogUtils.class.getName().equals(e.getClassName())) {
+            if (!Zog.class.getName().equals(e.getClassName())) {
                 stackTraceElement = e;
                 break;
             }

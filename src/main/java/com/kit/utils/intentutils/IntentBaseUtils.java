@@ -7,8 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.kit.utils.GsonUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,7 +39,7 @@ public class IntentBaseUtils {
             intent.setClass(packageContext, cls);
             packageContext.startActivity(intent);
         }catch (Exception e){
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -323,15 +322,15 @@ public class IntentBaseUtils {
             if (bundle != null) {
                 Set<String> keys = bundle.keySet();
                 Iterator<String> it = keys.iterator();
-                ZogUtils.i("printIntent start");
+                Zog.i("printIntent start");
                 while (it.hasNext()) {
                     String key = it.next();
-                    ZogUtils.i("[" + key + "=" + bundle.get(key) + "]");
+                    Zog.i("[" + key + "=" + bundle.get(key) + "]");
                 }
-                ZogUtils.i("printIntent end");
+                Zog.i("printIntent end");
             }
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -358,7 +357,7 @@ public class IntentBaseUtils {
         try {
             bundleData = map.get(flag);
         } catch (Exception e) {
-//            ZogUtils.showException(e);
+//            Zog.showException(e);
         }
         return bundleData;
     }
@@ -375,7 +374,7 @@ public class IntentBaseUtils {
         try {
             bundleData = map.get(intent);
         } catch (Exception e) {
-//            ZogUtils.showException(e);
+//            Zog.showException(e);
         }
         return bundleData;
     }

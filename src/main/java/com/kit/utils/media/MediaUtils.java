@@ -16,7 +16,7 @@ import android.provider.MediaStore;
 
 import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 /**
  * Created by Zhao on 16/8/1.
@@ -41,12 +41,12 @@ public class MediaUtils {
                 return null;
             bitmap = BitmapFactory.decodeByteArray(embedPic, 0, embedPic.length); //转换为图片
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         } finally {
             try {
                 retriever.release();
             } catch (Exception e2) {
-                ZogUtils.showException(e2);
+                Zog.showException(e2);
             }
         }
         Drawable drawable = null;
@@ -101,7 +101,7 @@ public class MediaUtils {
             try {
                 ResWrapper.getInstance().getApplicationContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
-                ZogUtils.showException(e);
+                Zog.showException(e);
             }
         } else {
             Context context = ResWrapper.getInstance().getApplicationContext();
@@ -122,7 +122,7 @@ public class MediaUtils {
             try {
                 ResWrapper.getInstance().getApplicationContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
-                ZogUtils.showException(e);
+                Zog.showException(e);
             }
         }
     }
@@ -138,7 +138,7 @@ public class MediaUtils {
         try {
             ResWrapper.getInstance().getApplicationContext().startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 }

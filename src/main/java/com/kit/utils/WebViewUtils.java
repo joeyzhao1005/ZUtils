@@ -13,7 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ZoomButtonsController;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Field;
 
@@ -65,7 +65,7 @@ public class WebViewUtils {
         if (fileExist) {
             String bgcolor = ColorUtils.toBrowserColor(color);
 
-            ZogUtils.i( "bgcolor:" + bgcolor);
+            Zog.i( "bgcolor:" + bgcolor);
 
             String adapterScreenWidth = "";
             if (isAdapterScreenWidth) {

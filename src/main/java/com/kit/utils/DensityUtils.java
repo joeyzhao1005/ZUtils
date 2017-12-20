@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.annotation.DimenRes;
 import android.util.TypedValue;
 
-import com.kit.utils.log.ZogUtils;
-
 public class DensityUtils {
 
     public static float sp2Px(int dimensionId) {

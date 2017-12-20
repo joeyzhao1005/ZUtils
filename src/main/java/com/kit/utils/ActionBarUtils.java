@@ -10,7 +10,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.Window;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Method;
 
@@ -30,7 +30,7 @@ public class ActionBarUtils {
             setHasEmbeddedTabsMethod.setAccessible(true);
             setHasEmbeddedTabsMethod.invoke(actionBar, true);
         } catch (Exception e) {
-            ZogUtils.i(e.getMessage().toString());
+            Zog.i(e.getMessage().toString());
 
         }
     }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -55,7 +55,7 @@ public class LightStatusBarUtils {
             extraFlagField.invoke(activity.getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
             return true;
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
             setAndroidNativeLightStatusBar(activity, isMarginStatusBar, isMarginNavigationBar, isTransStatusBar, darkmode);
         }
         return false;
@@ -85,7 +85,7 @@ public class LightStatusBarUtils {
                 activity.getWindow().setAttributes(lp);
                 result = true;
             } catch (Exception e) {
-                ZogUtils.showException(e);
+                Zog.showException(e);
                 setAndroidNativeLightStatusBar(activity, isMarginStatusBar, isMarginNavigationBar, isTransStatusBar, dark);
             }
         }
@@ -150,7 +150,7 @@ public class LightStatusBarUtils {
                 }
             }
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 

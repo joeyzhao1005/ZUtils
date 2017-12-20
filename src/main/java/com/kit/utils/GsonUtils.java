@@ -1,11 +1,9 @@
 package com.kit.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -231,7 +229,7 @@ public class GsonUtils {
         try {
             jsonObject = new JSONObject(jsonStr);
         } catch (JSONException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         String value = null;

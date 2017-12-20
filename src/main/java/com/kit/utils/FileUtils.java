@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,12 +14,9 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 public class FileUtils {
@@ -147,7 +143,7 @@ public class FileUtils {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                ZogUtils.e("file not exists,create it");
+                Zog.e("file not exists,create it");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -165,10 +161,10 @@ public class FileUtils {
         String dir = fileName.substring(0, fileName.lastIndexOf("/"));
         File directory = new File(dir);
 
-//        ZogUtils.e( "dir::" + dir);
+//        Zog.e( "dir::" + dir);
 
         if (!directory.exists()) {
-            ZogUtils.e("directory not exists,create it");
+            Zog.e("directory not exists,create it");
             return directory.mkdirs();//没有目录先创建目录
         }
         return false;
@@ -316,7 +312,7 @@ public class FileUtils {
             e.write(content);
             e.close();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
     }
@@ -347,7 +343,7 @@ public class FileUtils {
             in = fileInputStream;
 
         } catch (FileNotFoundException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         return in;
@@ -367,7 +363,7 @@ public class FileUtils {
             in = fileInputStream;
 
         } catch (FileNotFoundException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         return in;
@@ -587,10 +583,10 @@ public class FileUtils {
 
         // 判断源文件是否存在
         if (!srcFile.exists()) {
-            ZogUtils.i("源文件：" + srcFileName + "不存在！");
+            Zog.i("源文件：" + srcFileName + "不存在！");
             return false;
         } else if (!srcFile.isFile()) {
-            ZogUtils.i("复制文件失败，源文件：" + srcFileName + "不是一个文件！");
+            Zog.i("复制文件失败，源文件：" + srcFileName + "不是一个文件！");
             return false;
         }
 

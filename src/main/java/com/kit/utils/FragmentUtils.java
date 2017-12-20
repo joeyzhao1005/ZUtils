@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.kit.utils.intentutils.BundleData;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 /**
  * Created by Zhao on 14-10-17.
@@ -173,7 +173,7 @@ public class FragmentUtils {
             String bundleDataStr = fragment.getArguments().getString(KEY_DATA);
             bundleData = GsonUtils.getObj(bundleDataStr, BundleData.class);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return bundleData;
     }
@@ -191,7 +191,7 @@ public class FragmentUtils {
             String bundleDataStr = fragment.getArguments().getString(KEY_DATA);
             bundleData = GsonUtils.getObj(bundleDataStr, BundleData.class);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return bundleData;
     }

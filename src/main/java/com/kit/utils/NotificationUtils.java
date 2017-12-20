@@ -12,7 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.kit.utils.bitmap.BitmapUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 public class NotificationUtils {
 
@@ -26,7 +26,7 @@ public class NotificationUtils {
         try {
             notificationManager.cancel(id);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
     }

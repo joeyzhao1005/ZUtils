@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.kit.utils.bitmap.BitmapUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class ScreenShotUtils {
         view.buildDrawingCache();
         b1 = view.getDrawingCache();
 
-        ZogUtils.i( b1 + "");
+        Zog.i( b1 + "");
 
         // 获取状态栏高度
         Rect frame = new Rect();

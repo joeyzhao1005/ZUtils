@@ -4,7 +4,7 @@ import android.content.Context;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 /**
  * Created by Zhao on 15/5/21.
@@ -28,7 +28,7 @@ public class CookieUtils {
         syncCookie(context);
 
         String cookie = CookieManager.getInstance().getCookie(url);
-        ZogUtils.i( cookie);
+        Zog.i( cookie);
 
         return cookie;
     }
@@ -43,7 +43,7 @@ public class CookieUtils {
         String cookie = CookieManager.getInstance().getCookie(url);
         cookie = cookie + "; domain=" + domain + "; path=" + path;
 
-        ZogUtils.i( cookie);
+        Zog.i( cookie);
 
         return cookie;
     }

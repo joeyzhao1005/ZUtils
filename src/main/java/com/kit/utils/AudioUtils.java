@@ -1,11 +1,10 @@
 package com.kit.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Build;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 /**
  * Created by Zhao on 16/7/27.
@@ -47,7 +46,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
      * 开启听筒模式
      */
     public void setReceiverMode() {
-        ZogUtils.i("set to receiver mode");
+        Zog.i("set to receiver mode");
         context = ResWrapper.getInstance().getApplicationContext();
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
@@ -131,7 +130,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
      * 开启免提模式
      */
     public void setSpeakerMode() {
-        ZogUtils.i("set to speaker mode");
+        Zog.i("set to speaker mode");
         context = ResWrapper.getInstance().getApplicationContext();
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
@@ -170,7 +169,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
                     audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
                     audioManager.setSpeakerphoneOn(false);
                 } else {
-                    ZogUtils.i("set to mormal mode");
+                    Zog.i("set to mormal mode");
 
                     audioManager.setMode(AudioManager.MODE_NORMAL);
                     audioManager.setSpeakerphoneOn(true);
@@ -188,7 +187,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
 
 
     public void release() {
-        ZogUtils.i("release release release");
+        Zog.i("release release release");
         if (audioManager != null) {
             audioManager.setMode(AudioManager.MODE_NORMAL);
             audioManager.abandonAudioFocus(this);

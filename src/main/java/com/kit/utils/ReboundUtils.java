@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 /**
  * @author Zhao laozhao1005@gmail.com
@@ -256,7 +256,7 @@ public class ReboundUtils {
 
         int itemsHeight = ListViewUtils.getListViewHeightBasedOnChildren(list);
 
-        ZogUtils.i(listHeight + " " + itemsHeight);
+        Zog.i(listHeight + " " + itemsHeight);
 
         if (listHeight > itemsHeight) {
             return;

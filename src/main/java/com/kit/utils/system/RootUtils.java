@@ -3,7 +3,7 @@ package com.kit.utils.system;
 import android.content.Context;
 
 import com.kit.utils.StringUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -22,7 +22,7 @@ public class RootUtils {
         try {
             return execCmdWithRoot(cmd);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
             return false;
         }
     }
@@ -80,7 +80,7 @@ public class RootUtils {
                 return false;
             }
         } catch (Exception e) {
-            ZogUtils.d("Unexpected error - Here is what I know: "
+            Zog.d("Unexpected error - Here is what I know: "
                     + e.getMessage());
             return false;
         } finally {
@@ -127,7 +127,7 @@ public class RootUtils {
 //            os.flush();
 //            os.close();
 //        } catch (Exception e) {
-//            ZogUtils.showException(e);
+//            Zog.showException(e);
 //        }
 //
 //        if (process != null) {
@@ -159,7 +159,7 @@ public class RootUtils {
         try {
             return execCmdWithRoot(cmdStr);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
             return false;
         }
     }

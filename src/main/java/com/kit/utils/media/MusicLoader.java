@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore.Audio.Media;
 
 import com.kit.utils.ResWrapper;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +50,9 @@ public class MusicLoader {
 
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
-            ZogUtils.e("Music Loader cursor == null.");
+            Zog.e("Music Loader cursor == null.");
         } else if (!cursor.moveToFirst()) {
-            ZogUtils.e("Music Loader cursor.moveToFirst() returns false.");
+            Zog.e("Music Loader cursor.moveToFirst() returns false.");
         } else {
             cursor.moveToFirst();
             musicList = new ArrayList<MusicInfo>();
@@ -99,9 +99,9 @@ public class MusicLoader {
         ContentResolver contentResolver = ResWrapper.getInstance().getApplicationContext().getContentResolver();
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
-            ZogUtils.e("Music Loader cursor == null.");
+            Zog.e("Music Loader cursor == null.");
         } else if (!cursor.moveToFirst()) {
-            ZogUtils.e("Music Loader cursor.moveToFirst() returns false.");
+            Zog.e("Music Loader cursor.moveToFirst() returns false.");
         } else {
             cursor.moveToFirst();
 

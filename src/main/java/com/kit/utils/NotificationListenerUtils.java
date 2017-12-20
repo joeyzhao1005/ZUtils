@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.Set;
 
@@ -27,11 +27,11 @@ public class NotificationListenerUtils {
                 Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
                 context.startActivity(intent);
             } else {
-                ZogUtils.i("已开启通知监听服务权限");
+                Zog.i("已开启通知监听服务权限");
 //            Toast.makeText(context, "已开启服务权限", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
 
         }
     }

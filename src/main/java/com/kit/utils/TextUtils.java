@@ -1,6 +1,6 @@
 package com.kit.utils;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -96,7 +96,7 @@ public class TextUtils {
         try {
             File file = new File(filename);
 
-            ZogUtils.i( file.getPath());
+            Zog.i( file.getPath());
 
             File path = new File(file.getParent());
             if (!file.exists()) {

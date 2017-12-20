@@ -2,11 +2,10 @@ package com.kit.app;
 
 import android.app.Activity;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
-import java.util.Stack;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ActivityManager {
@@ -40,7 +39,7 @@ public class ActivityManager {
         if (activity != null) {
             activities.add(new WeakReference<Activity>(activity));
         }
-        ZogUtils.i("pushActivity size:" + getSize());
+        Zog.i("pushActivity size:" + getSize());
     }
 
     /**
@@ -64,7 +63,7 @@ public class ActivityManager {
             }
         }
 
-        ZogUtils.i("popActivity size:" + getSize());
+        Zog.i("popActivity size:" + getSize());
     }
 
     /**
@@ -89,7 +88,7 @@ public class ActivityManager {
             }
         }
 
-        ZogUtils.i("popActivity(activity) size:" + getSize());
+        Zog.i("popActivity(activity) size:" + getSize());
 
     }
 
@@ -111,7 +110,7 @@ public class ActivityManager {
             activities.remove(weakReference);
 
         }
-        ZogUtils.i("popAllActivity size:" + getSize());
+        Zog.i("popAllActivity size:" + getSize());
 
     }
 
@@ -121,7 +120,7 @@ public class ActivityManager {
      * @param cls
      */
     public synchronized void popAllActivityExceptOne(Class cls) {
-        ZogUtils.i("activities.size():"
+        Zog.i("activities.size():"
                 + activities.size());
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
@@ -136,7 +135,7 @@ public class ActivityManager {
             }
 
         }
-        ZogUtils.i("popAllActivityExceptOne size:" + getSize());
+        Zog.i("popAllActivityExceptOne size:" + getSize());
 
     }
 
@@ -153,9 +152,9 @@ public class ActivityManager {
             return activity.get();
 
         } catch (Exception e) {
-            ZogUtils.i("none activity.");
+            Zog.i("none activity.");
 
-//            ZogUtils.showException(e);
+//            Zog.showException(e);
             return null;
         }
     }

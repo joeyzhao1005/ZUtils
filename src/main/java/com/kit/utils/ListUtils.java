@@ -1,7 +1,7 @@
 package com.kit.utils;
 
 import com.kit.interfaces.IEqual;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -60,7 +60,7 @@ public class ListUtils {
             ObjectInputStream in = new ObjectInputStream(byteIn);
             dest = (List<T>) in.readObject();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return dest;
     }

@@ -1,6 +1,6 @@
 package com.kit.utils;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
@@ -110,7 +110,7 @@ public class HttpClientUtils {
     public static String httpPost(String serverUrl, String method,
                                   JSONObject params, String code) {
         String url = serverUrl + "/" + method;
-        ZogUtils.i("request url: " + url);
+        Zog.i("request url: " + url);
         String content = null;
         if (url == null || url.trim().length() == 0)
             return null;
@@ -140,12 +140,12 @@ public class HttpClientUtils {
 
         try {
             httpClient.executeMethod(postMethod);
-            ZogUtils.i(postMethod.getStatusLine()
+            Zog.i(postMethod.getStatusLine()
                     + "");
             content = new String(postMethod.getResponseBody(), code);
 
         } catch (Exception e) {
-            ZogUtils.i("time out");
+            Zog.i("time out");
             e.printStackTrace();
         } finally {
             if (postMethod != null)
@@ -158,7 +158,7 @@ public class HttpClientUtils {
     }
 
     public static String httpPost(String url, Map paramMap, String code) {
-        ZogUtils.i("request url: " + url);
+        Zog.i("request url: " + url);
         String content = null;
         if (url == null || url.trim().length() == 0 || paramMap == null
                 || paramMap.isEmpty())
@@ -184,12 +184,12 @@ public class HttpClientUtils {
         }
         try {
             httpClient.executeMethod(method);
-            ZogUtils.i(method.getStatusLine()
+            Zog.i(method.getStatusLine()
                     + "");
             content = new String(method.getResponseBody(), code);
 
         } catch (Exception e) {
-            ZogUtils.i("time out");
+            Zog.i("time out");
             e.printStackTrace();
         } finally {
             if (method != null)

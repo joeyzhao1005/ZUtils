@@ -5,13 +5,12 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.kit.utils.ResWrapper;
 import com.kit.utils.intentutils.BundleData;
 import com.kit.utils.intentutils.IntentUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ServiceUtils {
                         Intent i = new Intent(context, s.getClass());
                         context.startService(i);
 
-                        ZogUtils.i(
+                        Zog.i(
                                 "start service " + s.getClass().getName());
                     }
 
@@ -60,7 +59,7 @@ public class ServiceUtils {
                         Intent i = new Intent(context, c);
                         context.startService(i);
 
-                        ZogUtils.i("start service " + c.getName());
+                        Zog.i("start service " + c.getName());
                     }
 
                 }
@@ -75,7 +74,7 @@ public class ServiceUtils {
             @Override
             public void run() {
                 final Context context = ResWrapper.getInstance().getApplicationContext();
-                ZogUtils.i("start service " + clazzes.getName());
+                Zog.i("start service " + clazzes.getName());
 
                 IntentUtils.gotoService(context, clazzes, bundleData);
 
@@ -91,7 +90,7 @@ public class ServiceUtils {
             @Override
             public void run() {
                 final Context context = ResWrapper.getInstance().getApplicationContext();
-                ZogUtils.i("start service " + clazzes.getName());
+                Zog.i("start service " + clazzes.getName());
                 IntentUtils.gotoService(context, clazzes, bundle, false);
 
 

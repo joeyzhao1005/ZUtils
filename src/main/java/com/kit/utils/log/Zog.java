@@ -14,7 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ZogUtils {
+public class Zog {
     public static final String STYLE_MINIMAL = "MINIMAL";//极简
     public static final String STYLE_SIMPLE = "SIMPLE";//简单
     public static final String STYLE_VERBOSE = "VERBOSE";//简单
@@ -29,9 +29,9 @@ public class ZogUtils {
     public static String LOGUTILS_IDENTIFY = "@";
 
 
-    public static ZogUtils setStyle(String style) {
-        ZogUtils.STYLE = style;
-        return new ZogUtils();
+    public static Zog setStyle(String style) {
+        Zog.STYLE = style;
+        return new Zog();
     }
 
     /**
@@ -208,7 +208,7 @@ public class ZogUtils {
      */
     public static void showException(Throwable e) {
         if (AppConfig.getAppConfig().isShowException()) {
-            ZogUtils.e(e == null ? "ERROR!!!" : Log.getStackTraceString(e));
+            Zog.e(e == null ? "ERROR!!!" : Log.getStackTraceString(e));
         }
     }
     /**
@@ -219,7 +219,7 @@ public class ZogUtils {
      */
     public static void showException(Exception e) {
         if (AppConfig.getAppConfig().isShowException()) {
-            ZogUtils.e(e == null ? "ERROR!!!" : Log.getStackTraceString(e));
+            Zog.e(e == null ? "ERROR!!!" : Log.getStackTraceString(e));
         }
     }
 

@@ -18,11 +18,9 @@ import com.kit.utils.ListUtils;
 import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
 import com.kit.utils.contact.ContactInfo;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Zhao on 16/8/15.
@@ -189,7 +187,7 @@ public class SMSUtils {
         try {
             context.startActivity(intent);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
     }
@@ -207,7 +205,7 @@ public class SMSUtils {
         try {
             context.startActivity(intent);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         // // 第二种方法,直接就发送过去了
         // SmsManager smsManager = SmsManager.getDefault();

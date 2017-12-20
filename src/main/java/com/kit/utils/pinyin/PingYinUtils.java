@@ -1,6 +1,6 @@
 package com.kit.utils.pinyin;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -85,7 +85,7 @@ public class PingYinUtils {
                 }
             }
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return convert;
     }

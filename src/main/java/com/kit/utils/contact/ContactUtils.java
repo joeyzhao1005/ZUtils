@@ -16,12 +16,10 @@ import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
 import android.support.v4.content.ContextCompat;
 
-import com.kit.utils.ArrayUtils;
 import com.kit.utils.StringUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.InputStream;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,7 +121,7 @@ public class ContactUtils {
             cursor = context.getContentResolver().query(
                     ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         } catch (SecurityException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         if (cursor == null) {
             // Log.d(TAG, "getPeople null");
@@ -208,7 +206,7 @@ public class ContactUtils {
             cursor.close();
         }
 
-//        ZogUtils.i("getPeople cursor.getCount() = "
+//        Zog.i("getPeople cursor.getCount() = "
 //                + cursor.getCount());
 //        for (int i = 0; i < cursor.getCount(); i++) {
 //            cursor.moveToPosition(i);
@@ -350,13 +348,13 @@ public class ContactUtils {
                     selectionArgs, // WHERE clause value substitution
                     null); // Sort order.
         } catch (SecurityException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         if (cursor == null) {
             // Log.d(TAG, "getPeople null");
             return null;
         }
-        ZogUtils.i("getPeople cursor.getCount() = "
+        Zog.i("getPeople cursor.getCount() = "
                 + cursor.getCount());
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
@@ -450,13 +448,13 @@ public class ContactUtils {
                     selectionArgs, // WHERE clause value substitution
                     null); // Sort order.
         } catch (SecurityException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         if (cursor == null) {
             // Log.d(TAG, "getPeople null");
             return null;
         }
-        ZogUtils.i("getPeople cursor.getCount() = "
+        Zog.i("getPeople cursor.getCount() = "
                 + cursor.getCount());
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
@@ -546,7 +544,7 @@ public class ContactUtils {
                     selectionArgs, // WHERE clause value substitution
                     null); // Sort order.
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         if (cursor == null || cursor.getCount() < 1) {
             // Log.d(TAG, "getPeople null");

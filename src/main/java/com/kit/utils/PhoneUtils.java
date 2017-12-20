@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 /**
  * Created by Zhao on 16/9/1.
@@ -49,7 +49,7 @@ public class PhoneUtils {
         try {
             context.startActivity(intent);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
     }
@@ -61,7 +61,7 @@ public class PhoneUtils {
         try {
             context.startActivity(intent);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
 

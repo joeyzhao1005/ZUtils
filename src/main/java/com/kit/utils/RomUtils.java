@@ -4,7 +4,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -93,8 +93,8 @@ public class RomUtils {
             try {
                 return Integer.parseInt(version.substring(1));
             } catch (Exception e) {
-                ZogUtils.i("get miui version code error, version : " + version);
-                ZogUtils.e(Log.getStackTraceString(e));
+                Zog.i("get miui version code error, version : " + version);
+                Zog.e(Log.getStackTraceString(e));
             }
         }
         return -1;

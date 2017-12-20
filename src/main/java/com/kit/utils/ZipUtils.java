@@ -3,7 +3,7 @@ package com.kit.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -143,7 +143,7 @@ public class ZipUtils {
             }
             zipInputStream.close();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
     }

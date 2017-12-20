@@ -30,7 +30,7 @@ import com.kit.utils.FileUtils;
 import com.kit.utils.MathExtend;
 import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import junit.framework.Assert;
 
@@ -128,17 +128,17 @@ public class BitmapUtils {
 
         String dir = fileName.substring(0, fileName.lastIndexOf("/"));
         File directory = new File(dir);
-        ZogUtils.e(dir);
+        Zog.e(dir);
 
         if (!directory.exists()) {
-            ZogUtils.e("directory not exitsts,create it");
+            Zog.e("directory not exitsts,create it");
             directory.mkdir();//没有目录先创建目录
         }
 
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                ZogUtils.e("file not exitsts,create it");
+                Zog.e("file not exitsts,create it");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -200,7 +200,7 @@ public class BitmapUtils {
         if (be <= 0)
             be = 1;
 
-        ZogUtils.i("be be be:" + be + " w:" + w + " h:" + h);
+        Zog.i("be be be:" + be + " w:" + w + " h:" + h);
 
         options.inSampleSize = be;// 设置缩放比例
 
@@ -291,7 +291,7 @@ public class BitmapUtils {
                     break;
             }
         } catch (IOException e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return degree;
     }
@@ -419,7 +419,7 @@ public class BitmapUtils {
         Object content = null;
         try {
             try {
-                ZogUtils.i("address: " + url);
+                Zog.i("address: " + url);
                 URL uri = new URL(url);
                 content = uri.getContent();
             } catch (Exception e) {
@@ -839,9 +839,9 @@ public class BitmapUtils {
             }
         } catch (Exception e) {
 
-            ZogUtils.showException(e);
+            Zog.showException(e);
 
-            ZogUtils.i("scale应该取的小一点");
+            Zog.i("scale应该取的小一点");
         }
         return bmp;
     }

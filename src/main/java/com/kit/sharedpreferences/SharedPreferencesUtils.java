@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 
 import com.kit.utils.GsonUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -220,7 +220,7 @@ public class SharedPreferencesUtils {
                                   int saveLength) {
 
 
-        ZogUtils.i( "saveObject!!!!!!!");
+        Zog.i( "saveObject!!!!!!!");
 
         if (saveLength <= 0)
             saveLength = Integer.MAX_VALUE;
@@ -303,7 +303,7 @@ public class SharedPreferencesUtils {
             sharedPreferences = context.getSharedPreferences(
                     shaPreName, Context.MODE_PRIVATE);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
             return null;
         }
 
@@ -313,7 +313,7 @@ public class SharedPreferencesUtils {
         ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
 
 
-        ZogUtils.i( isExist(context, shaPreName) + "");
+        Zog.i( isExist(context, shaPreName) + "");
         if (!isExist(context, shaPreName)) {
             newSP(context, shaPreName);
         }

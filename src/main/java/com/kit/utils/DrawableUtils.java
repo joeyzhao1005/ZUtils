@@ -13,7 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.kit.utils.bitmap.BitmapUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.io.File;
 
@@ -28,14 +28,14 @@ public class DrawableUtils {
         try {
             width = drawable.getIntrinsicWidth();
         } catch (Exception e) {
-            ZogUtils.e("error in drawableToBitmap when getIntrinsicWidth");
+            Zog.e("error in drawableToBitmap when getIntrinsicWidth");
         }
         int height = 0;
 
         try {
             height = drawable.getIntrinsicHeight();
         } catch (Exception e) {
-            ZogUtils.e("error in drawableToBitmap when getIntrinsicHeight");
+            Zog.e("error in drawableToBitmap when getIntrinsicHeight");
         }
 
 

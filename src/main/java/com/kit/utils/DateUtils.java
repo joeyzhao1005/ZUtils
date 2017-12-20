@@ -2,7 +2,7 @@ package com.kit.utils;
 
 import android.annotation.SuppressLint;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -206,7 +206,7 @@ public class DateUtils {
             create = sdf.parse(date).getTime();
         } catch (ParseException e) {
 //			e.printStackTrace();
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
 
         return create;

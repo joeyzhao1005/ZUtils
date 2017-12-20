@@ -4,13 +4,9 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.Gson;
-import com.kit.utils.GsonUtils;
 import com.kit.utils.MapUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
-import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +50,7 @@ public class BundleData implements Cloneable, Parcelable {
         try {
             t = (T) hashMap.get(key);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return t;
     }
@@ -72,7 +68,7 @@ public class BundleData implements Cloneable, Parcelable {
         try {
             t = (List<T>) hashMap.get(key);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return t;
     }
@@ -91,7 +87,7 @@ public class BundleData implements Cloneable, Parcelable {
         try {
             t = (ArrayList<T>) hashMap.get(key);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return t;
     }
@@ -164,7 +160,7 @@ public class BundleData implements Cloneable, Parcelable {
         try {
             this.hashMap = (HashMap<String, Object>) in.readHashMap(HashMap.class.getClassLoader());
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 

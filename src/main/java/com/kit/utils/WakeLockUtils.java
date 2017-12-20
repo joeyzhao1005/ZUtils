@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.PowerManager;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 /**
  * Created by Zhao on 16/7/26.
@@ -87,7 +87,7 @@ public class WakeLockUtils {
         wakeLockNear.setReferenceCounted(false);
 
         if (!wakeLockNear.isHeld()) {
-            ZogUtils.i(wakeLockNear + " acquire");
+            Zog.i(wakeLockNear + " acquire");
             wakeLockNear.acquire();
         }
 
@@ -107,7 +107,7 @@ public class WakeLockUtils {
         wakeLockNear.setReferenceCounted(false);
 
         if (wakeLockNear.isHeld()) {
-            ZogUtils.i(wakeLockNear + " release");
+            Zog.i(wakeLockNear + " release");
             wakeLockNear.release();
         }
     }
@@ -125,7 +125,7 @@ public class WakeLockUtils {
         wakeLockScreen.setReferenceCounted(false);
 
         if (!wakeLockScreen.isHeld()) {
-            ZogUtils.i(wakeLockScreen + " acquire");
+            Zog.i(wakeLockScreen + " acquire");
             wakeLockScreen.acquire();
         }
     }
@@ -143,7 +143,7 @@ public class WakeLockUtils {
         wakeLockScreen.setReferenceCounted(false);
 
         if (wakeLockScreen.isHeld()) {
-            ZogUtils.i(wakeLockScreen + " release");
+            Zog.i(wakeLockScreen + " release");
             wakeLockScreen.release();
         }
     }

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.kit.config.AppConfig;
 import com.kit.utils.AppUtils;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 import com.kit.utils.StringUtils;
 
 import java.io.File;
@@ -84,7 +84,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     public void init(Context context) {
 
-        ZogUtils.i( "init CrashHandler");
+        Zog.i( "init CrashHandler");
 
         mContext = context;
         // 获取系统默认的UncaughtException处理器
@@ -98,7 +98,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        ZogUtils.i(
+        Zog.i(
                 "App " + appName + " crash");
 
 
@@ -171,9 +171,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 infos.put("versionCode", versionCode);
             }
         } catch (NameNotFoundException e) {
-            ZogUtils.i(
+            Zog.i(
                     "an error occured when collect package info");
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
@@ -183,7 +183,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 //                LogUtils.i(CrashHandler.class,
 //                        field.getName() + " : " + field.get(null));
             } catch (Exception e) {
-                ZogUtils.i(
+                Zog.i(
                         "an error occured when collect crash info" + e);
             }
         }
@@ -216,7 +216,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         String result = writer.toString();
         sb.append(result);
 
-        ZogUtils.i( "\n" + sb.toString());
+        Zog.i( "\n" + sb.toString());
 
 
         try {
@@ -237,9 +237,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
             }
             return fileName;
         } catch (Exception e) {
-            ZogUtils.i(
+            Zog.i(
                     "an error occured while writing file...");
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return null;
     }

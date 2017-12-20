@@ -5,7 +5,7 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 public class ClickableSpanExtend extends ClickableSpan implements View.OnClickListener {
 
@@ -41,7 +41,7 @@ public class ClickableSpanExtend extends ClickableSpan implements View.OnClickLi
     @Override
     public void onClick(View view) {
         this.view = view;
-        ZogUtils.i( "onClick string:" + string);
+        Zog.i( "onClick string:" + string);
         setClickableSpan.setOnClickListener(text, string);
     }
 

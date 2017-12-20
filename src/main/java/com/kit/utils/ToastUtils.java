@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 public class ToastUtils {
     private static Toast mToast;
@@ -21,7 +21,7 @@ public class ToastUtils {
             Context context = ResWrapper.getInstance().getApplicationContext();
             Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -30,7 +30,7 @@ public class ToastUtils {
             Context context = ResWrapper.getInstance().getApplicationContext();
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -38,7 +38,7 @@ public class ToastUtils {
         try {
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -46,7 +46,7 @@ public class ToastUtils {
         try {
             Toast.makeText(context, msgString, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -56,7 +56,7 @@ public class ToastUtils {
             Context context = ResWrapper.getInstance().getApplicationContext();
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -68,7 +68,7 @@ public class ToastUtils {
 
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -80,7 +80,7 @@ public class ToastUtils {
         try {
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -88,7 +88,7 @@ public class ToastUtils {
         try {
             Toast.makeText(context, msgString, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 

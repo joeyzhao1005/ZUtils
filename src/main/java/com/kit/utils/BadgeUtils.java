@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class BadgeUtils {
             count = Math.max(0, Math.min(count, 99));
         }
 
-        ZogUtils.e("Build.MANUFACTURER:" + Build.MANUFACTURER);
+        Zog.e("Build.MANUFACTURER:" + Build.MANUFACTURER);
 
         if (Build.MANUFACTURER.equalsIgnoreCase("Xiaomi")) {
             sendToXiaoMi(context, count);
@@ -82,7 +82,7 @@ public class BadgeUtils {
             // 设置信息数-->这种发送必须是miui 6才行
             field.set(miuiNotification, String.valueOf(count == 0 ? "" : count));
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
             // miui 6之前的版本
             Intent localIntent = new Intent(
                     "android.intent.action.APPLICATION_MESSAGE_UPDATE");

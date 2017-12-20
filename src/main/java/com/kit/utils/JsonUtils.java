@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +43,7 @@ public class JsonUtils {
 
     // 解析处理过的json字符串，需调用getJosnStr()，以取得处理过的json字符串
     public static JSONArray str2JSONArray(String str) {
-        ZogUtils.i(str);
+        Zog.i(str);
         if (StringUtils.isEmptyOrNullStr(str))
             return null;
 
@@ -53,7 +53,7 @@ public class JsonUtils {
 //            str = str.substring(1,str.length()-1);
             jsonArray = new JSONArray(str);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
         return jsonArray;
     }
@@ -116,7 +116,7 @@ public class JsonUtils {
             }
 
             if (keyName.equals(key)) {      //试剂类型
-                ZogUtils.i("img_url got!!!!!!!!!!!!!!");
+                Zog.i("img_url got!!!!!!!!!!!!!!");
                 jobj.put(keyName, replaceValue);
             }
         }
@@ -196,7 +196,7 @@ public class JsonUtils {
      */
     public static void printAsJson(Object obj) {
         Gson gson = new Gson();
-        ZogUtils.i(gson.toJson(obj));
+        Zog.i(gson.toJson(obj));
     }
 
 

@@ -22,7 +22,7 @@ import android.util.Log;
 
 import com.kit.app.ActivityManager;
 import com.kit.app.core.task.DoSomeThing;
-import com.kit.utils.log.ZogUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +167,7 @@ public class AppUtils {
             }
         } catch (Exception e) {
             //可能获取不到 报异常
-//            ZogUtils.showException(e);
+//            Zog.showException(e);
         }
         return null;
     }
@@ -393,7 +393,7 @@ public class AppUtils {
         try {
             context.startActivity(intent);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
@@ -428,7 +428,7 @@ public class AppUtils {
         try {
             Thread.sleep(time);
         } catch (Exception e) {
-            ZogUtils.i("Exception:" + e);
+            Zog.i("Exception:" + e);
         }
     }
 
@@ -608,7 +608,7 @@ public class AppUtils {
             intentPlayStore.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             context.startActivity(intentPlayStore);
         } catch (Exception e) {
-            ZogUtils.showException(e);
+            Zog.showException(e);
         }
     }
 
