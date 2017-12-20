@@ -61,12 +61,12 @@ public class ResourceUtils {
             context = context.getApplicationContext();
         }
 
-//        ZogUtils.i(ResourceUtils.class, "context:" + context);
+//        Zog.i(ResourceUtils.class, "context:" + context);
         Resources resources = context.getResources();
 
         String packageName = context.getApplicationInfo().packageName;
 
-//        ZogUtils.i(ResourceUtils.class, "packageName:" + packageName);
+//        Zog.i(ResourceUtils.class, "packageName:" + packageName);
 
         return resources.getIdentifier(name, defType, packageName);
     }
