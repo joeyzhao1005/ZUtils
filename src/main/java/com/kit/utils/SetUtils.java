@@ -7,10 +7,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class SetUtils {
@@ -75,26 +77,44 @@ public class SetUtils {
     }
 
 
-//    /**
-//     * 转换为ArrayList
-//     *
-//     * @param list
-//     * @return
-//     */
-//    public static ArrayList toArrayList(List list) {
-//        if (list == null || list.isEmpty()) {
-//            return null;
-//        } else {
-//            Set set = new HashSet();
-//            ArrayList newList = new ArrayList();
-//            for (Iterator iter = list.iterator(); iter.hasNext(); ) {
-//                Object element = iter.next();
-//                newList.add(element);
-//            }
-//            return newList;
-//        }
-//    }
+    /**
+     * 转换为ArrayList
+     *
+     * @param list
+     * @return
+     */
+    public static <T> Set<T> toSet(List<T> list) {
+        if (list == null || list.isEmpty()) {
+            return null;
+        } else {
+            Set set = new LinkedHashSet();
+            for (Iterator iter = list.iterator(); iter.hasNext(); ) {
+                Object element = iter.next();
+                set.add(element);
+            }
+            return set;
+        }
+    }
 
+
+    /**
+     * 转换为ArrayList
+     *
+     * @param set
+     * @return
+     */
+    public static <T> ArrayList<T> toArrayList(Set<T> set) {
+        if (set == null || set.isEmpty()) {
+            return null;
+        } else {
+            ArrayList newList = new ArrayList();
+            for (Iterator iter = set.iterator(); iter.hasNext(); ) {
+                Object element = iter.next();
+                newList.add(element);
+            }
+            return newList;
+        }
+    }
 
     /**
      * @param
