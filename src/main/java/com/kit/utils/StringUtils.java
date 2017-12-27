@@ -253,7 +253,7 @@ public class StringUtils {
             // LogUtils.i(StringUtils.class,
             // "contains:" + str.contains(strItem) + " strItem:" + strItem);
 
-            if (!StringUtils.isNullOrEmpty(str) && str.contains(strItem)) {
+            if (!StringUtils.isEmpty(str) && str.contains(strItem)) {
                 isContains = true;
                 return isContains;
             }
@@ -271,13 +271,7 @@ public class StringUtils {
      * @Description 字符串是否为空字符串
      */
     public static boolean isEmpty(String str) {
-
-        if (TextUtils.isEmpty(str)) {
-            return true;
-
-        }
-        return false;
-
+        return TextUtils.isEmpty(str);
     }
 
 //    public static String toDecimal3(double d) {
@@ -314,21 +308,6 @@ public class StringUtils {
     }
 
 
-    //    /**
-//     * @param
-//     * @return boolean 返回类型
-//     * @Description 字符串是否为null或空字符串
-//     */
-    public static boolean isNullOrEmpty(String str) {
-
-
-        if (str == null || TextUtils.isEmpty(str)) {
-            return true;
-
-        }
-        return false;
-
-    }
 
     /**
      * @param

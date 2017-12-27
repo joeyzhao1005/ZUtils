@@ -44,7 +44,7 @@ public class TextJsonUtils extends TextUtils {
      */
     public void saveData(Object obj, Class clazz) {
 
-        if (StringUtils.isNullOrEmpty(FILE_NAME)) {
+        if (StringUtils.isEmptyOrNullStr(FILE_NAME)) {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + clazz.getSimpleName();
         }
 
@@ -64,7 +64,7 @@ public class TextJsonUtils extends TextUtils {
      */
     public void saveDataList(List list, Class listIncludeClazz) {
 
-        if (StringUtils.isNullOrEmpty(FILE_NAME)) {
+        if (StringUtils.isEmptyOrNullStr(FILE_NAME)) {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + listIncludeClazz.getSimpleName() + "List";
         }
 
@@ -84,7 +84,7 @@ public class TextJsonUtils extends TextUtils {
      * @return
      */
     public Object getData(Class clazz) {
-        if (StringUtils.isNullOrEmpty(FILE_NAME)) {
+        if (StringUtils.isEmptyOrNullStr(FILE_NAME)) {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + clazz.getSimpleName();
         }
 
@@ -108,7 +108,7 @@ public class TextJsonUtils extends TextUtils {
      * @return
      */
     public String getDataList(Class listIncludeClazz) {
-        if (StringUtils.isNullOrEmpty(FILE_NAME)) {
+        if (StringUtils.isEmptyOrNullStr(FILE_NAME)) {
             FILE_NAME = AppConfig.getAppConfig().getCacheDataDir() + listIncludeClazz.getSimpleName() + "List";
         }
 

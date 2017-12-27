@@ -499,7 +499,7 @@ public class FileUtils {
      */
     public static String getFilename(String filedir) {
 
-        if (StringUtils.isNullOrEmpty(filedir)) {
+        if (StringUtils.isEmptyOrNullStr(filedir)) {
             return null;
         }
 

@@ -47,7 +47,7 @@ public class TextViewUtils {
 //        builder.setSpan(new ClickableSpanExtend(text,text, clickableSpan,color,normalColor), 0, text.length() -1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         for (String patternStr : patternStrings) {
-            if (StringUtils.isNullOrEmpty(patternStr)) {
+            if (StringUtils.isEmptyOrNullStr(patternStr)) {
                 return;
             }
             Pattern pattern = Pattern.compile(patternStr);
