@@ -132,16 +132,6 @@ public class BundleData implements Cloneable, Parcelable {
         this.hashMap = hashMap;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeMap(this.hashMap);
-    }
-
     /**
      * 尽量跳转到哪个界面传哪个
      *
@@ -156,24 +146,29 @@ public class BundleData implements Cloneable, Parcelable {
     }
 
 
-    protected BundleData(Parcel in) {
-        try {
-            this.hashMap = (HashMap<String, Object>) in.readHashMap(HashMap.class.getClassLoader());
-        } catch (Exception e) {
-            Zog.showException(e);
-        }
+    String flag;
+
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    String flag;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(this.hashMap);
+        dest.writeString(this.flag);
+    }
+
+    protected BundleData(Parcel in) {
+        this.hashMap = (HashMap<String, Object>) in.readSerializable();
+        this.flag = in.readString();
+    }
 
     public static final Creator<BundleData> CREATOR = new Creator<BundleData>() {
         @Override
         public BundleData createFromParcel(Parcel source) {
-            try {
-                return new BundleData(source);
-            } catch (Exception e) {
-                return null;
-            }
+            return new BundleData(source);
         }
 
         @Override
