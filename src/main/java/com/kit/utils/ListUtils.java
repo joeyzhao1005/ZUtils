@@ -159,11 +159,7 @@ public class ListUtils {
      * @Description 判定List是否是空指针或里面没有数据
      */
     public static boolean isNullOrEmpty(List<?> objs) {
-
-        if (objs == null || objs.isEmpty()) {
-            return true;
-        }
-        return false;
+        return (objs == null || objs.isEmpty()) ;
     }
 
     /**
@@ -173,11 +169,7 @@ public class ListUtils {
      * @Description 判定List里面没有数据
      */
     public static boolean isEmpty(List<?> objs) {
-
-        if (objs.isEmpty()) {
-            return true;
-        }
-        return false;
+        return objs.isEmpty();
     }
 
 
@@ -270,8 +262,6 @@ public class ListUtils {
 
         return tempList;
     }
-
-
 
 
     public static <T> T find(List<T> list, IEqual equal) {
