@@ -159,7 +159,7 @@ public class ListUtils {
      * @Description 判定List是否是空指针或里面没有数据
      */
     public static boolean isNullOrEmpty(List<?> objs) {
-        return (objs == null || objs.isEmpty()) ;
+        return (objs == null || objs.isEmpty());
     }
 
     /**
@@ -256,11 +256,19 @@ public class ListUtils {
 
 
     public static <T> List<T> addTop(List<T> list, T obj) {
-        List tempList = new ArrayList();
-        tempList.add(obj);
-        tempList.addAll(list);
 
-        return tempList;
+        if (list == null) {
+            list = new ArrayList<>();
+            list.add(obj);
+        } else {
+            List tempList = new ArrayList();
+            tempList.add(obj);
+            tempList.addAll(list);
+
+            list.clear();
+            list.addAll(tempList);
+        }
+        return list;
     }
 
 
