@@ -74,6 +74,20 @@ public class RomUtils {
         return false;
     }
 
+
+    public static int getMIUIVersionCode() {
+        String miuiVersionCodeStr = getSystemProperty("ro.miui.ui.version.code");
+        int miuiVersionCode = 0;
+        if (!TextUtils.isEmpty(miuiVersionCodeStr)) {
+            try {
+                miuiVersionCode = Integer.parseInt(miuiVersionCodeStr);
+                return miuiVersionCode;
+            } catch (Exception e) {
+            }
+        }
+        return miuiVersionCode;
+    }
+
     //Android Api 23以上
     private static boolean isAndroidMOrAbove() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

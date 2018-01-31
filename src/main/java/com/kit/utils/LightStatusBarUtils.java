@@ -23,7 +23,11 @@ public class LightStatusBarUtils {
             , boolean isMarginNavigationBar, boolean isTransStatusBar, boolean dark) {
         switch (RomUtils.getLightStatausBarAvailableRomType()) {
             case RomUtils.AvailableRomType.MIUI:
-                setMIUILightStatusBar(activity, isMarginStatusBar, isMarginNavigationBar, isTransStatusBar, dark);
+                if (RomUtils.getMIUIVersionCode() >= 7) {
+                    setAndroidNativeLightStatusBar(activity, isMarginStatusBar, isMarginNavigationBar, isTransStatusBar, dark);
+                } else {
+                    setMIUILightStatusBar(activity, isMarginStatusBar, isMarginNavigationBar, isTransStatusBar, dark);
+                }
                 break;
 
             case RomUtils.AvailableRomType.FLYME:
