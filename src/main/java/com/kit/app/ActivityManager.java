@@ -42,12 +42,18 @@ public class ActivityManager {
         Zog.i("pushActivity size:" + getSize());
     }
 
+
+    public synchronized void popActivity(Class cls) {
+        popActivity(cls, false);
+    }
+
+
     /**
      * 根据类名来销毁activity
      *
      * @param cls
      */
-    public synchronized void popActivity(Class cls) {
+    public synchronized void popActivity(Class cls, boolean isFinish) {
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
 
@@ -56,15 +62,17 @@ public class ActivityManager {
 
             if (activity != null && activity.getClass().equals(cls)) {
 
-                activity.finish();
                 weakReference.clear();
                 activities.remove(weakReference);
-                activity = null;
+                if (isFinish) {
+                    activity.finish();
+                }
             }
         }
 
         Zog.i("popActivity size:" + getSize());
     }
+
 
     /**
      * 弹出activity
@@ -81,9 +89,6 @@ public class ActivityManager {
                 if (act.getClass().equals(activity.getClass())) {
                     activities.remove(weakReference);
                     weakReference.clear();
-                    act.finish();
-                    act = null;
-                    activity = null;
                 }
             }
         }
@@ -92,10 +97,16 @@ public class ActivityManager {
 
     }
 
+    public synchronized void finishActivity(Activity activity) {
+        popActivity(activity);
+        activity.finish();
+    }
+
+
     /**
      * 遍历所有Activity并finish（一般用于退出应用，销毁APP）
      */
-    public synchronized void popAllActivity() {
+    public synchronized void finishAllActivity() {
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
 
@@ -103,15 +114,12 @@ public class ActivityManager {
             Activity activity = weakReference.get();
             if (activity != null) {
                 activity.finish();
-
                 weakReference.clear();
-                activity = null;
             }
             activities.remove(weakReference);
 
         }
         Zog.i("popAllActivity size:" + getSize());
-
     }
 
     /**
@@ -119,7 +127,7 @@ public class ActivityManager {
      *
      * @param cls
      */
-    public synchronized void popAllActivityExceptOne(Class cls) {
+    public synchronized void finishAllActivityExceptOne(Class cls) {
         Zog.i("activities.size():"
                 + activities.size());
         Iterator<WeakReference<Activity>> iter = activities.iterator();
