@@ -29,7 +29,7 @@ public class BundleData implements Cloneable, Parcelable {
      * @param key
      * @param value
      */
-    public void put(String key, Object value) {
+    public <T> void put(String key, T value) {
         hashMap.put(key, value);
 
         if (hashMap.size() > 20) {
@@ -45,7 +45,7 @@ public class BundleData implements Cloneable, Parcelable {
      * @param <T>
      * @return
      */
-    public <T> T getObject(String key) {
+    public <T> T get(String key) {
         T t = null;
         try {
             t = (T) hashMap.get(key);
@@ -130,6 +130,10 @@ public class BundleData implements Cloneable, Parcelable {
 
     public void setHashMap(HashMap<String, Object> hashMap) {
         this.hashMap = hashMap;
+    }
+
+
+    public BundleData() {
     }
 
     /**
