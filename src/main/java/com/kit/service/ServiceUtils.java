@@ -8,8 +8,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import com.kit.utils.ResWrapper;
-import com.kit.utils.intentutils.BundleData;
-import com.kit.utils.intentutils.IntentManager;
+import com.kit.utils.intent.BundleData;
+import com.kit.utils.intent.IntentManager;
 import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;

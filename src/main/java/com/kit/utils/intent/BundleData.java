@@ -1,4 +1,4 @@
-package com.kit.utils.intentutils;
+package com.kit.utils.intent;
 
 import android.os.Bundle;
 import android.os.Parcel;

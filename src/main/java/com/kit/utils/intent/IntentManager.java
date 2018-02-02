@@ -1,4 +1,4 @@
-package com.kit.utils.intentutils;
+package com.kit.utils.intent;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
