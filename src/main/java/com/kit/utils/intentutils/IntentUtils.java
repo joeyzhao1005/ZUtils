@@ -387,6 +387,7 @@ public class IntentUtils extends IntentBaseUtils {
         } else {
             context.startActivity(intent);
         }
+
         return bundle;
     }
 

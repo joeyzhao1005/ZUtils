@@ -9,7 +9,7 @@ import android.os.Bundle;
 
 import com.kit.utils.ResWrapper;
 import com.kit.utils.intentutils.BundleData;
-import com.kit.utils.intentutils.IntentUtils;
+import com.kit.utils.intentutils.IntentManager;
 import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class ServiceUtils {
                 final Context context = ResWrapper.getInstance().getApplicationContext();
                 Zog.i("start service " + clazzes.getName());
 
-                IntentUtils.gotoService(context, clazzes, bundleData);
+                IntentManager.get().setClass(context, clazzes).bundleData(bundleData).startService(context);
 
 
             }
@@ -91,8 +91,9 @@ public class ServiceUtils {
             public void run() {
                 final Context context = ResWrapper.getInstance().getApplicationContext();
                 Zog.i("start service " + clazzes.getName());
-                IntentUtils.gotoService(context, clazzes, bundle, false);
+//                IntentUtils.gotoService(context, clazzes, bundle, false);
 
+                IntentManager.get().setClass(context, clazzes).bundle(bundle).startService(context);
 
             }
         });

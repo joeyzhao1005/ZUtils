@@ -1,9 +1,11 @@
 package com.kit.utils.intentutils;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.kit.utils.MapUtils;
@@ -44,6 +46,85 @@ public class IntentManager {
         activity.startActivity(mIntent);
         mIntent = null;
         itemMap = null;
+
+        if (isFinishActivityAfterStart) {
+            activity.finish();
+        }
+    }
+
+
+    public void startActivity(Context context, ActivityOptions activityOptions) {
+        if (context == null)
+            return;
+
+        if (mIntent == null)
+            throw new IllegalStateException("intent must be setted first.");
+
+        if (mIntent.getComponent() == null)
+            throw new IllegalStateException("intent must be setted class first.");
+
+        if (!(context instanceof Activity)) {
+            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
+            Bundle bundle = activityOptions.toBundle();
+            context.startActivity(mIntent, bundle);
+        } else {
+            context.startActivity(mIntent);
+        }
+        if (isFinishActivityAfterStart && (context instanceof Activity)) {
+            ((Activity) context).finish();
+        }
+        mIntent = null;
+        itemMap = null;
+    }
+
+    public void startActivity(Activity activity, ActivityOptions activityOptions) {
+        if (activity == null)
+            return;
+
+        if (mIntent == null)
+            throw new IllegalStateException("intent must be setted first.");
+
+        if (mIntent.getComponent() == null)
+            throw new IllegalStateException("intent must be setted class first.");
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
+            Bundle bundle = activityOptions.toBundle();
+            activity.startActivity(mIntent, bundle);
+        } else {
+            activity.startActivity(mIntent);
+        }
+        if (isFinishActivityAfterStart) {
+            activity.finish();
+        }
+        mIntent = null;
+        itemMap = null;
+    }
+
+
+    public void startActivity(Context context) {
+        if (context == null)
+            return;
+
+        if (mIntent == null)
+            throw new IllegalStateException("intent must be setted first.");
+
+        if (mIntent.getComponent() == null)
+            throw new IllegalStateException("intent must be setted class first.");
+
+        putItem(mIntent.getComponent().getClassName(), itemMap);
+        if (!(context instanceof Activity)) {
+            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(mIntent);
+        if (isFinishActivityAfterStart && (context instanceof Activity)) {
+            ((Activity) context).finish();
+        }
+
+        mIntent = null;
+        itemMap = null;
     }
 
     public void startActivity(Activity activity) {
@@ -58,6 +139,10 @@ public class IntentManager {
 
         putItem(mIntent.getComponent().getClassName(), itemMap);
         activity.startActivity(mIntent);
+        if (isFinishActivityAfterStart) {
+            activity.finish();
+        }
+
         mIntent = null;
         itemMap = null;
     }
@@ -74,6 +159,9 @@ public class IntentManager {
 
         putItem(mIntent.getComponent().getClassName(), itemMap);
         activity.startActivityForResult(mIntent, code);
+        if (isFinishActivityAfterStart) {
+            activity.finish();
+        }
         mIntent = null;
         itemMap = null;
     }
@@ -153,10 +241,27 @@ public class IntentManager {
         getIntent().addCategory(category);
         return this;
     }
+
+    /**
+     * @param isFinishActivityAfterStart 打开新的界面之后是否关闭当前界面
+     * @return
+     */
+    public IntentManager finishActivityAfterStart(boolean isFinishActivityAfterStart) {
+        this.isFinishActivityAfterStart = isFinishActivityAfterStart;
+        return this;
+    }
+
     /************* intent 的构造   END ************************/
 
 
     /************* bundle 的构造  START *********/
+
+
+    public IntentManager bundleData(BundleData bundleData) {
+        this.itemMap = bundleData;
+        return this;
+    }
+
     public IntentManager bundle(Bundle bundle) {
         put("bundle", bundle);
         return this;
@@ -210,7 +315,6 @@ public class IntentManager {
     /************* intent 的取值  END *********/
 
 
-
     /************* intent 的传值销毁  START *********/
     /**
      * 销毁
@@ -224,6 +328,7 @@ public class IntentManager {
 
         map.remove(context.getClass().getName());
     }
+
     /************* intent 的传值销毁  END *********/
 
 
@@ -249,9 +354,11 @@ public class IntentManager {
      * @param bundleData
      */
     private void putItem(String key, BundleData bundleData) {
-        map.put(key, bundleData);
-        if (map.size() > MAX_SIZE) {
-            MapUtils.removeFirst(map);
+        if (bundleData != null) {
+            map.put(key, bundleData);
+            if (map.size() > MAX_SIZE) {
+                MapUtils.removeFirst(map);
+            }
         }
     }
 
@@ -263,6 +370,7 @@ public class IntentManager {
 
     Intent mIntent;
     BundleData itemMap;
+    boolean isFinishActivityAfterStart;
 
 
     public IntentManager() {
