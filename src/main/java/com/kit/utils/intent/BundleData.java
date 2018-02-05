@@ -29,12 +29,13 @@ public class BundleData implements Cloneable, Parcelable {
      * @param key
      * @param value
      */
-    public <T> void put(String key, T value) {
+    public <T> BundleData put(String key, T value) {
         hashMap.put(key, value);
 
         if (hashMap.size() > 20) {
             MapUtils.removeFirst(hashMap);
         }
+        return this;
     }
 
 
