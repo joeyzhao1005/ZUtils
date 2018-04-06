@@ -1,6 +1,7 @@
 package com.kit.utils.bitmap;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +51,7 @@ import java.util.Random;
 public class BitmapUtils {
 
     public static String TAG = BitmapUtils.class.getName();
+
 
     public static Bitmap loadGifFirstBitmap(FileDescriptor fd) {
         Bitmap bitmap = null;

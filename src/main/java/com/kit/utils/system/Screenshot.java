@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 
 import com.kit.config.AppConfig;
 
@@ -27,132 +30,84 @@ import java.io.OutputStream;
  */
 public class Screenshot {
 
-    final static String FB0FILE1 = "/dev/graphics/fb0";
-    final static String FB0FILE2 = "/dev/graphics/fb1";
-    final static String FB0FILE3 = "/dev/fb0";
-
-    static File fbFile;
-    static FileInputStream graphics = null;
-    static int screenWidth = 480; // 屏幕宽（像素，如：480px）
-    static int screenHeight = 800; // 屏幕高（像素，如：800p）
-    static byte[] piex;
-
     /**
-     * 初始化基本信息
+     * 根据指定的Activity截图（带空白的状态栏）
      *
-     * @param context
+     * @param context 要截图的Activity
+     * @return Bitmap
      */
-    public static void init(Activity context) {
-        fbFile = new File(FB0FILE1);
+    public static Bitmap shotActivity(Activity context) {
+        View view = context.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
 
-
-        if (!fbFile.exists()) {
-            File nFile = new File(FB0FILE2);
-            if (nFile.exists()) {
-                fbFile = nFile;
-            }
-        }
-
-        if (!fbFile.exists()) {
-            File nFile = new File(FB0FILE3);
-            if (nFile.exists()) {
-                fbFile = nFile;
-            }
-        }
-
-
-        // 初始化事件文件的权限
-        try {
-            Process sh = Runtime.getRuntime().exec("su", null, null);
-            OutputStream os = sh.getOutputStream();
-            os.write(("chmod 777 " + fbFile.getAbsolutePath()).getBytes());
-            os.flush();
-            os.close();
-            sh.waitFor();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        DisplayMetrics dm = new DisplayMetrics();
-        Display display = context.getWindowManager().getDefaultDisplay();
-        display.getMetrics(dm);
-        screenWidth = dm.widthPixels; // 屏幕宽（像素，如：480px）
-        screenHeight = dm.heightPixels; // 屏幕高（像素，如：800p）
-
-        PixelFormat pixelFormat = new PixelFormat();
-        PixelFormat.getPixelFormatInfo(PixelFormat.RGBA_8888, pixelFormat);
-        int deepth = pixelFormat.bytesPerPixel; // 位深
-        piex = new byte[screenHeight * screenWidth * deepth]; // 像素
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache(), 0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.setDrawingCacheEnabled(false);
+        view.destroyDrawingCache();
+        return bitmap;
     }
 
-    /**
-     * 测试截图
-     */
-    @SuppressLint("SdCardPath")
-    public static void testShot() {
-        long start = System.currentTimeMillis();
-        try {
-            Bitmap bm = getScreenBitmap();
-            saveMyBitmap(bm, AppConfig.getAppConfig().getCacheDataDir() + System.currentTimeMillis() + ".jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        long end = System.currentTimeMillis();
-        Log.i("Screenshot", "time cost:" + (end - start));
-    }
+
 
     /**
-     * 保存bitmap到文件
+     * 根据指定的Activity截图（去除状态栏）
      *
-     * @param bitmap
-     * @param bitName
-     * @throws IOException
+     * @param activity 要截图的Activity
+     * @return Bitmap
      */
-    public static void saveMyBitmap(Bitmap bitmap, String bitName)
-            throws IOException {
-        File f = new File(bitName);
-        f.createNewFile();
-        FileOutputStream fOut = new FileOutputStream(f);
+    public Bitmap shotActivityNoStatusBar(Activity activity) {
+        // 获取windows中最顶层的view
+        View view = activity.getWindow().getDecorView();
+        view.buildDrawingCache();
 
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-        fOut.flush();
-        fOut.close();
+        // 获取状态栏高度
+        Rect rect = new Rect();
+        view.getWindowVisibleDisplayFrame(rect);
+        int statusBarHeights = rect.top;
+        Display display = activity.getWindowManager().getDefaultDisplay();
+
+        // 获取屏幕宽和高
+        int widths = display.getWidth();
+        int heights = display.getHeight();
+
+        // 允许当前窗口保存缓存信息
+        view.setDrawingCacheEnabled(true);
+
+        // 去掉状态栏
+        Bitmap bmp = Bitmap.createBitmap(view.getDrawingCache(), 0,
+                statusBarHeights, widths, heights - statusBarHeights);
+
+        // 销毁缓存信息
+        view.destroyDrawingCache();
+
+        return bmp;
     }
-
     /**
-     * 获取当前屏幕截图，一定要先init
+     * 根据指定的view截图
      *
-     * @return
-     * @throws IOException
+     * @param v 要截图的view
+     * @return Bitmap
      */
-    public synchronized static Bitmap getScreenBitmap() throws IOException {
-        try {
-            graphics = new FileInputStream(fbFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public static Bitmap getViewBitmap(View v) {
+        if (null == v) {
             return null;
         }
-
-//        return BitmapFactory.decodeStream(graphics);
-
-
-        DataInputStream dStream = new DataInputStream(graphics);
-        dStream.readFully(piex);
-        dStream.close();
-
-
-        int[] colors = new int[screenHeight * screenWidth];
-        // 将rgb转为色值
-        for (int m = 0; m < colors.length; m++) {
-            int r = (piex[m * 4] & 0xFF);
-            int g = (piex[m * 4 + 1] & 0xFF);
-            int b = (piex[m * 4 + 2] & 0xFF);
-            int a = (piex[m * 4 + 3] & 0xFF);
-            colors[m] = (a << 24) + (r << 16) + (g << 8) + b;
+        v.setDrawingCacheEnabled(true);
+        v.buildDrawingCache();
+        if (Build.VERSION.SDK_INT >= 11) {
+            v.measure(View.MeasureSpec.makeMeasureSpec(v.getWidth(), View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(v.getHeight(), View.MeasureSpec.EXACTLY));
+            v.layout((int) v.getX(), (int) v.getY(), (int) v.getX() + v.getMeasuredWidth(), (int) v.getY() + v.getMeasuredHeight());
+        } else {
+            v.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
         }
 
-        return Bitmap.createBitmap(colors, screenWidth, screenHeight,
-                Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(v.getDrawingCache(), 0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+        v.setDrawingCacheEnabled(false);
+        v.destroyDrawingCache();
+        return bitmap;
     }
+
 }
