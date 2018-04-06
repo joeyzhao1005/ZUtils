@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 
 import com.kit.utils.MapUtils;
 import com.kit.utils.StringUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,7 +31,7 @@ public class ArgumentsManager {
     public void setArguments(Fragment fragment) {
 
         if (fragment == null) {
-            LogUtils.e("fragmentClass can not be null!");
+            Zog.e("fragmentClass can not be null!");
             return;
         }
         putItem(String.valueOf(fragment.hashCode()), itemMap);
@@ -66,6 +67,46 @@ public class ArgumentsManager {
 
 
 
+    /************* bundle 的构造  START *********/
+
+
+    public ArgumentsManager bundleData(BundleData bundleData) {
+        this.itemMap = bundleData;
+        return this;
+    }
+
+    public ArgumentsManager bundle(Bundle bundle) {
+        put("bundle", bundle);
+        return this;
+    }
+
+
+    /**
+     * 往item中压入数据 无敌的方法
+     *
+     * @param key
+     * @param value
+     */
+    public <T> ArgumentsManager put(String key, T value) {
+        getData().put(key, value);
+        return this;
+    }
+    /************* bundle 的构造  END *********/
+
+    /**
+     * 销毁
+     * 在基类的onDestory中调用最好
+     *
+     * @param fragment
+     */
+    public void destory(Fragment fragment) {
+        if (fragment == null)
+            return;
+
+        map.remove(String.valueOf(fragment.hashCode()));
+    }
+
+
     public BundleData getData(Fragment fragment) {
         if (fragment == null)
             return null;
@@ -73,6 +114,13 @@ public class ArgumentsManager {
         return map.get(String.valueOf(fragment.hashCode()));
     }
 
+
+    private BundleData getData() {
+        if (itemMap == null)
+            itemMap = new BundleData();
+
+        return itemMap;
+    }
     /**
      * 往map中压数据
      *

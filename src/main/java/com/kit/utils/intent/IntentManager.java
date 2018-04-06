@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.kit.utils.MapUtils;
-import com.kit.utils.StringUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * 最重要的是解决parcleable传值溢出的问题
  * <p>
- * 此类 仅作为 activity及fragment 之间传值，broadcast请使用BroadcastCenter；
+ * 此类 仅作为 activity之间传值，broadcast请使用BroadcastCenter；
  * 若有跳转到该类使用PendingIntent传值的话，则跳转到该类的所有传值方法请使用普通的传值方式（即Android默认的方式）；
  * 如：跳转到MainActivity的有通过点击通知栏通知的方式跳入的，则所有跳入MainActivity的都是用普通传值方式。
  * <p>
@@ -253,7 +253,7 @@ public class IntentManager {
     /************* intent 跨项目的构造   START ************************/
     public IntentManager target(Context packageContext, String target) {
         if (targetMap == null) {
-            LogUtils.e("You must init IntentManager first before target");
+            Zog.e("You must init IntentManager first before target");
         }
         if (targetMap != null) {
             Class clazz = targetMap.get(target);
@@ -375,20 +375,6 @@ public class IntentManager {
             return;
 
         map.remove(context.getClass().getName());
-    }
-
-
-    /**
-     * 销毁
-     * 在基类的onDestory中调用最好
-     *
-     * @param fragment
-     */
-    public void destory(Fragment fragment) {
-        if (fragment == null)
-            return;
-
-        map.remove(String.valueOf(fragment.hashCode()));
     }
 
 
