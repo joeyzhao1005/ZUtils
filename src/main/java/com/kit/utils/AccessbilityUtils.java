@@ -49,6 +49,7 @@ public class AccessbilityUtils {
             }
         }
         return false;
+
     }
 
     @TargetApi(14)
