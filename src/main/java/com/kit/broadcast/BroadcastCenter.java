@@ -99,10 +99,6 @@ public class BroadcastCenter {
         }
 
         if (intent == null) {
-            Zog.d("intent is not created");
-        }
-
-        if (intent == null) {
             if (!StringUtils.isEmptyOrNullStr(action)) {
                 intent = new Intent(action);
             }
