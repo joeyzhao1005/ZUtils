@@ -26,319 +26,52 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 public class ArgumentsManager {
-    /************* intent 的启动   START ************************/
-//    public void startActivity(Activity activity, Intent intent) {
-//        if (activity == null)
-//            return;
-//
-//        this.mIntent = intent;
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//        if (mIntent.getExtras() != null) {
-//            itemMap = new BundleData();
-//            itemMap.put("bundle", mIntent.getExtras());
-//            putItem(mIntent.getComponent().getClassName(), itemMap);
-//        }
-//        mIntent.putExtras(new Bundle());
-//        activity.startActivity(mIntent);
-//        mIntent = null;
-//        itemMap = null;
-//
-//        if (isFinishActivityAfterStart) {
-//            activity.finish();
-//        }
-//    }
-//
-//
-//    public void startActivity(Context context, ActivityOptions activityOptions) {
-//        if (context == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//        if (!(context instanceof Activity)) {
-//            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
-//            Bundle bundle = activityOptions.toBundle();
-//            context.startActivity(mIntent, bundle);
-//        } else {
-//            context.startActivity(mIntent);
-//        }
-//        if (isFinishActivityAfterStart && (context instanceof Activity)) {
-//            ((Activity) context).finish();
-//        }
-//        mIntent = null;
-//        itemMap = null;
-//    }
-//
-//    public void startActivity(Activity activity, ActivityOptions activityOptions) {
-//        if (activity == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
-//            Bundle bundle = activityOptions.toBundle();
-//            activity.startActivity(mIntent, bundle);
-//        } else {
-//            activity.startActivity(mIntent);
-//        }
-//        if (isFinishActivityAfterStart) {
-//            activity.finish();
-//        }
-//        mIntent = null;
-//        itemMap = null;
-//    }
-//
-//
-//    public void startActivity(Context context) {
-//        if (context == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//        putItem(mIntent.getComponent().getClassName(), itemMap);
-//        if (!(context instanceof Activity)) {
-//            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        }
-//        context.startActivity(mIntent);
-//        if (isFinishActivityAfterStart && (context instanceof Activity)) {
-//            ((Activity) context).finish();
-//        }
-//
-//        mIntent = null;
-//        itemMap = null;
-//    }
-//
-//    public void startActivity(Activity activity) {
-//        if (activity == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//        putItem(mIntent.getComponent().getClassName(), itemMap);
-//        activity.startActivity(mIntent);
-//        if (isFinishActivityAfterStart) {
-//            activity.finish();
-//        }
-//
-//        mIntent = null;
-//        itemMap = null;
-//    }
-//
-//    public void startActivityForResult(Activity activity, int code) {
-//        if (activity == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//        putItem(mIntent.getComponent().getClassName(), itemMap);
-//        activity.startActivityForResult(mIntent, code);
-//        if (isFinishActivityAfterStart) {
-//            activity.finish();
-//        }
-//        mIntent = null;
-//        itemMap = null;
-//    }
-//
-//    public void startService(Context context) {
-//        if (context == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//        putItem(mIntent.getComponent().getClassName(), itemMap);
-//        context.startService(mIntent);
-//        mIntent = null;
-//        itemMap = null;
-//    }
-//
-//    public void stopService(Context context) {
-//        if (context == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getComponent() == null)
-//            throw new IllegalStateException("intent must be setted class first.");
-//
-//        putItem(mIntent.getComponent().getClassName(), itemMap);
-//        context.stopService(mIntent);
-//        mIntent = null;
-//        itemMap = null;
-//    }
-//
-//    public void sendBroadCast(Context context) {
-//        if (context == null)
-//            return;
-//
-//        if (mIntent == null)
-//            throw new IllegalStateException("intent must be setted first.");
-//
-//        if (mIntent.getAction() == null || StringUtils.isEmptyOrNullStr(mIntent.getAction()))
-//            throw new IllegalStateException("intent must be setted action first.");
-//
-//        putItem(mIntent.getAction(), itemMap);
-//        context.sendBroadcast(mIntent);
-//        mIntent = null;
-//        itemMap = null;
-//    }
+    /************* fragment 传值的构造   START ************************/
+    public void setArguments(Fragment fragment) {
 
-
-
-    public void set(Class fragmentClass){
-        if (fragmentClass == null)
+        if (fragment == null) {
+            LogUtils.e("fragmentClass can not be null!");
             return;
-
-        putItem(fragmentClass.getName(), itemMap);
-//        context.sendBroadcast(mIntent);
-//        mIntent = null;
+        }
+        putItem(String.valueOf(fragment.hashCode()), itemMap);
         itemMap = null;
     }
-    /************* intent 的启动   END ************************/
-
-
-    /************* intent 的构造   START ************************/
-//    public ArgumentsManager setClass(Context packageContext, Class<?> cls) {
-//        getIntent().setClass(packageContext, cls);
-//        return this;
-//    }
+//    public void setArguments(Class<? extends Fragment> fragment) {
 //
-//    public ArgumentsManager setData(Uri data) {
-//        getIntent().setData(data);
-//        return this;
+//        if (fragment == null) {
+//            LogUtils.e("fragmentClass can not be null!");
+//            return;
+//        }
+//        putItem(fragment.toString(), itemMap);
 //    }
+//    /**
+//     * @param fragmentClass
+//     * @param tag           重复的fragment（即一个界面上同时出现多个这个fragment）那么需要加tag，销毁的时候页传递相应的tag
+//     */
+//    public void setArguments(Class<? extends Fragment> fragmentClass, String tag) {
+//        if (StringUtils.isEmptyOrNullStr(tag)) {
+//            setArguments(fragmentClass);
+//            return;
+//        }
 //
-//    public ArgumentsManager setAction(String action) {
-//        getIntent().setAction(action);
-//        return this;
-//    }
+//        if (fragmentClass == null) {
+//            LogUtils.e("fragmentClass can not be null!");
+//            return;
+//        }
 //
-//    public ArgumentsManager addFlag(int flags) {
-//        getIntent().addFlags(flags);
-//        return this;
+//        itemMap.put("IntentManagerTag", tag);
+//        putItem(fragmentClass.getName() + tag, itemMap);
 //    }
-//
-//    public ArgumentsManager addCategory(String category) {
-//        getIntent().addCategory(category);
-//        return this;
-//    }
-
-    /**
-     * @param isFinishActivityAfterStart 打开新的界面之后是否关闭当前界面
-     * @return
-     */
-    public ArgumentsManager finishActivityAfterStart(boolean isFinishActivityAfterStart) {
-        this.isFinishActivityAfterStart = isFinishActivityAfterStart;
-        return this;
-    }
-
-    /************* intent 的构造   END ************************/
-
-
-    /************* bundle 的构造  START *********/
-
-
-    public ArgumentsManager bundleData(BundleData bundleData) {
-        this.itemMap = bundleData;
-        return this;
-    }
-
-    public ArgumentsManager bundle(Bundle bundle) {
-        put("bundle", bundle);
-        return this;
-    }
-
-
-    /**
-     * 往item中压入数据 无敌的方法
-     *
-     * @param key
-     * @param value
-     */
-    public <T> ArgumentsManager put(String key, T value) {
-        getData().put(key, value);
-        return this;
-    }
-    /************* bundle 的构造  END *********/
-
-
-    /************* intent 的取值  START *********/
+    /************* fragment 传值的构造   END ************************/
 
 
 
-    public BundleData getArguments(Fragment fragment) {
+    public BundleData getData(Fragment fragment) {
         if (fragment == null)
             return null;
 
-        return map.get(fragment.getClass().getName());
+        return map.get(String.valueOf(fragment.hashCode()));
     }
-
-    /************* intent 的取值  END *********/
-
-
-    /************* intent 的传值销毁  START *********/
-    /**
-     * 销毁
-     * 在基类的onDestory中调用最好
-     *
-     * @param context
-     */
-    public void destory(Fragment fragment) {
-        if (fragment == null)
-            return;
-
-        map.remove(fragment.getClass().getName());
-    }
-
-    /************* intent 的传值销毁  END *********/
-
-//
-//    private Intent getIntent() {
-//        if (mIntent == null)
-//            mIntent = new Intent();
-//        return mIntent;
-//    }
-
-
-    private BundleData getData() {
-        if (itemMap == null)
-            itemMap = new BundleData();
-
-        return itemMap;
-    }
-
 
     /**
      * 往map中压数据
@@ -355,26 +88,24 @@ public class ArgumentsManager {
         }
     }
 
-    private static final int MAX_SIZE = 50;
+    private static final int MAX_SIZE = 100;
 
     private static ConcurrentHashMap<String, BundleData> map;
+    private static ConcurrentHashMap<String, Class> targetMap;
 
     private static ArgumentsManager mInstance;
 
-//    Intent mIntent;
     BundleData itemMap;
     boolean isFinishActivityAfterStart;
 
-
     public ArgumentsManager() {
-//        mIntent = new Intent();
         itemMap = new BundleData();
     }
 
     public static ArgumentsManager get() {
         if (mInstance == null) {
             mInstance = new ArgumentsManager();
-            map = new ConcurrentHashMap<String, BundleData>();
+            map = new ConcurrentHashMap<String, BundleData>(50);
         }
         return mInstance;
     }

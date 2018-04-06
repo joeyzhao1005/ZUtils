@@ -247,43 +247,7 @@ public class IntentManager {
     }
     /************* intent 的启动   END ************************/
 
-    /************* fragment 传值的构造   START ************************/
-    public void setArguments(Fragment fragment) {
 
-        if (fragment == null) {
-            LogUtils.e("fragmentClass can not be null!");
-            return;
-        }
-        putItem(String.valueOf(fragment.hashCode()), itemMap);
-        itemMap = null;
-    }
-//    public void setArguments(Class<? extends Fragment> fragment) {
-//
-//        if (fragment == null) {
-//            LogUtils.e("fragmentClass can not be null!");
-//            return;
-//        }
-//        putItem(fragment.toString(), itemMap);
-//    }
-//    /**
-//     * @param fragmentClass
-//     * @param tag           重复的fragment（即一个界面上同时出现多个这个fragment）那么需要加tag，销毁的时候页传递相应的tag
-//     */
-//    public void setArguments(Class<? extends Fragment> fragmentClass, String tag) {
-//        if (StringUtils.isEmptyOrNullStr(tag)) {
-//            setArguments(fragmentClass);
-//            return;
-//        }
-//
-//        if (fragmentClass == null) {
-//            LogUtils.e("fragmentClass can not be null!");
-//            return;
-//        }
-//
-//        itemMap.put("IntentManagerTag", tag);
-//        putItem(fragmentClass.getName() + tag, itemMap);
-//    }
-    /************* fragment 传值的构造   END ************************/
 
 
     /************* intent 跨项目的构造   START ************************/
@@ -379,14 +343,6 @@ public class IntentManager {
             return null;
 
         return map.get(context.getClass().getName());
-    }
-
-
-    public BundleData getData(Fragment fragment) {
-        if (fragment == null)
-            return null;
-
-        return map.get(String.valueOf(fragment.hashCode()));
     }
 
 
@@ -486,7 +442,7 @@ public class IntentManager {
         }
     }
 
-    private static final int MAX_SIZE = 100;
+    private static final int MAX_SIZE = 50;
 
     private static ConcurrentHashMap<String, BundleData> map;
     private static ConcurrentHashMap<String, Class> targetMap;
