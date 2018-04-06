@@ -50,9 +50,34 @@ public class BundleData implements Cloneable, Parcelable {
         T t = null;
         try {
             t = (T) hashMap.get(key);
-        } catch (Exception e) {
-            Zog.showException(e);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
         }
+        return t;
+    }
+
+    /**
+     * 获取数值
+     *
+     *
+     * 如果是获取数值型的 用这个方法，如果获取的是对象，用上面的get(String key)方法
+     * @param key
+     * @param <T>
+     * @return
+     */
+    public <T> T get(String key, T defaultValue) {
+        T t = null;
+        try {
+            t = (T) hashMap.get(key);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+        }
+
+        if (t == null)
+            t = defaultValue;
         return t;
     }
 
@@ -69,7 +94,7 @@ public class BundleData implements Cloneable, Parcelable {
         try {
             t = (List<T>) hashMap.get(key);
         } catch (Exception e) {
-            Zog.showException(e);
+            e.printStackTrace();
         }
         return t;
     }
@@ -88,7 +113,7 @@ public class BundleData implements Cloneable, Parcelable {
         try {
             t = (ArrayList<T>) hashMap.get(key);
         } catch (Exception e) {
-            Zog.showException(e);
+            e.printStackTrace();
         }
         return t;
     }
