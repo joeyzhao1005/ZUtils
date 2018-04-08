@@ -10,6 +10,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import com.kit.app.application.AppMaster;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -21,7 +23,6 @@ public class ResWrapper {
 
     private static ResWrapper resWrapper;
 
-    private static Context applicationContext;
 
     private ResWrapper() {
     }
@@ -43,10 +44,7 @@ public class ResWrapper {
 
 
     public Context getApplicationContext() {
-        if (applicationContext == null && context != null && context.get() != null) {
-            applicationContext = context.get().getApplicationContext();
-        }
-        return applicationContext;
+        return AppMaster.getInstance().getAppContext();
     }
 
 //    public Context getContext() {

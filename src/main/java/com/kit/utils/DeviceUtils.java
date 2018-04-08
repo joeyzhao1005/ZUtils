@@ -83,15 +83,13 @@ public class DeviceUtils {
     }
 
 
-
-
     private static int statusBarHeight = 0;
 
 
     public static final int DEVICE_ADMIN = 70 + 1;
 
 
-    public static void lockScreen(@Nullable Activity activity,Class<?> adminManagerReceiver) {
+    public static void lockScreen(@Nullable Activity activity, Class<?> adminManagerReceiver) {
 
         if (activity == null)
             activity = ActivityManager.getInstance().getCurrActivity();
@@ -209,38 +207,21 @@ public class DeviceUtils {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
-        if (context instanceof Activity) {
-            Display display = ((Activity) context).getWindowManager()
-                    .getDefaultDisplay();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-                Point size = new Point();
-                display.getSize(size);
-                return size.y;
-            } else {
-                return display.getHeight();
-            }
+        Display display = ((Activity) context).getWindowManager()
+                .getDefaultDisplay();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Point size = new Point();
+            display.getSize(size);
+            return size.y;
+        } else {
+            return display.getHeight();
         }
-        return 0;
     }
 
 
-    public static int getRealScreenHeight(Context context) {
-        if (context == null) {
-            context = ActivityManager.getInstance().getCurrActivity();
-        }
-
-        if (context instanceof Activity) {
-            Display display = ((Activity) context).getWindowManager()
-                    .getDefaultDisplay();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                Point size = new Point();
-                display.getRealSize(size);
-                return size.y;
-            } else {
-                return display.getHeight();
-            }
-        }
-        return 0;
+    public static int getRealScreenHeight() {
+        DisplayMetrics dm = ResWrapper.getInstance().getResources().getDisplayMetrics();
+        return dm.heightPixels;
     }
 
     /**
@@ -256,44 +237,27 @@ public class DeviceUtils {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
-        if (context instanceof Activity) {
-            Display display = ((Activity) context).getWindowManager()
-                    .getDefaultDisplay();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-                Point size = new Point();
-                display.getSize(size);
-                return size.x;
-            } else {
-                return display.getWidth();
-            }
+        Display display = ((Activity) context).getWindowManager()
+                .getDefaultDisplay();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Point size = new Point();
+            display.getSize(size);
+            return size.x;
+        } else {
+            return display.getWidth();
         }
-        return 0;
     }
 
 
     /**
      * Get the screen width.
      *
-     * @param context
      * @return the screen width
      */
-    public static int getRealScreenWidth(Context context) {
-        if (context == null) {
-            context = ActivityManager.getInstance().getCurrActivity();
-        }
+    public static int getRealScreenWidth() {
+        DisplayMetrics dm = ResWrapper.getInstance().getResources().getDisplayMetrics();
+        return dm.widthPixels;
 
-        if (context instanceof Activity) {
-            Display display = ((Activity) context).getWindowManager()
-                    .getDefaultDisplay();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                Point size = new Point();
-                display.getRealSize(size);
-                return size.x;
-            } else {
-                return display.getWidth();
-            }
-        }
-        return 0;
     }
 
     /**
