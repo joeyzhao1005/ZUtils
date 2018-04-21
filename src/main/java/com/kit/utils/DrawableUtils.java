@@ -17,6 +17,7 @@ import com.kit.utils.log.Zog;
 
 import java.io.File;
 
+
 /**
  * Created by Zhao on 14-8-12.
  */
@@ -67,6 +68,7 @@ public class DrawableUtils {
 
     /**
      * 改变 drawable 的颜色
+     *
      * @param drawable
      * @param colors
      * @return
@@ -78,9 +80,15 @@ public class DrawableUtils {
     }
 
 
-    public static Drawable tintDrawable( int resDrawaleId, ColorStateList colors) {
+    public static Drawable tintDrawable(int resDrawaleId, ColorStateList colors) {
         Drawable drawableSource = ResWrapper.getInstance().getDrawable(resDrawaleId);
-        return tintDrawable(drawableSource,colors);
+        return tintDrawable(drawableSource, colors);
+    }
+
+
+    public static Drawable tintDrawable(int resDrawaleId, int color) {
+        Drawable drawableSource = ResWrapper.getInstance().getDrawable(resDrawaleId);
+        return tintDrawable(drawableSource, ColorUtils.createColorStateList(color, color, color, color));
     }
 
 
