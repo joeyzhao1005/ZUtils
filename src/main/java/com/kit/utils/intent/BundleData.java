@@ -17,8 +17,9 @@ public class BundleData implements Cloneable, Parcelable {
 
     public boolean containsKey(String key) {
 
-        if (hashMap == null)
+        if (hashMap == null) {
             return false;
+        }
 
         return hashMap.containsKey(key);
     }
@@ -76,8 +77,9 @@ public class BundleData implements Cloneable, Parcelable {
         } catch (Exception e) {
         }
 
-        if (t == null)
+        if (t == null) {
             t = defaultValue;
+        }
         return t;
     }
 

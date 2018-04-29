@@ -37,8 +37,9 @@ public class MediaUtils {
         try {
             retriever.setDataSource(filePath); //设置数据源
             byte[] embedPic = retriever.getEmbeddedPicture(); //得到字节型数据
-            if(embedPic==null||embedPic.length<=0)
+            if(embedPic==null||embedPic.length<=0) {
                 return null;
+            }
             bitmap = BitmapFactory.decodeByteArray(embedPic, 0, embedPic.length); //转换为图片
         } catch (Exception e) {
             Zog.showException(e);
@@ -90,8 +91,9 @@ public class MediaUtils {
     }
 
     public static void playMusic(String dir) {
-        if (StringUtils.isEmptyOrNullStr(dir))
+        if (StringUtils.isEmptyOrNullStr(dir)) {
             return;
+        }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             Intent it = new Intent(Intent.ACTION_VIEW);
@@ -128,8 +130,9 @@ public class MediaUtils {
     }
 
     public static void playVideo(String url) {
-        if (StringUtils.isEmptyOrNullStr(url))
+        if (StringUtils.isEmptyOrNullStr(url)) {
             return;
+        }
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.parse(url), "video/mp4");

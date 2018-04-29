@@ -67,8 +67,9 @@ public class MapUtils {
             while (it.hasNext()) {
                 Map.Entry<?, ?> entry = it.next();
                 System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
-                if (entry.getValue() != null)
+                if (entry.getValue() != null) {
                     return false;
+                }
             }
             return true;
         }
@@ -132,8 +133,9 @@ public class MapUtils {
      */
     public static <K, V> Map removeFirst(Map<K, V> map) {
 
-        if (isNullOrEmpty(map))
+        if (isNullOrEmpty(map)) {
             return map;
+        }
 
         for (Map.Entry<K, V> entry : map.entrySet()) {
             map.remove(entry.getKey());
@@ -204,8 +206,9 @@ public class MapUtils {
 
         if (isNullOrEmpty(map)) {
             return null;
-        } else
+        } else {
             return tempMap;
+        }
     }
 
 
@@ -248,8 +251,9 @@ public class MapUtils {
 
         if (isNullOrEmpty(map)) {
             return null;
-        } else
+        } else {
             return tempMap;
+        }
     }
 
 
@@ -277,7 +281,9 @@ public class MapUtils {
 
             }
             return false;
-        } else return map.containsValue(value);
+        } else {
+            return map.containsValue(value);
+        }
 
     }
 
@@ -305,7 +311,9 @@ public class MapUtils {
 
             }
             return false;
-        } else return map.containsKey(key);
+        } else {
+            return map.containsKey(key);
+        }
 
     }
 
@@ -352,8 +360,9 @@ public class MapUtils {
 
 
     public static Object getPosition(Map map, int position) {
-        if (MapUtils.isNullOrEmpty(map))
+        if (MapUtils.isNullOrEmpty(map)) {
             return map;
+        }
 
         Iterator<Map.Entry<?, ?>> it = map.entrySet().iterator();
         int i = 0;
@@ -369,8 +378,9 @@ public class MapUtils {
 
 
     public static Map removePosition(Map map, int position) {
-        if (MapUtils.isNullOrEmpty(map))
+        if (MapUtils.isNullOrEmpty(map)) {
             return map;
+        }
 
         Iterator<Map.Entry<?, ?>> it = map.entrySet().iterator();
         int i = 0;

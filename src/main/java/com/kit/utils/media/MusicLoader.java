@@ -83,8 +83,9 @@ public class MusicLoader {
 
             } while (cursor.moveToNext());
         }
-        if (cursor != null)
+        if (cursor != null) {
             cursor.close();
+        }
 
         return musicList;
     }
@@ -132,8 +133,9 @@ public class MusicLoader {
 
             } while (cursor.moveToNext());
         }
-        if (cursor != null)
+        if (cursor != null) {
             cursor.close();
+        }
 
         return musicList;
     }

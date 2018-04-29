@@ -13,8 +13,9 @@ public class AssetsUtils extends AssetsTxt2String {
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line = "";
             String Result = "";
-            while ((line = bufReader.readLine()) != null)
+            while ((line = bufReader.readLine()) != null) {
                 Result += line + " \n";
+            }
             return Result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,8 +31,9 @@ public class AssetsUtils extends AssetsTxt2String {
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line = "";
             String Result = "";
-            while ((line = bufReader.readLine()) != null)
+            while ((line = bufReader.readLine()) != null) {
                 Result += line;
+            }
             return Result;
         } catch (Exception e) {
             e.printStackTrace();

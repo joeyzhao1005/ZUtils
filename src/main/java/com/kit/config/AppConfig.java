@@ -9,8 +9,9 @@ public class AppConfig {
     public static final String LOCKNOW = "com.kit.LockNow";
 
     public static IAppConfig getAppConfig() {
-        if (appConfig == null)
+        if (appConfig == null) {
             Log.e("AppConfig", "You must called setAppConfig(IAppConfig appConfig) before.");
+        }
         return appConfig;
     }
 
@@ -19,6 +20,7 @@ public class AppConfig {
     }
 
     public interface IAppConfig {
+        String sharedPreferencesName();
 
         boolean isShowLog();
 
@@ -31,6 +33,8 @@ public class AppConfig {
         String getCacheDataDir();
 
         String getCacheImageDir();
+
+        String getTheme();
     }
 
 

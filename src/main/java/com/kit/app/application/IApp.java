@@ -8,4 +8,5 @@ public interface IApp {
     String getVersionName();
     long getVersionCode();
     String getFlavor();
+    boolean isDebug();
 }

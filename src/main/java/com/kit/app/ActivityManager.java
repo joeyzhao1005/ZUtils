@@ -25,8 +25,9 @@ public class ActivityManager {
 
 
     public int getSize() {
-        if (activities != null)
+        if (activities != null) {
             return activities.size();
+        }
         return 0;
     }
 

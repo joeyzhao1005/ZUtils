@@ -192,14 +192,16 @@ public class ContactUtils {
                     }
                 }
 
-                if (StringUtils.isEmptyOrNullStr(disPlayName))
+                if (StringUtils.isEmptyOrNullStr(disPlayName)) {
                     continue;
+                }
 
                 ContactInfo contactInfo = new ContactInfo();
                 contactInfo.setDisplayName(disPlayName);
                 contactInfo.setNumber(phoneNumbers);
-                if (bitmap != null)
+                if (bitmap != null) {
                     contactInfo.setAvatar(bitmap);
+                }
 
                 phone.add(contactInfo);
             } while (cursor.moveToNext());
@@ -408,14 +410,16 @@ public class ContactUtils {
                 bitmap = BitmapFactory.decodeStream(input);
             }
 
-            if (StringUtils.isEmptyOrNullStr(name))
+            if (StringUtils.isEmptyOrNullStr(name)) {
                 continue;
+            }
 
             ContactInfo contactInfo = new ContactInfo();
             contactInfo.setDisplayName(name);
             contactInfo.setNumber(phoneNumbers);
-            if (bitmap != null)
+            if (bitmap != null) {
                 contactInfo.setAvatar(bitmap);
+            }
 
             contactInfos.add(contactInfo);
 
@@ -512,8 +516,9 @@ public class ContactUtils {
             ContactInfo contactInfo = new ContactInfo();
             contactInfo.setDisplayName(name);
             contactInfo.setNumber(phoneNumbers);
-            if (bitmap != null)
+            if (bitmap != null) {
                 contactInfo.setAvatar(bitmap);
+            }
 
             phone.add(contactInfo);
 
@@ -548,8 +553,9 @@ public class ContactUtils {
         }
         if (cursor == null || cursor.getCount() < 1) {
             // Log.d(TAG, "getPeople null");
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
 
             return false;
         } else {

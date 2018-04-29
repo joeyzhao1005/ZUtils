@@ -23,8 +23,9 @@ public class WakeLockUtils {
 
 
     public static WakeLockUtils getInstance() {
-        if (wakeLockUtils == null)
+        if (wakeLockUtils == null) {
             wakeLockUtils = new WakeLockUtils();
+        }
 
         return wakeLockUtils;
     }
@@ -81,8 +82,9 @@ public class WakeLockUtils {
     @TargetApi(23)
     private void screenOffAboveAPI23() {
         pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
-        if (wakeLockNear == null)
+        if (wakeLockNear == null) {
             wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
+        }
 
         wakeLockNear.setReferenceCounted(false);
 
@@ -101,8 +103,9 @@ public class WakeLockUtils {
     @TargetApi(23)
     private void screenOnAboveAPI23() {
         pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
-        if (wakeLockNear == null)
+        if (wakeLockNear == null) {
             wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
+        }
 
         wakeLockNear.setReferenceCounted(false);
 
@@ -119,8 +122,9 @@ public class WakeLockUtils {
 
     private void screenOnOld() {
         pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
-        if (wakeLockScreen == null)
+        if (wakeLockScreen == null) {
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");
+        }
 
         wakeLockScreen.setReferenceCounted(false);
 
@@ -137,8 +141,9 @@ public class WakeLockUtils {
     private void screenOffOld() {
         pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
 
-        if (wakeLockScreen == null)
+        if (wakeLockScreen == null) {
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");
+        }
 
         wakeLockScreen.setReferenceCounted(false);
 

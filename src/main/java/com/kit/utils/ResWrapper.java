@@ -29,12 +29,17 @@ public class ResWrapper {
 
     public static ResWrapper getInstance() {
 
-        if (resWrapper == null)
+        if (resWrapper == null) {
             resWrapper = new ResWrapper();
+        }
 
         return resWrapper;
     }
 
+
+    public Context getContext() {
+        return context != null ? context.get() : null;
+    }
 
     public ResWrapper setContext(Context context) {
         this.context = new WeakReference<Context>(context);
@@ -52,18 +57,20 @@ public class ResWrapper {
 //    }
 
     public void setBackground(View view, Drawable drawable) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(drawable);
-        else
+        } else {
             view.setBackgroundDrawable(drawable);
+        }
     }
 
 
     public int getColor(int colorId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return getResources().getColor(colorId, null);
-        else
+        } else {
             return ContextCompat.getColor(getApplicationContext(), colorId);
+        }
     }
 
     public float getDimension(int dimensionId) {
@@ -71,10 +78,11 @@ public class ResWrapper {
     }
 
     public Drawable getDrawable(int drawableId, Resources.Theme theme) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             return getResources().getDrawable(drawableId, theme);
-        else
+        } else {
             return getDrawable(drawableId);
+        }
     }
 
     public Drawable getDrawable(int drawableId) {

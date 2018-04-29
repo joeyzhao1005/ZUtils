@@ -100,8 +100,9 @@ public class DrawableUtils {
      */
     public static File saveDrawable(Drawable drawable, File file) {
         Bitmap bmp = BitmapUtils.drawable2Bitmap(drawable);
-        if (bmp == null)
+        if (bmp == null) {
             return null;
+        }
 
         BitmapUtils.saveBitmap(bmp, file);
 
@@ -117,8 +118,9 @@ public class DrawableUtils {
      */
     public static File saveDrawable(Drawable drawable, File file, boolean isNofify) {
         Bitmap bmp = BitmapUtils.drawable2Bitmap(drawable);
-        if (bmp == null || bmp.isRecycled())
+        if (bmp == null || bmp.isRecycled()) {
             return null;
+        }
 
         BitmapUtils.saveBitmap(bmp, file, isNofify);
 
@@ -129,8 +131,9 @@ public class DrawableUtils {
     public static String saveDrawable(Context context, int drawableID, String filename) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableID);
         try {
-            if (bitmap == null || bitmap.isRecycled())
+            if (bitmap == null || bitmap.isRecycled()) {
                 return null;
+            }
 
             BitmapUtils.saveBitmap(bitmap, new File(filename));
 
@@ -186,9 +189,9 @@ public class DrawableUtils {
             scaleHeight = ((float) MathExtend.divide(h, height));
         }
 
-        if (!isConstrain)
+        if (!isConstrain) {
             matrix.postScale(scaleWidth, scaleHeight);         // 设置缩放比例
-        else {
+        } else {
             if (scaleHeight >= 1 && scaleWidth >= 1) {//如果放大，那就取缩放最大的那个
                 scale = (scaleHeight > scaleWidth ? scaleHeight : scaleWidth);
             } else if (scaleHeight <= 1 && scaleWidth <= 1) {//如果缩小，那就取缩放最小的那个
@@ -239,9 +242,9 @@ public class DrawableUtils {
             scaleHeight = ((float) MathExtend.divide(h, height));
         }
 
-        if (!isConstrain)
+        if (!isConstrain) {
             matrix.postScale(scaleWidth, scaleHeight);         // 设置缩放比例
-        else {
+        } else {
             if (scaleHeight >= 1 && scaleWidth >= 1) {//如果放大，那就取缩放最大的那个
                 scale = (scaleHeight > scaleWidth ? scaleHeight : scaleWidth);
             } else if (scaleHeight <= 1 && scaleWidth <= 1) {//如果缩小，那就取缩放最小的那个

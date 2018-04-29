@@ -24,8 +24,9 @@ public class WebViewUtils {
         int end = url.indexOf("://");
 
 
-        if (end == -1)
+        if (end == -1) {
             end = url.length();
+        }
         return url.substring(0, end);
     }
 
@@ -153,8 +154,9 @@ public class WebViewUtils {
     @SuppressLint("SetJavaScriptEnabled")
     public static void loadUrl(Context mContext, WebView webview, String url,
                                boolean javaScriptEnabled) {
-        if(webview==null)
+        if(webview==null) {
             return;
+        }
 
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(javaScriptEnabled);

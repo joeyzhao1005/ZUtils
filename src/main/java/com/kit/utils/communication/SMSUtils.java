@@ -65,7 +65,9 @@ public class SMSUtils {
                     name = cur.getString(nameColumn);
                     phoneNumber = cur.getString(phoneNumberColumn);
                     smsbody = cur.getString(smsbodyColumn);
-                    if (smsbody == null) smsbody = "";
+                    if (smsbody == null) {
+                        smsbody = "";
+                    }
 
                     date = cur.getLong(dateColumn);
 
@@ -80,8 +82,9 @@ public class SMSUtils {
 
                     if (StringUtils.isEmptyOrNullStr(name) && !StringUtils.isEmptyOrNullStr(phoneNumber)) {
                         ContactInfo contactInfo = getContactByAddress(context, phoneNumber);
-                        if (contactInfo != null && !StringUtils.isEmptyOrNullStr(contactInfo.getDisplayName()))
+                        if (contactInfo != null && !StringUtils.isEmptyOrNullStr(contactInfo.getDisplayName())) {
                             name = contactInfo.getDisplayName();
+                        }
                     }
 
                     SMSInfo info = new SMSInfo();
@@ -112,8 +115,9 @@ public class SMSUtils {
 //        String[] projection = new String[]{"body"};//"_id", "address", "person",, "date", "type
         String where = " body like ?";
         Cursor cur = cr.query(SMS_INBOX, projection, where, selectionArgs, "date desc");
-        if (null == cur)
+        if (null == cur) {
             return null;
+        }
 
         ArrayList<SMSInfo> smsInfos = new ArrayList<SMSInfo>();
         for (int i = 0; i < cur.getCount(); i++) {
@@ -137,8 +141,9 @@ public class SMSUtils {
 
         if (ListUtils.isNullOrContainEmpty(smsInfos)) {
             return null;
-        } else
+        } else {
             return smsInfos;
+        }
     }
 
     public static ArrayList<SMSInfo> getSmsByPhone() {
@@ -150,8 +155,9 @@ public class SMSUtils {
         String where = " address = '1066321332' AND date >  "
                 + (System.currentTimeMillis() - 10 * 60 * 1000);
         Cursor cur = cr.query(SMS_INBOX, projection, where, null, "date desc");
-        if (null == cur)
+        if (null == cur) {
             return null;
+        }
         ArrayList<SMSInfo> smsInfos = new ArrayList<SMSInfo>();
         for (int i = 0; i < cur.getCount(); i++) {
             cur.moveToPosition(i);
@@ -174,8 +180,9 @@ public class SMSUtils {
 
         if (ListUtils.isNullOrContainEmpty(smsInfos)) {
             return null;
-        } else
+        } else {
             return smsInfos;
+        }
     }
 
 

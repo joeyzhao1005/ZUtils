@@ -64,7 +64,7 @@ public class NumberUtils {
 
 	public static long getMin1(ArrayList<Long> longArrayList) {
 
-		Long min = 0l;
+		Long min = 0L;
 		int flag = 0;
 
 		
@@ -106,7 +106,7 @@ public class NumberUtils {
 	
 	public static HashMap getMin(ArrayList<Long> longArrayList) {
 
-		Long min = 0l;
+		Long min = 0L;
 		int flag = 0;
 		
 		if(longArrayList.size()<=0){
@@ -157,7 +157,7 @@ public class NumberUtils {
 	
 	public static long getOrderTime(ArrayList<Long> longArrayList) {
 
-		Long min = 0l;
+		Long min = 0L;
 		int flag = 0;
 
 		ArrayList<Long> orderArrayList = new ArrayList<Long>();

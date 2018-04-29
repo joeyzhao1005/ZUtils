@@ -28,8 +28,9 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
     private static AudioUtils audioUtils;
 
     public static AudioUtils getInstance() {
-        if (audioUtils == null)
+        if (audioUtils == null) {
             audioUtils = new AudioUtils();
+        }
         return audioUtils;
     }
 
@@ -53,11 +54,13 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
 //        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            if (audioManager.getMode() == AudioManager.MODE_IN_CALL)
+            if (audioManager.getMode() == AudioManager.MODE_IN_CALL) {
                 return;
+            }
         } else {
-            if (audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION)
+            if (audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION) {
                 return;
+            }
         }
 
 
@@ -109,8 +112,9 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
 
 //        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-        if (audioManager.getMode() == AudioManager.MODE_NORMAL)
+        if (audioManager.getMode() == AudioManager.MODE_NORMAL) {
             return;
+        }
 
         audioManager.setMode(AudioManager.MODE_NORMAL);
 
@@ -134,8 +138,9 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
         context = ResWrapper.getInstance().getApplicationContext();
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        if (audioManager.getMode() == AudioManager.MODE_NORMAL)
+        if (audioManager.getMode() == AudioManager.MODE_NORMAL) {
             return;
+        }
 
 //        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
@@ -160,10 +165,11 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
 
                 boolean isWiredHeadsetOn = false;
 
-                if (audioState != null)
+                if (audioState != null) {
                     isWiredHeadsetOn = audioState.isWiredHeadsetOn(context);
-                else
+                } else {
                     isWiredHeadsetOn = audioManager.isWiredHeadsetOn();
+                }
 
                 if (isWiredHeadsetOn) {
                     audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);

@@ -30,9 +30,9 @@ public class SetUtils {
             return null;
         }
 
-        if (array[index] == null)
+        if (array[index] == null) {
             return null;
-        else {
+        } else {
             try {
                 return (T) array[index];
             } catch (Exception e) {
@@ -128,8 +128,9 @@ public class SetUtils {
             return true;
         } else {
             for (Object o : objs) {
-                if (o != null)
+                if (o != null) {
                     return false;
+                }
             }
             return true;
         }
@@ -199,8 +200,9 @@ public class SetUtils {
 
         if (tempSet == null || tempSet.isEmpty()) {
             return null;
-        } else
+        } else {
             return tempSet;
+        }
     }
 
 

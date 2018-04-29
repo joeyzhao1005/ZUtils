@@ -199,8 +199,9 @@ public class BitmapUtils {
         } else if (w < h && h > heightMax) {// 如果高度高的话根据宽度固定大小缩放
             be = (int) (options.outHeight / heightMax);
         }
-        if (be <= 0)
+        if (be <= 0) {
             be = 1;
+        }
 
         Zog.i("be be be:" + be + " w:" + w + " h:" + h);
 
@@ -225,17 +226,19 @@ public class BitmapUtils {
     public static Bitmap loadBitmap(String imgpath,
                                     BitmapFactory.Options options, boolean adjustOritation) {
         if (!adjustOritation) {
-            if (options == null)
+            if (options == null) {
                 return generateBitmapFile(imgpath, null);
-            else
+            } else {
                 return generateBitmapFile(imgpath, options);
+            }
         } else {
             Bitmap bm = null;
 
-            if (options == null)
+            if (options == null) {
                 bm = generateBitmapFile(imgpath, null);
-            else
+            } else {
                 bm = generateBitmapFile(imgpath, options);
+            }
 
 
             int digree = getDegree(imgpath);
@@ -312,7 +315,7 @@ public class BitmapUtils {
 
         int[] pix = new int[picWidth * picHeight];
 
-        for (int y = 0; y < picHeight; y++)
+        for (int y = 0; y < picHeight; y++) {
             for (int x = 0; x < picWidth; x++) {
                 int index = y * picWidth + x;
                 //int r = ((pix[index] >> 16) & 0xff)|0xff;
@@ -322,6 +325,7 @@ public class BitmapUtils {
                 pix[index] = color;
 
             }
+        }
         bm1.setPixels(pix, 0, picWidth, 0, 0, picWidth, picHeight);
         return bm1;
     }
@@ -813,8 +817,9 @@ public class BitmapUtils {
 
     // Bitmap ----> Drawable
     public static Drawable Bitmap2Drawable(Bitmap bitmap) {
-        if (bitmap == null)
+        if (bitmap == null) {
             return null;
+        }
 
         Drawable drawable = new BitmapDrawable(bitmap);
 
@@ -900,8 +905,9 @@ public class BitmapUtils {
     public static Bitmap resize(Bitmap bmp, int kb) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if (bmp != null)
+        if (bmp != null) {
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        }
 
         int options = 100;
         while (baos.toByteArray().length / 1024 > kb) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
@@ -956,8 +962,9 @@ public class BitmapUtils {
         } else if (w < h && h > height) {// 如果高度高的话根据宽度固定大小缩放
             be = (int) (newOpts.outHeight / height);
         }
-        if (be <= 0)
+        if (be <= 0) {
             be = 1;
+        }
         newOpts.inSampleSize = be;// 设置缩放比例
         // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);
@@ -1144,8 +1151,9 @@ public class BitmapUtils {
         options.inJustDecodeBounds = true;
         int ratio = (int) (options.outHeight / (float) imageViewHeight);
 
-        if (ratio <= 0)
+        if (ratio <= 0) {
             ratio = 1;
+        }
 
         options.inSampleSize = ratio;
 
@@ -1164,8 +1172,9 @@ public class BitmapUtils {
 
         int ratio = (int) (options.outHeight / (float) imageViewHeight);
 
-        if (ratio <= 0)
+        if (ratio <= 0) {
             ratio = 1;
+        }
 
         options.inSampleSize = ratio;
 
@@ -1183,8 +1192,9 @@ public class BitmapUtils {
         options.inJustDecodeBounds = true;
         int ratio = (int) (options.outHeight / (float) imageViewHeight);
 
-        if (ratio <= 0)
+        if (ratio <= 0) {
             ratio = 1;
+        }
 
         options.inSampleSize = ratio;
         options.inJustDecodeBounds = false;
@@ -1203,8 +1213,9 @@ public class BitmapUtils {
 
         int ratio = (int) (options.outWidth / (float) imageViewWidth);
 
-        if (ratio <= 0)
+        if (ratio <= 0) {
             ratio = 1;
+        }
 
         options.inSampleSize = ratio;
         options.inJustDecodeBounds = false;
@@ -1289,22 +1300,25 @@ public class BitmapUtils {
      * @param file
      */
     public static File saveBitmap(Bitmap bmp, File file) {
-        if (bmp == null)
+        if (bmp == null) {
             return null;
+        }
 
         File dir = new File(file.getParent());
 
 
         boolean mkdirResult = false;
-        if (!dir.exists())
+        if (!dir.exists()) {
             mkdirResult = dir.mkdirs();
+        }
 
         if (!mkdirResult && !dir.exists()) {//多级目录
             return null;
         }
 
-        if (file.exists())
+        if (file.exists()) {
             file.delete();
+        }
 
         FileOutputStream fos = null;
         try {

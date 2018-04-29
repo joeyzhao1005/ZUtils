@@ -42,13 +42,15 @@ public class ActionBarUtils {
      * @param activity
      */
     public static void setHomeBack(AppCompatActivity activity, int resDrawableBack, int resStringBack) {
-        if (activity == null || activity.getSupportActionBar() == null)
+        if (activity == null || activity.getSupportActionBar() == null) {
             return;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             activity.getSupportActionBar().setHomeActionContentDescription(resStringBack);
-            if (resDrawableBack > 0)
+            if (resDrawableBack > 0) {
                 activity.getSupportActionBar().setHomeAsUpIndicator(resDrawableBack);
+            }
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -56,8 +58,9 @@ public class ActionBarUtils {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            if (resDrawableBack > 0)
+            if (resDrawableBack > 0) {
                 activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
 
 //        activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
             activity.getSupportActionBar().setTitle(resStringBack);
@@ -73,8 +76,9 @@ public class ActionBarUtils {
      * @param activity
      */
     public static void setHomeBack(AppCompatActivity activity, int resDrawableBack, int resStringBack, int titleColor) {
-        if (activity.getSupportActionBar() == null)
+        if (activity.getSupportActionBar() == null) {
             return;
+        }
 
         ActionBar actionBar = activity.getSupportActionBar();
         if (resDrawableBack > 0) {

@@ -63,8 +63,9 @@ public class ArrayUtils {
             return true;
         } else {
             for (Object o : objs) {
-                if (o != null)
+                if (o != null) {
                     return false;
+                }
 
             }
             return true;

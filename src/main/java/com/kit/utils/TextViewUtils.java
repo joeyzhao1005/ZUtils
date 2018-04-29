@@ -77,10 +77,11 @@ public class TextViewUtils {
 
 //                builder.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                if (clickableSpan != null)
+                if (clickableSpan != null) {
                     builder.setSpan(new ClickableSpanExtend(text, findText, clickableSpan,
                                     normalColor, highlightColor, highlightClickBgColor), start, end,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
             }
 
         }

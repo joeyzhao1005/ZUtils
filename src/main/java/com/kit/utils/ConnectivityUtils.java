@@ -200,8 +200,9 @@ public boolean isNetWorkAvaliable() {
 
 
             }
-        } else
+        } else {
             return "none";
+        }
     }
 
 

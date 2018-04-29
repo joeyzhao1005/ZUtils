@@ -307,8 +307,9 @@ public class DateUtils {
 
     public static String getHommizationDateWeek(long time, String format) {
 
-        if (format == null || format.equals(""))
+        if (format == null || format.equals("")) {
             format = DateUtils.WEEK_SIMPLE;
+        }
         try {
             String ret = "";
             SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -358,8 +359,9 @@ public class DateUtils {
 
     public static String getHommizationDate(long time, String format) {
 
-        if (format == null || format.equals(""))
+        if (format == null || format.equals("")) {
             format = "MM-dd HH:mm";
+        }
         try {
             String ret = "";
             SimpleDateFormat sdf = new SimpleDateFormat(format);

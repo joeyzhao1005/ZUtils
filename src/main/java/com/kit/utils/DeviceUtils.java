@@ -91,8 +91,9 @@ public class DeviceUtils {
 
     public static void lockScreen(@Nullable Activity activity, Class<?> adminManagerReceiver) {
 
-        if (activity == null)
+        if (activity == null) {
             activity = ActivityManager.getInstance().getCurrActivity();
+        }
 
         //获取设备管理服务
         DevicePolicyManager policyManager = (DevicePolicyManager) activity
@@ -273,8 +274,9 @@ public class DeviceUtils {
         //获取NavigationBar的高度
         int height = resources.getDimensionPixelSize(resourceId);
 
-        if (height == 0)
+        if (height == 0) {
             height = DensityUtils.dip2px(context, 44);
+        }
         return height;
     }
 

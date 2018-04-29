@@ -52,8 +52,9 @@ public class NotificationListenerUtils {
 
 
     public static NotificationListenerUtils getInstance() {
-        if (notificationListenerUtils == null)
+        if (notificationListenerUtils == null) {
             notificationListenerUtils = new NotificationListenerUtils();
+        }
 
         return notificationListenerUtils;
     }

@@ -122,8 +122,9 @@ public class ImageTools {
 		options.inJustDecodeBounds = false;
 		// 计算缩放比
 		int be = (int) (options.outHeight / (float) 200);
-		if (be <= 0)
-			be = 1;
+		if (be <= 0) {
+            be = 1;
+        }
 		options.inSampleSize = 2; // 图片长宽各缩小二分之一
 		// 重新读入图片，注意这次要把options.inJustDecodeBounds 设为 false哦
 		bitmap = BitmapFactory.decodeFile(path, options);

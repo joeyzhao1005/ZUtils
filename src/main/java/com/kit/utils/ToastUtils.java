@@ -103,9 +103,9 @@ public class ToastUtils {
     public static void mkToast(String text, int duration) {
 
         mHandler.removeCallbacks(r);
-        if (mToast != null)
+        if (mToast != null) {
             mToast.setText(text);
-        else {
+        } else {
             Context context = ResWrapper.getInstance().getApplicationContext();
             mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
         }
@@ -126,10 +126,11 @@ public class ToastUtils {
 
         String text = context.getResources().getString(resId);
         mHandler.removeCallbacks(r);
-        if (mToast != null)
+        if (mToast != null) {
             mToast.setText(text);
-        else
+        } else {
             mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        }
         mHandler.postDelayed(r, duration);
 
         mToast.show();

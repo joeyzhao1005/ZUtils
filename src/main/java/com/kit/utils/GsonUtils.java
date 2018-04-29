@@ -69,8 +69,9 @@ public class GsonUtils {
      * @return
      */
     public static <T> List<T> getList(String jsonStr, Type type) {
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Gson gson = new Gson();
         List<T> list = gson.fromJson(jsonStr, type);
@@ -86,8 +87,9 @@ public class GsonUtils {
      * @return
      */
     public static <T> Map<String, T> getMap(String jsonStr, Type type) {
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Gson gson = new Gson();
         Map<String, T> list = gson.fromJson(jsonStr, type);
@@ -101,8 +103,9 @@ public class GsonUtils {
      * @return
      */
     public static <T> Set<T> getSet(String jsonStr, Type typeOfT) {
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Gson gson = new Gson();
         Set<T> list = gson.fromJson(jsonStr, typeOfT);
@@ -117,8 +120,9 @@ public class GsonUtils {
      * @return
      */
     public static <T> LinkedHashSet<T> getLinkedHashSet(String jsonStr, Type typeOfT) {
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Gson gson = new Gson();
         LinkedHashSet<T> list = gson.fromJson(jsonStr, typeOfT);
@@ -133,8 +137,9 @@ public class GsonUtils {
      * @return
      */
     public static <T> ArrayList<T> getArrayList(String jsonStr, Type typeOfT) {
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Gson gson = new Gson();
         ArrayList<T> list = gson.fromJson(jsonStr, typeOfT);
@@ -149,8 +154,9 @@ public class GsonUtils {
      */
     public static <T> ArrayList<T> getArrayList(String jsonStr) {
 
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Type type = new TypeToken<ArrayList<T>>() {
         }.getType();
@@ -167,8 +173,9 @@ public class GsonUtils {
      */
     public static <T> Set<T> getSet(String jsonStr) {
 
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Type type = new TypeToken<Set<T>>() {
         }.getType();
@@ -185,8 +192,9 @@ public class GsonUtils {
      */
     public static <T> LinkedHashSet<T> getLinkedHashSet(String jsonStr) {
 
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Type type = new TypeToken<LinkedHashSet<T>>() {
         }.getType();
@@ -202,8 +210,9 @@ public class GsonUtils {
      * @return
      */
     public static <T> T getObj(String jsonStr, Class<T> clazz) {
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         Gson gson = new Gson();
         return gson.fromJson(jsonStr, clazz);
@@ -216,14 +225,16 @@ public class GsonUtils {
      * @return
      */
     public static String getJsonByKey(Object object, String key) {
-        if (object == null)
+        if (object == null) {
             return null;
+        }
 
         String jsonStr = GsonUtils.toJson(object);
 
 
-        if (StringUtils.isEmptyOrNullStr(jsonStr))
+        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
+        }
 
         JSONObject jsonObject = null;
         try {

@@ -100,24 +100,27 @@ public class ArgumentsManager {
      * @param fragment
      */
     public void destory(Fragment fragment) {
-        if (fragment == null)
+        if (fragment == null) {
             return;
+        }
 
         map.remove(String.valueOf(fragment.hashCode()));
     }
 
 
     public BundleData getData(Fragment fragment) {
-        if (fragment == null)
+        if (fragment == null) {
             return null;
+        }
 
         return map.get(String.valueOf(fragment.hashCode()));
     }
 
 
     private BundleData getData() {
-        if (itemMap == null)
+        if (itemMap == null) {
             itemMap = new BundleData();
+        }
 
         return itemMap;
     }

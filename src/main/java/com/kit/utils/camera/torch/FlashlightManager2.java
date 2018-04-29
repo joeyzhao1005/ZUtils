@@ -27,8 +27,9 @@ public class FlashlightManager2 {
     private Context context;
 
     public static FlashlightManager2 getInstance() {
-        if (flashlightManager == null)
+        if (flashlightManager == null) {
             flashlightManager = new FlashlightManager2();
+        }
 
         return flashlightManager;
     }
@@ -207,10 +208,11 @@ public class FlashlightManager2 {
                     Boolean enabled = (Boolean) getFlashEnabledMethod.invoke(
                             iHardwareService, (Object[]) null);
 
-                    if (enabled)
+                    if (enabled) {
                         setFlashEnabledMethod.invoke(iHardwareService, active);
-                    else
+                    } else {
                         setFlashLightNormal();
+                    }
 
                 } catch (Exception e) {
                     setFlashLightNormal();
@@ -256,8 +258,9 @@ public class FlashlightManager2 {
 
     public  void setFlashLightNormal() {
 
-        if (camera == null)
+        if (camera == null) {
             camera = getCamera();
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {

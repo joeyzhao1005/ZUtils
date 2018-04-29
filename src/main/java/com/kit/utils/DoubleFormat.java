@@ -10,9 +10,9 @@ public class DoubleFormat {
 	}
 
 	public String doubleOutPut(double v, Integer num) {
-		if (v == Double.valueOf(v).intValue())
-			return Double.valueOf(v).intValue() + "";
-		else {
+		if (v == Double.valueOf(v).intValue()) {
+            return Double.valueOf(v).intValue() + "";
+        } else {
 			/*
 			 * 下面这段所用的舍入模式是ROUND_HALF_EVEN NumberFormat formatter =
 			 * NumberFormat.getNumberInstance();

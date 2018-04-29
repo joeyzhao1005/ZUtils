@@ -21,8 +21,9 @@ public class PingYinUtils {
 
 
     public static PingYinUtils getInstance() {
-        if (pingYinUtils == null)
+        if (pingYinUtils == null) {
             pingYinUtils = new PingYinUtils();
+        }
 
 
         return pingYinUtils;
@@ -52,9 +53,10 @@ public class PingYinUtils {
                             toHanyuPinyinStringArray(input[i],
                                     format);
                     output += temp[0];
-                } else
-                    output += java.lang.Character.toString(
+                } else {
+                    output += Character.toString(
                             input[i]);
+                }
             }
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             e.printStackTrace();

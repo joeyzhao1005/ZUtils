@@ -44,8 +44,9 @@ public class JsonUtils {
     // 解析处理过的json字符串，需调用getJosnStr()，以取得处理过的json字符串
     public static JSONArray str2JSONArray(String str) {
         Zog.i(str);
-        if (StringUtils.isEmptyOrNullStr(str))
+        if (StringUtils.isEmptyOrNullStr(str)) {
             return null;
+        }
 
         JSONArray jsonArray = null;
         try {
@@ -76,8 +77,9 @@ public class JsonUtils {
 
     public static String formatJsonStr(String inputString) {
 
-        if (TextUtils.isEmpty(inputString))
+        if (TextUtils.isEmpty(inputString)) {
             return "";
+        }
         // String dataStr = inputString;
         // System.out.println(dataStr);
         String paramsStr = inputString;
@@ -146,8 +148,9 @@ public class JsonUtils {
             } catch (JSONException e) {
             }
 
-            if (value == null)
+            if (value == null) {
                 continue;
+            }
 
             if (value instanceof JSONArray) {
                 value = toList((JSONArray) value);
@@ -175,8 +178,9 @@ public class JsonUtils {
             } catch (JSONException e) {
             }
 
-            if (value == null)
+            if (value == null) {
                 continue;
+            }
 
             if (value instanceof JSONArray) {
                 value = toList((JSONArray) value);

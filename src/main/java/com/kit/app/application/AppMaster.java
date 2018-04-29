@@ -13,12 +13,19 @@ import android.content.Context;
  */
 
 public class AppMaster implements IApp {
-
+    @Override
+    public boolean isDebug() {
+        if (app == null) {
+            return false;
+        }
+        return  app.isDebug();
+    }
 
     @Override
     public Context getAppContext() {
-        if (app == null)
+        if (app == null) {
             return null;
+        }
         return  app.getAppContext();
     }
 
@@ -29,22 +36,25 @@ public class AppMaster implements IApp {
 
     @Override
     public String getFlavor() {
-        if (app == null)
+        if (app == null) {
             return null;
+        }
         return app.getFlavor();
     }
 
     @Override
     public String getVersionName() {
-        if (app == null)
+        if (app == null) {
             return null;
+        }
         return app.getVersionName();
     }
 
     @Override
     public long getVersionCode() {
-        if (app == null)
+        if (app == null) {
             return 0;
+        }
         return app.getVersionCode();
     }
 

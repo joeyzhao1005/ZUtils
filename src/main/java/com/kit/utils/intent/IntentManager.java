@@ -45,15 +45,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class IntentManager {
     /************* intent 的启动   START ************************/
     public void startActivity(Activity activity, Intent intent) {
-        if (activity == null)
+        if (activity == null) {
             return;
+        }
 
         this.mIntent = intent;
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         if (mIntent.getExtras() != null) {
             itemMap = new BundleData();
@@ -71,15 +74,18 @@ public class IntentManager {
     }
 
     public void startActivity(Context context, Intent intent) {
-        if (context == null)
+        if (context == null) {
             return;
+        }
 
         this.mIntent = intent;
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         if (!(context instanceof Activity)) {
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -102,14 +108,17 @@ public class IntentManager {
 
 
     public void startActivity(Context context, ActivityOptions activityOptions) {
-        if (context == null)
+        if (context == null) {
             return;
+        }
 
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         if (!(context instanceof Activity)) {
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -128,14 +137,17 @@ public class IntentManager {
     }
 
     public void startActivity(Activity activity, ActivityOptions activityOptions) {
-        if (activity == null)
+        if (activity == null) {
             return;
+        }
 
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
@@ -153,14 +165,17 @@ public class IntentManager {
 
 
     public void startActivity(Context context) {
-        if (context == null)
+        if (context == null) {
             return;
+        }
 
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         putItem(mIntent.getComponent().getClassName(), itemMap);
         if (!(context instanceof Activity)) {
@@ -176,14 +191,17 @@ public class IntentManager {
     }
 
     public void startActivity(Activity activity) {
-        if (activity == null)
+        if (activity == null) {
             return;
+        }
 
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         putItem(mIntent.getComponent().getClassName(), itemMap);
         activity.startActivity(mIntent);
@@ -196,14 +214,17 @@ public class IntentManager {
     }
 
     public void startActivityForResult(Activity activity, int code) {
-        if (activity == null)
+        if (activity == null) {
             return;
+        }
 
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         putItem(mIntent.getComponent().getClassName(), itemMap);
         activity.startActivityForResult(mIntent, code);
@@ -215,14 +236,17 @@ public class IntentManager {
     }
 
     public void startService(Context context) {
-        if (context == null)
+        if (context == null) {
             return;
+        }
 
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         putItem(mIntent.getComponent().getClassName(), itemMap);
         context.startService(mIntent);
@@ -231,14 +255,17 @@ public class IntentManager {
     }
 
     public void stopService(Context context) {
-        if (context == null)
+        if (context == null) {
             return;
+        }
 
-        if (mIntent == null)
+        if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
+        }
 
-        if (mIntent.getComponent() == null)
+        if (mIntent.getComponent() == null) {
             throw new IllegalStateException("intent must be setted class first.");
+        }
 
         putItem(mIntent.getComponent().getClassName(), itemMap);
         context.stopService(mIntent);
@@ -331,16 +358,18 @@ public class IntentManager {
 
     /************* intent 的取值  START *********/
     public BundleData getData(String action) {
-        if (action == null)
+        if (action == null) {
             return null;
+        }
 
         return map.get(action);
     }
 
 
     public BundleData getData(Context context) {
-        if (context == null)
+        if (context == null) {
             return null;
+        }
 
         return map.get(context.getClass().getName());
     }
@@ -371,8 +400,9 @@ public class IntentManager {
      * @param context
      */
     public void destory(Context context) {
-        if (context == null)
+        if (context == null) {
             return;
+        }
 
         map.remove(context.getClass().getName());
     }
@@ -399,15 +429,17 @@ public class IntentManager {
 
 
     private Intent getIntent() {
-        if (mIntent == null)
+        if (mIntent == null) {
             mIntent = new Intent();
+        }
         return mIntent;
     }
 
 
     private BundleData getData() {
-        if (itemMap == null)
+        if (itemMap == null) {
             itemMap = new BundleData();
+        }
 
         return itemMap;
     }

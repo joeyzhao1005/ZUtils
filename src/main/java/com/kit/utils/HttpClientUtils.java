@@ -112,8 +112,9 @@ public class HttpClientUtils {
         String url = serverUrl + "/" + method;
         Zog.i("request url: " + url);
         String content = null;
-        if (url == null || url.trim().length() == 0)
+        if (url == null || url.trim().length() == 0) {
             return null;
+        }
         HttpClient httpClient = new HttpClient();
         PostMethod postMethod = new PostMethod(url);
 
@@ -148,8 +149,9 @@ public class HttpClientUtils {
             Zog.i("time out");
             e.printStackTrace();
         } finally {
-            if (postMethod != null)
+            if (postMethod != null) {
                 postMethod.releaseConnection();
+            }
             postMethod = null;
             httpClient = null;
         }
@@ -161,8 +163,9 @@ public class HttpClientUtils {
         Zog.i("request url: " + url);
         String content = null;
         if (url == null || url.trim().length() == 0 || paramMap == null
-                || paramMap.isEmpty())
+                || paramMap.isEmpty()) {
             return null;
+        }
         HttpClient httpClient = new HttpClient();
         PostMethod method = new PostMethod(url);
 
@@ -192,8 +195,9 @@ public class HttpClientUtils {
             Zog.i("time out");
             e.printStackTrace();
         } finally {
-            if (method != null)
+            if (method != null) {
                 method.releaseConnection();
+            }
             method = null;
             httpClient = null;
         }

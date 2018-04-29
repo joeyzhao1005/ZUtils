@@ -89,8 +89,9 @@ public class StringUtils {
     public static boolean isMatch(String text, String patternStr) {
         Pattern pattern = Pattern.compile(patternStr);
         Matcher m = pattern.matcher(text);
-        if (m.find())
+        if (m.find()) {
             return true;
+        }
 
 
         return false;
@@ -109,8 +110,9 @@ public class StringUtils {
         for (String patternStr : patternStrings) {
             Pattern pattern = Pattern.compile(patternStr);
             Matcher m = pattern.matcher(text);
-            if (m.find())
+            if (m.find()) {
                 return true;
+            }
         }
         return false;
     }
@@ -513,8 +515,9 @@ public class StringUtils {
      * @return
      */
     public static boolean isAlphabet(String str) {
-        if (StringUtils.isEmptyOrNullStr(str))
+        if (StringUtils.isEmptyOrNullStr(str)) {
             return false;
+        }
 
         boolean isAlphabet = str.matches("[a-zA-Z]+");
 

@@ -9,8 +9,9 @@ public class RandomUtils {
 		Vector<Integer> k = new Vector<Integer>();
 
 		int randomNum = 0;
-		for (int m = 100; m < 1000; m++)
-			k.add(m);
+		for (int m = 100; m < 1000; m++) {
+            k.add(m);
+        }
 
 		for (int m = 0; m < 1; m++) {// m控制生成几个随机数
 			int n = (int) (Math.random() * k.size());
@@ -35,8 +36,9 @@ public class RandomUtils {
 		Vector<Integer> k = new Vector<Integer>();
 
 		int randomNum = 0;
-		for (int m = start; m <= end; m++)
-			k.add(m);
+		for (int m = start; m <= end; m++) {
+            k.add(m);
+        }
 
 		for (int m = 0; m < 1; m++) {// m控制生成几个随机数
 			int n = (int) (Math.random() * k.size());

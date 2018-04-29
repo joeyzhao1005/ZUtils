@@ -34,9 +34,10 @@ public class KeyboardUtils {
         }
 
         InputMethodManager imm = null;
-        if (context != null)
+        if (context != null) {
             imm = (InputMethodManager) context
                     .getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
 
 //        if (view.getVisibility() != View.VISIBLE) {
 //            LogUtils.i(KeyboardUtils.class, "view must visible!!!");
@@ -55,9 +56,10 @@ public class KeyboardUtils {
                     Activity activity = ((Activity) context);
                     view1 = activity.getCurrentFocus();
                 }
-                if (view1 != null)
+                if (view1 != null) {
                     imm.hideSoftInputFromWindow(view1.getApplicationWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
         }
     }

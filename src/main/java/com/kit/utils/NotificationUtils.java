@@ -59,12 +59,14 @@ public class NotificationUtils {
 
         Notification.Builder builder = new Notification.Builder(context);
 
-        if (iconLargeDrawableRes > 0)
+        if (iconLargeDrawableRes > 0) {
             builder.setLargeIcon(BitmapUtils.drawable2Bitmap(
                     context.getResources().getDrawable(iconLargeDrawableRes)));
+        }
 
-        if (iconSmallDrawableRes > 0)
+        if (iconSmallDrawableRes > 0) {
             builder.setSmallIcon(iconSmallDrawableRes);
+        }
 
         builder.setAutoCancel(false);
         builder.setTicker(ticker);

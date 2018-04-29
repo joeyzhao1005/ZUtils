@@ -87,8 +87,9 @@ public class BroadcastCenter {
     }
 
     private BundleData getData() {
-        if (data == null)
+        if (data == null) {
             data = new BundleData();
+        }
         return data;
     }
 

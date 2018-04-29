@@ -694,19 +694,25 @@ public class LunarCalendar implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+            return true;
+        }
+		if (obj == null) {
+            return false;
+        }
+		if (getClass() != obj.getClass()) {
+            return false;
+        }
 		LunarCalendar other = (LunarCalendar) obj;
-		if (day != other.day)
-			return false;
-		if (month != other.month)
-			return false;
-		if (year != other.year)
-			return false;
+		if (day != other.day) {
+            return false;
+        }
+		if (month != other.month) {
+            return false;
+        }
+		if (year != other.year) {
+            return false;
+        }
 		return true;
 	}
 

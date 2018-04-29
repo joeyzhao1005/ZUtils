@@ -45,8 +45,9 @@ public class AppUtils {
             }
         }
 
-        if (packageManager == null)
+        if (packageManager == null) {
             return false;
+        }
 
         ApplicationInfo applicationInfo = null;
         try {
@@ -54,8 +55,9 @@ public class AppUtils {
         } catch (Exception e) {
         }
 
-        if (applicationInfo == null)
+        if (applicationInfo == null) {
             return false;
+        }
 
         return isSysApp(applicationInfo);
 
@@ -147,17 +149,20 @@ public class AppUtils {
     @SuppressWarnings("unchecked")
     public static <T> T getActivityInfoMetaDataFromManifest(Context context, String key, ComponentName componentName) {
         try {
-            if (context == null)
+            if (context == null) {
                 return null;
+            }
 
-            if (context.getPackageManager() == null || componentName == null)
+            if (context.getPackageManager() == null || componentName == null) {
                 return null;
+            }
 
             ActivityInfo info = context.getPackageManager().getActivityInfo(componentName
                     , PackageManager.GET_META_DATA);
 
-            if (info == null)
+            if (info == null) {
                 return null;
+            }
 
             Bundle metaData = info.metaData;
             if (metaData == null) {
@@ -208,8 +213,9 @@ public class AppUtils {
     @SuppressWarnings("unchecked")
     public static <T> T getAppMetaDataFromManifest(Context context, String key) {
         try {
-            if (context == null)
+            if (context == null) {
                 return null;
+            }
             return (T) context.getPackageManager().getApplicationInfo(context.getPackageName()
                     , PackageManager.GET_META_DATA).metaData.get(key);
         } catch (PackageManager.NameNotFoundException e) {
@@ -520,8 +526,9 @@ public class AppUtils {
 
 
     public static String getPackageNameByAppName(Context context, String appName) {
-        if (StringUtils.isEmptyOrNullStr(appName))
+        if (StringUtils.isEmptyOrNullStr(appName)) {
             return null;
+        }
 
         List<PackageInfo> apps = getAllApps(context);
         String packageName = null;
@@ -546,8 +553,9 @@ public class AppUtils {
      * @return
      */
     public static List<PackageInfo> getPackageNamesByAppName(Context context, String appName) {
-        if (StringUtils.isEmptyOrNullStr(appName))
+        if (StringUtils.isEmptyOrNullStr(appName)) {
             return null;
+        }
 
         appName = StringUtils.trimPunct(appName).toLowerCase();
 
@@ -578,8 +586,9 @@ public class AppUtils {
         List<PackageInfo> packageNames = new ArrayList<PackageInfo>();
         for (String name : appName) {
             List<PackageInfo> inner = getPackageNamesByAppName(context, name);
-            if (!ListUtils.isNullOrEmpty(inner))
+            if (!ListUtils.isNullOrEmpty(inner)) {
                 packageNames.addAll(inner);
+            }
         }
         return packageNames;
     }

@@ -77,19 +77,23 @@ public class FileUtils {
         if (file.isDirectory()) {
             //判断file是否是目录
             File[] lists = file.listFiles();
-            if (lists == null)
+            if (lists == null) {
                 return null;
+            }
 
             for (int i = 0; i < lists.length; i++) {
-                if (lists[i] == null)
+                if (lists[i] == null) {
                     continue;
+                }
                 if (lists[i].isDirectory()) {//是目录就递归进入目录内再进行判断
                     ArrayList<String> innerMap = getFilesInDir(lists[i].getPath(), suffix);
-                    if (innerMap != null)
+                    if (innerMap != null) {
                         map.addAll(innerMap);
+                    }
                 } else {
-                    if (lists[i].getPath().length() < 1)
+                    if (lists[i].getPath().length() < 1) {
                         continue;
+                    }
 
                     if (lists[i].getPath().endsWith(suffix)) {
                         map.add(lists[i].getPath());
@@ -114,19 +118,23 @@ public class FileUtils {
         if (file.isDirectory()) {
             //判断file是否是目录
             File[] lists = file.listFiles();
-            if (lists == null)
+            if (lists == null) {
                 return null;
+            }
 
             for (int i = 0; i < lists.length; i++) {
-                if (lists[i] == null)
+                if (lists[i] == null) {
                     continue;
+                }
                 if (lists[i].isDirectory()) {//是目录就递归进入目录内再进行判断
                     ArrayList<String> innerMap = getFilesInDir(lists[i].getPath());
-                    if (innerMap != null)
+                    if (innerMap != null) {
                         map.addAll(innerMap);
+                    }
                 } else {
-                    if (lists[i].getPath().length() < 1)
+                    if (lists[i].getPath().length() < 1) {
                         continue;
+                    }
 
                     map.add(lists[i].getPath());
                 }
@@ -177,12 +185,14 @@ public class FileUtils {
      * @param fileNames
      */
     public static boolean deleteFiles(String... fileNames) {
-        if (fileNames.length <= 0)
+        if (fileNames.length <= 0) {
             return false;
+        }
         for (int i = 0; i < fileNames.length; i++) {
             File file = new File(fileNames[i]);
-            if (file.exists())
+            if (file.exists()) {
                 return file.delete();
+            }
         }
         return false;
     }
@@ -194,12 +204,14 @@ public class FileUtils {
      * @param fileList
      */
     public static boolean deleteFiles(List<String> fileList) {
-        if (fileList.size() <= 0)
+        if (fileList.size() <= 0) {
             return false;
+        }
         for (int i = 0; i < fileList.size(); i++) {
             File file = new File(fileList.get(i));
-            if (file != null && file.exists())
+            if (file != null && file.exists()) {
                 return file.delete();
+            }
         }
         return false;
     }
@@ -447,8 +459,9 @@ public class FileUtils {
     public static boolean deleteFile(String dir) {
         boolean isSuccess = false;
 
-        if (StringUtils.isEmptyOrNullStr(dir))
+        if (StringUtils.isEmptyOrNullStr(dir)) {
             return isSuccess;
+        }
 
         File file = null;
 
@@ -457,8 +470,9 @@ public class FileUtils {
         } catch (Exception e) {
         }
 
-        if (file == null)
+        if (file == null) {
             return isSuccess;
+        }
 
 
         if (file.isFile()) {
@@ -521,15 +535,18 @@ public class FileUtils {
         }
 
 
-        if (!filedir.contains("."))
+        if (!filedir.contains(".")) {
             return filedir;
+        }
 
         String full = getFilename(filedir);
-        if (full == null)
+        if (full == null) {
             return null;
+        }
 
-        if (!full.contains("."))
+        if (!full.contains(".")) {
             return filedir;
+        }
 
         if (!StringUtils.isEmptyOrNullStr(full)) {
             int end = full.lastIndexOf(".") > 0 ? full.lastIndexOf(".") : 0;
@@ -576,8 +593,9 @@ public class FileUtils {
     public static boolean copy(String srcFileName, String destFileName,
                                boolean overlay) {
 
-        if (StringUtils.isEmptyOrNullStr(srcFileName))
+        if (StringUtils.isEmptyOrNullStr(srcFileName)) {
             return false;
+        }
 
         File srcFile = new File(srcFileName);
 
@@ -629,10 +647,12 @@ public class FileUtils {
             return false;
         } finally {
             try {
-                if (out != null)
+                if (out != null) {
                     out.close();
-                if (in != null)
+                }
+                if (in != null) {
                     in.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

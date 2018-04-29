@@ -108,8 +108,9 @@ public class ListUtils {
      */
     public static <T> T getLast(List<T> objs) {
 
-        if (ListUtils.isNullOrEmpty(objs))
+        if (ListUtils.isNullOrEmpty(objs)) {
             return null;
+        }
 
         return objs.get(objs.size() - 1);
 
@@ -142,8 +143,9 @@ public class ListUtils {
             return true;
         } else {
             for (Object o : objs) {
-                if (o != null)
+                if (o != null) {
                     return false;
+                }
 
             }
             return true;
@@ -206,8 +208,9 @@ public class ListUtils {
 
         if (tempList == null || tempList.isEmpty()) {
             return null;
-        } else
+        } else {
             return tempList;
+        }
     }
 
 
@@ -284,11 +287,13 @@ public class ListUtils {
 
     public static int findPosition(List list, IEqual eq) {
 
-        if (eq == null)
+        if (eq == null) {
             return -1;
+        }
 
-        if (ListUtils.isNullOrEmpty(list))
+        if (ListUtils.isNullOrEmpty(list)) {
             return -1;
+        }
 
         for (int i = 0; i < list.size(); i++) {
             if (eq.equal(list.get(i))) {

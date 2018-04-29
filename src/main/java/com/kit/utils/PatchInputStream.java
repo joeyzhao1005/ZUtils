@@ -13,10 +13,10 @@ public class PatchInputStream extends FilterInputStream{
 	}
 	
 	public long skip(long n)throws IOException{
-		long m=0l;
+		long m= 0L;
 		while(m<n){
 			long _m=in.skip(n-m);
-			if(_m==0l){
+			if(_m== 0L){
 				break;
 			}
 			m+=_m;

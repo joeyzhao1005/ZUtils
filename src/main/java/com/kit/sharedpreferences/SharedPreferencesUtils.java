@@ -125,7 +125,7 @@ public class SharedPreferencesUtils {
     }
 
     public long loadLongSharedPreference(String key) {
-        return sharedpreferences.getLong(key, 0l);
+        return sharedpreferences.getLong(key, 0L);
     }
 
     public boolean saveSharedPreferences(String key, Boolean value) {
@@ -220,10 +220,11 @@ public class SharedPreferencesUtils {
                                   int saveLength) {
 
 
-        Zog.i( "saveObject!!!!!!!");
+        Zog.i("saveObject!!!!!!!");
 
-        if (saveLength <= 0)
+        if (saveLength <= 0) {
             saveLength = Integer.MAX_VALUE;
+        }
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 shaPreName, Context.MODE_PRIVATE);
@@ -313,7 +314,7 @@ public class SharedPreferencesUtils {
         ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
 
 
-        Zog.i( isExist(context, shaPreName) + "");
+        Zog.i(isExist(context, shaPreName) + "");
         if (!isExist(context, shaPreName)) {
             newSP(context, shaPreName);
         }

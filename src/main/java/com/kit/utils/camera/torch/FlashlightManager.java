@@ -18,8 +18,9 @@ public class FlashlightManager {
     private Context context;
 
     public static FlashlightManager getInstance() {
-        if (flashlightManager == null)
+        if (flashlightManager == null) {
             flashlightManager = new FlashlightManager();
+        }
 
         return flashlightManager;
     }
