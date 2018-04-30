@@ -211,7 +211,7 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;
 
 
-       /* 另外，为了节约内存我们还可以使用下面的几个字段：*/
+        /* 另外，为了节约内存我们还可以使用下面的几个字段：*/
         options.inPreferredConfig = Bitmap.Config.ARGB_4444;    // 默认是Bitmap.Config.ARGB_8888
         /* 下面两个字段需要组合使用 */
         options.inPurgeable = true;
@@ -1312,7 +1312,8 @@ public class BitmapUtils {
             mkdirResult = dir.mkdirs();
         }
 
-        if (!mkdirResult && !dir.exists()) {//多级目录
+        //多级目录
+        if (!mkdirResult && !dir.exists()) {
             return null;
         }
 
