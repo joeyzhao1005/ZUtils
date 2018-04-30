@@ -20,6 +20,10 @@ public class AppConfig {
     }
 
     public interface IAppConfig {
+        /**
+         * 获取 sp name
+         * @return
+         */
         String sharedPreferencesName();
 
         boolean isShowLog();
@@ -33,6 +37,10 @@ public class AppConfig {
         String getCacheDataDir();
 
         String getCacheImageDir();
+
+        boolean isFirstReLaunch();
+
+        void setFirstReLaunch(boolean isFirstReLaunch);
 
         String getTheme();
     }
