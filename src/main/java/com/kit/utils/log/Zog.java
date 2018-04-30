@@ -151,6 +151,9 @@ public class Zog {
                         + debugInfo
                         + "】 ";
                 break;
+
+                default:
+                    break;
         }
         return title;
     }
