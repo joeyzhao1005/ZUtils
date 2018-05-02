@@ -14,25 +14,38 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author Zhao
+ * 日志类
+ */
 public class Zog {
-    public static final String STYLE_MINIMAL = "MINIMAL";//极简
-    public static final String STYLE_SIMPLE = "SIMPLE";//简单
-    public static final String STYLE_VERBOSE = "VERBOSE";//简单
 
 
-    public static int COUNT = 0;
+    /**
+     * 是否手动的 catch Log，一般用来给用户抓日志用
+     */
+    private static boolean IS_CATCH_LOG = false;
 
-    private static String STYLE = STYLE_MINIMAL;
-
-
-    public static String LOGUTILS_TAG = "Zhao_APP";
-    public static String LOGUTILS_IDENTIFY = "@";
-
-
-    public static Zog setStyle(String style) {
-        Zog.STYLE = style;
-        return new Zog();
+    public static void putLog(String log) {
+        if (!IS_CATCH_LOG) {
+            return;
+        }
+        if (stringLogBuilder == null) {
+            stringLogBuilder = new StringBuilder("请将如下日志截图给开发者，谢谢~~~");
+        }
+        stringLogBuilder.append(" | ");
+        stringLogBuilder.append(log);
     }
+
+    private static StringBuilder stringLogBuilder;
+
+    public static String getLog() {
+        if (stringLogBuilder == null) {
+            return "";
+        }
+        return stringLogBuilder.toString();
+    }
+
 
     /**
      * 保存错误信息到文件中
@@ -152,8 +165,8 @@ public class Zog {
                         + "】 ";
                 break;
 
-                default:
-                    break;
+            default:
+                break;
         }
         return title;
     }
@@ -201,8 +214,6 @@ public class Zog {
     }
 
 
-
-
     /**
      * @param
      * @return void 返回类型
@@ -214,6 +225,7 @@ public class Zog {
             Zog.e(e == null ? "ERROR!!!" : Log.getStackTraceString(e));
         }
     }
+
     /**
      * @param
      * @return void 返回类型
@@ -227,4 +239,22 @@ public class Zog {
     }
 
 
+    public static final String STYLE_MINIMAL = "MINIMAL";//极简
+    public static final String STYLE_SIMPLE = "SIMPLE";//简单
+    public static final String STYLE_VERBOSE = "VERBOSE";//简单
+
+
+    public static int COUNT = 0;
+
+    private static String STYLE = STYLE_MINIMAL;
+
+
+    public static String LOGUTILS_TAG = "Zhao_APP";
+    public static String LOGUTILS_IDENTIFY = "@";
+
+
+    public static Zog setStyle(String style) {
+        Zog.STYLE = style;
+        return new Zog();
+    }
 }
