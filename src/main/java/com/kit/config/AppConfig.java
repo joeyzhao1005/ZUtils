@@ -43,6 +43,10 @@ public class AppConfig {
         void setFirstReLaunch(boolean isFirstReLaunch);
 
         String getTheme();
+
+        boolean isNeedRestart();
+        void setNeedRestart(boolean needRestart);
+
     }
 
 

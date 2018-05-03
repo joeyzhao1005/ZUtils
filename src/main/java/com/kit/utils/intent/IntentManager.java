@@ -14,7 +14,6 @@ import com.kit.utils.log.Zog;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-
 /**
  * Created by joeyzhao on 2018/2/2.
  * <p>
@@ -39,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 切记：
  * 如果跳转到该类的使用了IntentManager，那么所有跳转到该类的都要使用IntentManager。
  * 若使用IntentManager过程中发现有类似上述MainActivity不能使用IntentManager的情况，那么所有的跳转都要重新写回普通的传值方式。
- *
+ * <p>
  * 另：使用ARouter或其它路由的Activity，一律不可使用IntentManager。可使用IntentManger代替ARouter。
  */
 public class IntentManager {
@@ -275,8 +274,6 @@ public class IntentManager {
     /************* intent 的启动   END ************************/
 
 
-
-
     /************* intent 跨项目的构造   START ************************/
     public IntentManager target(Context packageContext, String target) {
         if (targetMap == null) {
@@ -467,9 +464,9 @@ public class IntentManager {
 
     private static IntentManager mInstance;
 
-    Intent mIntent;
-    BundleData itemMap;
-    boolean isFinishActivityAfterStart;
+    private Intent mIntent;
+    private BundleData itemMap;
+    private boolean isFinishActivityAfterStart;
 
 
     public IntentManager() {
@@ -478,7 +475,7 @@ public class IntentManager {
     }
 
 
-    public void init(ConcurrentHashMap map) {
+    public void init(ConcurrentHashMap<String, Class> map) {
         targetMap = map;
     }
 
