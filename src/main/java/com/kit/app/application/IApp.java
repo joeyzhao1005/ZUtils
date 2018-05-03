@@ -9,4 +9,5 @@ public interface IApp {
     long getVersionCode();
     String getFlavor();
     boolean isDebug();
+    void restartApp();
 }

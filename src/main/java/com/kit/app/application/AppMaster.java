@@ -13,6 +13,18 @@ import android.content.Context;
  */
 
 public class AppMaster implements IApp {
+
+    @Override
+    public void restartApp() {
+
+        if (app == null) {
+            return ;
+        }
+          app.restartApp();
+
+
+    }
+
     @Override
     public boolean isDebug() {
         if (app == null) {
