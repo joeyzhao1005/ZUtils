@@ -67,6 +67,7 @@ public final class CrashUtils {
                     System.exit(0);
                     return;
                 }
+                e.printStackTrace();
                 Date now = new Date(System.currentTimeMillis());
                 String fileName = FORMAT.format(now) + ".txt";
                 final String fullPath = (dir == null ? defaultDir : dir) + fileName;
