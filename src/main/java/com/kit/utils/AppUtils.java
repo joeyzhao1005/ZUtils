@@ -235,7 +235,7 @@ public class AppUtils {
 
     @TargetApi(3)
     public static void restartApp(Context context) {
-        ActivityManager.getInstance().finishAllActivity();
+        ActivityManager.getInstance().popAllActivity();
 
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -416,7 +416,7 @@ public class AppUtils {
 //        makeCrash();
 
 
-        ActivityManager.getInstance().finishAllActivity();
+        ActivityManager.getInstance().popAllActivity();
 
         System.exit(0);
 

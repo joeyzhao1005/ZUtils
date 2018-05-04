@@ -107,7 +107,7 @@ public class ActivityManager {
     /**
      * 遍历所有Activity并finish（一般用于退出应用，销毁APP）
      */
-    public synchronized void finishAllActivity() {
+    public synchronized void popAllActivity() {
         Iterator<WeakReference<Activity>> iter = activities.iterator();
         while (iter.hasNext()) {
 

@@ -18,9 +18,9 @@ public class AppMaster implements IApp {
     public void restartApp() {
 
         if (app == null) {
-            return ;
+            return;
         }
-          app.restartApp();
+        app.restartApp();
 
 
     }
@@ -30,7 +30,7 @@ public class AppMaster implements IApp {
         if (app == null) {
             return false;
         }
-        return  app.isDebug();
+        return app.isDebug();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class AppMaster implements IApp {
         if (app == null) {
             return null;
         }
-        return  app.getAppContext();
+        return app.getAppContext();
     }
 
     @Override
