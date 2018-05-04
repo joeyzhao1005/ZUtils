@@ -52,6 +52,16 @@ public class BitmapUtils {
 
     public static String TAG = BitmapUtils.class.getName();
 
+    public static Bitmap drawBackground4Bitmap(int color, Bitmap orginBitmap) {
+        Paint paint = new Paint();
+        paint.setColor(color);
+        Bitmap bitmap = Bitmap.createBitmap(orginBitmap.getWidth(),
+                orginBitmap.getHeight(), orginBitmap.getConfig());
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawRect(0, 0, orginBitmap.getWidth(), orginBitmap.getHeight(), paint);
+        canvas.drawBitmap(orginBitmap, 0, 0, paint);
+        return bitmap;
+    }
 
     public static Bitmap loadGifFirstBitmap(FileDescriptor fd) {
         Bitmap bitmap = null;
@@ -1335,6 +1345,9 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
+        if (!bmp.isRecycled()) {
+            bmp.recycle();
+        }
 //
 
         return file;

@@ -105,8 +105,13 @@ public class ResWrapper {
     }
 
 
-    public String[] getStringArray(int stringId) {
-        return getResources().getStringArray(stringId);
+    public String[] getStringArray(int arrayId) {
+        return getResources().getStringArray(arrayId);
+    }
+
+
+    public int[] getIntArray(int arrayId) {
+        return getResources().getIntArray(arrayId);
     }
 
     public List<String> getStringList(int stringId) {
