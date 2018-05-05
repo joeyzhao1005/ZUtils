@@ -29,6 +29,24 @@ import java.util.List;
 import java.util.Locale;
 
 public class AppUtils {
+    // 两次点击按钮之间的点击间隔不能少于1000毫秒
+    private static final int MIN_CLICK_DELAY_TIME = 1000;
+    private static long lastClickTime;
+
+    public static void fastClick(DoSomeThing doSomeThing) {
+        boolean flag = false;
+        long curClickTime = System.currentTimeMillis();
+        if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+            flag = true;
+        }
+        lastClickTime = curClickTime;
+
+        if(flag){
+            if(doSomeThing!=null){
+                doSomeThing.execute();
+            }
+        }
+    }
 
     public static boolean isSysApp(String packageName) {
         PackageManager packageManager = null;
@@ -76,7 +94,7 @@ public class AppUtils {
 
         //判断是否系统应用
         if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0
-                /*|| (applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0*/) {
+            /*|| (applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0*/) {
             //非系统应用
             flag = false;
         } else {
