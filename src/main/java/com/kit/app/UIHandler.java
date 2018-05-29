@@ -20,6 +20,6 @@ public class UIHandler {
     }
 
     public static void run(Runnable runnable) {
-        mainHandler.post(runnable);
+        getMainHandler().post(runnable);
     }
 }
