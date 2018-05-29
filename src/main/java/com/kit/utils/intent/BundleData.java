@@ -1,5 +1,6 @@
 package com.kit.utils.intent;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -47,7 +48,11 @@ public class BundleData implements Cloneable, Parcelable {
      * @param <T>
      * @return
      */
-    public <T> T get(String key) {
+    @SuppressWarnings("unchecked")
+    public <T> T get(Activity activity, String key, T defaultValue) {
+        if (hashMap == null || !hashMap.containsKey(key)) {
+            return null;
+        }
         T t = null;
         try {
             t = (T) hashMap.get(key);
@@ -56,19 +61,55 @@ public class BundleData implements Cloneable, Parcelable {
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
+
+        if (t == null && activity != null && activity.getIntent() != null && activity.getIntent().getExtras() != null) {
+            try {
+                return (T) (activity.getIntent().getExtras().get(key) == null ? defaultValue : activity.getIntent().getExtras().get(key));
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+            }
+        }
+        return t;
+    }
+
+    /**
+     * 获取Object
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T get(String key) {
+        if (hashMap == null || !hashMap.containsKey(key)) {
+            return null;
+        }
+        T t = null;
+        try {
+            t = (T) hashMap.get(key);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+
         return t;
     }
 
     /**
      * 获取数值
-     *
-     *
+     * <p>
+     * <p>
      * 如果是获取数值型的 用这个方法，如果获取的是对象，用上面的get(String key)方法
+     *
      * @param key
      * @param <T>
      * @return
      */
     public <T> T get(String key, T defaultValue) {
+        if (hashMap == null || !hashMap.containsKey(key)) {
+            return defaultValue;
+        }
         T t = null;
         try {
             t = (T) hashMap.get(key);

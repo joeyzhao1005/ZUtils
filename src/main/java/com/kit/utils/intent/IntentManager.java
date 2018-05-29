@@ -15,7 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * Created by joeyzhao on 2018/2/2.
+ * @author joeyzhao
+ * <p>
  * <p>
  * 本类用来做intent传值
  * <p>
@@ -367,7 +368,6 @@ public class IntentManager {
         if (context == null) {
             return null;
         }
-
         return map.get(context.getClass().getName());
     }
 
