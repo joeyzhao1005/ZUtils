@@ -2,91 +2,108 @@ package com.kit.utils;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
+import com.kit.app.UIHandler;
 import com.kit.utils.log.Zog;
 
 public class ToastUtils {
     private static Toast mToast;
-    private static Handler mHandler = new Handler();
     private static Runnable r = new Runnable() {
+        @Override
         public void run() {
             mToast.cancel();
         }
     };
 
-    public static void mkLongTimeToast(String msg) {
+    public static void l(String msg) {
         try {
-            Context context = ResWrapper.getInstance().getApplicationContext();
-            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+            Looper.prepare();
+            Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            Looper.loop();
         } catch (Exception e) {
             Zog.showException(e);
         }
     }
 
-    public static void mkLongTimeToast(int msgStringId) {
+    public static void l(int msgStringId) {
         try {
-            Context context = ResWrapper.getInstance().getApplicationContext();
+            Looper.prepare();
+            Toast.makeText(ResWrapper.getInstance().getApplicationContext()
+                    , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
+                    , Toast.LENGTH_LONG).show();
+            Looper.loop();
+        } catch (Exception e) {
+            Zog.showException(e);
+        }
+    }
+
+    public static void l(Context context, int msgStringId) {
+        try {
+            Looper.prepare();
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show();
+            Looper.loop();
         } catch (Exception e) {
             Zog.showException(e);
         }
     }
 
-    public static void mkLongTimeToast(Context context, int msgStringId) {
+    public static void l(Context context, String msgString) {
         try {
-            Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Zog.showException(e);
-        }
-    }
-
-    public static void mkLongTimeToast(Context context, String msgString) {
-        try {
+            Looper.prepare();
             Toast.makeText(context, msgString, Toast.LENGTH_LONG).show();
+            Looper.loop();
         } catch (Exception e) {
             Zog.showException(e);
         }
     }
 
 
-    public static void mkShortTimeToast(String msg) {
+    public static void s(String msg) {
         try {
-            Context context = ResWrapper.getInstance().getApplicationContext();
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            Looper.prepare();
+            Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            Looper.loop();
         } catch (Exception e) {
             Zog.showException(e);
         }
     }
 
 
-    public static void mkShortTimeToast(@StringRes int msgStringId) {
+    public static void s(@StringRes int msgStringId) {
 
         try {
-            Context context = ResWrapper.getInstance().getApplicationContext();
-
-            Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
+            Looper.prepare();
+            Toast.makeText(ResWrapper.getInstance().getApplicationContext()
+                    , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
+                    , Toast.LENGTH_SHORT).show();
+            Looper.loop();
         } catch (Exception e) {
             Zog.showException(e);
         }
     }
 
 
-    public static void mkShortTimeToast(Context context, @StringRes int msgStringId) {
+    public static void s(Context context, @StringRes int msgStringId) {
         if (context == null) {
             context = ResWrapper.getInstance().getApplicationContext();
         }
         try {
+            Looper.prepare();
             Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
+            Looper.loop();
         } catch (Exception e) {
             Zog.showException(e);
         }
     }
 
-    public static void mkShortTimeToast(Context context, String msgString) {
+    public static void s(Context context, String msgString) {
         try {
+            Looper.prepare();
             Toast.makeText(context, msgString, Toast.LENGTH_SHORT).show();
+            Looper.loop();
         } catch (Exception e) {
             Zog.showException(e);
         }
@@ -100,16 +117,15 @@ public class ToastUtils {
      * @Title mkToast
      * @Description 自定义toast内容和时长
      */
-    public static void mkToast(String text, int duration) {
+    public static void toast(String text, int duration) {
 
-        mHandler.removeCallbacks(r);
+        UIHandler.getMainHandler().removeCallbacks(r);
         if (mToast != null) {
             mToast.setText(text);
         } else {
-            Context context = ResWrapper.getInstance().getApplicationContext();
-            mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(ResWrapper.getInstance().getApplicationContext(), text, Toast.LENGTH_SHORT);
         }
-        mHandler.postDelayed(r, duration);
+        UIHandler.getMainHandler().postDelayed(r, duration);
 
         mToast.show();
     }
@@ -121,17 +137,16 @@ public class ToastUtils {
      * @Title mkToast
      * @Description 自定义toast内容和时长
      */
-    public static void mkToast(int resId, int duration) {
-        Context context = ResWrapper.getInstance().getApplicationContext();
+    public static void toast(int resId, int duration) {
 
-        String text = context.getResources().getString(resId);
-        mHandler.removeCallbacks(r);
+        String text = ResWrapper.getInstance().getApplicationContext().getResources().getString(resId);
+        UIHandler.getMainHandler().removeCallbacks(r);
         if (mToast != null) {
             mToast.setText(text);
         } else {
-            mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(ResWrapper.getInstance().getApplicationContext(), text, Toast.LENGTH_SHORT);
         }
-        mHandler.postDelayed(r, duration);
+        UIHandler.getMainHandler().postDelayed(r, duration);
 
         mToast.show();
     }
