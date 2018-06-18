@@ -20,9 +20,9 @@ public class ToastUtils {
 
     public static void l(String msg) {
         try {
-            Looper.prepare();
-            Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+                    Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_LONG).show()
+            );
         } catch (Exception e) {
             Zog.showException(e);
         }
@@ -30,11 +30,11 @@ public class ToastUtils {
 
     public static void l(int msgStringId) {
         try {
-            Looper.prepare();
-            Toast.makeText(ResWrapper.getInstance().getApplicationContext()
-                    , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
-                    , Toast.LENGTH_LONG).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+                    Toast.makeText(ResWrapper.getInstance().getApplicationContext()
+                            , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
+                            , Toast.LENGTH_LONG).show()
+            );
         } catch (Exception e) {
             Zog.showException(e);
         }
@@ -42,9 +42,11 @@ public class ToastUtils {
 
     public static void l(Context context, int msgStringId) {
         try {
-            Looper.prepare();
-            Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+
+                    Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show()
+            );
+
         } catch (Exception e) {
             Zog.showException(e);
         }
@@ -52,9 +54,10 @@ public class ToastUtils {
 
     public static void l(Context context, String msgString) {
         try {
-            Looper.prepare();
-            Toast.makeText(context, msgString, Toast.LENGTH_LONG).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+
+                    Toast.makeText(context, msgString, Toast.LENGTH_LONG).show()
+            );
         } catch (Exception e) {
             Zog.showException(e);
         }
@@ -63,9 +66,9 @@ public class ToastUtils {
 
     public static void s(String msg) {
         try {
-            Looper.prepare();
-            Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+                    Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+            );
         } catch (Exception e) {
             Zog.showException(e);
         }
@@ -75,25 +78,28 @@ public class ToastUtils {
     public static void s(@StringRes int msgStringId) {
 
         try {
-            Looper.prepare();
-            Toast.makeText(ResWrapper.getInstance().getApplicationContext()
-                    , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
-                    , Toast.LENGTH_SHORT).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+                    Toast.makeText(ResWrapper.getInstance().getApplicationContext()
+                            , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
+                            , Toast.LENGTH_SHORT).show()
+            );
         } catch (Exception e) {
             Zog.showException(e);
         }
     }
 
 
-    public static void s(Context context, @StringRes int msgStringId) {
+    public static void s(final Context context, @StringRes int msgStringId) {
+        final Context contxt;
         if (context == null) {
-            context = ResWrapper.getInstance().getApplicationContext();
+            contxt = ResWrapper.getInstance().getApplicationContext();
+        } else {
+            contxt = context;
         }
         try {
-            Looper.prepare();
-            Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+                    Toast.makeText(contxt, contxt.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show()
+            );
         } catch (Exception e) {
             Zog.showException(e);
         }
@@ -101,9 +107,9 @@ public class ToastUtils {
 
     public static void s(Context context, String msgString) {
         try {
-            Looper.prepare();
-            Toast.makeText(context, msgString, Toast.LENGTH_SHORT).show();
-            Looper.loop();
+            UIHandler.getMainHandler().post(() ->
+                    Toast.makeText(context, msgString, Toast.LENGTH_SHORT).show()
+            );
         } catch (Exception e) {
             Zog.showException(e);
         }
