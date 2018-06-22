@@ -142,9 +142,20 @@ public class BroadcastCenter {
         broadcastReceiverList.add(br);
     }
 
+    public boolean checkBroadcastReceiverRegistered(String receiverClassName) {
+
+        if (broadcastReceiverList == null || broadcastReceiverList.isEmpty()) {
+            return false;
+        }
+        for (BroadcastReceiver br : broadcastReceiverList) {
+            if (br != null && br.getClass().getName().equals(receiverClassName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
-     *
      * @param br
      * @param actions 至少传入一个
      */
