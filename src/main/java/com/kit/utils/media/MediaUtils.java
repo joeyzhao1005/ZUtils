@@ -52,7 +52,7 @@ public class MediaUtils {
         }
         Drawable drawable = null;
         if (bitmap != null) {
-            drawable = new BitmapDrawable(ResWrapper.getInstance().getResources(), bitmap);
+            drawable = new BitmapDrawable(ResWrapper.getResources(), bitmap);
         }
         return drawable;
     }
@@ -101,12 +101,12 @@ public class MediaUtils {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             try {
-                ResWrapper.getInstance().getApplicationContext().startActivity(it);
+                ResWrapper.getApplicationContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
                 Zog.showException(e);
             }
         } else {
-            Context context = ResWrapper.getInstance().getApplicationContext();
+            Context context = ResWrapper.getApplicationContext();
             ContentValues contentValues = new ContentValues(1);
             contentValues.put(MediaStore.Images.Media.DATA, dir);
             Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
@@ -122,7 +122,7 @@ public class MediaUtils {
                     "");
 
             try {
-                ResWrapper.getInstance().getApplicationContext().startActivity(it);
+                ResWrapper.getApplicationContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
                 Zog.showException(e);
             }
@@ -139,7 +139,7 @@ public class MediaUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
-            ResWrapper.getInstance().getApplicationContext().startActivity(intent);
+            ResWrapper.getApplicationContext().startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Zog.showException(e);
         }

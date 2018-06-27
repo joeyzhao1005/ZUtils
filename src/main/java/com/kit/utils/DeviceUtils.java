@@ -221,7 +221,7 @@ public class DeviceUtils {
 
 
     public static int getRealScreenHeight() {
-        DisplayMetrics dm = ResWrapper.getInstance().getResources().getDisplayMetrics();
+        DisplayMetrics dm = ResWrapper.getResources().getDisplayMetrics();
         return dm.heightPixels;
     }
 
@@ -256,7 +256,7 @@ public class DeviceUtils {
      * @return the screen width
      */
     public static int getRealScreenWidth() {
-        DisplayMetrics dm = ResWrapper.getInstance().getResources().getDisplayMetrics();
+        DisplayMetrics dm = ResWrapper.getResources().getDisplayMetrics();
         return dm.widthPixels;
 
     }

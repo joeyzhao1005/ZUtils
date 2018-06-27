@@ -81,13 +81,13 @@ public class DrawableUtils {
 
 
     public static Drawable tintDrawable(int resDrawaleId, ColorStateList colors) {
-        Drawable drawableSource = ResWrapper.getInstance().getDrawable(resDrawaleId);
+        Drawable drawableSource = ResWrapper.getDrawable(resDrawaleId);
         return tintDrawable(drawableSource, colors);
     }
 
 
     public static Drawable tintDrawable(int resDrawaleId, int color) {
-        Drawable drawableSource = ResWrapper.getInstance().getDrawable(resDrawaleId);
+        Drawable drawableSource = ResWrapper.getDrawable(resDrawaleId);
         return tintDrawable(drawableSource, ColorUtils.createColorStateList(color, color, color, color));
     }
 

@@ -85,7 +85,7 @@ public class ActionBarUtils {
             setHomeBack(activity, resDrawableBack, resStringBack);
         }
 
-        String actionTitle = ResWrapper.getInstance().getString(resStringBack);
+        String actionTitle = ResWrapper.getString(resStringBack);
         SpannableString spannableString = new SpannableString(actionTitle);
         ForegroundColorSpan span = new ForegroundColorSpan(titleColor);
         spannableString.setSpan(span, 0, actionTitle.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -1298,7 +1298,7 @@ public class BitmapUtils {
 
         File fileSaved = saveBitmap(bmp, file);
         if (fileSaved != null && isNotify) {
-            notifySystemSavedPic(ResWrapper.getInstance().getApplicationContext(), file);
+            notifySystemSavedPic(ResWrapper.getApplicationContext(), file);
         }
         return fileSaved;
     }

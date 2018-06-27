@@ -81,7 +81,7 @@ public class WakeLockUtils {
      */
     @TargetApi(23)
     private void screenOffAboveAPI23() {
-        pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
         if (wakeLockNear == null) {
             wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
         }
@@ -102,7 +102,7 @@ public class WakeLockUtils {
      */
     @TargetApi(23)
     private void screenOnAboveAPI23() {
-        pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
         if (wakeLockNear == null) {
             wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
         }
@@ -121,7 +121,7 @@ public class WakeLockUtils {
      */
 
     private void screenOnOld() {
-        pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
         if (wakeLockScreen == null) {
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");
         }
@@ -139,7 +139,7 @@ public class WakeLockUtils {
      * 熄灭屏幕
      */
     private void screenOffOld() {
-        pm = (PowerManager) ResWrapper.getInstance().getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
 
         if (wakeLockScreen == null) {
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");

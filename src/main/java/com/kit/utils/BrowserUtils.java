@@ -23,7 +23,7 @@ public class BrowserUtils {
     }
 
     public static void gotoBrowser( String url) {
-        Context context =  ResWrapper.getInstance().getApplicationContext();
+        Context context =  ResWrapper.getApplicationContext();
         Uri uri = Uri.parse(url);
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
         //下面这句会让用户自行选择浏览器打开

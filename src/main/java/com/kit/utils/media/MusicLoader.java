@@ -46,7 +46,7 @@ public class MusicLoader {
 
     public List<MusicInfo> getMusicList() {
         List<MusicInfo> musicList = null;
-        ContentResolver contentResolver = ResWrapper.getInstance().getApplicationContext().getContentResolver();
+        ContentResolver contentResolver = ResWrapper.getApplicationContext().getContentResolver();
 
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
@@ -97,7 +97,7 @@ public class MusicLoader {
         where = "mime_type in ('audio/mpeg','audio/x-ms-wma') and _display_name like '%"
                 + name
                 + "%' and is_music > 0 ";
-        ContentResolver contentResolver = ResWrapper.getInstance().getApplicationContext().getContentResolver();
+        ContentResolver contentResolver = ResWrapper.getApplicationContext().getContentResolver();
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
             Zog.e("Music Loader cursor == null.");

@@ -19,36 +19,11 @@ import java.util.List;
  * Created by Zhao on 16/7/17.
  */
 public class ResWrapper {
-    private WeakReference<Context> context;
-
-    private static ResWrapper resWrapper;
-
-
     private ResWrapper() {
     }
 
-    public static ResWrapper getInstance() {
 
-        if (resWrapper == null) {
-            resWrapper = new ResWrapper();
-        }
-
-        return resWrapper;
-    }
-
-
-    public Context getContext() {
-        return context != null ? context.get() : null;
-    }
-
-    public ResWrapper setContext(Context context) {
-        this.context = new WeakReference<Context>(context);
-        getApplicationContext();
-        return resWrapper;
-    }
-
-
-    public Context getApplicationContext() {
+    public static Context getApplicationContext() {
         return AppMaster.getInstance().getAppContext();
     }
 
@@ -56,7 +31,7 @@ public class ResWrapper {
 //        return applicationContext;
 //    }
 
-    public void setBackground(View view, Drawable drawable) {
+    public static void setBackground(View view, Drawable drawable) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(drawable);
         } else {
@@ -65,7 +40,7 @@ public class ResWrapper {
     }
 
 
-    public int getColor(int colorId) {
+    public static int getColor(int colorId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return getResources().getColor(colorId, null);
         } else {
@@ -73,11 +48,11 @@ public class ResWrapper {
         }
     }
 
-    public float getDimension(int dimensionId) {
+    public static float getDimension(int dimensionId) {
         return getResources().getDimension(dimensionId);
     }
 
-    public Drawable getDrawable(int drawableId, Resources.Theme theme) {
+    public static Drawable getDrawable(int drawableId, Resources.Theme theme) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             return getResources().getDrawable(drawableId, theme);
         } else {
@@ -85,36 +60,36 @@ public class ResWrapper {
         }
     }
 
-    public Drawable getDrawable(int drawableId) {
+    public static Drawable getDrawable(int drawableId) {
         return getResources().getDrawable(drawableId);
     }
 
 
-    public Bitmap getBitmap(int drawableId) {
+    public static Bitmap getBitmap(int drawableId) {
         return BitmapFactory.decodeResource(getResources(), drawableId);
     }
 
 
-    public String getString(@StringRes int stringId) {
+    public static String getString(@StringRes int stringId) {
         return getResources().getString(stringId);
     }
 
 
-    public String getString(@StringRes int stringId, Object... formatArgs) {
+    public static String getString(@StringRes int stringId, Object... formatArgs) {
         return getResources().getString(stringId, formatArgs);
     }
 
 
-    public String[] getStringArray(int arrayId) {
+    public static String[] getStringArray(int arrayId) {
         return getResources().getStringArray(arrayId);
     }
 
 
-    public int[] getIntArray(int arrayId) {
+    public static int[] getIntArray(int arrayId) {
         return getResources().getIntArray(arrayId);
     }
 
-    public List<String> getStringList(int stringId) {
+    public static List<String> getStringList(int stringId) {
         try {
             return ArrayUtils.toList(getResources().getStringArray(stringId));
         } catch (Exception e) {
@@ -130,7 +105,7 @@ public class ResWrapper {
 
     }
 
-    public Resources getResources() {
+    public static Resources getResources() {
         return getApplicationContext().getResources();
     }
 }

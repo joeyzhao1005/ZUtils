@@ -107,7 +107,7 @@ public class SMSUtils {
 
     public static ArrayList<SMSInfo> getSmsByKeyWord(String keyword) {
         Uri SMS_INBOX = Uri.parse("content://sms/");
-        ContentResolver cr = ResWrapper.getInstance().getApplicationContext().getContentResolver();
+        ContentResolver cr = ResWrapper.getApplicationContext().getContentResolver();
         String[] projection = new String[]{"_id", "person", "address", "date", "body"};
         String[] selectionArgs = new String[]{"%" + keyword + "%"};
 
@@ -149,7 +149,7 @@ public class SMSUtils {
     public static ArrayList<SMSInfo> getSmsByPhone() {
         Uri SMS_INBOX = Uri.parse("content://sms/");
 
-        ContentResolver cr = ResWrapper.getInstance().getApplicationContext().getContentResolver();
+        ContentResolver cr = ResWrapper.getApplicationContext().getContentResolver();
 
         String[] projection = new String[]{"_id", "person", "address", "date", "body"};
         String where = " address = '1066321332' AND date >  "

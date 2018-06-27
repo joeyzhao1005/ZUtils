@@ -52,7 +52,7 @@ public class AppUtils {
         PackageManager packageManager = null;
 
         try {
-            packageManager = ResWrapper.getInstance().getApplicationContext().getPackageManager();
+            packageManager = ResWrapper.getApplicationContext().getPackageManager();
         } catch (Exception e) {
         }
 
@@ -116,7 +116,7 @@ public class AppUtils {
     @SuppressWarnings("unchecked")
     public static <T> T getReceiverInfoMetaDataFromManifest(String key, ComponentName componentName) {
         try {
-            Context context = ResWrapper.getInstance().getApplicationContext();
+            Context context = ResWrapper.getApplicationContext();
             ActivityInfo info = context.getPackageManager().getReceiverInfo(componentName
                     , PackageManager.GET_META_DATA);
             Bundle metaData = info.metaData;
@@ -142,7 +142,7 @@ public class AppUtils {
     @SuppressWarnings("unchecked")
     public static <T> T getServiceInfoMetaDataFromManifest(String key, ComponentName componentName) {
         try {
-            Context context = ResWrapper.getInstance().getApplicationContext();
+            Context context = ResWrapper.getApplicationContext();
             ServiceInfo info = context.getPackageManager().getServiceInfo(componentName
                     , PackageManager.GET_META_DATA);
             Bundle metaData = info.metaData;
@@ -244,7 +244,7 @@ public class AppUtils {
 
 
     public static boolean isPermission(String permissionTag) {
-        Context context = ResWrapper.getInstance().getApplicationContext();
+        Context context = ResWrapper.getApplicationContext();
         PackageManager pm = context.getPackageManager();
         return (PackageManager.PERMISSION_GRANTED ==
                 pm.checkPermission(permissionTag, context.getPackageName()));
@@ -374,7 +374,7 @@ public class AppUtils {
     public static boolean isAvilible(String packageName) {
         PackageInfo packageInfo;
         try {
-            Context context = ResWrapper.getInstance().getApplicationContext();
+            Context context = ResWrapper.getApplicationContext();
             final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
             packageInfo = packageManager.getPackageInfo(
                     packageName, 0);
@@ -394,7 +394,7 @@ public class AppUtils {
 
 //    // 判断手机已安装某程序的方法：
 //    public static boolean isAvilible(String packageName) {
-//        Context context = ResWrapper.getInstance().getApplicationContext();
+//        Context context = ResWrapper.getApplicationContext();
 //        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
 //        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
 //        List<String> pName = new ArrayList<String>();// 用于存储所有已安装程序的包名
@@ -411,7 +411,7 @@ public class AppUtils {
     @SuppressWarnings("unused")
     @TargetApi(3)
     public static void launchApk(String launchApkUrl) {
-        Context context = ResWrapper.getInstance().getApplicationContext();
+        Context context = ResWrapper.getApplicationContext();
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(launchApkUrl);
         try {
@@ -511,7 +511,7 @@ public class AppUtils {
      */
     public static Locale getAppLanguage(Resources resources) {
         if (resources == null) {
-            resources = ResWrapper.getInstance().getResources();
+            resources = ResWrapper.getResources();
         }
         Configuration config = resources.getConfiguration();
         return config.locale;

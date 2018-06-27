@@ -8,8 +8,8 @@ public class DensityUtils {
 
     public static float sp2Px(int dimensionId) {
         return (int) Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                ResWrapper.getInstance().getResources().getDimension(dimensionId)
-                , ResWrapper.getInstance().getResources().getDisplayMetrics()));
+                ResWrapper.getResources().getDimension(dimensionId)
+                , ResWrapper.getResources().getDisplayMetrics()));
     }
 
     /**
@@ -71,7 +71,7 @@ public class DensityUtils {
     }
 
     public static float getScale() {
-        return ResWrapper.getInstance().getResources().getDisplayMetrics().density;
+        return ResWrapper.getResources().getDisplayMetrics().density;
     }
 
 }

@@ -47,7 +47,7 @@ public class ServiceUtils {
 
 
     public void startService(final Class... clazzes) {
-        final Context context = ResWrapper.getInstance().getApplicationContext();
+        final Context context = ResWrapper.getApplicationContext();
 
         Thread serviceThread = new Thread(new Runnable() {
             @Override
@@ -73,7 +73,7 @@ public class ServiceUtils {
         Thread serviceThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final Context context = ResWrapper.getInstance().getApplicationContext();
+                final Context context = ResWrapper.getApplicationContext();
                 Zog.i("start service " + clazzes.getName());
 
                 IntentManager.get().setClass(context, clazzes).bundleData(bundleData).startService(context);
@@ -89,7 +89,7 @@ public class ServiceUtils {
         Thread serviceThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final Context context = ResWrapper.getInstance().getApplicationContext();
+                final Context context = ResWrapper.getApplicationContext();
                 Zog.i("start service " + clazzes.getName());
 //                IntentUtils.gotoService(context, clazzes, bundle, false);
 
@@ -127,7 +127,7 @@ public class ServiceUtils {
 
 
     public void stopService(final Class... clazzes) {
-        final Context context = ResWrapper.getInstance().getApplicationContext();
+        final Context context = ResWrapper.getApplicationContext();
 
         for (Class c : clazzes) {
             Intent service = new Intent(context, c);

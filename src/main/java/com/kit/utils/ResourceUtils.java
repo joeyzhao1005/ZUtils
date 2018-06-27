@@ -28,7 +28,7 @@ public class ResourceUtils {
 
     public static void setSelectableItemBackgroundBorderless(Context context, View view) {
         if (context == null) {
-            context = ResWrapper.getInstance().getApplicationContext();
+            context = ResWrapper.getApplicationContext();
         } else {
             context = context.getApplicationContext();
         }
@@ -56,7 +56,7 @@ public class ResourceUtils {
     public static int getResId(Context context, String name, String defType) {
 
         if (context == null) {
-            context = ResWrapper.getInstance().getApplicationContext();
+            context = ResWrapper.getApplicationContext();
         } else {
             context = context.getApplicationContext();
         }

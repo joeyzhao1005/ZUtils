@@ -21,7 +21,7 @@ public class ToastUtils {
     public static void l(String msg) {
         try {
             UIHandler.getMainHandler().post(() ->
-                    Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_LONG).show()
+                    Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
             Zog.showException(e);
@@ -31,8 +31,8 @@ public class ToastUtils {
     public static void l(int msgStringId) {
         try {
             UIHandler.getMainHandler().post(() ->
-                    Toast.makeText(ResWrapper.getInstance().getApplicationContext()
-                            , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
+                    Toast.makeText(ResWrapper.getApplicationContext()
+                            , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class ToastUtils {
     public static void s(String msg) {
         try {
             UIHandler.getMainHandler().post(() ->
-                    Toast.makeText(ResWrapper.getInstance().getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
             Zog.showException(e);
@@ -79,8 +79,8 @@ public class ToastUtils {
 
         try {
             UIHandler.getMainHandler().post(() ->
-                    Toast.makeText(ResWrapper.getInstance().getApplicationContext()
-                            , ResWrapper.getInstance().getApplicationContext().getResources().getString(msgStringId)
+                    Toast.makeText(ResWrapper.getApplicationContext()
+                            , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -92,7 +92,7 @@ public class ToastUtils {
     public static void s(final Context context, @StringRes int msgStringId) {
         final Context contxt;
         if (context == null) {
-            contxt = ResWrapper.getInstance().getApplicationContext();
+            contxt = ResWrapper.getApplicationContext();
         } else {
             contxt = context;
         }
@@ -129,7 +129,7 @@ public class ToastUtils {
         if (mToast != null) {
             mToast.setText(text);
         } else {
-            mToast = Toast.makeText(ResWrapper.getInstance().getApplicationContext(), text, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(ResWrapper.getApplicationContext(), text, Toast.LENGTH_SHORT);
         }
         UIHandler.getMainHandler().postDelayed(r, duration);
 
@@ -145,12 +145,12 @@ public class ToastUtils {
      */
     public static void toast(int resId, int duration) {
 
-        String text = ResWrapper.getInstance().getApplicationContext().getResources().getString(resId);
+        String text = ResWrapper.getApplicationContext().getResources().getString(resId);
         UIHandler.getMainHandler().removeCallbacks(r);
         if (mToast != null) {
             mToast.setText(text);
         } else {
-            mToast = Toast.makeText(ResWrapper.getInstance().getApplicationContext(), text, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(ResWrapper.getApplicationContext(), text, Toast.LENGTH_SHORT);
         }
         UIHandler.getMainHandler().postDelayed(r, duration);
 
