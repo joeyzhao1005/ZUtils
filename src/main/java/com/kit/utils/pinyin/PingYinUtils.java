@@ -43,8 +43,7 @@ public class PingYinUtils {
         format.setVCharType(HanyuPinyinVCharType.WITH_V);
 
         char[] input = inputString.trim().toCharArray();
-        String output = "";
-
+        StringBuilder output = new StringBuilder();
         try {
             for (int i = 0; i < input.length; i++) {
                 if (java.lang.Character.toString(input[i]).
@@ -52,16 +51,17 @@ public class PingYinUtils {
                     String[] temp = PinyinHelper.
                             toHanyuPinyinStringArray(input[i],
                                     format);
-                    output += temp[0];
+                    if (temp != null && temp.length > 0) {
+                        output.append(temp[0]);
+                    }
                 } else {
-                    output += Character.toString(
-                            input[i]);
+                    output.append(Character.toString(input[i]));
                 }
             }
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             e.printStackTrace();
         }
-        return output;
+        return output.toString();
     }
 
 

@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
@@ -7,11 +8,15 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
+import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -21,13 +26,32 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import com.kit.app.ActivityManager;
+import com.kit.app.application.AppMaster;
 import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.security.Permission;
 
 public class DeviceUtils {
 
+
+    @SuppressWarnings("MissingPermission")
+    public static String getDeviceId(){
+        if(deviceId!=null){
+            return deviceId;
+        }
+        TelephonyManager mTelephonyMgr = (TelephonyManager) AppMaster.getInstance().getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
+//        String imsi = mTelephonyMgr.getSubscriberId(); //获取IMSI号
+        //获取IMEI号
+        if(ContextCompat.checkSelfPermission(AppMaster.getInstance().getAppContext(),Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
+            deviceId =  mTelephonyMgr.getDeviceId();
+        }else {
+            deviceId =  DeviceTokenUtils.getMd5DeviceToken();
+        }
+        return deviceId;
+    }
+    private static String deviceId;
 
     /**
      * 设备厂商
