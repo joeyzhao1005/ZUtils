@@ -43,6 +43,9 @@ public class AppMaster implements IApp {
 
     @Override
     public String getApplicationId() {
+        if (app == null) {
+            return null;
+        }
         return app.getApplicationId();
     }
 
