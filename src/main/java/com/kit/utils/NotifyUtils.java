@@ -22,22 +22,22 @@
 //                                                         int notificationId, int statusBarIcon, Intent intent,
 //                                                         RemoteViews view, String notice, int notificationFlag) {
 //
-//        Notification notification = new Notification(statusBarIcon, notice,
+//        Notification com.zhao.withu.notification = new Notification(statusBarIcon, notice,
 //                System.currentTimeMillis());
 //
-//        notification.contentView = view;
+//        com.zhao.withu.notification.contentView = view;
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                | Intent.FLAG_ACTIVITY_NEW_TASK);
 //
-//        notification.flags = notificationFlag;
+//        com.zhao.withu.notification.flags = notificationFlag;
 //
 //        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 //                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        notification.contentIntent = contentIntent;
-//        // notification.setLatestEventInfo(context, title, content,
+//        com.zhao.withu.notification.contentIntent = contentIntent;
+//        // com.zhao.withu.notification.setLatestEventInfo(context, title, content,
 //        // contentIntent);
 //
-//        return notification;
+//        return com.zhao.withu.notification;
 //    }
 //
 //
@@ -63,22 +63,22 @@
 //                                                 NotificationManager nm, int notificationId, int statusBarIcon,
 //                                                 Intent intent, RemoteViews view, String notice, int notificationFlag) {
 //
-//        Notification notification = new Notification(statusBarIcon, notice,
+//        Notification com.zhao.withu.notification = new Notification(statusBarIcon, notice,
 //                System.currentTimeMillis());
 //
-//        notification.contentView = view;
+//        com.zhao.withu.notification.contentView = view;
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                | Intent.FLAG_ACTIVITY_NEW_TASK);
 //
-//        notification.flags = notificationFlag;
+//        com.zhao.withu.notification.flags = notificationFlag;
 //
 //        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 //                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        notification.contentIntent = contentIntent;
-//        // notification.setLatestEventInfo(context, title, content,
+//        com.zhao.withu.notification.contentIntent = contentIntent;
+//        // com.zhao.withu.notification.setLatestEventInfo(context, title, content,
 //        // contentIntent);
 //
-//        nm.notify(notificationId, notification);
+//        nm.notify(notificationId, com.zhao.withu.notification);
 //
 //    }
 //
@@ -101,24 +101,24 @@
 //        int id = context.getResources().getIdentifier(iconName, "drawable",
 //                context.getApplicationContext().getPackageName());
 //
-//        Notification notification = new Notification(id, notice,
+//        Notification com.zhao.withu.notification = new Notification(id, notice,
 //                System.currentTimeMillis());
 //        RemoteViews contentView = new RemoteViews(context.getPackageName(),
 //                layoutId);
-//        notification.contentView = contentView;
+//        com.zhao.withu.notification.contentView = contentView;
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                | Intent.FLAG_ACTIVITY_NEW_TASK);
 //
-//        notification.flags = notificationFlag; // 设置常驻 Flag
+//        com.zhao.withu.notification.flags = notificationFlag; // 设置常驻 Flag
 //        // Notification.FLAG_ONGOING_EVENT
 //
 //        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 //                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        notification.contentIntent = contentIntent;
-//        // notification.setLatestEventInfo(context, title, content,
+//        com.zhao.withu.notification.contentIntent = contentIntent;
+//        // com.zhao.withu.notification.setLatestEventInfo(context, title, content,
 //        // contentIntent);
 //
-//        nm.notify(notificationId, notification);
+//        nm.notify(notificationId, com.zhao.withu.notification);
 //
 //        return notificationId;
 //
@@ -130,11 +130,11 @@
 //                                                   String str) {
 //        int id = context.getResources().getIdentifier(resStringTitleR,
 //                "string", context.getApplicationContext().getPackageName());
-//        Notification notification = NotifyUtils
+//        Notification com.zhao.withu.notification = NotifyUtils
 //                .creatResidentNotification(context, id, iconR, intent, view,
 //                        "", Notification.FLAG_ONGOING_EVENT);
 //
-//        ((Service) context).startForeground(notificationId, notification);
+//        ((Service) context).startForeground(notificationId, com.zhao.withu.notification);
 //
 //    }
 //

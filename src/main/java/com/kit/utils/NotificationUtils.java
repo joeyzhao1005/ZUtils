@@ -117,7 +117,7 @@ public class NotificationUtils {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.contentIntent = contentIntent;
-        // notification.setLatestEventInfo(context, title, content,
+        // com.zhao.withu.notification.setLatestEventInfo(context, title, content,
         // contentIntent);
 
         return notification;
@@ -179,7 +179,7 @@ public class NotificationUtils {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.contentIntent = contentIntent;
-        // notification.setLatestEventInfo(context, title, content,
+        // com.zhao.withu.notification.setLatestEventInfo(context, title, content,
         // contentIntent);
 
         nm.notify(notificationId, notification);
