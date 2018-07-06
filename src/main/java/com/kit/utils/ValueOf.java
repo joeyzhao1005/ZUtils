@@ -4,7 +4,7 @@ public class ValueOf {
 
 
 
-    public static double toFloat(Object o) {
+    public static float toFloat(Object o) {
         float value = 0;
         try {
             value = Float.valueOf(o.toString());
