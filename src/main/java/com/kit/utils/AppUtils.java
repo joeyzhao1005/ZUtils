@@ -21,6 +21,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.kit.app.ActivityManager;
+import com.kit.app.UIHandler;
 import com.kit.app.core.task.DoSomeThing;
 import com.kit.utils.log.Zog;
 
@@ -462,10 +463,10 @@ public class AppUtils {
      * @param time
      * @param doSomeThing
      */
-    public static Handler delay(long time, final DoSomeThing doSomeThing) {
+    public static void delay(long time, final DoSomeThing doSomeThing) {
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        UIHandler.getMainHandler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 //execute the task
                 doSomeThing.execute();
@@ -473,7 +474,6 @@ public class AppUtils {
 
         }, time);
 
-        return handler;
     }
 
     /**

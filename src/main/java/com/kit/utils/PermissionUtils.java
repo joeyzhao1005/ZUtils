@@ -30,6 +30,20 @@ public class PermissionUtils {
 //        })
     }
 
+    public static boolean check(Context context, @NonNull String permission) {
+
+        int result = PermissionChecker.checkSelfPermission(context, permission);
+
+        switch (result) {
+            case PermissionChecker.PERMISSION_GRANTED:
+                return true;
+
+            default:
+                return false;
+        }
+
+    }
+
     public static void check(Context context, @NonNull String permission, PermissionCallback callback) {
 
         int result = PermissionChecker.checkSelfPermission(context, permission);
