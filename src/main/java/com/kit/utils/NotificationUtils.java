@@ -210,16 +210,16 @@ public class NotificationUtils {
         return builder.build();
     }
 
-    public static void startForegroundNotification(Context context,
-                                                   int notificationId, RemoteViews view, Intent intent,
-                                                   PendingIntent pendingIntent, int iconR, String str) {
-
-        Notification notification = NotificationUtils
-                .creatResidentNotification(context, notificationId, iconR,
-                        intent, view, "", Notification.FLAG_ONGOING_EVENT);
-
-        ((Service) context).startForeground(notificationId, notification);
-
-    }
+//    public static void startForegroundNotification(Context context,
+//                                                   int notificationId, RemoteViews view, Intent intent,
+//                                                   PendingIntent pendingIntent, int iconR, String str) {
+//
+//        Notification notification = NotificationUtils
+//                .creatResidentNotification(context, notificationId, iconR,
+//                        intent, view, "", Notification.FLAG_ONGOING_EVENT);
+//
+//        ((Service) context).startForeground(notificationId, notification);
+//
+//    }
 
 }
