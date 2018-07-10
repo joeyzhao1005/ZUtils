@@ -12,7 +12,7 @@ import android.os.Looper;
 public class UIHandler {
     private static Handler mainHandler;
 
-    public static Handler getMainHandler() {
+    public static Handler get() {
         if (mainHandler == null) {
             mainHandler = new Handler(Looper.getMainLooper());
         }
@@ -20,6 +20,6 @@ public class UIHandler {
     }
 
     public static void run(Runnable runnable) {
-        getMainHandler().post(runnable);
+        get().post(runnable);
     }
 }

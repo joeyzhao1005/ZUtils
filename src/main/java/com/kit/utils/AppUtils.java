@@ -16,7 +16,6 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -465,7 +464,7 @@ public class AppUtils {
      */
     public static void delay(long time, final DoSomeThing doSomeThing) {
 
-        UIHandler.getMainHandler().postDelayed(new Runnable() {
+        UIHandler.get().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //execute the task

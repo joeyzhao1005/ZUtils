@@ -1,8 +1,6 @@
 package com.kit.utils;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
@@ -20,7 +18,7 @@ public class ToastUtils {
 
     public static void l(String msg) {
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
                     Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
@@ -30,7 +28,7 @@ public class ToastUtils {
 
     public static void l(int msgStringId) {
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
                     Toast.makeText(ResWrapper.getApplicationContext()
                             , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_LONG).show()
@@ -42,7 +40,7 @@ public class ToastUtils {
 
     public static void l(Context context, int msgStringId) {
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
 
                     Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show()
             );
@@ -54,7 +52,7 @@ public class ToastUtils {
 
     public static void l(Context context, String msgString) {
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
 
                     Toast.makeText(context, msgString, Toast.LENGTH_LONG).show()
             );
@@ -66,7 +64,7 @@ public class ToastUtils {
 
     public static void s(String msg) {
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
                     Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -78,7 +76,7 @@ public class ToastUtils {
     public static void s(@StringRes int msgStringId) {
 
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
                     Toast.makeText(ResWrapper.getApplicationContext()
                             , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_SHORT).show()
@@ -97,7 +95,7 @@ public class ToastUtils {
             contxt = context;
         }
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
                     Toast.makeText(contxt, contxt.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -107,7 +105,7 @@ public class ToastUtils {
 
     public static void s(Context context, String msgString) {
         try {
-            UIHandler.getMainHandler().post(() ->
+            UIHandler.get().post(() ->
                     Toast.makeText(context, msgString, Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -125,13 +123,13 @@ public class ToastUtils {
      */
     public static void toast(String text, int duration) {
 
-        UIHandler.getMainHandler().removeCallbacks(r);
+        UIHandler.get().removeCallbacks(r);
         if (mToast != null) {
             mToast.setText(text);
         } else {
             mToast = Toast.makeText(ResWrapper.getApplicationContext(), text, Toast.LENGTH_SHORT);
         }
-        UIHandler.getMainHandler().postDelayed(r, duration);
+        UIHandler.get().postDelayed(r, duration);
 
         mToast.show();
     }
@@ -146,13 +144,13 @@ public class ToastUtils {
     public static void toast(int resId, int duration) {
 
         String text = ResWrapper.getApplicationContext().getResources().getString(resId);
-        UIHandler.getMainHandler().removeCallbacks(r);
+        UIHandler.get().removeCallbacks(r);
         if (mToast != null) {
             mToast.setText(text);
         } else {
             mToast = Toast.makeText(ResWrapper.getApplicationContext(), text, Toast.LENGTH_SHORT);
         }
-        UIHandler.getMainHandler().postDelayed(r, duration);
+        UIHandler.get().postDelayed(r, duration);
 
         mToast.show();
     }
