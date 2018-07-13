@@ -6,6 +6,9 @@ import android.support.v7.graphics.Palette;
 public class PaletteUtils {
 
     public static int getColor(Bitmap bitmap, int defaultColor) {
+        if(bitmap==null){
+            return defaultColor;
+        }
         Palette palette = Palette.from(bitmap).generate();
         Palette.Swatch swatch = palette.getVibrantSwatch();
         Palette.Swatch swatchDark = palette.getDarkVibrantSwatch();

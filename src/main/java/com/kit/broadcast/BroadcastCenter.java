@@ -18,13 +18,15 @@ import com.kit.utils.StringUtils;
 import com.kit.utils.intent.BundleData;
 import com.kit.utils.log.Zog;
 
+import java.lang.ref.WeakReference;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BroadcastCenter {
     private LocalBroadcastManager localBroadcastManager;
 
-    private CopyOnWriteArrayList<BroadcastReceiver> broadcastReceiverList = new CopyOnWriteArrayList<BroadcastReceiver>();
+    private CopyOnWriteArrayList<WeakReference<BroadcastReceiver>> broadcastReceiverList = new CopyOnWriteArrayList<WeakReference<BroadcastReceiver>>();
     private static ConcurrentHashMap<String, BundleData> map;
     private static BroadcastCenter singleBroadcast = new BroadcastCenter();
 
@@ -53,7 +55,7 @@ public class BroadcastCenter {
 
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
         map = new ConcurrentHashMap<String, BundleData>(50);
-        broadcastReceiverList = new CopyOnWriteArrayList<BroadcastReceiver>();
+        broadcastReceiverList = new CopyOnWriteArrayList<WeakReference<BroadcastReceiver>>();
         Zog.d("init | Leave");
         return true;
     }
@@ -139,7 +141,7 @@ public class BroadcastCenter {
             }
         }
         localBroadcastManager.registerReceiver(br, iFilter);
-        broadcastReceiverList.add(br);
+        broadcastReceiverList.add(new WeakReference<>(br));
     }
 
     public boolean checkBroadcastReceiverRegistered(String receiverClassName) {
@@ -147,8 +149,15 @@ public class BroadcastCenter {
         if (broadcastReceiverList == null || broadcastReceiverList.isEmpty()) {
             return false;
         }
-        for (BroadcastReceiver br : broadcastReceiverList) {
-            if (br != null && br.getClass().getName().equals(receiverClassName)) {
+        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<BroadcastReceiver> key = iterator.next();
+            if (key == null || key.get() == null) {
+                continue;
+            }
+            BroadcastReceiver receiver = key.get();
+
+            if (receiver.getClass().getName().equals(receiverClassName)) {
                 return true;
             }
         }
@@ -170,9 +179,24 @@ public class BroadcastCenter {
                 map.remove(ac);
             }
         }
+        try {
+            localBroadcastManager.unregisterReceiver(br);
+        } catch (Exception e) {
 
-        localBroadcastManager.unregisterReceiver(br);
-        broadcastReceiverList.remove(br);
+        }
+
+        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<BroadcastReceiver> key = iterator.next();
+            if (key == null || key.get() == null) {
+                continue;
+            }
+            BroadcastReceiver receiver = key.get();
+
+            if (receiver == br) {
+                broadcastReceiverList.remove(key);
+            }
+        }
     }
 
     public void unregisterAllReceiver() {
@@ -181,8 +205,14 @@ public class BroadcastCenter {
             return;
         }
 
-        for (BroadcastReceiver tempBr : broadcastReceiverList) {
-            localBroadcastManager.unregisterReceiver(tempBr);
+        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<BroadcastReceiver> key = iterator.next();
+            if (key == null || key.get() == null) {
+                continue;
+            }
+
+            localBroadcastManager.unregisterReceiver(key.get());
         }
         map.clear();
         broadcastReceiverList.clear();
