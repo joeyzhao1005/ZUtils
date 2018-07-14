@@ -3,6 +3,17 @@ package com.kit.utils;
 import android.os.Build;
 
 public class ApiLevel {
+    public static final boolean ATMOST_O_MR1 =
+            Build.VERSION.SDK_INT <=Build.VERSION_CODES.O_MR1;
+
+
+
+
+    public static final boolean ATLEAST_P =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
+    public static final boolean ATLEAST_O_MR1 =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1;
+
     public static final boolean ATLEAST_LOLLIPOP_MR1 =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
 

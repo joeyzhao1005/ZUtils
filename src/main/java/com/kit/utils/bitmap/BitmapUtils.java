@@ -32,8 +32,6 @@ import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
 import com.kit.utils.log.Zog;
 
-import junit.framework.Assert;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -981,79 +979,6 @@ public class BitmapUtils {
     }
 
 
-    private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
-
-    public static Bitmap resize(final String path, final int height, final int width, final boolean crop) {
-        Assert.assertTrue(path != null && !path.equals("") && height > 0 && width > 0);
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-
-        try {
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, options);
-
-
-            final double beY = options.outHeight * 1.0 / height;
-            final double beX = options.outWidth * 1.0 / width;
-            options.inSampleSize = (int) (crop ? (beY > beX ? beX : beY) : (beY < beX ? beX : beY));
-            if (options.inSampleSize <= 1) {
-                options.inSampleSize = 1;
-            }
-
-            // NOTE: out of memory error
-            while (options.outHeight * options.outWidth / options.inSampleSize > MAX_DECODE_PICTURE_SIZE) {
-                options.inSampleSize++;
-            }
-
-            int newHeight = height;
-            int newWidth = width;
-            if (crop) {
-                if (beY > beX) {
-                    newHeight = (int) (newWidth * 1.0 * options.outHeight / options.outWidth);
-                } else {
-                    newWidth = (int) (newHeight * 1.0 * options.outWidth / options.outHeight);
-                }
-            } else {
-                if (beY < beX) {
-                    newHeight = (int) (newWidth * 1.0 * options.outHeight / options.outWidth);
-                } else {
-                    newWidth = (int) (newHeight * 1.0 * options.outWidth / options.outHeight);
-                }
-            }
-
-            options.inJustDecodeBounds = false;
-
-
-            Bitmap bm = BitmapFactory.decodeFile(path, options);
-            if (bm == null) {
-                Log.e(TAG, "bitmap decode failed");
-                return null;
-            }
-
-            final Bitmap scale = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
-            if (scale != null) {
-                bm.recycle();
-                bm = scale;
-            }
-
-            if (crop) {
-                final Bitmap cropped = Bitmap.createBitmap(bm, (bm.getWidth() - width) >> 1, (bm.getHeight() - height) >> 1, width, height);
-                if (cropped == null) {
-                    return bm;
-                }
-
-                bm.recycle();
-                bm = cropped;
-            }
-            return bm;
-
-        } catch (final OutOfMemoryError e) {
-            Log.e(TAG, "decode bitmap failed: " + e.getMessage());
-            options = null;
-        }
-
-        return null;
-    }
 
     public static Bitmap compressImage(Bitmap image, int kb) {
 

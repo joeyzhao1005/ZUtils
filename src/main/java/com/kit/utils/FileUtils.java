@@ -271,9 +271,9 @@ public class FileUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(android.content.Intent.ACTION_VIEW);
 
-/* 调用getMIMEType()来取得MimeType */
+        /* 调用getMIMEType()来取得MimeType */
         String type = getMIMEType(f);
-/* 设置intent的file与MimeType */
+        /* 设置intent的file与MimeType */
         intent.setDataAndType(Uri.fromFile(f), type);
         context.startActivity(intent);
     }
@@ -282,12 +282,12 @@ public class FileUtils {
     private static String getMIMEType(File f) {
         String type = "";
         String fName = f.getName();
-/* 取得扩展名 */
+        /* 取得扩展名 */
         String end = fName
                 .substring(fName.lastIndexOf(".") + 1, fName.length())
                 .toLowerCase();
 
-/* 依扩展名的类型决定MimeType */
+        /* 依扩展名的类型决定MimeType */
         if (end.equals("m4a") || end.equals("mp3") || end.equals("mid")
                 || end.equals("xmf") || end.equals("ogg") || end.equals("wav")
                 || end.equals("wma")) {
@@ -298,12 +298,12 @@ public class FileUtils {
                 || end.equals("jpeg") || end.equals("bmp")) {
             type = "image";
         } else if (end.equals("apk")) {
-/* android.permission.INSTALL_PACKAGES */
+            /* android.permission.INSTALL_PACKAGES */
             type = "application/vnd.android.package-archive";
         } else {
             type = "*";
         }
-/* 如果无法直接打开，就跳出软件列表给用户选择 */
+        /* 如果无法直接打开，就跳出软件列表给用户选择 */
         if (end.equals("apk")) {
         } else {
             type += "/*";
@@ -420,6 +420,39 @@ public class FileUtils {
         }
         return false;
     }
+
+
+    /**
+     * 判断文件夹是否为空
+     *
+     * @param fileDir 路径
+     * @return
+     */
+    public static boolean isEmpty(String fileDir) {
+        if (StringUtils.isEmptyOrNullStr(fileDir)) {
+            return true;
+        }
+        try {
+            File backfile = new File(fileDir);
+            if (!backfile.exists()) {
+                return true;
+            }
+            if (backfile.isDirectory()) {
+                File[] files = backfile.listFiles();
+                //此方法判断OK,需要使用数组的长度来判断。
+                if (files != null && files.length > 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
 
     /**
      * 判断文件是存在
