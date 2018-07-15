@@ -61,7 +61,11 @@ public class ResWrapper {
     }
 
     public static Drawable getDrawable(int drawableId) {
-        return getResources().getDrawable(drawableId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getResources().getDrawable(drawableId, null);
+        } else {
+            return ContextCompat.getDrawable(getApplicationContext(), drawableId);
+        }
     }
 
 

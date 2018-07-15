@@ -12,8 +12,9 @@ dependencies {
     implementation('commons-httpclient:commons-httpclient:3.1') {
         exclude group: 'commons-logging', module: 'commons-logging'
     }
-    implementation 'com.belerweb:pinyin4j:2.5.1'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }
 
 android {
