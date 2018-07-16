@@ -164,6 +164,10 @@ public class BroadcastCenter {
         return false;
     }
 
+    public boolean checkBroadcastReceiverRegistered(Class receiverClass) {
+        return checkBroadcastReceiverRegistered(receiverClass.getClass().getName());
+    }
+
     /**
      * @param br
      * @param actions 至少传入一个
