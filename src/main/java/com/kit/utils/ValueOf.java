@@ -47,32 +47,39 @@ public class ValueOf {
         return value;
     }
 
-    public static long toLong(Object o) {
+    public static long toLong(Object o, long defaultValue) {
         long value = 0;
         try {
-            value = Long.valueOf(o.toString());
-        } catch (Exception e) {
-        }
-
-        return value;
-    }
-
-    public static long toLong(Object o, long defaultValue) {
-        long value;
-        try {
-            value = Long.valueOf(o.toString());
+            String s = o.toString();
+            if (s.contains(".")) {
+                value = Long.valueOf(s.substring(0, s.lastIndexOf(".")));
+            } else {
+                value = Long.valueOf(s);
+            }
         } catch (Exception e) {
             value = defaultValue;
         }
 
+
         return value;
     }
+
+    public static long toLong(Object o) {
+        return toLong(o, 0);
+    }
+
+
 
 
     public static int toInt(Object o, int defaultValue) {
         int value;
         try {
-            value = Integer.valueOf(o.toString());
+            String s = o.toString();
+            if (s.contains(".")) {
+                value = Integer.valueOf(s.substring(0, s.lastIndexOf(".")));
+            } else {
+                value = Integer.valueOf(s);
+            }
         } catch (Exception e) {
             value = defaultValue;
         }
@@ -81,16 +88,8 @@ public class ValueOf {
     }
 
     public static int toInt(Object o) {
-        int value = 0;
-        try {
-            value = Integer.valueOf(o.toString());
-        } catch (Exception e) {
-        }
-
-        return value;
+        return toInt(o, 0);
     }
-
-
 
     public static String toString(Object o, String defaultValue) {
         String value;
