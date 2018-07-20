@@ -475,6 +475,13 @@ public class AppUtils {
 
     }
 
+
+
+    public static void newThread(Runnable runnable) {
+        SingleThread.get().execute(runnable);
+    }
+
+
     /**
      * 改变语言环境
      *

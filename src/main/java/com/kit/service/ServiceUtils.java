@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 
+import com.kit.app.application.AppMaster;
+import com.kit.utils.AppUtils;
 import com.kit.utils.ResWrapper;
 import com.kit.utils.intent.BundleData;
 import com.kit.utils.intent.IntentManager;
@@ -18,86 +20,62 @@ import java.util.List;
 public class ServiceUtils {
 
 
-
     public ServiceUtils() {
     }
 
     public void startService(final Context context, final Service... services) {
 
-        Thread serviceThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (Service s : services) {
+        AppUtils.newThread(() -> {
+            for (Service s : services) {
 
-                    if (!ServiceUtils.isServiceRunning(context, s.getClass()
-                            .getName())) {
+                if (!ServiceUtils.isServiceRunning(context, s.getClass()
+                        .getName())) {
 
-                        Intent i = new Intent(context, s.getClass());
-                        context.startService(i);
+                    Intent i = new Intent(context, s.getClass());
+                    context.startService(i);
 
-                        Zog.i(
-                                "start service " + s.getClass().getName());
-                    }
-
+                    Zog.i("start service " + s.getClass().getName());
                 }
+
             }
         });
-        serviceThread.start();
     }
 
 
     public void startService(final Class... clazzes) {
-        final Context context = ResWrapper.getApplicationContext();
+        AppUtils.newThread(() -> {
+            final Context context = AppMaster.getInstance().getAppContext();
+            for (Class c : clazzes) {
+                if (!ServiceUtils.isServiceRunning(context, c.getName())) {
 
-        Thread serviceThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (Class c : clazzes) {
+                    Intent i = new Intent(context, c);
+                    context.startService(i);
 
-                    if (!ServiceUtils.isServiceRunning(context, c.getName())) {
-
-                        Intent i = new Intent(context, c);
-                        context.startService(i);
-
-                        Zog.i("start service " + c.getName());
-                    }
-
+                    Zog.i("start service " + c.getName());
                 }
+
             }
         });
-        serviceThread.start();
     }
 
     public void startService(final Class clazzes, final BundleData bundleData) {
+        AppUtils.newThread(() -> {
+            final Context context = ResWrapper.getApplicationContext();
+            Zog.i("start service " + clazzes.getName());
 
-        Thread serviceThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Context context = ResWrapper.getApplicationContext();
-                Zog.i("start service " + clazzes.getName());
+            IntentManager.get().setClass(context, clazzes).bundleData(bundleData).startService(context);
 
-                IntentManager.get().setClass(context, clazzes).bundleData(bundleData).startService(context);
-
-
-            }
         });
-        serviceThread.start();
     }
 
     public void startService(final Class clazzes, final Bundle bundle) {
-
-        Thread serviceThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Context context = ResWrapper.getApplicationContext();
-                Zog.i("start service " + clazzes.getName());
+        AppUtils.newThread(() -> {
+            final Context context = ResWrapper.getApplicationContext();
+            Zog.i("start service " + clazzes.getName());
 //                IntentUtils.gotoService(context, clazzes, bundle, false);
 
-                IntentManager.get().setClass(context, clazzes).bundle(bundle).startService(context);
-
-            }
+            IntentManager.get().setClass(context, clazzes).bundle(bundle).startService(context);
         });
-        serviceThread.start();
     }
 
     public void bindService(final Context context, final ArrayList<Service> services,
@@ -145,10 +123,6 @@ public class ServiceUtils {
         }
 
     }
-
-
-
-
 
 
     /**

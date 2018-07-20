@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import com.kit.app.application.AppMaster;
+import com.kit.utils.AppUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,6 +18,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
 
 public final class CrashUtils {
 
@@ -74,7 +76,7 @@ public final class CrashUtils {
                 if (!createOrExistsFile(fullPath)) {
                     return;
                 }
-                new Thread(() -> {
+                AppUtils.newThread(()->{
                     PrintWriter pw = null;
                     try {
                         pw = new PrintWriter(new FileWriter(fullPath, false));
@@ -92,7 +94,8 @@ public final class CrashUtils {
                             pw.close();
                         }
                     }
-                }).start();
+                });
+
                 if (DEFAULT_UNCAUGHT_EXCEPTION_HANDLER != null) {
                     DEFAULT_UNCAUGHT_EXCEPTION_HANDLER.uncaughtException(t, e);
                 }
