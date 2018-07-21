@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.util.LruCache;
+import android.util.Log;
 
 
 import com.kit.utils.StringUtils;
@@ -30,7 +32,7 @@ public class BroadcastCenter {
     private static ConcurrentHashMap<String, BundleData> map;
     private static BroadcastCenter singleBroadcast = new BroadcastCenter();
 
-
+    private LruCache<String, BundleData> dataMap;
     private Intent intent;
     private String action;
     private BundleData data;
@@ -54,7 +56,8 @@ public class BroadcastCenter {
         }
 
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
-        map = new ConcurrentHashMap<String, BundleData>(50);
+        map = new ConcurrentHashMap<String, BundleData>(10);
+        dataMap = new LruCache<String, BundleData>(20);
         broadcastReceiverList = new CopyOnWriteArrayList<WeakReference<BroadcastReceiver>>();
         Zog.d("init | Leave");
         return true;
@@ -71,6 +74,20 @@ public class BroadcastCenter {
         this.action = action;
         return this;
     }
+
+
+    /**
+     * 从压入的数据取出数据
+     *
+     * @param key
+     */
+    public <T> T get(String key) {
+        if (action == null) {
+            Zog.e("action must init first,you can call like action(xxx).get(yyy)");
+        }
+        return dataMap.get(action).get(key);
+    }
+
 
     /**
      * 往item中压入数据 无敌的方法
@@ -121,6 +138,11 @@ public class BroadcastCenter {
             Zog.e("intent create failed");
             return;
         }
+
+        if (action != null && data != null) {
+            dataMap.put(action, data);
+        }
+
         localBroadcastManager.sendBroadcast(intent);
         Zog.d("broadcast | sendBroadcast finished");
         intent = null;
