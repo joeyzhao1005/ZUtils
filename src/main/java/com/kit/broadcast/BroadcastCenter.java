@@ -157,10 +157,8 @@ public class BroadcastCenter {
         }
 
         IntentFilter iFilter = new IntentFilter();
-        if (actions != null) {
-            for (String ac : actions) {
-                iFilter.addAction(ac);
-            }
+        for (String ac : actions) {
+            iFilter.addAction(ac);
         }
         localBroadcastManager.registerReceiver(br, iFilter);
         broadcastReceiverList.add(new WeakReference<>(br));
