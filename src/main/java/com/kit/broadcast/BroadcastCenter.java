@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.LruCache;
-import android.util.Log;
 
 
 import com.kit.utils.StringUtils;
@@ -22,20 +21,18 @@ import com.kit.utils.log.Zog;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BroadcastCenter {
     private LocalBroadcastManager localBroadcastManager;
 
     private CopyOnWriteArrayList<WeakReference<BroadcastReceiver>> broadcastReceiverList = new CopyOnWriteArrayList<WeakReference<BroadcastReceiver>>();
-    private static ConcurrentHashMap<String, BundleData> map;
     private static BroadcastCenter singleBroadcast = new BroadcastCenter();
 
     private LruCache<String, BundleData> dataMap;
     private Intent intent;
     private String action;
-    private BundleData data;
+    private BundleData dataItem;
 
 
     public static BroadcastCenter getInstance() {
@@ -56,7 +53,6 @@ public class BroadcastCenter {
         }
 
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
-        map = new ConcurrentHashMap<String, BundleData>(10);
         dataMap = new LruCache<String, BundleData>(20);
         broadcastReceiverList = new CopyOnWriteArrayList<WeakReference<BroadcastReceiver>>();
         Zog.d("init | Leave");
@@ -96,20 +92,20 @@ public class BroadcastCenter {
      * @param value
      */
     public <T> BroadcastCenter put(String key, T value) {
-        getData().put(key, value);
+        getDataItem().put(key, value);
         return this;
     }
 
     public BroadcastCenter extras(BundleData bundleData) {
-        this.data = bundleData;
+        this.dataItem = bundleData;
         return this;
     }
 
-    private BundleData getData() {
-        if (data == null) {
-            data = new BundleData();
+    private BundleData getDataItem() {
+        if (dataItem == null) {
+            dataItem = new BundleData();
         }
-        return data;
+        return dataItem;
     }
 
     public void broadcast() {
@@ -126,12 +122,6 @@ public class BroadcastCenter {
             if (!StringUtils.isEmptyOrNullStr(action)) {
                 intent = new Intent(action);
             }
-            if (data != null) {
-                map.put(action, data);
-                Zog.d("intent created with data");
-            } else {
-                map.remove(action);
-            }
         }
 
         if (intent == null) {
@@ -139,15 +129,19 @@ public class BroadcastCenter {
             return;
         }
 
-        if (action != null && data != null) {
-            dataMap.put(action, data);
+        if (action != null) {
+            if (dataItem != null) {
+                dataMap.put(action, dataItem);
+            } else {
+                dataMap.remove(action);
+            }
         }
 
         localBroadcastManager.sendBroadcast(intent);
         Zog.d("broadcast | sendBroadcast finished");
         intent = null;
         action = null;
-        data = null;
+        dataItem = null;
     }
 
     public void registerReceiver(BroadcastReceiver br, String... actions) {
@@ -200,7 +194,7 @@ public class BroadcastCenter {
 
         if (actions != null) {
             for (String ac : actions) {
-                map.remove(ac);
+                dataMap.remove(ac);
             }
         }
         try {
@@ -238,8 +232,12 @@ public class BroadcastCenter {
 
             localBroadcastManager.unregisterReceiver(key.get());
         }
-        map.clear();
-        broadcastReceiverList.clear();
+        if (dataMap != null) {
+            dataMap.evictAll();
+        }
+        if (broadcastReceiverList != null) {
+            broadcastReceiverList.clear();
+        }
     }
 
 
