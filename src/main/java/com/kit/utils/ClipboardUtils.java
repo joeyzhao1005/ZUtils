@@ -3,35 +3,56 @@ package com.kit.utils;
 import android.content.Context;
 import android.text.ClipboardManager;
 
+import com.kit.app.application.AppMaster;
+
 /**
  * Created by Zhao on 14/11/17.
  */
 public class ClipboardUtils {
     /**
      * 实现文本复制功能
-     * add by wangqianzhou
      *
      * @param content
      */
     public static void copy(String content) {
-// 得到剪贴板管理器
-        Context context = ResWrapper.getApplicationContext();
-        ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        if (!StringUtils.isEmptyOrNullStr(content)) {
-            cmb.setText(content.trim());
+        if (ApiLevel.ATLEAST_HONEYCOMB) {
+            final android.content.ClipboardManager clipboardManager =
+                    (android.content.ClipboardManager) AppMaster.getInstance().getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            final android.content.ClipData clipData = android.content.ClipData
+                    .newPlainText(content,content);
+
+            if (clipboardManager != null) {
+                clipboardManager.setPrimaryClip(clipData);
+            }
+        } else {
+            final android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) AppMaster.getInstance().getAppContext()
+                    .getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboardManager != null) {
+                clipboardManager.setText(content);
+            }
         }
     }
 
     /**
      * 实现粘贴功能
-     * add by wangqianzhou
      *
-     * @param context
      * @return
      */
-    public static String paste(Context context) {
-// 得到剪贴板管理器
-        ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        return cmb.getText().toString().trim();
+    public static String paste() {
+        if (ApiLevel.ATLEAST_HONEYCOMB) {
+            final android.content.ClipboardManager clipboardManager =
+                    (android.content.ClipboardManager) AppMaster.getInstance().getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboardManager != null && clipboardManager.getPrimaryClip().getItemCount() > 0) {
+                return clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
+            }
+        } else {
+            final android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) AppMaster.getInstance().getAppContext()
+                    .getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboardManager != null) {
+                return clipboardManager.getText().toString().trim();
+            }
+        }
+
+        return "";
     }
 }
