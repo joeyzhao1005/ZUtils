@@ -7,6 +7,8 @@ import android.util.Log;
 import com.kit.config.AppConfig;
 import com.kit.utils.AppUtils;
 import com.kit.utils.GsonUtils;
+import com.kit.utils.ValueOf;
+import com.kit.utils.ZString;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -92,7 +94,10 @@ public class Zog {
      * @Description 打印Log
      */
     public static void i(String msg) {
-        i(LOGUTILS_TAG, getTitle() + msg);
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
+        }
+        Log.i(LOGUTILS_TAG, getTitle().append(msg).toString());
     }
 
 
@@ -102,12 +107,17 @@ public class Zog {
      * @Title i
      * @Description 打印Log
      */
-    public static void i(String tag, String msg) {
-
-        if (AppConfig.getAppConfig().isShowLog()) {
-            Log.i(tag, getTitle() + msg);
+    public static void i(Object... msg) {
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
         }
+        ZString zString = ZString.get();
+        for (Object obj : msg) {
+            zString.p(obj);
+        }
+        Log.i(LOGUTILS_TAG, getTitle().append(zString.string()).toString());
     }
+
 
     /**
      * @param msg String 消息
@@ -116,10 +126,27 @@ public class Zog {
      * @Description 打印Log
      */
     public static void e(String msg) {
-
-        if (AppConfig.getAppConfig().isShowLog()) {
-            Log.e(LOGUTILS_TAG, getTitle() + msg);
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
         }
+        Log.e(LOGUTILS_TAG, getTitle() + msg);
+    }
+
+    /**
+     * @param msg String 消息
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void e(String... msg) {
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
+        }
+        ZString zString = ZString.get();
+        for (Object obj : msg) {
+            zString.p(obj);
+        }
+        Log.e(LOGUTILS_TAG, getTitle().append(zString.string()).toString());
     }
 
     /**
@@ -129,7 +156,10 @@ public class Zog {
      * @Description 打印Log
      */
     public static void d(String msg) {
-        d(LOGUTILS_TAG, getTitle() + msg);
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
+        }
+        Log.d(LOGUTILS_TAG, getTitle() + msg);
     }
 
 
@@ -139,38 +169,53 @@ public class Zog {
      * @Title e
      * @Description 打印Log
      */
-    public static void d(String tag, String msg) {
-
-        if (AppConfig.getAppConfig().isShowLog()) {
-            Log.d(tag, getTitle() + msg);
+    public static void d(String... msg) {
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
         }
+        ZString zString = ZString.get();
+        for (Object obj : msg) {
+            zString.p(obj);
+        }
+        Log.d(LOGUTILS_TAG, getTitle().append(zString.string()).toString());
     }
 
 
-    private static String getTitle() {
+    /**
+     * @return void 返回类型
+     * @Title i
+     * @Description 打印Log
+     */
+    public static void tag(String tag) {
+        if (AppConfig.getAppConfig().isShowLog()) {
+            LOGUTILS_TAG = tag;
+        }
+    }
+
+    private static StringBuilder getTitle() {
         DebugInfo debugInfo = new DebugInfo();
 
-        String title = "";
+        StringBuilder title = new StringBuilder();
         switch (STYLE) {
             case STYLE_MINIMAL:
-                title = "【"
-                        + LOGUTILS_IDENTIFY
-                        + debugInfo.simpleClassName()
-                        + "】 ";
+                title.append("【")
+                        .append(LOGUTILS_IDENTIFY)
+                        .append(debugInfo.simpleClassName())
+                        .append("】 ");
                 break;
 
             case STYLE_SIMPLE:
-                title = "【"
-                        + LOGUTILS_IDENTIFY
-                        + debugInfo.className()
-                        + "】 ";
+                title.append("【")
+                        .append(LOGUTILS_IDENTIFY)
+                        .append(debugInfo.className())
+                        .append("】 ");
                 break;
             case STYLE_VERBOSE:
-                title = "【"
-                        + LOGUTILS_IDENTIFY
-                        + debugInfo.className()
-                        + debugInfo
-                        + "】 ";
+                title.append("【")
+                        .append(LOGUTILS_IDENTIFY)
+                        .append(debugInfo.className())
+                        .append(debugInfo)
+                        .append("】 ");
                 break;
 
             default:
@@ -201,24 +246,6 @@ public class Zog {
 
         String msg = GsonUtils.toJson(object);
         i(tag, msg);
-    }
-
-
-    /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
-     */
-    public static void i(String msg, int count) {
-        if (AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-
-        if (COUNT < count) {
-            i(msg);
-        }
-        COUNT++;
     }
 
 

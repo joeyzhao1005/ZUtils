@@ -12,6 +12,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils {
+
+    /**
+     * Trims the string, removing all whitespace at the beginning and end of the string.
+     * Non-breaking whitespaces are also removed.
+     */
+    public static String p(CharSequence s) {
+        StringBuilder stringBuilder = new StringBuilder(s);
+        if (s == null) {
+            return null;
+        }
+
+        // Just strip any sequence of whitespace or java space characters from the beginning and end
+        Matcher m = sTrimPattern.matcher(s);
+        return m.replaceAll("$1");
+    }
+
+
     public static String trim(String str, String trim) {
         if (isEmptyOrNullStr(str)) {
             return str;

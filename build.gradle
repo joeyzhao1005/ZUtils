@@ -9,9 +9,7 @@ dependencies {
     implementation "com.android.support:palette-v7:${android_sdk_version}"
 
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation('commons-httpclient:commons-httpclient:3.1') {
-        exclude group: 'commons-logging', module: 'commons-logging'
-    }
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
