@@ -16,6 +16,12 @@ public class ApiLevel {
 
     public static final boolean ATLEAST_LOLLIPOP_MR1 =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
+    public static final boolean ATLEAST_N =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
+
+    public static final boolean ATLEAST_M =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+
 
     public static final boolean ATLEAST_LOLLIPOP =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
