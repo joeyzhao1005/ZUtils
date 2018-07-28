@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.kit.app.application.AppMaster;
 import com.kit.config.AppConfig;
 import com.kit.utils.FileUtils;
 import com.kit.utils.MathExtend;
@@ -979,7 +980,6 @@ public class BitmapUtils {
     }
 
 
-
     public static Bitmap compressImage(Bitmap image, int kb) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -1212,28 +1212,15 @@ public class BitmapUtils {
         return sourceImg;
     }
 
-    /**
-     * 保存位图到filepath路径
-     *
-     * @param bmp
-     * @param file
-     */
-    public static File saveBitmap(Bitmap bmp, File file, boolean isNotify) {
-
-        File fileSaved = saveBitmap(bmp, file);
-        if (fileSaved != null && isNotify) {
-            notifySystemSavedPic(ResWrapper.getApplicationContext(), file);
-        }
-        return fileSaved;
-    }
 
     /**
      * 保存位图到filepath路径
      *
      * @param bmp
      * @param file
+     * @param isRecycle 保存之后是否回收
      */
-    public static File saveBitmap(Bitmap bmp, File file) {
+    public static File saveBitmap(Bitmap bmp, File file, boolean isRecycle) {
         if (bmp == null) {
             return null;
         }
@@ -1269,12 +1256,25 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
-        if (!bmp.isRecycled()) {
+        if (!bmp.isRecycled() && isRecycle) {
             bmp.recycle();
         }
 //
-
+        if (file.exists()) {
+            notifySystemSavedPic(AppMaster.getInstance().getAppContext(), file);
+        }
         return file;
+    }
+
+    /**
+     * 保存位图到filepath路径
+     *
+     * @param bmp
+     * @param file
+     */
+    public static File saveBitmap(Bitmap bmp, File file) {
+
+        return saveBitmap(bmp, file, true);
     }
 
     /**

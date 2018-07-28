@@ -109,25 +109,6 @@ public class DrawableUtils {
         return file;
     }
 
-    /**
-     * 保存drawable
-     *
-     * @param drawable
-     * @param file
-     * @param isNofify 是否通知系统保存了图片
-     */
-    public static File saveDrawable(Drawable drawable, File file, boolean isNofify) {
-        Bitmap bmp = BitmapUtils.drawable2Bitmap(drawable);
-        if (bmp == null || bmp.isRecycled()) {
-            return null;
-        }
-
-        BitmapUtils.saveBitmap(bmp, file, isNofify);
-
-        return file;
-    }
-
-
     public static String saveDrawable(Context context, int drawableID, String filename) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableID);
         try {
