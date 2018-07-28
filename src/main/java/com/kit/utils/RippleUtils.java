@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
@@ -18,7 +19,7 @@ public class RippleUtils {
             int normalColor, int pressedColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return new RippleDrawable(ColorStateList.valueOf(pressedColor),
-                    new ColorDrawable(normalColor), getRippleMask(normalColor));
+                    new ColorDrawable(normalColor), getRippleMask(ColorUtils.getLighterColor(pressedColor,0.3f)));
         } else {
             return getStateListDrawable(normalColor, pressedColor);
         }

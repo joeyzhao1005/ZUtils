@@ -57,6 +57,7 @@ public class PermissionUtils {
 
             case PermissionChecker.PERMISSION_DENIED:
             case PermissionChecker.PERMISSION_DENIED_APP_OP:
+            default:
                 if (callback != null) {
                     callback.denied();
                 }

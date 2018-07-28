@@ -359,21 +359,21 @@ public class MapUtils {
     }
 
 
-    public static Object getPosition(Map map, int position) {
+    public static <K, V> K getPosition(Map<K, V> map, int position) {
         if (MapUtils.isNullOrEmpty(map)) {
-            return map;
+            return null;
         }
 
-        Iterator<Map.Entry<?, ?>> it = map.entrySet().iterator();
+        Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
         int i = 0;
         while (it.hasNext()) {
             Map.Entry<?, ?> entry = it.next();
             if (i == position) {
-                return entry.getKey();
+                return (K) entry.getKey();
             }
             i++;
         }
-        return map;
+        return null;
     }
 
 
