@@ -164,6 +164,20 @@ public class Zog {
 
 
     /**
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void d( ZString.Creator creator) {
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
+        }
+        Log.d(LOGUTILS_TAG, getTitle() + creator.build());
+    }
+
+
+
+    /**
      * @param msg String 消息
      * @return void 返回类型
      * @Title e

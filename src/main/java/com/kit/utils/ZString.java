@@ -65,4 +65,14 @@ public class ZString {
         zString.sb = new StringBuilder();
         return zString;
     }
+
+
+    public interface Creator {
+        /***
+         * ZString 拼接
+         *
+         * @return 拼接好的字符串
+         */
+        String build();
+    }
 }
