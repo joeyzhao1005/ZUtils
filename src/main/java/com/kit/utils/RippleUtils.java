@@ -19,7 +19,7 @@ public class RippleUtils {
             int normalColor, int pressedColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return new RippleDrawable(ColorStateList.valueOf(pressedColor),
-                    new ColorDrawable(normalColor), getRippleMask(ColorUtils.getLighterColor(pressedColor,0.3f)));
+                    new ColorDrawable(normalColor), getRippleMask(ColorUtils.isLightColor(pressedColor) ? ColorUtils.getDarkerColor(pressedColor, 0.1f) : ColorUtils.getLighterColor(pressedColor, 0.1f)));
         } else {
             return getStateListDrawable(normalColor, pressedColor);
         }
