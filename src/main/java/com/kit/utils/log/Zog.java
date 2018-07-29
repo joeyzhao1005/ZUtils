@@ -86,6 +86,18 @@ public class Zog {
         return null;
     }
 
+    /**
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void i(ZString.Creator creator) {
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
+        }
+        Log.i(LOGUTILS_TAG, getTitle() + creator.build());
+    }
+
 
     /**
      * @param msg String 消息
@@ -94,10 +106,46 @@ public class Zog {
      * @Description 打印Log
      */
     public static void i(String msg) {
+        i(() -> msg);
+    }
+
+    /**
+     * @param msg String 消息
+     * @return void 返回类型
+     * @Title i
+     * @Description 打印Log
+     */
+    public static void i(Object... msg) {
+
+        i(() -> {
+            ZString zString = ZString.get();
+            for (Object obj : msg) {
+                zString.p(obj);
+            }
+            return zString.string();
+        });
+    }
+
+    /**
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void e(ZString.Creator creator) {
         if (!AppConfig.getAppConfig().isShowLog()) {
             return;
         }
-        Log.i(LOGUTILS_TAG, getTitle().append(msg).toString());
+        Log.e(LOGUTILS_TAG, getTitle() + creator.build());
+    }
+
+    /**
+     * @param msg String 消息
+     * @return void 返回类型
+     * @Title i
+     * @Description 打印Log
+     */
+    public static void e(String msg) {
+        e(() -> msg);
     }
 
 
@@ -107,68 +155,22 @@ public class Zog {
      * @Title i
      * @Description 打印Log
      */
-    public static void i(Object... msg) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-        ZString zString = ZString.get();
-        for (Object obj : msg) {
-            zString.p(obj);
-        }
-        Log.i(LOGUTILS_TAG, getTitle().append(zString.string()).toString());
+    public static void e(Object... msg) {
+
+        e(() -> {
+            ZString zString = ZString.get();
+            for (Object obj : msg) {
+                zString.p(obj);
+            }
+            return zString.string();
+        });
     }
-
-
-    /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
-     */
-    public static void e(String msg) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-        Log.e(LOGUTILS_TAG, getTitle() + msg);
-    }
-
-    /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
-     */
-    public static void e(String... msg) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-        ZString zString = ZString.get();
-        for (Object obj : msg) {
-            zString.p(obj);
-        }
-        Log.e(LOGUTILS_TAG, getTitle().append(zString.string()).toString());
-    }
-
-    /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
-     */
-    public static void d(String msg) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-        Log.d(LOGUTILS_TAG, getTitle() + msg);
-    }
-
-
     /**
      * @return void 返回类型
      * @Title e
      * @Description 打印Log
      */
-    public static void d( ZString.Creator creator) {
+    public static void d(ZString.Creator creator) {
         if (!AppConfig.getAppConfig().isShowLog()) {
             return;
         }
@@ -176,22 +178,32 @@ public class Zog {
     }
 
 
+    /**
+     * @param msg String 消息
+     * @return void 返回类型
+     * @Title i
+     * @Description 打印Log
+     */
+    public static void d(String msg) {
+        d(() -> msg);
+    }
+
 
     /**
      * @param msg String 消息
      * @return void 返回类型
-     * @Title e
+     * @Title i
      * @Description 打印Log
      */
-    public static void d(String... msg) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-        ZString zString = ZString.get();
-        for (Object obj : msg) {
-            zString.p(obj);
-        }
-        Log.d(LOGUTILS_TAG, getTitle().append(zString.string()).toString());
+    public static void d(Object... msg) {
+
+        d(() -> {
+            ZString zString = ZString.get();
+            for (Object obj : msg) {
+                zString.p(obj);
+            }
+            return zString.string();
+        });
     }
 
 
