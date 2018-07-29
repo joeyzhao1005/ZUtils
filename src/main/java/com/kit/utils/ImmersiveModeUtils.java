@@ -60,7 +60,7 @@ public class ImmersiveModeUtils {
 //        } catch (Exception e) {
 //        }
 
-        immersiveAboveAPI19(baseActivity, false, false, statusBarColor, navigationBarColor, isDarkStatusBarIcon);
+        immersiveAboveAPI19(baseActivity, statusBarColor, navigationBarColor, isDarkStatusBarIcon);
     }
 
 
