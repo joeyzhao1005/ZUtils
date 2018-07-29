@@ -91,11 +91,21 @@ public class Zog {
      * @Title e
      * @Description 打印Log
      */
-    public static void i(ZString.Creator creator) {
+    public static void i(String tag,ZString.Creator creator) {
         if (!AppConfig.getAppConfig().isShowLog()) {
             return;
         }
-        Log.i(LOGUTILS_TAG, getTitle() + creator.build());
+        Log.i(tag, getTitle() + creator.build());
+    }
+
+
+    /**
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void i(ZString.Creator creator) {
+        i(LOGUTILS_TAG, creator);
     }
 
 
@@ -126,16 +136,27 @@ public class Zog {
         });
     }
 
+
+    /**
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void e(String tag, ZString.Creator creator) {
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
+        }
+        Log.e(tag, getTitle() + creator.build());
+    }
+
+
     /**
      * @return void 返回类型
      * @Title e
      * @Description 打印Log
      */
     public static void e(ZString.Creator creator) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-        Log.e(LOGUTILS_TAG, getTitle() + creator.build());
+        e(LOGUTILS_TAG, creator);
     }
 
     /**
@@ -165,16 +186,28 @@ public class Zog {
             return zString.string();
         });
     }
+
+
+    /**
+     * @return void 返回类型
+     * @Title e
+     * @Description 打印Log
+     */
+    public static void d(String tag, ZString.Creator creator) {
+        if (!AppConfig.getAppConfig().isShowLog()) {
+            return;
+        }
+        Log.d(tag, getTitle() + creator.build());
+    }
+
+
     /**
      * @return void 返回类型
      * @Title e
      * @Description 打印Log
      */
     public static void d(ZString.Creator creator) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
-            return;
-        }
-        Log.d(LOGUTILS_TAG, getTitle() + creator.build());
+        d(LOGUTILS_TAG, creator);
     }
 
 
@@ -206,17 +239,6 @@ public class Zog {
         });
     }
 
-
-    /**
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
-     */
-    public static void tag(String tag) {
-        if (AppConfig.getAppConfig().isShowLog()) {
-            LOGUTILS_TAG = tag;
-        }
-    }
 
     private static StringBuilder getTitle() {
         DebugInfo debugInfo = new DebugInfo();
