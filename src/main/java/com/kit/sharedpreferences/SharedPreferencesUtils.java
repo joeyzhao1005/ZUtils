@@ -40,7 +40,7 @@ public class SharedPreferencesUtils {
         sharedpreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
 
-    public boolean saveSharedPreferences(String key, String value) {
+    public void saveSharedPreferences(String key, String value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         try {
             editor.putString(key, value);
@@ -48,7 +48,7 @@ public class SharedPreferencesUtils {
             editor.putString(key, value);
             e.printStackTrace();
         }
-        return editor.commit();
+        editor.apply();
     }
 
     public String loadStringSharedPreference(String key, String stringValue) {
@@ -73,10 +73,10 @@ public class SharedPreferencesUtils {
         return str;
     }
 
-    public boolean saveSharedPreferences(String key, int value) {
+    public void saveSharedPreferences(String key, int value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putInt(key, value);
-        return editor.commit();
+        editor.apply();
     }
 
     public int loadIntSharedPreference(String key, int intValue) {
@@ -88,16 +88,16 @@ public class SharedPreferencesUtils {
     }
 
 
-    public boolean saveSharedPreferences(String key, long value) {
+    public void saveSharedPreferences(String key, long value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putLong(key, value);
-        return editor.commit();
+        editor.apply();
     }
 
-    public boolean saveSharedPreferences(String key, float value) {
+    public void saveSharedPreferences(String key, float value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putFloat(key, value);
-        return editor.commit();
+        editor.apply();
     }
 
 
@@ -109,10 +109,10 @@ public class SharedPreferencesUtils {
         return sharedpreferences.getFloat(key, 0f);
     }
 
-    public boolean saveSharedPreferences(String key, Long value) {
+    public void saveSharedPreferences(String key, Long value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putLong(key, value);
-        return editor.commit();
+        editor.apply();
     }
 
     public long loadLongSharedPreference(String key, long longValue) {
@@ -128,10 +128,10 @@ public class SharedPreferencesUtils {
         return sharedpreferences.getLong(key, 0L);
     }
 
-    public boolean saveSharedPreferences(String key, Boolean value) {
+    public void saveSharedPreferences(String key, Boolean value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putBoolean(key, value);
-        return editor.commit();
+        editor.apply();
     }
 
     public boolean loadBooleanSharedPreference(String key, boolean booleanValue) {
@@ -142,10 +142,10 @@ public class SharedPreferencesUtils {
         return sharedpreferences.getBoolean(key, false);
     }
 
-    public boolean saveAllSharePreference(String keyName, List<?> list) {
+    public void saveAllSharePreference(String keyName, List<?> list) {
         int size = list.size();
         if (size < 1) {
-            return false;
+            return ;
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         if (list.get(0) instanceof String) {
@@ -169,23 +169,23 @@ public class SharedPreferencesUtils {
                 editor.putBoolean(keyName + i, (Boolean) list.get(i));
             }
         }
-        return editor.commit();
+        editor.apply();
     }
 
     public Map<String, ?> loadAllSharePreference(String key) {
         return sharedpreferences.getAll();
     }
 
-    public boolean removeKey(String key) {
+    public void removeKey(String key) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(key);
-        return editor.commit();
+        editor.apply();
     }
 
-    public boolean removeAllKey() {
+    public void removeAllKey() {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.clear();
-        return editor.commit();
+        editor.apply();
     }
 
     /**
@@ -269,7 +269,7 @@ public class SharedPreferencesUtils {
             String strList = new String(Base64.encode(baos.toByteArray(),
                     Base64.DEFAULT));
             editor.putString(saveTag, strList);
-            editor.commit();
+            editor.apply();
             oos.close();
 
         } catch (IOException e) {
@@ -357,7 +357,7 @@ public class SharedPreferencesUtils {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 shaPreName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.commit();
+        editor.apply();
     }
 
 

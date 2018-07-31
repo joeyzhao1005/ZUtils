@@ -3,14 +3,15 @@ package com.kit.sharedpreferences;
 import android.content.Context;
 
 import com.kit.utils.ResWrapper;
+
 import java.util.List;
 import java.util.Map;
 
 public class DataCache {
 
 
-    public boolean saveSharedPreferences(String key, String value) {
-        return sharedPreferencesUtils.saveSharedPreferences(key, value);
+    public void saveSharedPreferences(String key, String value) {
+        sharedPreferencesUtils.saveSharedPreferences(key, value);
     }
 
     public String loadStringSharedPreference(String key, String stringValue) {
@@ -22,8 +23,8 @@ public class DataCache {
         return sharedPreferencesUtils.loadStringSharedPreference(key);
     }
 
-    public boolean saveSharedPreferences(String key, int value) {
-        return sharedPreferencesUtils.saveSharedPreferences(key, value);
+    public void saveSharedPreferences(String key, int value) {
+        sharedPreferencesUtils.saveSharedPreferences(key, value);
 
     }
 
@@ -36,56 +37,55 @@ public class DataCache {
     }
 
 
-    public boolean saveSharedPreferences(String key, long value) {
-        return sharedPreferencesUtils.saveSharedPreferences(key,value);
+    public void saveSharedPreferences(String key, long value) {
+        sharedPreferencesUtils.saveSharedPreferences(key, value);
 
     }
 
-    public boolean saveSharedPreferences(String key, float value) {
-        return sharedPreferencesUtils.saveSharedPreferences(key,value);
+    public void saveSharedPreferences(String key, float value) {
+        sharedPreferencesUtils.saveSharedPreferences(key, value);
     }
 
 
     public float loadFloatSharedPreference(String key, Float floatValue) {
-        return sharedPreferencesUtils.loadFloatSharedPreference(key,floatValue);
+        return sharedPreferencesUtils.loadFloatSharedPreference(key, floatValue);
     }
 
     public float loadFloatSharedPreference(String key) {
         return sharedPreferencesUtils.loadFloatSharedPreference(key);
     }
 
-    public boolean saveSharedPreferences(String key, Long value) {
-        return sharedPreferencesUtils.saveSharedPreferences(key,value);
+    public void saveSharedPreferences(String key, Long value) {
+        sharedPreferencesUtils.saveSharedPreferences(key, value);
     }
 
     public long loadLongSharedPreference(String key, long longValue) {
-        return sharedPreferencesUtils.loadLongSharedPreference(key,longValue);
+        return sharedPreferencesUtils.loadLongSharedPreference(key, longValue);
     }
 
 
     public float loadLongSharedPreference(String key, float longValue) {
-        return sharedPreferencesUtils.loadLongSharedPreference(key,longValue);
+        return sharedPreferencesUtils.loadLongSharedPreference(key, longValue);
     }
 
     public long loadLongSharedPreference(String key) {
         return sharedPreferencesUtils.loadLongSharedPreference(key);
     }
 
-    public boolean saveSharedPreferences(String key, Boolean value) {
-        return sharedPreferencesUtils.saveSharedPreferences(key,value);
+    public void saveSharedPreferences(String key, Boolean value) {
+        sharedPreferencesUtils.saveSharedPreferences(key, value);
     }
 
     public boolean loadBooleanSharedPreference(String key, boolean booleanValue) {
-        return sharedPreferencesUtils.loadBooleanSharedPreference(key,booleanValue);
+        return sharedPreferencesUtils.loadBooleanSharedPreference(key, booleanValue);
     }
 
     public boolean loadBooleanSharedPreference(String key) {
         return sharedPreferencesUtils.loadBooleanSharedPreference(key);
     }
 
-    public boolean saveAllSharePreference(String keyName, List<?> list) {
-        return sharedPreferencesUtils.saveAllSharePreference(keyName,list);
-
+    public void saveAllSharePreference(String keyName, List<?> list) {
+        sharedPreferencesUtils.saveAllSharePreference(keyName, list);
     }
 
     public Map<String, ?> loadAllSharePreference(String key) {
@@ -93,12 +93,12 @@ public class DataCache {
 
     }
 
-    public boolean removeKey(String key) {
-        return sharedPreferencesUtils.removeKey(key);
+    public void removeKey(String key) {
+        sharedPreferencesUtils.removeKey(key);
     }
 
-    public boolean removeAllKey() {
-        return sharedPreferencesUtils.removeAllKey();
+    public void removeAllKey() {
+        sharedPreferencesUtils.removeAllKey();
     }
 
     /**
@@ -131,7 +131,7 @@ public class DataCache {
      */
     public static void saveObject(Context context, String shaPreName, String saveTag, Object object,
                                   int saveLength) {
-        SharedPreferencesUtils.saveObject(context,shaPreName,saveTag,object,saveLength);
+        SharedPreferencesUtils.saveObject(context, shaPreName, saveTag, object, saveLength);
 
     }
 
@@ -145,7 +145,7 @@ public class DataCache {
     public static List<Object> getObject(Context context,
                                          String shaPreName, String saveTag) {
 
-       return SharedPreferencesUtils.getObject(context,shaPreName,saveTag);
+        return SharedPreferencesUtils.getObject(context, shaPreName, saveTag);
     }
 
     /**
@@ -155,7 +155,7 @@ public class DataCache {
      * @param shaPreName 保存的文件名
      */
     public static void newSP(Context context, String shaPreName) {
-         SharedPreferencesUtils.newSP(context,shaPreName);
+        SharedPreferencesUtils.newSP(context, shaPreName);
     }
 
 
@@ -168,7 +168,7 @@ public class DataCache {
      */
     public static boolean isExist(Context context,
                                   String shaPreName) {
-      return   SharedPreferencesUtils.isExist(context,shaPreName);
+        return SharedPreferencesUtils.isExist(context, shaPreName);
     }
 
 
