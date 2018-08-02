@@ -11,8 +11,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
 
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
 }
 
 android {
