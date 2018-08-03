@@ -465,25 +465,33 @@ public class BitmapUtils {
         return bitmap;
     }
 
-    public static Bitmap getAdpterBitmap(Bitmap bmp, int width,
-                                         int height) {
+
+    /**
+     * 得到自适应宽高的bitmap
+     * @param bmp
+     * @param width
+     * @param height
+     * @return
+     */
+    public static Bitmap getAdapterSizeBitmap(Bitmap bmp, int width,
+                                              int height) {
 
         Bitmap outBitmap = null;
 
-        Bitmap resizeBmp = bmp;
-        try {
-            if (bmp.getHeight() > height) {// 为了节省内存，如果高度过高，剪切一个高度等于所需高度的，宽度则再做变化后到最后再做剪切
-                resizeBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(),
-                        height);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            // 为了节省内存，如果高度过高，剪切一个高度等于所需高度的，宽度则再做变化后到最后再做剪切
+//            if (bmp.getHeight() > height) {
+//                resizeBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(),
+//                        height);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         float scaleWidth = (float) MathExtend.divide(width,
-                resizeBmp.getWidth());
+                bmp.getWidth());
         float scaleHeight = (float) MathExtend.divide(height,
-                resizeBmp.getHeight());
+                bmp.getHeight());
 
         float scale = 1;
 
@@ -493,52 +501,39 @@ public class BitmapUtils {
             scale = scaleHeight;
         }
 
+        Bitmap scaleBmp = bmp;
         if (scale != 0) {
             Matrix matrix = new Matrix();
+            matrix.preScale(scale, scale);
 
-            matrix.postScale(scale, scale);
-
-            int w = resizeBmp.getWidth();
-            int h = resizeBmp.getHeight();
-            try {
                 try {
-                    // System.gc();
-                    resizeBmp = Bitmap.createBitmap(resizeBmp, 0, 0, w, h,
+                    scaleBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
                             matrix, true);
-
                 } catch (OutOfMemoryError e) {
                     e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                // 锁屏
-                //
-                // Intent intent = new Intent();
-                // intent.setAction("com.kitme.LockNow");
-                // context.sendBroadcast(intent);
-            }
+
         } else {
-            System.out.println("我靠，scale居然等于0");
+            Zog.d("Error!!! scale == 0");
         }
 
         try {
-            // System.out.println(width + "---- " + resizeBmp.getWidth());
-
-            System.out.println("resizeBmp:" + resizeBmp);
-
-            outBitmap = Bitmap.createBitmap(resizeBmp,
-                    (resizeBmp.getWidth() - width) / 2,
-                    (resizeBmp.getHeight() - height) / 2, width, height);
-            // outBitmap = Bitmap.createBitmap(resizeBmp, 0, 0, width, height);
+            outBitmap = Bitmap.createBitmap(scaleBmp,
+                    (scaleBmp.getWidth() - width) / 2,
+                    (scaleBmp.getHeight() - height) / 2, width, height);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // if (!bmp.isRecycled()) {// 先判断图片是否已释放了
-        // bmp.recycle();
-        // }
-        // if (!resizeBmp.isRecycled()) {// 先判断图片是否已释放了
-        // resizeBmp.recycle();
-        // }
+
+        if (!bmp.isRecycled()) {
+            bmp.recycle();
+        }
+
+        if (!scaleBmp.isRecycled()) {
+            scaleBmp.recycle();
+        }
+
+
         return outBitmap;
     }
 

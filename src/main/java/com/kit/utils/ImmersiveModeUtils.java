@@ -34,7 +34,7 @@ public class ImmersiveModeUtils {
      * @param navigationBarColor 导航栏的颜色
      */
     public static void immersiveAboveAPI19(AppCompatActivity baseActivity, int statusBarColor, int navigationBarColor, boolean isDarkStatusBarIcon) {
-        immersiveAboveAPI19(baseActivity, false, false, statusBarColor, navigationBarColor, isDarkStatusBarIcon);
+        immersiveAboveAPI19(baseActivity, false, true, statusBarColor, navigationBarColor, isDarkStatusBarIcon);
     }
 
 

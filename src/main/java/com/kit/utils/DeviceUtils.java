@@ -37,20 +37,21 @@ public class DeviceUtils {
 
 
     @SuppressWarnings("MissingPermission")
-    public static String getDeviceId(){
-        if(deviceId!=null){
+    public static String getDeviceId() {
+        if (deviceId != null) {
             return deviceId;
         }
         TelephonyManager mTelephonyMgr = (TelephonyManager) AppMaster.getInstance().getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
 //        String imsi = mTelephonyMgr.getSubscriberId(); //获取IMSI号
         //获取IMEI号
-        if(ContextCompat.checkSelfPermission(AppMaster.getInstance().getAppContext(),Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
-            deviceId =  mTelephonyMgr.getDeviceId();
-        }else {
-            deviceId =  DeviceTokenUtils.getMd5DeviceToken();
+        if (ContextCompat.checkSelfPermission(AppMaster.getInstance().getAppContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            deviceId = mTelephonyMgr.getDeviceId();
+        } else {
+            deviceId = DeviceTokenUtils.getMd5DeviceToken();
         }
         return deviceId;
     }
+
     private static String deviceId;
 
     /**
@@ -227,6 +228,7 @@ public class DeviceUtils {
      * @param context
      * @return the screen height
      */
+    @SuppressWarnings("deprecation")
     public static int getScreenHeight(Context context) {
         if (context == null) {
             context = ActivityManager.getInstance().getCurrActivity();
@@ -234,7 +236,7 @@ public class DeviceUtils {
 
         Display display = ((Activity) context).getWindowManager()
                 .getDefaultDisplay();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+        if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
             return size.y;
@@ -244,9 +246,25 @@ public class DeviceUtils {
     }
 
 
-    public static int getRealScreenHeight() {
-        DisplayMetrics dm = ResWrapper.getResources().getDisplayMetrics();
-        return dm.heightPixels;
+    @Deprecated
+    public static int getRealScreenHeight(){
+        return getRealScreenHeight(null);
+    }
+
+    public static int getRealScreenHeight(Context context) {
+        if (context == null) {
+            context = ActivityManager.getInstance().getCurrActivity();
+        }
+
+        Display display = ((Activity) context).getWindowManager()
+                .getDefaultDisplay();
+        if (ApiLevel.ATLEAST_JELLY_BEAN_MR1) {
+            Point size = new Point();
+            display.getRealSize(size);
+            return size.y;
+        } else {
+            return display.getHeight();
+        }
     }
 
     /**
@@ -256,7 +274,6 @@ public class DeviceUtils {
      * @return the screen width
      */
     @SuppressWarnings("deprecation")
-    @SuppressLint("NewApi")
     public static int getScreenWidth(Context context) {
         if (context == null) {
             context = ActivityManager.getInstance().getCurrActivity();
@@ -264,7 +281,23 @@ public class DeviceUtils {
 
         Display display = ((Activity) context).getWindowManager()
                 .getDefaultDisplay();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+        if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
+            Point size = new Point();
+            display.getSize(size);
+            return size.x;
+        } else {
+            return display.getWidth();
+        }
+    }
+
+    public static int getRealScreenWidth(Context context) {
+        if (context == null) {
+            context = ActivityManager.getInstance().getCurrActivity();
+        }
+
+        Display display = ((Activity) context).getWindowManager()
+                .getDefaultDisplay();
+        if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
             return size.x;
@@ -274,15 +307,15 @@ public class DeviceUtils {
     }
 
 
+
     /**
      * Get the screen width.
      *
      * @return the screen width
      */
+    @Deprecated
     public static int getRealScreenWidth() {
-        DisplayMetrics dm = ResWrapper.getResources().getDisplayMetrics();
-        return dm.widthPixels;
-
+        return getRealScreenWidth(null);
     }
 
     /**
