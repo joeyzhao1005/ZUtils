@@ -2,6 +2,8 @@ package com.kit.utils;
 
 import android.content.Context;
 
+import com.kit.utils.log.Zog;
+
 import java.lang.reflect.Method;
 
 public class StatusBarUtils {
@@ -26,6 +28,7 @@ public class StatusBarUtils {
             collapse.setAccessible(true);
             collapse.invoke(service);
         } catch (Exception e) {
+            Zog.e("不要忘记在 manifest 里声明权限 android.permission.EXPAND_STATUS_BAR");
             e.printStackTrace();
         }
     }
@@ -55,6 +58,7 @@ public class StatusBarUtils {
             expand.setAccessible(true);
             expand.invoke(service);
         } catch (Exception e) {
+            Zog.e("不要忘记在 manifest 里声明权限 android.permission.EXPAND_STATUS_BAR");
             e.printStackTrace();
         }
 
@@ -88,6 +92,7 @@ public class StatusBarUtils {
             expand.setAccessible(true);
             expand.invoke(service);
         } catch (Exception e) {
+            Zog.e("不要忘记在 manifest 里声明权限 android.permission.EXPAND_STATUS_BAR");
             e.printStackTrace();
         }
 
