@@ -9,25 +9,9 @@ import com.kit.app.application.AppMaster;
 
 public class PermissionUtils {
 
-    private void test() {
-        PermissionUtils.check(AppMaster.getInstance().getAppContext(), Manifest.permission.VIBRATE, new PermissionCallback() {
-            @Override
-            public void granted() {
 
-            }
-
-            @Override
-            public void denied() {
-
-            }
-        });
-
-//        PermissionUtils.check(AppMaster.getInstance().appContext, Manifest.permission.VIBRATE, object : PermissionCallback() {
-//            override fun granted() {
-//                super.granted()
-//                Zog.d("tttt")
-//            }
-//        })
+    public static boolean check(@NonNull String permission) {
+        return check(AppMaster.getInstance().getAppContext(), permission);
     }
 
     public static boolean check(Context context, @NonNull String permission) {
@@ -44,6 +28,10 @@ public class PermissionUtils {
 
     }
 
+    public static void check(@NonNull String permission, PermissionCallback callback) {
+         check(AppMaster.getInstance().getAppContext(), permission, callback);
+    }
+
     public static void check(Context context, @NonNull String permission, PermissionCallback callback) {
 
         int result = PermissionChecker.checkSelfPermission(context, permission);
@@ -51,7 +39,7 @@ public class PermissionUtils {
         switch (result) {
             case PermissionChecker.PERMISSION_GRANTED:
                 if (callback != null) {
-                    callback.granted();
+                    callback.onCheck(true);
                 }
                 break;
 
@@ -59,7 +47,7 @@ public class PermissionUtils {
             case PermissionChecker.PERMISSION_DENIED_APP_OP:
             default:
                 if (callback != null) {
-                    callback.denied();
+                    callback.onCheck(false);
                 }
                 break;
         }
