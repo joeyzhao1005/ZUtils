@@ -230,8 +230,15 @@ public class DeviceUtils {
      */
     @SuppressWarnings("deprecation")
     public static int getScreenHeight(Context context) {
-        if (context == null) {
+        if (screenHeight != 0) {
+            return screenHeight;
+        }
+        if (context == null || !(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
+        }
+
+        if (context == null) {
+            return 0;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -239,21 +246,32 @@ public class DeviceUtils {
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
-            return size.y;
+            screenHeight = size.y;
         } else {
-            return display.getHeight();
+            screenHeight = display.getHeight();
         }
+
+        return screenHeight;
     }
+
+    private static int screenHeight;
 
 
     @Deprecated
-    public static int getRealScreenHeight(){
+    public static int getRealScreenHeight() {
         return getRealScreenHeight(null);
     }
 
     public static int getRealScreenHeight(Context context) {
-        if (context == null) {
+        if (realScreenHeight != 0) {
+            return realScreenHeight;
+        }
+        if (context == null || !(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
+        }
+
+        if (context == null) {
+            return 0;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -261,11 +279,15 @@ public class DeviceUtils {
         if (ApiLevel.ATLEAST_JELLY_BEAN_MR1) {
             Point size = new Point();
             display.getRealSize(size);
-            return size.y;
+            realScreenHeight = size.y;
         } else {
-            return display.getHeight();
+            realScreenHeight = display.getHeight();
         }
+
+        return realScreenHeight;
     }
+
+    private static int realScreenHeight;
 
     /**
      * Get the screen width.
@@ -275,8 +297,16 @@ public class DeviceUtils {
      */
     @SuppressWarnings("deprecation")
     public static int getScreenWidth(Context context) {
-        if (context == null) {
+        if (screenWidth != 0) {
+            return screenWidth;
+        }
+
+        if (context == null || !(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
+        }
+
+        if (context == null) {
+            return 0;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -284,15 +314,27 @@ public class DeviceUtils {
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
-            return size.x;
+            screenWidth = size.x;
         } else {
-            return display.getWidth();
+            screenWidth = display.getWidth();
         }
+
+        return screenWidth;
     }
+
+    private static int screenWidth;
 
     public static int getRealScreenWidth(Context context) {
-        if (context == null) {
+        if (realScreenWidth != 0) {
+            return realScreenWidth;
+        }
+
+        if (context == null || !(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
+        }
+
+        if (context == null) {
+            return 0;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -300,13 +342,14 @@ public class DeviceUtils {
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
-            return size.x;
+            realScreenWidth =  size.x;
         } else {
-            return display.getWidth();
+            realScreenWidth =  display.getWidth();
         }
+        return realScreenWidth;
     }
 
-
+    private static int realScreenWidth;
 
     /**
      * Get the screen width.
