@@ -28,6 +28,7 @@ import com.kit.utils.log.Zog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.RejectedExecutionException;
 
 public class AppUtils {
     // 两次点击按钮之间的点击间隔不能少于1000毫秒
@@ -42,8 +43,8 @@ public class AppUtils {
         }
         lastClickTime = curClickTime;
 
-        if(flag){
-            if(doSomeThing!=null){
+        if (flag) {
+            if (doSomeThing != null) {
                 doSomeThing.execute();
             }
         }
@@ -469,9 +470,14 @@ public class AppUtils {
     }
 
 
-
     public static void newThread(Runnable runnable) {
-        SingleThread.get().execute(runnable);
+        try {
+            if (!SingleThread.get().isShutdown()) {
+                SingleThread.get().submit(runnable);
+            }
+        } catch (RejectedExecutionException e) {
+            Zog.showException(e);
+        }
     }
 
 

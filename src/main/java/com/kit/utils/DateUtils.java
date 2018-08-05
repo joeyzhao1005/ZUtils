@@ -212,6 +212,11 @@ public class DateUtils {
         return create;
     }
 
+
+    public static Date getCurrDate() {
+        return new Date(System.currentTimeMillis());
+    }
+
     public static String getCurrDateFormat(String format) {
         // dateStrWithZone = 1351582444220+0800;
         if (format == null || format.equals("")) {

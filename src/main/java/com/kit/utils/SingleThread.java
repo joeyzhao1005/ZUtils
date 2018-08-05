@@ -11,15 +11,18 @@ import java.util.concurrent.TimeUnit;
 public class SingleThread {
 
     public static ExecutorService get() {
-        if (singleton == null) {
+        if (singleton == null || singleton.isShutdown()) {
             synchronized (SingleThread.class) {
                 if (singleton == null) {
-                    singleton = new ThreadPoolExecutor(1, 1,
+                    ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1,
                             60L, TimeUnit.SECONDS,
                             new SynchronousQueue<Runnable>(), new DefaultThreadFactory("singleThread"));
+                    threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+                    singleton = threadPoolExecutor;
                 }
             }
         }
+
         return singleton;
     }
 
@@ -39,7 +42,7 @@ public class SingleThread {
 
         @Override
         public synchronized Thread newThread(@NonNull Runnable runnable) {
-            final Thread result = new Thread(runnable, "glide-" + name + "-thread-" + threadNum) {
+            final Thread result = new Thread(runnable, "singleThread-" + name + "-thread-" + threadNum) {
                 @Override
                 public void run() {
                     android.os.Process.setThreadPriority(DEFAULT_PRIORITY);
