@@ -22,6 +22,7 @@ import android.util.Log;
 import com.kit.app.ActivityManager;
 import com.kit.app.UIHandler;
 import com.kit.app.core.task.DoSomeThing;
+import com.kit.app.core.task.OnNext;
 import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
@@ -460,18 +461,10 @@ public class AppUtils {
      * 延时执行
      *
      * @param time
-     * @param doSomeThing
      */
-    public static void delay(long time, final DoSomeThing doSomeThing) {
+    public static void delay(long time, final OnNext onNext) {
 
-        UIHandler.get().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //execute the task
-                doSomeThing.execute();
-            }
-
-        }, time);
+        UIHandler.get().postDelayed(onNext::next, time);
 
     }
 

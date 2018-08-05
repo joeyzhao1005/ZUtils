@@ -11,6 +11,7 @@ public class ColorUtils {
 
     /**
      * 是否是浅色（颜色的深浅）
+     *
      * @param color
      * @return
      */
@@ -79,6 +80,19 @@ public class ColorUtils {
     }
 
 
+    /**
+     * 得到反色
+     *
+     * @param color
+     * @return
+     */
+    public static int getInvertColor(int color) {
+        int red = Math.abs(getRed(color) - 255);
+        int green = Math.abs(getGreen(color) - 255);
+        int blue = Math.abs(getBlue(color) - 255);
+        return Color.rgb(red, green, blue);
+    }
+
     public static String toHex(int a, int r, int g, int b) {
         return toBrowserHexValue(a) + toBrowserHexValue(r)
                 + toBrowserHexValue(g) + toBrowserHexValue(b);
@@ -90,7 +104,7 @@ public class ColorUtils {
 
     }
 
-    public static String  getHtmlColor(int color){
+    public static String getHtmlColor(int color) {
         return String.format("%06X", (0xFFFFFF & color));
     }
 

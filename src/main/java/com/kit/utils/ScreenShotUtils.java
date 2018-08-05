@@ -65,6 +65,6 @@ public class ScreenShotUtils {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        BitmapUtils.saveBitmap(takeScreenShot(a), file);
+        BitmapUtils.saveBitmap(takeScreenShot(a), file,true);
     }
 }

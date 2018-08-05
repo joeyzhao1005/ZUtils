@@ -3,6 +3,7 @@ package com.kit.utils;
 import android.support.annotation.Nullable;
 
 import com.kit.app.core.task.DoSomeThing;
+import com.kit.app.core.task.OnNext;
 
 public class QuickClick {
 
@@ -18,7 +19,7 @@ public class QuickClick {
     }
 
 
-    public static void check(@Nullable DoSomeThing doSomeThing) {
+    public static void check(@Nullable OnNext onNext) {
         boolean flag = false;
         long curClickTime = System.currentTimeMillis();
         if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
@@ -26,14 +27,14 @@ public class QuickClick {
         }
         lastClickTime = curClickTime;
 
-        if (flag && doSomeThing != null) {
-            doSomeThing.execute();
+        if (flag && onNext != null) {
+            onNext.next();
         }
     }
 
 
-    public void inspect(@Nullable DoSomeThing doSomeThing) {
-        check(doSomeThing);
+    public void inspect(@Nullable OnNext onNext) {
+        check(onNext);
     }
 
     public QuickClick limit(int time) {

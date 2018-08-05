@@ -14,11 +14,18 @@ import java.util.Arrays;
 
 public class RippleUtils {
 
-
-    public static Drawable getAdaptiveRippleDrawable(
-            int normalColor, int pressedColor) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    public static Drawable getAdaptiveRippleDrawable(int normalColor, int pressedColor) {
+        if (ApiLevel.ATLEAST_LOLLIPOP) {
             return new RippleDrawable(ColorStateList.valueOf(pressedColor),
+                    new ColorDrawable(normalColor), getRippleMask(ColorUtils.isLightColor(pressedColor) ? ColorUtils.getDarkerColor(pressedColor, 0.1f) : ColorUtils.getLighterColor(pressedColor, 0.1f)));
+        } else {
+            return getStateListDrawable(normalColor, pressedColor);
+        }
+    }
+
+    public static Drawable getCircleRippleDrawable(int normalColor, int pressedColor) {
+        if (ApiLevel.ATLEAST_LOLLIPOP) {
+            return new RippleDrawable(ColorUtils.createColorStateList(normalColor,pressedColor,pressedColor,normalColor),
                     new ColorDrawable(normalColor), getRippleMask(ColorUtils.isLightColor(pressedColor) ? ColorUtils.getDarkerColor(pressedColor, 0.1f) : ColorUtils.getLighterColor(pressedColor, 0.1f)));
         } else {
             return getStateListDrawable(normalColor, pressedColor);
@@ -36,6 +43,7 @@ public class RippleUtils {
         shapeDrawable.getPaint().setColor(color);
         return shapeDrawable;
     }
+
 
     public static StateListDrawable getStateListDrawable(
             int normalColor, int pressedColor) {

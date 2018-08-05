@@ -158,6 +158,7 @@ public class BroadcastCenter {
         broadcastReceiverList.add(new WeakReference<>(br));
     }
 
+    @Deprecated
     public boolean checkBroadcastReceiverRegistered(String receiverClassName) {
 
         if (broadcastReceiverList == null || broadcastReceiverList.isEmpty()) {
@@ -178,8 +179,28 @@ public class BroadcastCenter {
         return false;
     }
 
+    @Deprecated
     public boolean checkBroadcastReceiverRegistered(Class receiverClass) {
         return checkBroadcastReceiverRegistered(receiverClass.getClass().getName());
+    }
+
+    public boolean checkBroadcastReceiverRegistered(BroadcastReceiver br) {
+        if (broadcastReceiverList == null || broadcastReceiverList.isEmpty() ||br ==null) {
+            return false;
+        }
+        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<BroadcastReceiver> key = iterator.next();
+            if (key == null || key.get() == null) {
+                continue;
+            }
+            BroadcastReceiver receiver = key.get();
+
+            if (receiver == br) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

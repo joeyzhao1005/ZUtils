@@ -1215,7 +1215,7 @@ public class BitmapUtils {
      * @param file
      * @param isRecycle 保存之后是否回收
      */
-    public static File saveBitmap(Bitmap bmp, File file, boolean isRecycle) {
+    public static File saveBitmap(Bitmap bmp, File file, boolean isRecycle,boolean notifySystem) {
         if (bmp == null) {
             return null;
         }
@@ -1255,11 +1255,23 @@ public class BitmapUtils {
             bmp.recycle();
         }
 //
-        if (file.exists()) {
+        if (file.exists() &&notifySystem) {
             notifySystemSavedPic(AppMaster.getInstance().getAppContext(), file);
         }
         return file;
     }
+
+
+    /**
+     * 保存位图到filepath路径
+     *
+     * @param bmp
+     * @param file
+     */
+    public static File saveBitmap(Bitmap bmp, File file,boolean notifySystem) {
+        return saveBitmap(bmp, file, true,notifySystem);
+    }
+
 
     /**
      * 保存位图到filepath路径
@@ -1268,8 +1280,7 @@ public class BitmapUtils {
      * @param file
      */
     public static File saveBitmap(Bitmap bmp, File file) {
-
-        return saveBitmap(bmp, file, true);
+        return saveBitmap(bmp, file, true,false);
     }
 
     /**
