@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 @SuppressLint("SimpleDateFormat")
 public class DateUtils {
@@ -236,10 +237,22 @@ public class DateUtils {
 
 
     public static long getCurrDateLong() {
+        return getCurrDateLong(TimeUnit.MILLISECONDS);
+    }
 
-        long dateLong = System.currentTimeMillis();
+    public static long getCurrDateLong(TimeUnit timeUnit) {
 
-        return dateLong;
+        if (timeUnit == TimeUnit.MILLISECONDS) {
+            return System.currentTimeMillis();
+        } else if (timeUnit == TimeUnit.SECONDS) {
+            return System.currentTimeMillis() / 1000;
+        } else if (timeUnit == TimeUnit.MINUTES) {
+            return System.currentTimeMillis() / 1000 / 60;
+        } else {
+            return System.currentTimeMillis();
+        }
+
+
     }
 
     public static String getHommizationDate(String createTime, String format) {
