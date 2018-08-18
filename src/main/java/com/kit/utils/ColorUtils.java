@@ -39,6 +39,20 @@ public class ColorUtils {
         return new ColorStateList(states, colors);
     }
 
+    /**
+     * 不同状态时其颜色
+     */
+    public static ColorStateList createSingleColorStateList(int color) {
+        int[] colors = new int[]{color, color, color, color, color, color};
+        int[][] states = new int[6][];
+        states[0] = new int[]{android.R.attr.state_pressed, android.R.attr.state_enabled};
+        states[1] = new int[]{android.R.attr.state_enabled, android.R.attr.state_focused};
+        states[2] = new int[]{android.R.attr.state_enabled};
+        states[3] = new int[]{android.R.attr.state_focused};
+        states[4] = new int[]{android.R.attr.state_window_focused};
+        states[5] = new int[]{};
+        return new ColorStateList(states, colors);
+    }
 
     /**
      * 得到更深的颜色

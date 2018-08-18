@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.kit.utils.bitmap.BitmapUtils;
@@ -80,13 +81,13 @@ public class DrawableUtils {
     }
 
 
-    public static Drawable tintDrawable(int resDrawaleId, ColorStateList colors) {
+    public static Drawable tintDrawable(@DrawableRes int resDrawaleId, ColorStateList colors) {
         Drawable drawableSource = ResWrapper.getDrawable(resDrawaleId);
         return tintDrawable(drawableSource, colors);
     }
 
 
-    public static Drawable tintDrawable(int resDrawaleId, int color) {
+    public static Drawable tintDrawable(@DrawableRes int resDrawaleId, int color) {
         Drawable drawableSource = ResWrapper.getDrawable(resDrawaleId);
         return tintDrawable(drawableSource, ColorUtils.createColorStateList(color, color, color, color));
     }
