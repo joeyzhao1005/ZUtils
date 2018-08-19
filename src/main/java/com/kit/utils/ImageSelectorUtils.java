@@ -149,9 +149,7 @@ public class ImageSelectorUtils {
         if (StringUtils.isEmptyOrNullStr(filedir)) {
             return false;
         } else {
-            String sub = getSuffix(filedir);
-            boolean isGifPic = ("gif".equals(sub) || "GIF".equals(sub));
-            return isGifPic;
+            return filedir.endsWith("gif") || filedir.endsWith("GIF");
         }
     }
 }
