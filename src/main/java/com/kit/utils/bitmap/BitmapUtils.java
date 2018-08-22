@@ -473,8 +473,7 @@ public class BitmapUtils {
      * @param height
      * @return
      */
-    public static Bitmap getAdapterSizeBitmap(Bitmap bmp, int width,
-                                              int height) {
+    public static Bitmap getAdapterSizeBitmap(Bitmap bmp, int width, int height) {
 
         Bitmap outBitmap = null;
 
