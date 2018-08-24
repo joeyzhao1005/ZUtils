@@ -468,12 +468,13 @@ public class BitmapUtils {
 
     /**
      * 得到自适应宽高的bitmap
+     *
      * @param bmp
      * @param width
      * @param height
      * @return
      */
-    public static Bitmap getAdapterSizeBitmap(Bitmap bmp, int width, int height) {
+    public static Bitmap getAdapterSizeBitmap(Bitmap bmp, int width, int height, boolean isRecyclerOriginal) {
 
         Bitmap outBitmap = null;
 
@@ -505,12 +506,12 @@ public class BitmapUtils {
             Matrix matrix = new Matrix();
             matrix.preScale(scale, scale);
 
-                try {
-                    scaleBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
-                            matrix, true);
-                } catch (OutOfMemoryError e) {
-                    e.printStackTrace();
-                }
+            try {
+                scaleBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
+                        matrix, true);
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            }
 
         } else {
             Zog.d("Error!!! scale == 0");
@@ -524,7 +525,8 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
-        if (!bmp.isRecycled()) {
+
+        if (isRecyclerOriginal && !bmp.isRecycled()) {
             bmp.recycle();
         }
 
@@ -534,6 +536,19 @@ public class BitmapUtils {
 
 
         return outBitmap;
+    }
+
+    /**
+     * 得到自适应宽高的bitmap
+     *
+     * @param bmp
+     * @param width
+     * @param height
+     * @return
+     */
+    public static Bitmap getAdapterSizeBitmap(Bitmap bmp, int width, int height) {
+
+        return getAdapterSizeBitmap(bmp, width, height, true);
     }
 
     /**
@@ -1214,7 +1229,7 @@ public class BitmapUtils {
      * @param file
      * @param isRecycle 保存之后是否回收
      */
-    public static File saveBitmap(Bitmap bmp, File file, boolean isRecycle,boolean notifySystem) {
+    public static File saveBitmap(Bitmap bmp, File file, boolean isRecycle, boolean notifySystem) {
         if (bmp == null) {
             return null;
         }
@@ -1254,7 +1269,7 @@ public class BitmapUtils {
             bmp.recycle();
         }
 //
-        if (file.exists() &&notifySystem) {
+        if (file.exists() && notifySystem) {
             notifySystemSavedPic(AppMaster.getInstance().getAppContext(), file);
         }
         return file;
@@ -1267,8 +1282,8 @@ public class BitmapUtils {
      * @param bmp
      * @param file
      */
-    public static File saveBitmap(Bitmap bmp, File file,boolean notifySystem) {
-        return saveBitmap(bmp, file, true,notifySystem);
+    public static File saveBitmap(Bitmap bmp, File file, boolean notifySystem) {
+        return saveBitmap(bmp, file, true, notifySystem);
     }
 
 
@@ -1279,7 +1294,7 @@ public class BitmapUtils {
      * @param file
      */
     public static File saveBitmap(Bitmap bmp, File file) {
-        return saveBitmap(bmp, file, true,false);
+        return saveBitmap(bmp, file, true, false);
     }
 
     /**
