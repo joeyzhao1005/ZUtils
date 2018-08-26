@@ -55,9 +55,23 @@ public class ActivityManager {
      * @param cls
      */
     public synchronized void popActivity(Class cls, boolean isFinish) {
+        popActivity(cls, isFinish, -1);
+    }
+
+
+    /**
+     * 根据类名来销毁activity
+     *
+     * @param cls
+     */
+    public synchronized void popActivity(Class cls, boolean isFinish, int limit) {
         Iterator<WeakReference<Activity>> iter = activities.iterator();
+        int curr = 0;
         while (iter.hasNext()) {
 
+            if (curr >= limit && limit != -1) {
+                return;
+            }
             WeakReference<Activity> weakReference = iter.next();
             Activity activity = weakReference.get();
 
@@ -68,6 +82,8 @@ public class ActivityManager {
                 if (isFinish) {
                     activity.finish();
                 }
+
+                curr++;
             }
         }
 
