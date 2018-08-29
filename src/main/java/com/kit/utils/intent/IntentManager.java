@@ -123,6 +123,11 @@ public class IntentManager {
         if (!(context instanceof Activity)) {
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
+
+        if (itemMap != null) {
+            putItem(mIntent.getComponent().getClassName(), itemMap);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
             Bundle bundle = activityOptions.toBundle();
             context.startActivity(mIntent, bundle);
@@ -149,6 +154,9 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted class first.");
         }
 
+        if (itemMap != null) {
+            putItem(mIntent.getComponent().getClassName(), itemMap);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
             Bundle bundle = activityOptions.toBundle();
@@ -177,7 +185,10 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted class first.");
         }
 
-        putItem(mIntent.getComponent().getClassName(), itemMap);
+        if (itemMap != null) {
+            putItem(mIntent.getComponent().getClassName(), itemMap);
+        }
+
         if (!(context instanceof Activity)) {
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
@@ -203,7 +214,10 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted class first.");
         }
 
-        putItem(mIntent.getComponent().getClassName(), itemMap);
+        if (itemMap != null) {
+            putItem(mIntent.getComponent().getClassName(), itemMap);
+        }
+
         activity.startActivity(mIntent);
         if (isFinishActivityAfterStart) {
             activity.finish();
