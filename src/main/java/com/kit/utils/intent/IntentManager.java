@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.kit.utils.MapUtils;
 import com.kit.utils.log.Zog;
@@ -201,10 +202,7 @@ public class IntentManager {
         itemMap = null;
     }
 
-    public void startActivity(Activity activity) {
-        if (activity == null) {
-            return;
-        }
+    public void startActivity(@NonNull Activity activity) {
 
         if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
@@ -304,7 +302,7 @@ public class IntentManager {
 
 
     /************* intent 的构造   START ************************/
-    public IntentManager setClass(Context packageContext, Class<?> cls) {
+    public IntentManager setClass(@NonNull Context packageContext, @NonNull Class<?> cls) {
         getIntent().setClass(packageContext, cls);
         return this;
     }

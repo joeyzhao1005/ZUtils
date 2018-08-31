@@ -2,12 +2,14 @@ package com.kit.utils;
 
 import android.annotation.TargetApi;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
@@ -622,10 +624,20 @@ public class AppUtils {
      * @param packageName
      */
     public static void uninstallAPK(Context context, String packageName) {
-        Uri uri = Uri.parse("package:" + packageName);
-        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        Intent intent;
+//        if (ApiLevel.ATLEAST_LOLLIPOP) {
+//            intent = new Intent();
+//            PendingIntent sender = PendingIntent.getActivity(context, 0, intent, 0);
+//            PackageInstaller mPackageInstaller = context.getPackageManager().getPackageInstaller();
+//            mPackageInstaller.uninstall(packageName, sender.getIntentSender());
+//        } else {
+            Uri uri = Uri.parse("package:" + packageName);
+            intent = new Intent(Intent.ACTION_DELETE, uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+//        }
+
+
     }
 
     /**
