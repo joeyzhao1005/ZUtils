@@ -127,14 +127,14 @@ public class FileUtils {
     }
 
 
-
     public static String readFileByLines(String fileName) {
-        return readFileByLines(fileName,"");
+        return readFileByLines(fileName, "");
     }
-        /**
-         * 以行为单位读取文件，常用于读面向行的格式化文件
-         */
-    public static String readFileByLines(String fileName,String lineSeparator) {
+
+    /**
+     * 以行为单位读取文件，常用于读面向行的格式化文件
+     */
+    public static String readFileByLines(String fileName, String lineSeparator) {
         StringBuilder stringBuilder = new StringBuilder();
 
         File file = new File(fileName);
@@ -626,12 +626,10 @@ public class FileUtils {
      * @return
      */
     public static boolean isExists(String filePath) {
-        try {
-            File f = new File(filePath);
-            return f.exists();
-        } catch (Exception e) {
+        if (StringUtils.isEmptyOrNullStr(filePath)) {
+            return false;
         }
-        return false;
+        return new File(filePath).exists();
     }
 
 
