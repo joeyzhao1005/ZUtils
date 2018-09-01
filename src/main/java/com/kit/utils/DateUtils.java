@@ -29,6 +29,7 @@ public class DateUtils {
 
     public static String YEAR_MONTH_DAY_WEEK_CHINA = "yyyy年MM月dd日 EEE";
     public static String MONTH_DAY_WEEK_CHINA = "MM月dd日 EEE";
+    public static String MONTH_DAY_WEEK= "MM dd";
 
 
     public static String HOUR_MIN = "HH:mm";
