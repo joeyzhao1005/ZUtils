@@ -1,9 +1,8 @@
 package com.kit.utils;
 
-import android.Manifest;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.content.PermissionChecker;
+import androidx.annotation.NonNull;
+import androidx.core.content.PermissionChecker;
 
 import com.kit.app.application.AppMaster;
 

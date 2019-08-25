@@ -5,7 +5,7 @@ package com.kit.utils;
  */
 
 import android.os.Environment;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.kit.app.application.AppMaster;
 

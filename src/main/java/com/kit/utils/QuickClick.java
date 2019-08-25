@@ -1,8 +1,7 @@
 package com.kit.utils;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-import com.kit.app.core.task.DoSomeThing;
 import com.kit.app.core.task.OnNext;
 
 public class QuickClick {

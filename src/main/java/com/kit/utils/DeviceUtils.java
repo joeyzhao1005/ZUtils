@@ -1,7 +1,6 @@
 package com.kit.utils;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
@@ -13,9 +12,9 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+import androidx.core.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -31,7 +30,6 @@ import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.security.Permission;
 
 public class DeviceUtils {
 

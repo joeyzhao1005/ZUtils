@@ -1,6 +1,6 @@
 package com.kit.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;

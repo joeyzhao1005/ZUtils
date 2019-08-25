@@ -2,10 +2,10 @@ package com.kit.utils;
 
 import android.annotation.TargetApi;
 import android.os.Bundle;
-import android.support.annotation.AnimRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.annotation.AnimRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.kit.utils.intent.BundleData;
 import com.kit.utils.log.Zog;

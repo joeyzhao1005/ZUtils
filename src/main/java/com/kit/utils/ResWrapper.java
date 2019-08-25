@@ -6,13 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 
 import com.kit.app.application.AppMaster;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**

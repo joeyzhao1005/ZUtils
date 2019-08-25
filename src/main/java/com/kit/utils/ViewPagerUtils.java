@@ -1,8 +1,8 @@
 package com.kit.utils;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import androidx.viewpager.widget.ViewPager;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import java.lang.reflect.Field;
 
