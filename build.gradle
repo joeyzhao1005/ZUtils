@@ -5,7 +5,7 @@ dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.appcompat:appcompat:${android_x_appcompat}"
-    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation "androidx.annotation:annotation:${android_x_annotation}"
     implementation 'androidx.palette:palette:1.0.0'
 
     implementation "com.google.code.gson:gson:${gson}"
@@ -14,11 +14,11 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 29
     }
 
     compileOptions {
