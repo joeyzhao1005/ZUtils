@@ -3,19 +3,18 @@ apply plugin: 'kotlin-android'
 
 dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
-    implementation "com.android.support:support-v4:${android_sdk_version}"
-    implementation "com.android.support:appcompat-v7:${android_sdk_version}"
-    implementation "com.android.support:support-annotations:${android_sdk_version}"
-    implementation "com.android.support:palette-v7:${android_sdk_version}"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.appcompat:appcompat:${android_x_appcompat}"
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.palette:palette:1.0.0'
 
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation "com.google.code.gson:gson:${gson}"
 
 
 }
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.1"
 
     defaultConfig {
         minSdkVersion 14

@@ -1,7 +1,7 @@
 package com.kit.utils;
 
 import android.graphics.Bitmap;
-import android.support.v7.graphics.Palette;
+import androidx.palette.graphics.Palette;
 
 import com.kit.utils.log.Zog;
 

@@ -1,7 +1,7 @@
 package com.kit.utils;
 
 import android.content.Context;
-import android.support.annotation.DimenRes;
+import androidx.annotation.DimenRes;
 import android.util.TypedValue;
 
 public class DensityUtils {

@@ -20,16 +20,14 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.kit.app.application.AppMaster;
 import com.kit.config.AppConfig;
 import com.kit.utils.FileUtils;
 import com.kit.utils.MathExtend;
-import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
 import com.kit.utils.log.Zog;
 
