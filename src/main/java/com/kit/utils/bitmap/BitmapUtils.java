@@ -20,7 +20,9 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.View;
 
@@ -1286,7 +1288,20 @@ public class BitmapUtils {
 
 
     /**
-     * 保存位图到filepath路径
+     * 保存位图到fileFullPath路径
+     *
+     * @param bmp
+     * @param fileFullPath
+     */
+    public static File saveBitmap(Bitmap bmp, String fileFullPath) {
+        if (bmp == null || fileFullPath == null) {
+            return null;
+        }
+        return saveBitmap(bmp, new File(fileFullPath), true, false);
+    }
+
+    /**
+     * 保存位图到file
      *
      * @param bmp
      * @param file

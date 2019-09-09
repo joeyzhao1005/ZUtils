@@ -18,8 +18,18 @@ public class UIHandler {
         }
         return mainHandler;
     }
+    public static Handler create() {
+        return new Handler(Looper.getMainLooper());
+    }
 
     public static void run(Runnable runnable) {
-        get().post(runnable);
+        if (runnable == null) {
+            return;
+        }
+        if (Thread.currentThread() != Looper.getMainLooper().getThread()) {
+            create().post(runnable);
+        } else {
+            runnable.run();
+        }
     }
 }
