@@ -68,15 +68,6 @@ public class ServiceUtils {
         });
     }
 
-    public void startService(final Class clazzes, final Bundle bundle) {
-        AppUtils.newThread(() -> {
-            final Context context = ResWrapper.getApplicationContext();
-            Zog.i("start service " + clazzes.getName());
-//                IntentUtils.gotoService(context, clazzes, bundle, false);
-
-            IntentManager.get().setClass(context, clazzes).bundle(bundle).startService(context);
-        });
-    }
 
     public void bindService(final Context context, final ArrayList<Service> services,
                             final ArrayList<ServiceConnection> mConnection) {

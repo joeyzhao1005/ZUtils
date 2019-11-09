@@ -91,8 +91,8 @@ public class Zog {
      * @Title e
      * @Description 打印Log
      */
-    public static void i(String tag,ZString.Creator creator) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
+    public static void i(String tag, ZString.Creator creator) {
+        if (AppConfig.getAppConfig() == null || !AppConfig.getAppConfig().isShowLog()) {
             return;
         }
         Log.i(tag, getTitle() + creator.build());
