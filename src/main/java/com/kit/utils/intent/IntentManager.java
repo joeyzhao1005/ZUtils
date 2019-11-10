@@ -7,17 +7,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
-import com.kit.utils.MapUtils;
+import com.kit.utils.MD5Utils;
 import com.kit.utils.log.Zog;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * @author joeyzhao
- * <p>
+ * Created by joeyzhao on 2018/2/2.
  * <p>
  * 本类用来做intent传值
  * <p>
@@ -25,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * 最重要的是解决parcleable传值溢出的问题
  * <p>
- * 此类 仅作为 activity之间传值，broadcast请使用BroadcastCenter；
+ * 此类 仅作为 activity及fragment 之间传值，broadcast请使用BroadcastCenter；
  * 若有跳转到该类使用PendingIntent传值的话，则跳转到该类的所有传值方法请使用普通的传值方式（即Android默认的方式）；
  * 如：跳转到MainActivity的有通过点击通知栏通知的方式跳入的，则所有跳入MainActivity的都是用普通传值方式。
  * <p>
@@ -45,69 +43,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class IntentManager {
     /************* intent 的启动   START ************************/
-    public void startActivity(Activity activity, Intent intent) {
-        if (activity == null) {
-            return;
-        }
-
-        this.mIntent = intent;
-        if (mIntent == null) {
-            throw new IllegalStateException("intent must be setted first.");
-        }
-
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
-
-        if (mIntent.getExtras() != null) {
-            itemMap = new BundleData();
-            itemMap.put("bundle", mIntent.getExtras());
-            putItem(mIntent.getComponent().getClassName(), itemMap);
-        }
-        mIntent.putExtras(new Bundle());
-        activity.startActivity(mIntent);
-        mIntent = null;
-        itemMap = null;
-
-        if (isFinishActivityAfterStart) {
-            activity.finish();
-        }
-    }
-
-    public void startActivity(Context context, Intent intent) {
-        if (context == null) {
-            return;
-        }
-
-        this.mIntent = intent;
-        if (mIntent == null) {
-            throw new IllegalStateException("intent must be setted first.");
-        }
-
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
-
-        if (!(context instanceof Activity)) {
-            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-
-        if (mIntent.getExtras() != null) {
-            itemMap = new BundleData();
-            itemMap.put("bundle", mIntent.getExtras());
-            putItem(mIntent.getComponent().getClassName(), itemMap);
-        }
-        mIntent.putExtras(new Bundle());
-        context.startActivity(mIntent);
-        mIntent = null;
-        itemMap = null;
-
-        if (isFinishActivityAfterStart) {
-            ((Activity) context).finish();
-        }
-    }
-
-
     public void startActivity(Context context, ActivityOptions activityOptions) {
         if (context == null) {
             return;
@@ -116,19 +51,13 @@ public class IntentManager {
         if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
         }
-
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
-
+//
+//        if (mIntent.getComponent() == null) {
+//            throw new IllegalStateException("intent must be setted class first.");
+//        }
         if (!(context instanceof Activity)) {
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-
-        if (itemMap != null) {
-            putItem(mIntent.getComponent().getClassName(), itemMap);
-        }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
             Bundle bundle = activityOptions.toBundle();
             context.startActivity(mIntent, bundle);
@@ -140,6 +69,7 @@ public class IntentManager {
         }
         mIntent = null;
         itemMap = null;
+        isClassicMode = false;
     }
 
     public void startActivity(Activity activity, ActivityOptions activityOptions) {
@@ -151,13 +81,9 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted first.");
         }
 
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
-
-        if (itemMap != null) {
-            putItem(mIntent.getComponent().getClassName(), itemMap);
-        }
+//        if (mIntent.getComponent() == null) {
+//            throw new IllegalStateException("intent must be setted class first.");
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && activityOptions != null) {
             Bundle bundle = activityOptions.toBundle();
@@ -170,6 +96,7 @@ public class IntentManager {
         }
         mIntent = null;
         itemMap = null;
+        isClassicMode = false;
     }
 
 
@@ -182,14 +109,11 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted first.");
         }
 
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
+//        if (mIntent.getComponent() == null) {
+//            throw new IllegalStateException("intent must be setted class first.");
+//        }
 
-        if (itemMap != null) {
-            putItem(mIntent.getComponent().getClassName(), itemMap);
-        }
-
+        putItem(mIntent, itemMap);
         if (!(context instanceof Activity)) {
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
@@ -200,22 +124,22 @@ public class IntentManager {
 
         mIntent = null;
         itemMap = null;
+        isClassicMode = false;
     }
 
-    public void startActivity(@NonNull Activity activity) {
-
+    public void startActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
         if (mIntent == null) {
             throw new IllegalStateException("intent must be setted first.");
         }
 
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
+//        if (mIntent.getComponent() == null) {
+//            throw new IllegalStateException("intent must be setted class first.");
+//        }
 
-        if (itemMap != null) {
-            putItem(mIntent.getComponent().getClassName(), itemMap);
-        }
-
+        putItem(mIntent, itemMap);
         activity.startActivity(mIntent);
         if (isFinishActivityAfterStart) {
             activity.finish();
@@ -223,6 +147,7 @@ public class IntentManager {
 
         mIntent = null;
         itemMap = null;
+        isClassicMode = false;
     }
 
     public void startActivityForResult(Activity activity, int code) {
@@ -234,17 +159,18 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted first.");
         }
 
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
+//        if (mIntent.getComponent() == null) {
+//            throw new IllegalStateException("intent must be setted class first.");
+//        }
 
-        putItem(mIntent.getComponent().getClassName(), itemMap);
+        putItem(mIntent, itemMap);
         activity.startActivityForResult(mIntent, code);
         if (isFinishActivityAfterStart) {
             activity.finish();
         }
         mIntent = null;
         itemMap = null;
+        isClassicMode = false;
     }
 
     public void startService(Context context) {
@@ -256,14 +182,15 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted first.");
         }
 
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
+//        if (mIntent.getComponent() == null) {
+//            throw new IllegalStateException("intent must be setted class first.");
+//        }
 
-        putItem(mIntent.getComponent().getClassName(), itemMap);
+        putItem(mIntent, itemMap);
         context.startService(mIntent);
         mIntent = null;
         itemMap = null;
+        isClassicMode = false;
     }
 
     public void stopService(Context context) {
@@ -275,17 +202,16 @@ public class IntentManager {
             throw new IllegalStateException("intent must be setted first.");
         }
 
-        if (mIntent.getComponent() == null) {
-            throw new IllegalStateException("intent must be setted class first.");
-        }
+//        if (mIntent.getComponent() == null) {
+//            throw new IllegalStateException("intent must be setted class first.");
+//        }
 
-        putItem(mIntent.getComponent().getClassName(), itemMap);
+        putItem(mIntent, itemMap);
         context.stopService(mIntent);
         mIntent = null;
         itemMap = null;
     }
     /************* intent 的启动   END ************************/
-
 
     /************* intent 跨项目的构造   START ************************/
     public IntentManager target(Context packageContext, String target) {
@@ -302,7 +228,7 @@ public class IntentManager {
 
 
     /************* intent 的构造   START ************************/
-    public IntentManager setClass(@NonNull Context packageContext, @NonNull Class<?> cls) {
+    public IntentManager setClass(Context packageContext, Class<?> cls) {
         getIntent().setClass(packageContext, cls);
         return this;
     }
@@ -327,6 +253,11 @@ public class IntentManager {
         return this;
     }
 
+    public IntentManager classicMode() {
+        this.isClassicMode = true;
+        return this;
+    }
+
     /**
      * @param isFinishActivityAfterStart 打开新的界面之后是否关闭当前界面
      * @return
@@ -347,11 +278,6 @@ public class IntentManager {
         return this;
     }
 
-    public IntentManager bundle(Bundle bundle) {
-        put("bundle", bundle);
-        return this;
-    }
-
 
     /**
      * 往item中压入数据 无敌的方法
@@ -360,6 +286,9 @@ public class IntentManager {
      * @param value
      */
     public <T> IntentManager put(String key, T value) {
+        if (value == null) {
+            return this;
+        }
         getData().put(key, value);
         return this;
     }
@@ -367,37 +296,23 @@ public class IntentManager {
 
 
     /************* intent 的取值  START *********/
-    public BundleData getData(String action) {
-        if (action == null) {
+
+
+    public BundleData getData(Intent intent) {
+        if (intent == null) {
             return null;
         }
+        BundleData bundleData = null;
 
-        return map.get(action);
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            bundleData = bundle.getParcelable("bundle");
+        }
+
+        return bundleData;
     }
 
 
-    public BundleData getData(Context context) {
-        if (context == null) {
-            return null;
-        }
-        return map.get(context.getClass().getName());
-    }
-
-
-//    public Bundle getBundle(String action) {
-//        if (action == null)
-//            return null;
-//        BundleData bundleData = map.get(action);
-//
-//        return bundleData.get("bindle");
-//    }
-//
-//    public BundleData getBundle(Context context) {
-//        if (context == null)
-//            return null;
-//        BundleData bundleData = map.get(context.getClass().getName());
-//        return bundleData.get("bindle");
-//    }
     /************* intent 的取值  END *********/
 
 
@@ -405,34 +320,10 @@ public class IntentManager {
     /**
      * 销毁
      * 在基类的onDestory中调用最好
-     *
-     * @param context
      */
-    public void destory(Context context) {
-        if (context == null) {
-            return;
-        }
-
-        map.remove(context.getClass().getName());
+    public void destory(Intent intent) {
     }
 
-
-//    /**
-//     * @param fragment
-//     * @param tag      重复的fragment（即一个界面上同时出现多个这个fragment）那么需要加tag，销毁的时候页传递相应的tag
-//     */
-//    public void destory(Fragment fragment, String tag) {
-//
-//        if (StringUtils.isEmptyOrNullStr(tag)) {
-//            destory(fragment);
-//            return;
-//        }
-//
-//        if (fragment == null)
-//            return;
-//
-//        map.remove(fragment.getClass().getName() + tag);
-//    }
 
     /************* intent 的传值销毁  END *********/
 
@@ -449,7 +340,6 @@ public class IntentManager {
         if (itemMap == null) {
             itemMap = new BundleData();
         }
-
         return itemMap;
     }
 
@@ -457,44 +347,72 @@ public class IntentManager {
     /**
      * 往map中压数据
      *
-     * @param key
+     * @param intent
      * @param bundleData
      */
-    private void putItem(String key, BundleData bundleData) {
-        if (bundleData != null) {
-            map.put(key, bundleData);
-            if (map.size() > MAX_SIZE) {
-                MapUtils.removeFirst(map);
-            }
+    private void putItem(Intent intent, BundleData bundleData) {
+        if (intent == null) {
+            return;
         }
+
+        intent.putExtra("bundle", bundleData);
     }
 
-    private static final int MAX_SIZE = 50;
+    private String getKey(Intent intent) {
+        String classStr = intent.getComponent() == null ? "" : intent.getComponent().getClassName();
+        String action = intent.getAction() == null ? "" : intent.getAction();
 
-    private static ConcurrentHashMap<String, BundleData> map;
+        String categories = "";
+
+        if (intent.getCategories() != null && !intent.getCategories().isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : intent.getCategories()) {
+                categories = sb
+                        .append(categories)
+                        .append(s)
+                        .append(";")
+                        .toString();
+            }
+        }
+
+        return MD5Utils.getMD5String(classStr + "_" + action + "_" + categories);
+    }
+
+
+    public static void register(String intentKey, Class classTarget) {
+        if (targetMap == null) {
+            Zog.e("You must init IntentManager first before target");
+            return;
+        }
+
+        targetMap.put(intentKey, classTarget);
+    }
+
+
+
     private static ConcurrentHashMap<String, Class> targetMap;
 
     private static IntentManager mInstance;
-
-    private Intent mIntent;
-    private BundleData itemMap;
-    private boolean isFinishActivityAfterStart;
+    private boolean isClassicMode;
+    Intent mIntent;
+    BundleData itemMap;
+    boolean isFinishActivityAfterStart;
 
 
     public IntentManager() {
         mIntent = new Intent();
         itemMap = new BundleData();
+        isClassicMode = false;
     }
 
 
-    public void init(ConcurrentHashMap<String, Class> map) {
+    public void init(ConcurrentHashMap map) {
         targetMap = map;
     }
 
     public static IntentManager get() {
         if (mInstance == null) {
             mInstance = new IntentManager();
-            map = new ConcurrentHashMap<String, BundleData>(50);
         }
         return mInstance;
     }
