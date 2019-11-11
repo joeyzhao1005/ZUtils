@@ -127,6 +127,20 @@ public class MathExtend {
      * @return 两个参数的商
      */
 
+    public static double divide(int v1, int v2) {
+        return divide(ValueOf.toDouble(v1), ValueOf.toDouble(v2), DEFAULT_DIV_SCALE);
+    }
+
+    /**
+     * 提供（相对）精确的除法运算，当发生除不尽的情况时，精确到
+     * <p/>
+     * 小数点以后10位，以后的数字四舍五入,舍入模式采用ROUND_HALF_EVEN
+     *
+     * @param v1
+     * @param v2
+     * @return 两个参数的商
+     */
+
     public static double divide(double v1, double v2) {
 
         return divide(v1, v2, DEFAULT_DIV_SCALE);

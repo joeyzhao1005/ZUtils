@@ -31,6 +31,7 @@ import com.kit.config.AppConfig;
 import com.kit.utils.FileUtils;
 import com.kit.utils.MathExtend;
 import com.kit.utils.StringUtils;
+import com.kit.utils.ValueOf;
 import com.kit.utils.log.Zog;
 
 import java.io.ByteArrayInputStream;
@@ -1146,8 +1147,30 @@ public class BitmapUtils {
         return bitmap;
     }
 
-    public static Bitmap resizeBitmapFileByWidth(Context context, String filePath,
-                                                 int imageViewWidth) {
+    public static Bitmap resizeBitmapByWidth(Bitmap origin, float imageViewWidth) {
+
+        if (origin == null) {
+            return null;
+        }
+
+
+        int width = origin.getWidth();
+        int height = origin.getHeight();
+
+        float ratio = ValueOf.toFloat(MathExtend.divide(imageViewWidth, width));
+
+        if (ratio <= 0) {
+            ratio = 1;
+        }
+
+        Matrix matrix = new Matrix();
+        matrix.preScale(ratio, ratio);
+        Bitmap resize = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
+        origin.recycle();
+        return resize;
+    }
+
+    public static Bitmap resizeBitmapFileByWidth(String filePath, int imageViewWidth) {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -1162,9 +1185,7 @@ public class BitmapUtils {
 
         options.inSampleSize = ratio;
         options.inJustDecodeBounds = false;
-        Bitmap bitmap = generateBitmapFile(filePath, options);
-
-        return bitmap;
+        return generateBitmapFile(filePath, options);
     }
 
     public static Bitmap generateBitmapFile(String filePath,
