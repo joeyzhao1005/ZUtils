@@ -143,7 +143,8 @@ public class Zog {
      * @Description 打印Log
      */
     public static void e(String tag, ZString.Creator creator) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
+        AppConfig.IAppConfig appConfig = AppConfig.getAppConfig();
+        if (appConfig == null || !appConfig.isShowLog()) {
             return;
         }
         Log.e(tag, getTitle() + creator.build());
