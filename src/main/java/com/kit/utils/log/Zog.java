@@ -7,7 +7,6 @@ import android.util.Log;
 import com.kit.config.AppConfig;
 import com.kit.utils.AppUtils;
 import com.kit.utils.GsonUtils;
-import com.kit.utils.ValueOf;
 import com.kit.utils.ZString;
 
 import java.io.File;
@@ -26,10 +25,10 @@ public class Zog {
     /**
      * 是否手动的 catch Log，一般用来给用户抓日志用
      */
-    private static boolean IS_CATCH_LOG = false;
+    private static boolean IS_FILE_LOG = false;
 
-    public static void putLog(String log) {
-        if (!IS_CATCH_LOG) {
+    public static void fileLog(String log) {
+        if (!IS_FILE_LOG) {
             return;
         }
         if (stringLogBuilder == null) {
