@@ -15,8 +15,9 @@ public class RomUtils {
     public class AvailableRomType {
         public static final int MIUI = 1;
         public static final int FLYME = 2;
-        public static final int ANDROID_NATIVE = 3;
-        public static final int NA = 4;
+        public static final int EMUI = 3;
+        public static final int ANDROID_NATIVE = 4;
+        public static final int NA = 5;
     }
 
     public static boolean isLightStatusBarAvailable() {
@@ -26,7 +27,7 @@ public class RomUtils {
         return false;
     }
 
-    public static int getLightStatausBarAvailableRomType() {
+    public static int getAvailableRomType() {
         if (isMIUIV6OrAbove()) {
             return AvailableRomType.MIUI;
         }
@@ -35,9 +36,15 @@ public class RomUtils {
             return AvailableRomType.FLYME;
         }
 
+        if (isEMUI()) {
+            return AvailableRomType.EMUI;
+
+        }
+
         if (isAndroidMOrAbove()) {
             return AvailableRomType.ANDROID_NATIVE;
         }
+
 
         return AvailableRomType.NA;
     }
@@ -87,6 +94,18 @@ public class RomUtils {
         }
         return miuiVersionCode;
     }
+
+    private static boolean isEMUI() {
+        String miuiVersionCodeStr = getSystemProperty("ro.build.version.emui");
+        if (!TextUtils.isEmpty(miuiVersionCodeStr)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    private static final String KEY_EMUI_VERSION_CODE = "ro.build.version.emui";
+
 
     //Android Api 23以上
     private static boolean isAndroidMOrAbove() {
