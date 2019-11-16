@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.core.content.ContextCompat;
 
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -368,6 +369,11 @@ public class DeviceUtils {
      * @return
      */
     public static int getNavigationBarHeight(Context context) {
+        if (ApiLevel.ATLEAST_JELLY_BEAN_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
+            //小米手势导航 启用
+            return 0;
+        }
+
         int resourceId = 0;
         int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
         if (rid != 0) {
