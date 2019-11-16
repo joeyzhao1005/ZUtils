@@ -12,9 +12,11 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.core.content.ContextCompat;
+
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -340,9 +342,9 @@ public class DeviceUtils {
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
-            realScreenWidth =  size.x;
+            realScreenWidth = size.x;
         } else {
-            realScreenWidth =  display.getWidth();
+            realScreenWidth = display.getWidth();
         }
         return realScreenWidth;
     }
@@ -366,16 +368,14 @@ public class DeviceUtils {
      * @return
      */
     public static int getNavigationBarHeight(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height",
-                "dimen", "android");
-        //获取NavigationBar的高度
-        int height = resources.getDimensionPixelSize(resourceId);
-
-        if (height == 0) {
-            height = DensityUtils.dip2px(context, 44);
+        int resourceId = 0;
+        int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
+        if (rid != 0) {
+            resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+            return context.getResources().getDimensionPixelSize(resourceId);
+        } else {
+            return 0;
         }
-        return height;
     }
 
     /**
