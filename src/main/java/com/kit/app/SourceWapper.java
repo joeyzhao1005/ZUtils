@@ -63,6 +63,8 @@ public class SourceWapper {
             return "contentProvider";
         } else if (uri.startsWith("res://")) {
             return "res";
+        } else if (uri.endsWith(".gif") || uri.startsWith(".GIF")) {
+            return "gif";
         } else if (uri.startsWith("http://") || uri.startsWith("https://")) {
             return "http";
         } else {
