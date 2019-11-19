@@ -327,6 +327,18 @@ public class StringUtils {
     }
 
 
+    /**
+     * @param
+     * @return boolean 返回类型
+     * @Title isEmptyOrNullStr
+     * @Description 字符串是否为null或空字符或为“null”
+     */
+    public static boolean isEmptyOrNullStr(CharSequence str) {
+        if (str == null) {
+            return true;
+        }
+        return isEmptyOrNullStr(str.toString());
+    }
 
     /**
      * @param
@@ -348,7 +360,6 @@ public class StringUtils {
             }
         }
         return false;
-
     }
 
     public static String toDecimal(double d) {
