@@ -29,7 +29,7 @@ public class DateUtils {
 
     public static String YEAR_MONTH_DAY_WEEK_CHINA = "yyyy年MM月dd日 EEE";
     public static String MONTH_DAY_WEEK_CHINA = "MM月dd日 EEE";
-    public static String MONTH_DAY_WEEK= "MM dd";
+    public static String MONTH_DAY_WEEK = "MM dd";
 
 
     public static String HOUR_MIN = "HH:mm";
@@ -276,7 +276,9 @@ public class DateUtils {
             if (sub > 0) {
                 if (sub < ms) {
                     // System.out.println("hms: " + hms);
-                    if (sub < hms) {
+                    if (sub < 60 * 1000) {
+                        ret = "刚刚";
+                    } else if (sub < hms) {
                         // System.out.println();
                         long mms = (sub / 1000) / 60;
                         ret = mms + "分钟前";
