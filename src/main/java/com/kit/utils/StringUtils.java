@@ -2,6 +2,8 @@ package com.kit.utils;
 
 import android.text.TextUtils;
 
+import androidx.annotation.Nullable;
+
 import com.kit.utils.log.Zog;
 
 import java.io.UnsupportedEncodingException;
@@ -346,7 +348,7 @@ public class StringUtils {
      * @Title isEmptyOrNullStr
      * @Description 字符串是否为null或空字符或为“null”
      */
-    public static boolean isEmptyOrNullStr(String str) {
+    public static boolean isEmptyOrNullStr(@Nullable String str) {
         if (TextUtils.isEmpty(str)) {
             return true;
         } else {
