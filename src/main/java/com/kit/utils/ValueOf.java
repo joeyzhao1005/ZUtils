@@ -3,7 +3,6 @@ package com.kit.utils;
 public class ValueOf {
 
 
-
     public static float toFloat(Object o) {
         float value = 0;
         try {
@@ -51,6 +50,7 @@ public class ValueOf {
         long value = 0;
         try {
             String s = o.toString();
+            s = s.trim();
             if (s.contains(".")) {
                 value = Long.valueOf(s.substring(0, s.lastIndexOf(".")));
             } else {
@@ -69,12 +69,11 @@ public class ValueOf {
     }
 
 
-
-
     public static int toInt(Object o, int defaultValue) {
         int value;
         try {
             String s = o.toString();
+            s = s.trim();
             if (s.contains(".")) {
                 value = Integer.valueOf(s.substring(0, s.lastIndexOf(".")));
             } else {

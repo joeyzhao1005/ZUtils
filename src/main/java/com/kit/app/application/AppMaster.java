@@ -73,6 +73,10 @@ public class AppMaster implements IApp {
         return app.getVersionCode();
     }
 
+    public IApp getApp() {
+        return app;
+    }
+
     public void setApp(IApp app) {
         this.app = app;
     }
