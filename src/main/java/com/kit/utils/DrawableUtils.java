@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.DrawableRes;
 import androidx.core.graphics.drawable.DrawableCompat;
 
@@ -20,11 +21,12 @@ import java.io.File;
 
 
 /**
- * Created by Zhao on 14-8-12.
+ * @author Zhao
+ * @date 14-8-12
  */
 public class DrawableUtils {
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+    public static Bitmap drawableToBitmap(Drawable drawable, int defaultWidth, int defaultHeight) {
 
         int width = 0;
         try {
@@ -42,11 +44,11 @@ public class DrawableUtils {
 
 
         if (width <= 0) {
-            width = DensityUtils.dip2px(120f);
+            width = defaultWidth;
         }
 
         if (height <= 0) {
-            height = DensityUtils.dip2px(120f);
+            height = defaultHeight;
         }
 
         Bitmap bitmap = Bitmap.createBitmap(
@@ -159,33 +161,41 @@ public class DrawableUtils {
 
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
-        Bitmap oldbmp = BitmapUtils.drawable2Bitmap(drawable); // drawable 转换成 bitmap
-        Matrix matrix = new Matrix();   // 创建操作图片用的 Matrix 对象
+        // drawable 转换成 bitmap
+        Bitmap oldbmp = BitmapUtils.drawable2Bitmap(drawable);
+        // 创建操作图片用的 Matrix 对象
+        Matrix matrix = new Matrix();
 
         float scaleWidth = 1;
         float scaleHeight = 1;
         if (w > 0) {
-            scaleWidth = ((float) MathExtend.divide(w, width));   // 计算缩放比例
+            // 计算缩放比例
+            scaleWidth = ((float) MathExtend.divide(w, width));
         }
         if (h > 0) {
             scaleHeight = ((float) MathExtend.divide(h, height));
         }
 
         if (!isConstrain) {
-            matrix.postScale(scaleWidth, scaleHeight);         // 设置缩放比例
+            // 设置缩放比例
+            matrix.postScale(scaleWidth, scaleHeight);
         } else {
-            if (scaleHeight >= 1 && scaleWidth >= 1) {//如果放大，那就取缩放最大的那个
+            if (scaleHeight >= 1 && scaleWidth >= 1) {
+                //如果放大，那就取缩放最大的那个
                 scale = (scaleHeight > scaleWidth ? scaleHeight : scaleWidth);
-            } else if (scaleHeight <= 1 && scaleWidth <= 1) {//如果缩小，那就取缩放最小的那个
+            } else if (scaleHeight <= 1 && scaleWidth <= 1) {
+                //如果缩小，那就取缩放最小的那个
                 scale = (scaleHeight < scaleWidth ? scaleHeight : scaleWidth);
-            } else {//这就是异常情况了 那就取两个之中较小的那个
-
-//                LogUtils.i(DrawableUtils.class, "in here!!!!!!!!!!");
+            } else {
+                //这就是异常情况了 那就取两个之中较小的那个
                 scale = (scaleHeight < scaleWidth ? scaleHeight : scaleWidth);
             }
-            matrix.postScale(scale, scale);         // 设置缩放比例
+            // 设置缩放比例
+            matrix.postScale(scale, scale);
         }
-        Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);       // 建立新的 bitmap ，其内容是对原 bitmap 的缩放后的图
+
+        Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);
+        // 建立新的 bitmap ，其内容是对原 bitmap 的缩放后的图
         if (!oldbmp.isRecycled()) {
             oldbmp.recycle();
         }
@@ -212,40 +222,48 @@ public class DrawableUtils {
 
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
-        Bitmap oldbmp = BitmapUtils.drawable2Bitmap(drawable); // drawable 转换成 bitmap
-        Matrix matrix = new Matrix();   // 创建操作图片用的 Matrix 对象
+        // drawable 转换成 bitmap
+        Bitmap oldbmp = BitmapUtils.drawable2Bitmap(drawable);
+        // 创建操作图片用的 Matrix 对象
+        Matrix matrix = new Matrix();
 
         float scaleWidth = 1;
         float scaleHeight = 1;
         if (w > 0) {
-            scaleWidth = ((float) MathExtend.divide(w, width));   // 计算缩放比例
+            // 计算缩放比例
+            scaleWidth = ((float) MathExtend.divide(w, width));
         }
         if (h > 0) {
             scaleHeight = ((float) MathExtend.divide(h, height));
         }
 
         if (!isConstrain) {
-            matrix.postScale(scaleWidth, scaleHeight);         // 设置缩放比例
+            // 设置缩放比例
+            matrix.postScale(scaleWidth, scaleHeight);
         } else {
-            if (scaleHeight >= 1 && scaleWidth >= 1) {//如果放大，那就取缩放最大的那个
+            if (scaleHeight >= 1 && scaleWidth >= 1) {
+                //如果放大，那就取缩放最大的那个
                 scale = (scaleHeight > scaleWidth ? scaleHeight : scaleWidth);
-            } else if (scaleHeight <= 1 && scaleWidth <= 1) {//如果缩小，那就取缩放最小的那个
+            } else if (scaleHeight <= 1 && scaleWidth <= 1) {
+                //如果缩小，那就取缩放最小的那个
                 scale = (scaleHeight < scaleWidth ? scaleHeight : scaleWidth);
-            } else {//这就是异常情况了 那就取两个之中较小的那个
-
-//                LogUtils.i(DrawableUtils.class, "in here!!!!!!!!!!");
+            } else {
+                //这就是异常情况了 那就取两个之中较小的那个
                 scale = (scaleHeight < scaleWidth ? scaleHeight : scaleWidth);
             }
-            matrix.postScale(scale, scale);         // 设置缩放比例
+            // 设置缩放比例
+            matrix.postScale(scale, scale);
         }
-        Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);       // 建立新的 bitmap ，其内容是对原 bitmap 的缩放后的图
+        Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);
+
+        // 建立新的 bitmap ，其内容是对原 bitmap 的缩放后的图
         if (!oldbmp.isRecycled()) {
             oldbmp.recycle();
         }
 
 
-//        LogUtils.i(DrawableUtils.class, "newbmp:" + newbmp + " scale:" + scale);
-        return new BitmapDrawable(newbmp);       // 把 bitmap 转换成 drawable 并返回
+        // 把 bitmap 转换成 drawable 并返回
+        return new BitmapDrawable(newbmp);
 
 //        return drawable;
     }
