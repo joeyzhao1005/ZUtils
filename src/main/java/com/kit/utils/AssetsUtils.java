@@ -24,7 +24,7 @@ public class AssetsUtils extends AssetsTxt2String {
         return null;
     }
 
-    public static String getFromAssetsNo_N(Context context, String fileName) {
+    public static String getFromAssetsNoNewLines(Context context, String fileName) {
         try {
             InputStreamReader inputReader = new InputStreamReader(context
                     .getResources().getAssets().open(fileName));
