@@ -2,8 +2,10 @@ package com.kit.utils;
 
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.core.app.NotificationManagerCompat;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.log.Zog;
 
 import java.util.Set;
@@ -44,6 +46,10 @@ public class NotificationListenerUtils {
      * @return
      */
     public boolean isNotificationListenerListenerEnabled(Context context) {
+        if (context == null) {
+            context = AppMaster.getInstance().getAppContext();
+            Zog.e("conext is null, it maybe not you wish!");
+        }
         String pkgName = context.getPackageName();
         Set<String> packageNames = NotificationManagerCompat.getEnabledListenerPackages(context);
 
