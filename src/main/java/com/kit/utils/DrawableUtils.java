@@ -27,7 +27,7 @@ import java.io.File;
  */
 public class DrawableUtils {
 
-    public static Bitmap drawableToBitmap(Drawable drawable, int defaultWidth, int defaultHeight) {
+    public static Bitmap drawableToBitmap(Drawable drawable, int toWidth, int toHeight) {
 
         int width = 0;
         try {
@@ -45,11 +45,11 @@ public class DrawableUtils {
 
 
         if (width <= 0) {
-            width = defaultWidth;
+            width = toWidth;
         }
 
         if (height <= 0) {
-            height = defaultHeight;
+            height = toHeight;
         }
 
         Bitmap bitmap = Bitmap.createBitmap(
