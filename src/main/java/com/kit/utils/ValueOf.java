@@ -68,6 +68,23 @@ public class ValueOf {
         return toLong(o, 0);
     }
 
+    public static boolean toBoolean(Object o, boolean defaultValue) {
+        boolean value = defaultValue;
+        try {
+            String s = o.toString();
+            s = s.trim();
+            value = Boolean.valueOf(s);
+        } catch (Exception e) {
+            value = defaultValue;
+        }
+
+        return value;
+    }
+
+    public static boolean toBoolean(Object o) {
+        return toBoolean(o, false);
+    }
+
 
     public static int toInt(Object o, int defaultValue) {
         int value;
