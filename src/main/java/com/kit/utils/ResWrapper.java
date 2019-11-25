@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+
 import android.view.View;
 
 import com.kit.app.application.AppMaster;
@@ -15,7 +17,8 @@ import com.kit.app.application.AppMaster;
 import java.util.List;
 
 /**
- * Created by Zhao on 16/7/17.
+ * @author Zhao
+ * @date 16/7/17
  */
 public class ResWrapper {
     private ResWrapper() {

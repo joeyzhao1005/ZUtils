@@ -30,6 +30,7 @@ import com.kit.app.application.AppMaster;
 import com.kit.config.AppConfig;
 import com.kit.utils.FileUtils;
 import com.kit.utils.MathExtend;
+import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
 import com.kit.utils.ValueOf;
 import com.kit.utils.log.Zog;
@@ -839,7 +840,7 @@ public class BitmapUtils {
             return null;
         }
 
-        Drawable drawable = new BitmapDrawable(bitmap);
+        Drawable drawable = new BitmapDrawable(ResWrapper.getResources(), bitmap);
 
         return drawable;
     }
