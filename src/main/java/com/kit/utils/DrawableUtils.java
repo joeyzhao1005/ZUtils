@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.DrawableRes;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.bitmap.BitmapUtils;
 import com.kit.utils.log.Zog;
 
@@ -56,10 +57,8 @@ public class DrawableUtils {
                 height,
                 Bitmap.Config.ARGB_8888);
 
-        Canvas canvas = new Canvas(bitmap);
-
-        //canvas.setBitmap(bitmap);
-
+        Canvas canvas = new Canvas();
+        canvas.setBitmap(bitmap);
 
         drawable.setBounds(0, 0, width, height);
         drawable.draw(canvas);
