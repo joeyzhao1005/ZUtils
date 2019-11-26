@@ -122,7 +122,7 @@ public class RomUtils {
      */
     public static int getMiuiVersion() {
         String version = RomUtils.getSystemProperty("ro.miui.ui.version.name");
-        if (version != null) {
+        if (version != null && !StringUtils.isEmpty(version)) {
             try {
                 return Integer.parseInt(version.substring(1));
             } catch (Exception e) {

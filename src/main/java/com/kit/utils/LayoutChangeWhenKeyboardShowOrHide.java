@@ -5,19 +5,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.kit.utils.log.Zog;
+
 public class LayoutChangeWhenKeyboardShowOrHide {
 
-    public static void assistContainer(View content) {
-        new LayoutChangeWhenKeyboardShowOrHide(content);
+    /**
+     *
+     * @param content
+     * @param navigaionBarHeight 假如包含navigation高度 那么就传非0的真实导航栏数值
+     */
+    public static void assistContainer(View content, int navigaionBarHeight) {
+        new LayoutChangeWhenKeyboardShowOrHide(content, navigaionBarHeight);
     }
 
     private View mChildOfContent;
     private int usableHeightPrevious;
     private ViewGroup.LayoutParams frameLayoutParams;
+    private int navigaionBarHeight;
 
-    private LayoutChangeWhenKeyboardShowOrHide(View content) {
+    private LayoutChangeWhenKeyboardShowOrHide(View content, int navigaionBarHeight) {
         if (content != null) {
             mChildOfContent = content;
+            this.navigaionBarHeight = navigaionBarHeight;
             mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
@@ -43,6 +52,6 @@ public class LayoutChangeWhenKeyboardShowOrHide {
         //计算视图可视高度
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
-        return (r.bottom);
+        return (r.bottom + navigaionBarHeight);
     }
 }
