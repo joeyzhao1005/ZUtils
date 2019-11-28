@@ -1,8 +1,12 @@
 package com.kit.utils;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import java.lang.ref.WeakReference;
+import java.util.Iterator;
 
 /**
  * Created by Zhao on 14/11/21.
@@ -11,24 +15,8 @@ import android.os.Bundle;
  */
 public class BroadcastUtils {
 
-    public static Object object;
-
-
-    public static void send(Context context,Intent intent,Bundle bundle){
-        intent.putExtras(bundle);
-
-        context.sendBroadcast(intent);
-    }
 
 
 
-    public static void send(Context context,Intent intent,Object obj){
-        object = obj;
-        context.sendBroadcast(intent);
-    }
 
-
-    public static Object getData() {
-        return object;
-    }
 }

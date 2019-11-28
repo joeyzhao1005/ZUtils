@@ -7,56 +7,37 @@
 package com.kit.broadcast;
 
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.collection.LruCache;
 
-
+import com.kit.app.application.AppMaster;
 import com.kit.utils.StringUtils;
 import com.kit.utils.intent.BundleData;
 import com.kit.utils.log.Zog;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 public class BroadcastCenter {
     private LocalBroadcastManager localBroadcastManager;
 
-    private CopyOnWriteArrayList<WeakReference<BroadcastReceiver>> broadcastReceiverList = new CopyOnWriteArrayList<WeakReference<BroadcastReceiver>>();
-    private static BroadcastCenter singleBroadcast = new BroadcastCenter();
-
-    private LruCache<String, BundleData> dataMap;
     private Intent intent;
     private String action;
-    private BundleData dataItem;
+    private BundleData data;
 
 
     public static BroadcastCenter getInstance() {
-        return singleBroadcast;
-    }
-
-    public boolean init(Context context) {
-        Zog.d("init | Enter");
-
-        if (localBroadcastManager != null) {
-            Zog.e("init | localBroadcastManager is null");
-            return false;
-        }
-
-        if (null == context) {
-            Zog.e("init | context is null");
-            return false;
-        }
-
-        localBroadcastManager = LocalBroadcastManager.getInstance(context);
-        dataMap = new LruCache<String, BundleData>(20);
-        broadcastReceiverList = new CopyOnWriteArrayList<WeakReference<BroadcastReceiver>>();
-        Zog.d("init | Leave");
-        return true;
+        BroadcastCenter broadcastCenter = new BroadcastCenter();
+        broadcastCenter.localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
+        return broadcastCenter;
     }
 
 
@@ -72,46 +53,140 @@ public class BroadcastCenter {
     }
 
 
-    /**
-     * 从压入的数据取出数据
-     *
-     * @param key
-     */
-    public <T> T get(String key) {
-        if (action == null) {
-            Zog.e("action must init first,you can call like action(xxx).get(yyy)");
-        }
-        return dataMap.get(action).get(key);
-    }
-
-
-    /**
-     * 往item中压入数据 无敌的方法
-     *
-     * @param key
-     * @param value
-     */
-    public <T> BroadcastCenter put(String key, T value) {
-        getDataItem().put(key, value);
-        return this;
-    }
-
     public BroadcastCenter extras(BundleData bundleData) {
-        this.dataItem = bundleData;
+        this.data = bundleData;
         return this;
     }
 
-    private BundleData getDataItem() {
-        if (dataItem == null) {
-            dataItem = new BundleData();
+    public BroadcastCenter extras(Bundle bundle) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
         }
-        return dataItem;
+        intent.putExtras(bundle);
+        return this;
     }
 
-    public void broadcast() {
+
+    public BroadcastCenter put(String key, ArrayList<? extends Parcelable> value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+    public BroadcastCenter put(String key, Parcelable[] value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+
+    public BroadcastCenter put(String key, Parcelable value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+    public BroadcastCenter put(String key, float value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+    public BroadcastCenter put(String key, double value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+    public BroadcastCenter put(String key, long value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+    public BroadcastCenter put(String key, boolean value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+    public BroadcastCenter put(String key, int value) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, value);
+        return this;
+    }
+
+
+    public BroadcastCenter put(String key, String str) {
+        createIntent();
+
+        if (intent == null) {
+            Zog.e("intent create failed");
+            return this;
+        }
+
+        intent.putExtra(key, str);
+        return this;
+    }
+
+    private void createIntent() {
         if (null == localBroadcastManager) {
-            Zog.e("localBroadcastManager is null, is the BroadcastCenter inited?");
-            return;
+            localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
+        }
+
+        if (intent == null) {
+            Zog.d("intent is not created");
         }
 
         if (intent == null) {
@@ -119,9 +194,18 @@ public class BroadcastCenter {
                 intent = new Intent(action);
             }
             Zog.d("intent created with action");
-            if (!StringUtils.isEmptyOrNullStr(action)) {
-                intent = new Intent(action);
-            }
+        }
+
+    }
+
+
+    public void broadcast() {
+
+        createIntent();
+
+        if (data != null) {
+            intent.putExtra(action, data);
+            Zog.d("intent created with data");
         }
 
         if (intent == null) {
@@ -129,137 +213,70 @@ public class BroadcastCenter {
             return;
         }
 
-        if (action != null) {
-            if (dataItem != null) {
-                dataMap.put(action, dataItem);
-            } else {
-                dataMap.remove(action);
-            }
+
+        if (action == null) {
+            Zog.e("action is null!!!");
+            return;
         }
 
+        intent.setAction(action);
+
+        if (null == localBroadcastManager) {
+            localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
+        }
         localBroadcastManager.sendBroadcast(intent);
         Zog.d("broadcast | sendBroadcast finished");
-        intent = null;
-        action = null;
-        dataItem = null;
+
     }
 
-    public void registerReceiver(BroadcastReceiver br, String... actions) {
-        if (null == br || null == actions || null == localBroadcastManager) {
-            Zog.e("registerReceiver | param is null or localBroadcastManager is null");
+    public void registerReceiver(BroadcastReceiver br, List<String> actions) {
+        if (null == br || null == actions) {
+            Zog.e("registerReceiver | param is null ");
             return;
         }
 
         IntentFilter iFilter = new IntentFilter();
-        for (String ac : actions) {
-            iFilter.addAction(ac);
+        if (actions != null) {
+            for (String action : actions) {
+                iFilter.addAction(action);
+            }
+        }
+
+        if (null == localBroadcastManager) {
+            localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
         }
         localBroadcastManager.registerReceiver(br, iFilter);
-        broadcastReceiverList.add(new WeakReference<>(br));
     }
 
-    @Deprecated
-    public boolean checkBroadcastReceiverRegistered(String receiverClassName) {
 
-        if (broadcastReceiverList == null || broadcastReceiverList.isEmpty()) {
-            return false;
+    public void registerReceiver(BroadcastReceiver br, String... actions) {
+        if (actions == null || actions.length <= 0) {
+            return;
         }
-        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
-        while (iterator.hasNext()) {
-            WeakReference<BroadcastReceiver> key = iterator.next();
-            if (key == null || key.get() == null) {
-                continue;
-            }
-            BroadcastReceiver receiver = key.get();
-
-            if (receiver.getClass().getName().equals(receiverClassName)) {
-                return true;
-            }
-        }
-        return false;
+        registerReceiver(br, Arrays.asList(actions));
     }
 
-    @Deprecated
-    public boolean checkBroadcastReceiverRegistered(Class receiverClass) {
-        return checkBroadcastReceiverRegistered(receiverClass.getClass().getName());
-    }
-
-    public boolean checkBroadcastReceiverRegistered(BroadcastReceiver br) {
-        if (broadcastReceiverList == null || broadcastReceiverList.isEmpty() ||br ==null) {
-            return false;
-        }
-        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
-        while (iterator.hasNext()) {
-            WeakReference<BroadcastReceiver> key = iterator.next();
-            if (key == null || key.get() == null) {
-                continue;
-            }
-            BroadcastReceiver receiver = key.get();
-
-            if (receiver == br) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * @param br
-     * @param actions 至少传入一个
      */
-    public void unregisterReceiver(BroadcastReceiver br, @NonNull String... actions) {
-        if (null == br || null == localBroadcastManager) {
-            Zog.e("unregisterReceiver | param is null or localBroadcastManager is null");
+    public void unregisterReceiver(BroadcastReceiver br) {
+        if (null == br) {
+            Zog.e("unregisterReceiver | param is null");
             return;
         }
 
-        if (actions != null) {
-            for (String ac : actions) {
-                dataMap.remove(ac);
-            }
+        if (null == localBroadcastManager) {
+            localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
         }
+
         try {
             localBroadcastManager.unregisterReceiver(br);
         } catch (Exception e) {
 
         }
-
-        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
-        while (iterator.hasNext()) {
-            WeakReference<BroadcastReceiver> key = iterator.next();
-            if (key == null || key.get() == null) {
-                continue;
-            }
-            BroadcastReceiver receiver = key.get();
-
-            if (receiver == br) {
-                broadcastReceiverList.remove(key);
-            }
-        }
-    }
-
-    public void unregisterAllReceiver() {
-        if (null == localBroadcastManager) {
-            Zog.e("unregisterAllReceiver | localBroadcastManager is null");
-            return;
-        }
-
-        Iterator<WeakReference<BroadcastReceiver>> iterator = broadcastReceiverList.iterator();
-        while (iterator.hasNext()) {
-            WeakReference<BroadcastReceiver> key = iterator.next();
-            if (key == null || key.get() == null) {
-                continue;
-            }
-
-            localBroadcastManager.unregisterReceiver(key.get());
-        }
-        if (dataMap != null) {
-            dataMap.evictAll();
-        }
-        if (broadcastReceiverList != null) {
-            broadcastReceiverList.clear();
-        }
     }
 
 
 }
+
