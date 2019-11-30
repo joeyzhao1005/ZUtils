@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
@@ -376,7 +377,11 @@ public class DeviceUtils {
 
         int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
         if (rid != 0) {
-            return getRealScreenHeight(context) - getScreenHeight(context);
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                return DeviceUtils.getRealScreenHeight(context) - DeviceUtils.getScreenHeight(context);
+            } else {
+                return DeviceUtils.getRealScreenWidth(context) - DeviceUtils.getScreenWidth(context);
+            }
 //            int resourceId  = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
 //            return context.getResources().getDimensionPixelSize(resourceId);
         } else {
