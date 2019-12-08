@@ -8,14 +8,19 @@ import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * @author joeyzhao
+ */
 public class ActivityManager {
-    private CopyOnWriteArrayList<WeakReference<Activity>> activities = new CopyOnWriteArrayList<WeakReference<Activity>>();
+    private CopyOnWriteArrayList<WeakReference<Activity>> activities = new CopyOnWriteArrayList<>();
     private static ActivityManager instance;
 
     private ActivityManager() {
     }
 
-    // 单例模式中获取唯一的ZhaoActivityManager实例
+    /**
+     * 单例模式中获取唯一的ActivityManager实例
+     */
     public static ActivityManager getInstance() {
         if (null == instance) {
             instance = new ActivityManager();
