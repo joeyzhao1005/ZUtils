@@ -21,7 +21,7 @@ public class ViewPagerUtils {
             f.setAccessible(true);
             f.set(viewPager, fixedSpeedScroller);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }
