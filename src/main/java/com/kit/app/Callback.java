@@ -1,11 +1,16 @@
-/*
- * Copyright (c) 2018.
- * Author：Zhao
- * Email：joeyzhao1005@gmail.com
- */
-
 package com.kit.app;
 
+import androidx.annotation.Nullable;
+
+/**
+ * @author Zhao
+ */
 public interface Callback<T> {
-    void call(T callEntity);
+
+    /**
+     * 回调
+     *
+     * @param callEntity 值
+     */
+    void call(@Nullable T callEntity);
 }
