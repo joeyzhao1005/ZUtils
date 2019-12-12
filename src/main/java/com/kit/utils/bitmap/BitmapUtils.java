@@ -872,6 +872,33 @@ public class BitmapUtils {
         return bmp;
     }
 
+
+    /**
+     * @param path  文件路径
+     * @return Bitmap 返回类型
+     * @Title getBitmapFromFile
+     * @Description 从文件路径，获取图片缩略图
+     */
+    public static Bitmap getBitmapFromFile(String path, Options options) {
+        Bitmap bmp = null;
+        try {
+            int digree = getDegree(path);
+
+
+            bmp = BitmapFactory.decodeFile(path, options);
+            if (digree != 0) {
+                bmp = rotate(digree, bmp);
+            }
+        } catch (Exception e) {
+
+            Zog.showException(e);
+
+            Zog.i("scale应该取的小一点");
+        }
+        return bmp;
+    }
+
+
     /**
      * @param context 上下文
      * @param uri     相册选取得到的路径
@@ -1007,7 +1034,6 @@ public class BitmapUtils {
     }
 
     public static Options getBitmapOption(double inSampleSize) {
-        System.gc();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPurgeable = true;
         options.inSampleSize = (int) MathExtend.divide(1, inSampleSize);
