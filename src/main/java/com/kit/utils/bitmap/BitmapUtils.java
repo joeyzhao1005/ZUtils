@@ -874,7 +874,7 @@ public class BitmapUtils {
 
 
     /**
-     * @param path  文件路径
+     * @param path 文件路径
      * @return Bitmap 返回类型
      * @Title getBitmapFromFile
      * @Description 从文件路径，获取图片缩略图
@@ -1377,7 +1377,7 @@ public class BitmapUtils {
                 String newFileName = System.currentTimeMillis() + "" + new Random().nextInt(9999) + "." + prefix;
                 String newFileDir = AppConfig.getAppConfig().getCacheImageDir() + ".temp/" + newFileName;
                 file = new File(newFileDir);
-                BitmapFactory.Options options = getOptions(filePath, height, width, null);
+                BitmapFactory.Options options = getOptions(filePath, width, height, null);
                 Bitmap bmp = BitmapUtils.loadBitmap(filePath, options, true);
                 saveBitmap(bmp, file);
                 return newFileDir;
