@@ -267,19 +267,20 @@ public class BroadcastCenter {
 
         createIntent();
 
-        if (data != null) {
-            intent.putExtra(action, data);
-        }
-
         if (intent == null) {
             Zog.e("intent create failed");
+            isUsing = false;
             return;
         }
-
 
         if (action == null) {
             Zog.e("action is null!!!");
+            isUsing = false;
             return;
+        }
+
+        if (data != null) {
+            intent.putExtra(action, data);
         }
 
         intent.setAction(action);
@@ -289,8 +290,6 @@ public class BroadcastCenter {
         }
         localBroadcastManager.sendBroadcast(intent);
         isUsing = false;
-//        Zog.d("broadcast | sendBroadcast finished");
-
     }
 
     public void registerReceiver(BroadcastReceiver br, List<String> actions) {
@@ -300,10 +299,8 @@ public class BroadcastCenter {
         }
 
         IntentFilter iFilter = new IntentFilter();
-        if (actions != null) {
-            for (String action : actions) {
-                iFilter.addAction(action);
-            }
+        for (String action : actions) {
+            iFilter.addAction(action);
         }
 
         if (null == localBroadcastManager) {
