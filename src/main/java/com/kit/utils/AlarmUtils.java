@@ -32,7 +32,7 @@
 //                .getSystemService(Context.ALARM_SERVICE);
 //
 //
-//        Calendar calendar = Calendar.getInstance();//Calendar是一类可以将时间转化成绝对时间毫秒数的一个类
+//        Calendar calendar = Calendar.get();//Calendar是一类可以将时间转化成绝对时间毫秒数的一个类
 //        calendar.set(Calendar.HOUR_OF_DAY, hour);
 //
 //        calendar.set(Calendar.MINUTE, minute);

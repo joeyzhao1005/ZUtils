@@ -57,7 +57,7 @@ public class CookieUtils {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeSessionCookie();//移除
 //        cookieManager.setCookie(url, cookies);//cookies是在HttpClient中获得的cookie
-//        CookieSyncManager.getInstance().sync();
+//        CookieSyncManager.get().sync();
         CookieManager.getInstance().removeAllCookie();
     }
 

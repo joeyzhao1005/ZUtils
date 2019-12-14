@@ -12,7 +12,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.kit.app.application.AppMaster;
@@ -20,26 +20,90 @@ import com.kit.utils.StringUtils;
 import com.kit.utils.intent.BundleData;
 import com.kit.utils.log.Zog;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
+/**
+ * @author joeyzhao
+ */
 public class BroadcastCenter {
     private LocalBroadcastManager localBroadcastManager;
 
     private Intent intent;
     private String action;
     private BundleData data;
+    private boolean isUsing = false;
+
+    private static final Set<BroadcastCenter> BROADCAST_CENTER_POOL = new CopyOnWriteArraySet<>();
+
+    private static final int MAX = 5;
 
 
-    public static BroadcastCenter getInstance() {
+    private static synchronized BroadcastCenter createNew() {
         BroadcastCenter broadcastCenter = new BroadcastCenter();
         broadcastCenter.localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
+        broadcastCenter.isUsing = true;
+        BROADCAST_CENTER_POOL.add(broadcastCenter);
+
+
+        //池中大于MAX 移除一个没在使用的
+        if (BROADCAST_CENTER_POOL.size() > MAX) {
+            for (BroadcastCenter bc : BROADCAST_CENTER_POOL) {
+                if (!bc.isUsing) {
+                    BROADCAST_CENTER_POOL.remove(bc);
+                    break;
+                }
+            }
+        }
         return broadcastCenter;
     }
 
+    public static synchronized BroadcastCenter get() {
+        if (BROADCAST_CENTER_POOL.isEmpty()) {
+            return createNew();
+        } else {
+            BroadcastCenter getOne = null;
+            for (BroadcastCenter broadcastCenter : BROADCAST_CENTER_POOL) {
+                if (!broadcastCenter.isUsing) {
+                    getOne = broadcastCenter;
+                    break;
+                }
+            }
+
+            if (getOne == null) {
+                return createNew();
+            } else {
+                getOne.reset();
+                getOne.isUsing = true;
+                getOne.localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
+                return getOne;
+            }
+
+        }
+    }
+
+
+    public void reset() {
+        intent = null;
+        action = null;
+        data = null;
+        localBroadcastManager = null;
+        isUsing = false;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return super.equals(obj);
+    }
 
     public BroadcastCenter intent(Intent intent) {
         this.intent = intent;
@@ -185,15 +249,15 @@ public class BroadcastCenter {
             localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
         }
 
-        if (intent == null) {
-            Zog.d("intent is not created");
-        }
+//        if (intent == null) {
+//            Zog.d("intent is not created");
+//        }
 
         if (intent == null) {
             if (!StringUtils.isEmptyOrNullStr(action)) {
                 intent = new Intent(action);
             }
-            Zog.d("intent created with action");
+//            Zog.d("intent created with action");
         }
 
     }
@@ -205,7 +269,6 @@ public class BroadcastCenter {
 
         if (data != null) {
             intent.putExtra(action, data);
-            Zog.d("intent created with data");
         }
 
         if (intent == null) {
@@ -225,7 +288,8 @@ public class BroadcastCenter {
             localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
         }
         localBroadcastManager.sendBroadcast(intent);
-        Zog.d("broadcast | sendBroadcast finished");
+        isUsing = false;
+//        Zog.d("broadcast | sendBroadcast finished");
 
     }
 

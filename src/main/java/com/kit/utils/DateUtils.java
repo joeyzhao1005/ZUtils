@@ -467,7 +467,7 @@ public class DateUtils {
 //			String ret = "";
 //			SimpleDateFormat sdf = new SimpleDateFormat(format);
 //			long create = date.getTime();
-//			Calendar now = Calendar.getInstance();
+//			Calendar now = Calendar.get();
 //			long ms = 1000 * (now.get(Calendar.HOUR_OF_DAY) * 3600
 //					+ now.get(Calendar.MINUTE) * 60 + now.get(Calendar.SECOND));// 1天毫秒数
 //
