@@ -292,7 +292,7 @@ public class BroadcastCenter {
         isUsing = false;
     }
 
-    public void registerReceiver(BroadcastReceiver br, List<String> actions) {
+    public static void registerReceiver(BroadcastReceiver br, List<String> actions) {
         if (null == br || null == actions) {
             Zog.e("registerReceiver | param is null ");
             return;
@@ -302,15 +302,11 @@ public class BroadcastCenter {
         for (String action : actions) {
             iFilter.addAction(action);
         }
-
-        if (null == localBroadcastManager) {
-            localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
-        }
-        localBroadcastManager.registerReceiver(br, iFilter);
+        LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext()).registerReceiver(br, iFilter);
     }
 
 
-    public void registerReceiver(BroadcastReceiver br, String... actions) {
+    public static void registerReceiver(BroadcastReceiver br, String... actions) {
         if (actions == null || actions.length <= 0) {
             return;
         }
@@ -321,18 +317,14 @@ public class BroadcastCenter {
     /**
      * @param br
      */
-    public void unregisterReceiver(BroadcastReceiver br) {
+    public static void unregisterReceiver(BroadcastReceiver br) {
         if (null == br) {
             Zog.e("unregisterReceiver | param is null");
             return;
         }
 
-        if (null == localBroadcastManager) {
-            localBroadcastManager = LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext());
-        }
-
         try {
-            localBroadcastManager.unregisterReceiver(br);
+            LocalBroadcastManager.getInstance(AppMaster.getInstance().getAppContext()).unregisterReceiver(br);
         } catch (Exception e) {
 
         }
