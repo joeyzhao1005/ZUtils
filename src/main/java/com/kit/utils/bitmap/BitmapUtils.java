@@ -235,6 +235,8 @@ public class BitmapUtils {
      */
     public static Bitmap loadBitmap(String imgpath,
                                     BitmapFactory.Options options, boolean adjustOritation) {
+
+        Zog.d("loadBitmap loadBitmap loadBitmap");
         if (!adjustOritation) {
             if (options == null) {
                 return generateBitmapFile(imgpath, null);
