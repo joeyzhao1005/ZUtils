@@ -20,11 +20,10 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
-
-import androidx.annotation.Nullable;
-
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.kit.app.application.AppMaster;
 import com.kit.config.AppConfig;
@@ -1271,6 +1270,9 @@ public class BitmapUtils {
         return sourceImg;
     }
 
+    public static File saveBitmap(Bitmap bmp, String filePath, boolean isRecycle, boolean notifySystem) {
+        return saveBitmap(bmp, new File(filePath), isRecycle, notifySystem);
+    }
 
     /**
      * 保存位图到filepath路径

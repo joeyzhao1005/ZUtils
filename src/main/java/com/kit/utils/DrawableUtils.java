@@ -27,8 +27,7 @@ import java.io.File;
  */
 public class DrawableUtils {
 
-    public static Bitmap drawableToBitmap(Drawable drawable, int toWidth, int toHeight) {
-
+    public static Bitmap drawableToBitmap(Drawable drawable) {
         int width = 0;
         try {
             width = drawable.getIntrinsicWidth();
@@ -43,13 +42,15 @@ public class DrawableUtils {
             Zog.e("error in drawableToBitmap when getIntrinsicHeight");
         }
 
+        int defaultWidth = 100;
+        int defaultHeight = 100;
 
         if (width <= 0) {
-            width = toWidth;
+            width = defaultWidth;
         }
 
         if (height <= 0) {
-            height = toHeight;
+            height = defaultHeight;
         }
 
         Bitmap bitmap = Bitmap.createBitmap(
@@ -59,12 +60,20 @@ public class DrawableUtils {
 
         Canvas canvas = new Canvas();
         canvas.setBitmap(bitmap);
-
         drawable.setBounds(0, 0, width, height);
         drawable.draw(canvas);
 
         return bitmap;
 
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable, int toWidth, int toHeight) {
+        Bitmap bitmap = drawableToBitmap(drawable);
+
+        Matrix matrix = new Matrix();
+        matrix.setScale(ValueOf.toFloat(MathExtend.divide(toWidth, bitmap.getWidth())), ValueOf.toFloat(MathExtend.divide(toHeight, bitmap.getHeight())));
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+                bitmap.getHeight(), matrix, true);
     }
 
 
