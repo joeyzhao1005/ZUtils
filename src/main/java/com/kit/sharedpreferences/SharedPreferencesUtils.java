@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * 存储配置信息的工具类 <br>
  * 注：可读取的数据类型有-<code>boolean、int、float、long、String.</code>
+ * @author joeyzhao
  */
 public class SharedPreferencesUtils {
     // private final String MAK = "innoview";
