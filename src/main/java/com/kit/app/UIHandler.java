@@ -18,6 +18,7 @@ public class UIHandler {
         }
         return mainHandler;
     }
+
     public static Handler create() {
         return new Handler(Looper.getMainLooper());
     }
@@ -30,6 +31,15 @@ public class UIHandler {
             create().post(runnable);
         } else {
             runnable.run();
+        }
+    }
+
+
+    public static boolean check() {
+        if (Thread.currentThread() != Looper.getMainLooper().getThread()) {
+            return false;
+        } else {
+            return true;
         }
     }
 }
