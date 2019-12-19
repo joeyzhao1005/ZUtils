@@ -21,8 +21,6 @@ public class AppMaster implements IApp {
             return;
         }
         app.restartApp();
-
-
     }
 
     @Override
