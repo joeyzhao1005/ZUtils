@@ -180,19 +180,19 @@ public class BitmapUtils {
     /**
      * 设置不高于heightMax，不宽于widthMax的options，并维系原有宽高比
      *
-     * @param imgpath   图片的路径，根据图片路径取出原有的图片宽高
+     * @param imgPath   图片的路径，根据图片路径取出原有的图片宽高
      * @param widthMax  最大宽度
      * @param heightMax 最大高度
      * @param options   这个值可以传null
      * @return
      */
-    public static Options getOptions(String imgpath, int widthMax, int heightMax, Options options) {
+    public static Options getOptions(String imgPath, int widthMax, int heightMax, Options options) {
 
         if (options == null) {
             options = new Options();
         }
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imgpath, options);
+        BitmapFactory.decodeFile(imgPath, options);
 
         int w = options.outWidth;
         int h = options.outHeight;
@@ -232,27 +232,58 @@ public class BitmapUtils {
     /**
      * 从给定的路径加载图片，并指定是否自动旋转方向
      */
-    public static Bitmap loadBitmap(String imgpath,
-                                    BitmapFactory.Options options, boolean adjustOritation) {
+    public static Bitmap loadBitmap(String imgPath, int width, int height, boolean adjustOritation) {
+        Options options = getOptions(imgPath, width, height, null);
 
         Zog.d("loadBitmap loadBitmap loadBitmap");
         if (!adjustOritation) {
             if (options == null) {
-                return generateBitmapFile(imgpath, null);
+                return generateBitmapFile(imgPath, null);
             } else {
-                return generateBitmapFile(imgpath, options);
+                return generateBitmapFile(imgPath, options);
             }
         } else {
             Bitmap bm = null;
 
             if (options == null) {
-                bm = generateBitmapFile(imgpath, null);
+                bm = generateBitmapFile(imgPath, null);
             } else {
-                bm = generateBitmapFile(imgpath, options);
+                bm = generateBitmapFile(imgPath, options);
             }
 
 
-            int digree = getDegree(imgpath);
+            int digree = getDegree(imgPath);
+
+            if (digree != 0) {
+                bm = rotate(digree, bm);
+            }
+            return bm;
+        }
+    }
+
+    /**
+     * 从给定的路径加载图片，并指定是否自动旋转方向
+     */
+    public static Bitmap loadBitmap(String imgPath, BitmapFactory.Options options, boolean adjustOritation) {
+
+        Zog.d("loadBitmap loadBitmap loadBitmap");
+        if (!adjustOritation) {
+            if (options == null) {
+                return generateBitmapFile(imgPath, null);
+            } else {
+                return generateBitmapFile(imgPath, options);
+            }
+        } else {
+            Bitmap bm = null;
+
+            if (options == null) {
+                bm = generateBitmapFile(imgPath, null);
+            } else {
+                bm = generateBitmapFile(imgPath, options);
+            }
+
+
+            int digree = getDegree(imgPath);
 
             if (digree != 0) {
                 bm = rotate(digree, bm);
