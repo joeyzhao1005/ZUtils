@@ -23,32 +23,6 @@ public class Zog {
 
 
     /**
-     * 是否手动的 catch Log，一般用来给用户抓日志用
-     */
-    private static boolean IS_FILE_LOG = false;
-
-    public static void fileLog(String log) {
-        if (!IS_FILE_LOG) {
-            return;
-        }
-        if (stringLogBuilder == null) {
-            stringLogBuilder = new StringBuilder("请将如下日志截图给开发者，谢谢~~~");
-        }
-        stringLogBuilder.append(" | ");
-        stringLogBuilder.append(log);
-    }
-
-    private static StringBuilder stringLogBuilder;
-
-    public static String getLog() {
-        if (stringLogBuilder == null) {
-            return "";
-        }
-        return stringLogBuilder.toString();
-    }
-
-
-    /**
      * 保存错误信息到文件中
      *
      * @param zogStr

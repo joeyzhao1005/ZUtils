@@ -334,11 +334,11 @@ public class FileUtils {
         String dir = fileName.substring(0, fileName.lastIndexOf("/"));
         File directory = new File(dir);
 
-//        Zog.e( "dir::" + dir);
 
         if (!directory.exists()) {
-            Zog.e("directory not exists,create it");
-            return directory.mkdirs();//没有目录先创建目录
+            Zog.d("directory not exists,create it");
+            //没有目录先创建目录
+            return directory.mkdirs();
         }
         return false;
     }
