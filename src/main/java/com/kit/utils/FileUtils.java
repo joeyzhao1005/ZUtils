@@ -309,9 +309,12 @@ public class FileUtils {
         return map;
     }
 
+    public static String getDir(String fileFullPath) {
+        return fileFullPath.substring(0, fileFullPath.lastIndexOf(File.separator));
+    }
 
     private static void beforeSave(String fileName) {
-        mkDir(fileName);
+        mkDir(getDir(fileName));
         File file = new File(fileName);
         if (!file.exists()) {
             try {
@@ -327,20 +330,18 @@ public class FileUtils {
     /**
      * 创建目录
      *
-     * @param fileName 文件全名 包含文件名
+     * @param dirPath 文件全名 包含文件名
      */
-    public static boolean mkDir(String fileName) {
+    public static boolean mkDir(String dirPath) {
 
-        String dir = fileName.substring(0, fileName.lastIndexOf("/"));
-        File directory = new File(dir);
-
-
-        if (!directory.exists()) {
+        File file = new File(dirPath);
+        if (!file.exists()) {
             Zog.d("directory not exists,create it");
             //没有目录先创建目录
-            return directory.mkdirs();
+            return file.mkdirs();
+        } else {
+            return true;
         }
-        return false;
     }
 
 
