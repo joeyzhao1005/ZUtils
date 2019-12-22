@@ -4,12 +4,15 @@ import android.content.Context;
 
 import androidx.annotation.Nullable;
 
+import com.kit.app.application.AppMaster;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class AssetsUtils extends AssetsTxt2String {
     @Nullable
-    public static String getFromAssets(Context context, String fileName) {
+    public static String getFromAssets(String fileName) {
+        Context context = AppMaster.getInstance().getAppContext();
         try {
             InputStreamReader inputReader = new InputStreamReader(context
                     .getResources().getAssets().open(fileName));
@@ -28,7 +31,8 @@ public class AssetsUtils extends AssetsTxt2String {
     }
 
     @Nullable
-    public static String getFromAssetsNoNewLines(Context context, String fileName) {
+    public static String getFromAssetsNoNewLines(String fileName) {
+        Context context = AppMaster.getInstance().getAppContext();
         try {
             InputStreamReader inputReader = new InputStreamReader(context
                     .getResources().getAssets().open(fileName));
