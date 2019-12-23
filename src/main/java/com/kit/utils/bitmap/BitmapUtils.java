@@ -219,7 +219,7 @@ public class BitmapUtils {
 
 
         /* 另外，为了节约内存我们还可以使用下面的几个字段：*/
-        options.inPreferredConfig = Bitmap.Config.ARGB_4444;    // 默认是Bitmap.Config.ARGB_8888
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;    // 默认是Bitmap.Config.ARGB_8888
         /* 下面两个字段需要组合使用 */
         options.inPurgeable = true;
         options.inInputShareable = true;
@@ -713,7 +713,7 @@ public class BitmapUtils {
         // bfOptions.inTempStorage=new byte[12 * 1024 * 1024];
         BitmapFactory.Options bfOptions = new BitmapFactory.Options();
         bfOptions.inTempStorage = new byte[2 * 1024 * 1024];
-        bfOptions.inPreferredConfig = Config.ARGB_4444;
+        bfOptions.inPreferredConfig = Config.ARGB_8888;
         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(),
                 listResId.get(0), bfOptions);
         int width = bmp.getWidth() * lineNum;
@@ -726,7 +726,7 @@ public class BitmapUtils {
         bmp = null;
         // System.gc();
 
-        Bitmap result = Bitmap.createBitmap(width, height, Config.ARGB_4444);
+        Bitmap result = Bitmap.createBitmap(width, height, Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
 
         int flag = 0;
@@ -737,7 +737,7 @@ public class BitmapUtils {
             for (int column = 0; column < columnNum; column++) {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inTempStorage = new byte[2 * 1024 * 1024];
-                options.inPreferredConfig = Config.ARGB_4444;
+                options.inPreferredConfig = Config.ARGB_8888;
 
                 Bitmap bmpTemp = BitmapFactory.decodeResource(
                         context.getResources(), listResId.get(flag), options);
