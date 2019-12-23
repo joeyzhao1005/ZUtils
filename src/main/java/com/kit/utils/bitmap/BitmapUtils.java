@@ -212,8 +212,6 @@ public class BitmapUtils {
             be = 1;
         }
 
-        Zog.i("be be be:" + be + " w:" + w + " h:" + h);
-
         options.inSampleSize = be;// 设置缩放比例
 
         /* 这样才能真正的返回一个Bitmap给你 */
@@ -235,7 +233,6 @@ public class BitmapUtils {
     public static Bitmap loadBitmap(String imgPath, int width, int height, boolean adjustOritation) {
         Options options = getOptions(imgPath, width, height, null);
 
-        Zog.d("loadBitmap loadBitmap loadBitmap");
         if (!adjustOritation) {
             if (options == null) {
                 return generateBitmapFile(imgPath, null);
