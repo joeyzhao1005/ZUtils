@@ -95,7 +95,7 @@ public class RomUtils {
         return miuiVersionCode;
     }
 
-    private static boolean isEMUI() {
+    public static boolean isEMUI() {
         String miuiVersionCodeStr = getSystemProperty("ro.build.version.emui");
         if (!TextUtils.isEmpty(miuiVersionCodeStr)) {
             return true;
@@ -103,6 +103,14 @@ public class RomUtils {
         return false;
     }
 
+
+    public static boolean isSmartisan() {
+        String miuiVersionCodeStr = getSystemProperty("ro.smartisan.version");
+        if (!TextUtils.isEmpty(miuiVersionCodeStr)) {
+            return true;
+        }
+        return false;
+    }
 
     private static final String KEY_EMUI_VERSION_CODE = "ro.build.version.emui";
 
