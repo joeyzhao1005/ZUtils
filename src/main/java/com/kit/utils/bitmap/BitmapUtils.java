@@ -318,6 +318,13 @@ public class BitmapUtils {
         if (StringUtils.isEmptyOrNullStr(path)) {
             return 0;
         }
+        if (!FileUtils.isExists(path)) {
+            return 0;
+        }
+
+        if (path.endsWith(".png")) {
+            return 0;
+        }
 
         int degree = 0;
         try {
