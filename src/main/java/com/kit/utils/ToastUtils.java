@@ -40,8 +40,7 @@ public class ToastUtils {
 
     public static void l(Context context, int msgStringId) {
         try {
-            UIHandler.get().post(() ->
-
+            UIHandler.run(() ->
                     Toast.makeText(context, context.getResources().getString(msgStringId), Toast.LENGTH_LONG).show()
             );
 
