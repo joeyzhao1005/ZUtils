@@ -9,7 +9,7 @@ import com.kit.utils.StringUtils;
 
 import java.io.File;
 
-public class SourceWapper {
+public class SourceWrapper {
 
 
     public static String get(String uri) {
