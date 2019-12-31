@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
@@ -79,9 +80,13 @@ public class WakeLockUtils {
     /**
      * 控制熄灭屏幕,需要与距离传感器结合
      */
+    @SuppressLint("InvalidWakeLockTag")
     @TargetApi(23)
     private void screenOffAboveAPI23() {
         pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        if (pm == null) {
+            return;
+        }
         if (wakeLockNear == null) {
             wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
         }
@@ -100,9 +105,13 @@ public class WakeLockUtils {
     /**
      * 控制点亮屏幕,需要与距离传感器结合
      */
+    @SuppressLint("InvalidWakeLockTag")
     @TargetApi(23)
     private void screenOnAboveAPI23() {
         pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        if (pm == null) {
+            return;
+        }
         if (wakeLockNear == null) {
             wakeLockNear = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "near");
         }
@@ -120,8 +129,12 @@ public class WakeLockUtils {
      * 点亮屏幕
      */
 
+    @SuppressLint("InvalidWakeLockTag")
     private void screenOnOld() {
         pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        if (pm == null) {
+            return;
+        }
         if (wakeLockScreen == null) {
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");
         }
@@ -138,9 +151,12 @@ public class WakeLockUtils {
     /**
      * 熄灭屏幕
      */
+    @SuppressLint("InvalidWakeLockTag")
     private void screenOffOld() {
         pm = (PowerManager) ResWrapper.getApplicationContext().getSystemService(Context.POWER_SERVICE);
-
+        if (pm == null) {
+            return;
+        }
         if (wakeLockScreen == null) {
             wakeLockScreen = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "screen");
         }

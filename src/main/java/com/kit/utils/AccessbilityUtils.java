@@ -54,8 +54,7 @@ public class AccessbilityUtils {
 
     @TargetApi(14)
     private static boolean isEnabled(Context context, String name) {
-        AccessibilityManager am = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-        List<AccessibilityServiceInfo> serviceInfos = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC);
+        AccessibilityManager am = (AccessibilityManager) context.getApplicationContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
         List<AccessibilityServiceInfo> installedAccessibilityServiceList = am.getInstalledAccessibilityServiceList();
         for (AccessibilityServiceInfo info : installedAccessibilityServiceList) {
             if (name.equals(info.getId())) {

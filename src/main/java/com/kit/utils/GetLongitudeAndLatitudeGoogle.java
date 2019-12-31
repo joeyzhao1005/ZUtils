@@ -32,7 +32,7 @@ public class GetLongitudeAndLatitudeGoogle extends Activity {
 			mDialog = ProgressDialog.show(this, null, "loading", true, true);
 
 			// 声明LocationManager对象
-			mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 			mLocationListener = new LocationListener() {
 				public void onStatusChanged(String provider, int status,
 						Bundle extras) {

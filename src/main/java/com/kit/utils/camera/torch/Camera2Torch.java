@@ -36,7 +36,7 @@ public final class Camera2Torch extends CameraManager.TorchCallback implements T
     @Override
     public void init() {
         try {
-            cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+            cameraManager = (CameraManager) context.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);
             cameraManager.registerTorchCallback(this, null);
         } catch (IllegalArgumentException e) {
             throw new IllegalStateException("Failed to register with the Camera service!", e);

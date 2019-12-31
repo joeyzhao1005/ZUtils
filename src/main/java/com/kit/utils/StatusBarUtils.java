@@ -1,11 +1,13 @@
 package com.kit.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Method;
 
+@SuppressLint("WrongConstant")
 public class StatusBarUtils {
     /**
      * 折叠通知栏
@@ -13,9 +15,10 @@ public class StatusBarUtils {
      * @param context
      */
     public static void collapsingNotification(Context context) {
-        Object service = context.getSystemService("statusbar");
-        if (null == service)
+        Object service = context.getApplicationContext().getSystemService("statusbar");
+        if (null == service) {
             return;
+        }
         try {
             Class<?> clazz = Class.forName("android.app.StatusBarManager");
             int sdkVersion = android.os.Build.VERSION.SDK_INT;
@@ -35,9 +38,10 @@ public class StatusBarUtils {
 
 
     public static void expandNotificationsPanel(Context context) {
-        Object service = context.getSystemService("statusbar");
-        if (null == service)
+        Object service = context.getApplicationContext().getSystemService("statusbar");
+        if (null == service) {
             return;
+        }
 
         try {
             Class<?> clazz = Class.forName("android.app.StatusBarManager");
@@ -67,10 +71,11 @@ public class StatusBarUtils {
 
     public static void expandSettingsPanel(Context context) {
 
-        Object service = context.getSystemService("statusbar");
+        Object service = context.getApplicationContext().getSystemService("statusbar");
 
-        if (null == service)
+        if (null == service) {
             return;
+        }
 
         try {
             Class<?> clazz = Class.forName("android.app.StatusBarManager");

@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Vibrator;
 
@@ -14,8 +15,9 @@ public class VibratorUtils {
      *
      * @param mContext
      */
+    @SuppressLint("MissingPermission")
     public static void lessVibrate(Context mContext) {
-        Vibrator vibrator = (Vibrator) mContext.getSystemService(mContext.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) mContext.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {500, 500}; // /OFF/ON/OFF/ON...
         vibrator.vibrate(pattern, -1);//-1不重复，非-1为从pattern的指定下标开始重复
     }
@@ -26,8 +28,9 @@ public class VibratorUtils {
      *
      * @param mContext
      */
+    @SuppressLint("MissingPermission")
     public static void heartbeat(Context mContext) {
-        Vibrator vibrator = (Vibrator) mContext.getSystemService(mContext.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) mContext.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {50, 50, 400, 30, 500, 500}; // /OFF/ON/OFF/ON...
         vibrator.vibrate(pattern, -1);//-1不重复，非-1为从pattern的指定下标开始重复
     }
@@ -38,8 +41,9 @@ public class VibratorUtils {
      *
      * @param mContext
      */
+    @SuppressLint("MissingPermission")
     public static void heartbeatTwice(Context mContext) {
-        Vibrator vibrator = (Vibrator) mContext.getSystemService(mContext.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) mContext.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {800, 50, 400, 30, 800, 50, 400, 30}; // OFF/ON/OFF/ON/...
         vibrator.vibrate(pattern, -1);//-1不重复，非-1为从pattern的指定下标开始重复
     }
@@ -49,8 +53,9 @@ public class VibratorUtils {
      *
      * @param mContext
      */
+    @SuppressLint("MissingPermission")
     public static void heartbeating(Context mContext) {
-        Vibrator vibrator = (Vibrator) mContext.getSystemService(mContext.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) mContext.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {800, 50, 400, 30}; // OFF/ON/OFF/ON/...
         vibrator.vibrate(pattern, 2);//-1不重复，非-1为从pattern的指定下标开始重复
     }

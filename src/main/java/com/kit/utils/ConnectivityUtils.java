@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -20,9 +21,9 @@ public class ConnectivityUtils {
         if (connectivityUtils == null) {
             connectivityUtils = new ConnectivityUtils();
             Context context = ResWrapper.getApplicationContext();
-            connectivityUtils.mConnectivityManager = (ConnectivityManager) context
+            connectivityUtils.mConnectivityManager = (ConnectivityManager) context.getApplicationContext()
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
-            connectivityUtils.wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            connectivityUtils.wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         }
         return connectivityUtils;
     }
@@ -182,8 +183,8 @@ public boolean isNetWorkAvaliable() {
     }
 
     public static String getNetworkTypeReadable(Context context) {
-        final ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo activeNetInfo = conMgr.getActiveNetworkInfo();
+        final ConnectivityManager conMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        @SuppressLint("MissingPermission") final NetworkInfo activeNetInfo = conMgr.getActiveNetworkInfo();
         if (activeNetInfo != null && activeNetInfo.isAvailable() && activeNetInfo.isConnected()) {
             switch (activeNetInfo.getType()) {
                 case ConnectivityManager.TYPE_WIFI:
@@ -206,6 +207,7 @@ public boolean isNetWorkAvaliable() {
     }
 
 
+    @SuppressLint("MissingPermission")
     public static int getNetworkType(Context context) {
         ConnectivityManager connectionManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectionManager.getActiveNetworkInfo().getType();

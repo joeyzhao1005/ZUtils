@@ -6,6 +6,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -26,9 +27,9 @@ public class NetAddressUtil {
 	 * @return 设备mac地址
 	 */
 	public static  String getLocalMacAddress(Context mContext) {
-		WifiManager wifi = (WifiManager) mContext
+		WifiManager wifi = (WifiManager) mContext.getApplicationContext()
 				.getSystemService(Context.WIFI_SERVICE);
-		WifiInfo info = wifi.getConnectionInfo();
+		@SuppressLint("MissingPermission") WifiInfo info = wifi.getConnectionInfo();
 		return info.getMacAddress();
 	}
 }

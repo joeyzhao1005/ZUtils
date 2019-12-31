@@ -125,7 +125,7 @@ public class ServiceUtils {
      */
     public static boolean isServiceRunning(Context mContext, String clazzName) {
         boolean isRunning = false;
-        ActivityManager activityManager = (ActivityManager) mContext
+        ActivityManager activityManager = (ActivityManager) mContext.getApplicationContext()
                 .getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> serviceList = activityManager
                 .getRunningServices(1000);

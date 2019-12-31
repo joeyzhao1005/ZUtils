@@ -123,7 +123,7 @@ public class DeviceUtils {
         }
 
         //获取设备管理服务
-        DevicePolicyManager policyManager = (DevicePolicyManager) activity
+        DevicePolicyManager policyManager = (DevicePolicyManager) activity.getApplicationContext()
                 .getSystemService(Context.DEVICE_POLICY_SERVICE);
 
         //AdminReceiver 继承自 DeviceAdminReceiver
@@ -207,7 +207,7 @@ public class DeviceUtils {
      */
     public static int getVirtualBarHeigh(Context context) {
         int vh = 0;
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         try {
@@ -491,7 +491,7 @@ public class DeviceUtils {
      * @return
      */
     public static boolean isScreenOn(Context context) {
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager pm = (PowerManager) context.getApplicationContext().getSystemService(Context.POWER_SERVICE);
         boolean screen = pm.isScreenOn();
 
         return screen;
@@ -505,7 +505,7 @@ public class DeviceUtils {
      * @return
      */
     public static boolean isKeyguard(Context context) {
-        KeyguardManager mKeyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager mKeyguardManager = (KeyguardManager) context.getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
         boolean flag = mKeyguardManager.inKeyguardRestrictedInputMode();
         return flag;
     }

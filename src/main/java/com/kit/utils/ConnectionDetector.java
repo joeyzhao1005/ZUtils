@@ -1,5 +1,6 @@
 package com.kit.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.net.ConnectivityManager;
@@ -18,14 +19,14 @@ public class ConnectionDetector {
 
 	public boolean isConnectingToInternet() {
 
-		ConnectivityManager connectivity = (ConnectivityManager) _context
+		ConnectivityManager connectivity = (ConnectivityManager) _context.getApplicationContext()
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 
 		if (connectivity != null)
 
 		{
 
-			NetworkInfo[] info = connectivity.getAllNetworkInfo();
+			@SuppressLint("MissingPermission") NetworkInfo[] info = connectivity.getAllNetworkInfo();
 
 			if (info != null)
 

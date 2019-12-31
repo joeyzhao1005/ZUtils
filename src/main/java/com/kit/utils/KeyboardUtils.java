@@ -35,7 +35,7 @@ public class KeyboardUtils {
 
         InputMethodManager imm = null;
         if (context != null) {
-            imm = (InputMethodManager) context
+            imm = (InputMethodManager) context.getApplicationContext()
                     .getSystemService(Context.INPUT_METHOD_SERVICE);
         }
 
@@ -99,7 +99,7 @@ public class KeyboardUtils {
      * @param view    为接受软键盘输入的视图
      */
     public static void showKeyboard(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) context.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         view.setFocusable(true);
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -121,7 +121,7 @@ public class KeyboardUtils {
      */
     public static boolean isOpen(Context context) {
 
-        InputMethodManager im = (InputMethodManager) context
+        InputMethodManager im = (InputMethodManager) context.getApplicationContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         // 获取输入法是否打开
         boolean isOpen = im.isActive();

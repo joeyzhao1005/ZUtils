@@ -320,7 +320,7 @@ public class AppUtils {
      */
     @TargetApi(3)
     public static String getProcessName(Context cxt, int pid) {
-        android.app.ActivityManager am = (android.app.ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        android.app.ActivityManager am = (android.app.ActivityManager) cxt.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<android.app.ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
         if (runningApps == null) {
             return null;
