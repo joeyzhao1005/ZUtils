@@ -25,13 +25,12 @@ public class NotificationListenerUtils {
     public void enableNotificationListenerListener(Context context) {
 
         try {
-            if (!isNotificationListenerListenerEnabled(context)) {
-                Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
-                context.startActivity(intent);
-            } else {
-                Zog.i("已开启通知监听服务权限");
-//            Toast.makeText(context, "已开启服务权限", Toast.LENGTH_LONG).show();
-            }
+//            if (!isNotificationListenerListenerEnabled(context)) {
+            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+            context.startActivity(intent);
+//            } else {
+//                Zog.i("已开启通知监听服务权限");
+//            }
         } catch (Exception e) {
             Zog.showException(e);
 
