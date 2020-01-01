@@ -17,14 +17,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.kit.app.application.AppMaster;
 import com.kit.utils.StringUtils;
-import com.kit.utils.intent.BundleData;
 import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -35,7 +33,7 @@ public class BroadcastCenter {
 
     private Intent intent;
     private String action;
-    private BundleData data;
+    private Bundle data;
     private boolean isUsing = false;
 
     private static final Set<BroadcastCenter> BROADCAST_CENTER_POOL = new CopyOnWriteArraySet<>();
@@ -116,11 +114,6 @@ public class BroadcastCenter {
         return this;
     }
 
-
-    public BroadcastCenter extras(BundleData bundleData) {
-        this.data = bundleData;
-        return this;
-    }
 
     public BroadcastCenter extras(Bundle bundle) {
         createIntent();

@@ -7,15 +7,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 
 import com.kit.utils.MD5Utils;
+import com.kit.utils.ValueOf;
 import com.kit.utils.log.Zog;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * Created by joeyzhao on 2018/2/2.
+ * @author joeyzhao
+ * @date 2018/2/2
+ *
  * <p>
  * 本类用来做intent传值
  * <p>
@@ -69,7 +80,7 @@ public class IntentManager {
         }
         mIntent = null;
         itemMap = null;
-        isClassicMode = false;
+
     }
 
     public void startActivity(Activity activity, ActivityOptions activityOptions) {
@@ -96,7 +107,7 @@ public class IntentManager {
         }
         mIntent = null;
         itemMap = null;
-        isClassicMode = false;
+
     }
 
 
@@ -124,7 +135,7 @@ public class IntentManager {
 
         mIntent = null;
         itemMap = null;
-        isClassicMode = false;
+
     }
 
     public void startActivity(Activity activity) {
@@ -147,7 +158,7 @@ public class IntentManager {
 
         mIntent = null;
         itemMap = null;
-        isClassicMode = false;
+
     }
 
     public void startActivityForResult(Activity activity, int code) {
@@ -170,7 +181,7 @@ public class IntentManager {
         }
         mIntent = null;
         itemMap = null;
-        isClassicMode = false;
+
     }
 
     public void startService(Context context) {
@@ -190,7 +201,7 @@ public class IntentManager {
         context.startService(mIntent);
         mIntent = null;
         itemMap = null;
-        isClassicMode = false;
+
     }
 
     public void stopService(Context context) {
@@ -253,10 +264,6 @@ public class IntentManager {
         return this;
     }
 
-    public IntentManager classicMode() {
-        this.isClassicMode = true;
-        return this;
-    }
 
     /**
      * @param isFinishActivityAfterStart 打开新的界面之后是否关闭当前界面
@@ -273,8 +280,21 @@ public class IntentManager {
     /************* bundle 的构造  START *********/
 
 
-    public IntentManager bundleData(BundleData bundleData) {
+    public IntentManager bundleData(Bundle bundleData) {
         this.itemMap = bundleData;
+        return this;
+    }
+
+    public IntentManager bundleData(BundleData bundleData) {
+        this.itemMap = getData();
+        HashMap<String, Object> map = bundleData.getHashMap();
+        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> entry = it.next();
+            if (entry.getValue() != null) {
+                put(entry.getKey(), entry.getValue());
+            }
+        }
         return this;
     }
 
@@ -289,7 +309,33 @@ public class IntentManager {
         if (value == null) {
             return this;
         }
-        getData().put(key, value);
+        //TODO 待完善
+        if (value instanceof Bundle) {
+            getData().putAll((Bundle) value);
+        } else if (value instanceof Parcelable) {
+            getData().putParcelable(key, (Parcelable) value);
+        } else if (value instanceof Parcelable[]) {
+            getData().putParcelableArray(key, (Parcelable[]) value);
+        } else if (value instanceof ArrayList && !((ArrayList) value).isEmpty() && ((ArrayList) value).get(0) instanceof Parcelable) {
+            getData().putParcelableArrayList(key, (ArrayList<? extends Parcelable>) value);
+        } else if (value instanceof String) {
+            getData().putString(key, (String) value);
+        } else if (value instanceof CharSequence) {
+            getData().putCharSequence(key, (CharSequence) value);
+        } else if (value instanceof Integer) {
+            getData().putInt(key, (Integer) value);
+        } else if (value instanceof Long) {
+            getData().putLong(key, (Long) value);
+        } else if (value instanceof Float) {
+            getData().putFloat(key, (Float) value);
+        } else if (value instanceof Double) {
+            getData().putDouble(key, (Double) value);
+        } else if (value instanceof Short) {
+            getData().putShort(key, (Short) value);
+        } else if (value instanceof Byte) {
+            getData().putByte(key, (Byte) value);
+        }
+
         return this;
     }
     /************* bundle 的构造  END *********/
@@ -298,18 +344,17 @@ public class IntentManager {
     /************* intent 的取值  START *********/
 
 
-    public BundleData getData(Intent intent) {
+    @NonNull
+    public Bundle getData(Intent intent) {
         if (intent == null) {
             return null;
         }
-        BundleData bundleData = null;
-
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = intent.getParcelableExtra("BundleData");
         if (bundle != null) {
-            bundleData = bundle.getParcelable("bundle");
+            return bundle;
+        } else {
+            return emptyBundleData;
         }
-
-        return bundleData;
     }
 
 
@@ -336,9 +381,9 @@ public class IntentManager {
     }
 
 
-    private BundleData getData() {
+    private Bundle getData() {
         if (itemMap == null) {
-            itemMap = new BundleData();
+            itemMap = new Bundle();
         }
         return itemMap;
     }
@@ -350,12 +395,12 @@ public class IntentManager {
      * @param intent
      * @param bundleData
      */
-    private void putItem(Intent intent, BundleData bundleData) {
+    private void putItem(Intent intent, Bundle bundleData) {
         if (intent == null) {
             return;
         }
 
-        intent.putExtra("bundle", bundleData);
+        intent.putExtra("BundleData", bundleData);
     }
 
     private String getKey(Intent intent) {
@@ -389,26 +434,24 @@ public class IntentManager {
     }
 
 
-
     private static ConcurrentHashMap<String, Class> targetMap;
 
     private static IntentManager mInstance;
-    private boolean isClassicMode;
+    private static Bundle emptyBundleData = new Bundle();
     Intent mIntent;
-    BundleData itemMap;
+    Bundle itemMap;
     boolean isFinishActivityAfterStart;
 
 
     public IntentManager() {
         mIntent = new Intent();
-        itemMap = new BundleData();
-        isClassicMode = false;
     }
 
 
     public void init(ConcurrentHashMap map) {
         targetMap = map;
     }
+
 
     public static IntentManager get() {
         if (mInstance == null) {

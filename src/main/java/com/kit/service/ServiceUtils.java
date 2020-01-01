@@ -58,7 +58,7 @@ public class ServiceUtils {
         });
     }
 
-    public void startService(final Class clazzes, final BundleData bundleData) {
+    public void startService(final Class clazzes, final Bundle bundleData) {
         AppUtils.newThread(() -> {
             final Context context = ResWrapper.getApplicationContext();
             Zog.i("start service " + clazzes.getName());

@@ -1,19 +1,10 @@
 package com.kit.utils.log;
 
-import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 import com.kit.config.AppConfig;
-import com.kit.utils.AppUtils;
 import com.kit.utils.GsonUtils;
 import com.kit.utils.ZString;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author Zhao
@@ -22,42 +13,6 @@ import java.util.Date;
 public class Zog {
 
 
-    /**
-     * 保存错误信息到文件中
-     *
-     * @param zogStr
-     * @return 返回文件名称, 便于将文件传送到服务器
-     */
-    public static String saveLog2File(Context context, String tag, String zogStr) {
-
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-
-        StringBuffer sb = new StringBuffer();
-
-        sb.append(zogStr);
-        try {
-            long timestamp = System.currentTimeMillis();
-            String time = formatter.format(new Date());
-
-
-            String fileName = AppUtils.getAppName(context) + "-" + tag + time + "-" + timestamp + ".zog";
-            if (Environment.getExternalStorageState().equals(
-                    Environment.MEDIA_MOUNTED)) {
-                String path = AppConfig.getAppConfig().getCacheDataDir() + "zogs/";
-                File dir = new File(path);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                FileOutputStream fos = new FileOutputStream(path + fileName);
-                fos.write(sb.toString().getBytes());
-                fos.close();
-            }
-            return fileName;
-        } catch (Exception e) {
-            showException(e);
-        }
-        return null;
-    }
 
     /**
      * @return void 返回类型

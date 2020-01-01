@@ -2,19 +2,22 @@ package com.kit.utils.intent;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.kit.utils.MapUtils;
-import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BundleData implements Cloneable, Parcelable {
+/**
+ * @author joeyzhao
+ */
+public class BundleData implements Cloneable {
     HashMap<String, Object> hashMap = new HashMap();
 
+    public HashMap<String, Object> getHashMap() {
+        return hashMap;
+    }
 
     public boolean containsKey(String key) {
 
@@ -193,60 +196,57 @@ public class BundleData implements Cloneable, Parcelable {
     }
 
 
-    public HashMap<String, Object> getHashMap() {
-        return hashMap;
-    }
-
-    public void setHashMap(HashMap<String, Object> hashMap) {
-        this.hashMap = hashMap;
-    }
-
-
     public BundleData() {
     }
 
-    /**
-     * 尽量跳转到哪个界面传哪个
-     *
-     * @param flag
-     */
-    public BundleData(String flag) {
-        this.flag = flag;
-    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        if (hashMap == null || hashMap.isEmpty()) {
+//            return;
+//        }
+//
+//        dest.writeInt(hashMap.size());
+//
+//        Iterator<Map.Entry<String, Object>> it = hashMap.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry<String, Object> entry = it.next();
+//            if (entry.getValue() != null) {
+//                dest.writeString(entry.getKey());
+//                if (entry.getValue() instanceof Parcelable) {
+//                    dest.writeParcelable((Parcelable) entry.getValue(), flags);
+//                } else {
+//                    //TODO 转化成为Parcelable
+//                    dest.writeSerializable((Serializable) entry.getValue());
+//                }
+//            }
+//        }
+//    }
+//    protected BundleData(Parcel in) {
+//        int size = in.readInt();
+//
+//        this.hashMap = new HashMap<String, Object>(size);
+//        for (int i = 0; i < size; i++) {
+//            String key = in.readString();
+//            //TODO 转化成为Parcelable
+//
+//            Object value = null;
+//            try {
+//                value = in.readParcelable(null);
+//            } catch (BadParcelableException e) {
+//            }
+//            if (value == null) {
+//                value = in.readSerializable();
+//            }
+//            hashMap.put(key, value);
+//        }
+//
+//    }
 
-    public String getFlag() {
-        return flag;
-    }
 
-
-    String flag;
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(this.hashMap);
-        dest.writeString(this.flag);
-    }
-
-    protected BundleData(Parcel in) {
-        this.hashMap = (HashMap<String, Object>) in.readSerializable();
-        this.flag = in.readString();
-    }
-
-    public static final Creator<BundleData> CREATOR = new Creator<BundleData>() {
-        @Override
-        public BundleData createFromParcel(Parcel source) {
-            return new BundleData(source);
-        }
-
-        @Override
-        public BundleData[] newArray(int size) {
-            return new BundleData[size];
-        }
-    };
 }
