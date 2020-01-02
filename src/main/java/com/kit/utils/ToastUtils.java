@@ -1,24 +1,21 @@
 package com.kit.utils;
 
 import android.content.Context;
-import androidx.annotation.StringRes;
 import android.widget.Toast;
+
+import androidx.annotation.StringRes;
 
 import com.kit.app.UIHandler;
 import com.kit.utils.log.Zog;
 
+/**
+ * @author joeyzhao
+ */
 public class ToastUtils {
-    private static Toast mToast;
-    private static Runnable r = new Runnable() {
-        @Override
-        public void run() {
-            mToast.cancel();
-        }
-    };
 
     public static void l(String msg) {
         try {
-            UIHandler.get().post(() ->
+            UIHandler.run(() ->
                     Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
@@ -28,7 +25,7 @@ public class ToastUtils {
 
     public static void l(int msgStringId) {
         try {
-            UIHandler.get().post(() ->
+            UIHandler.run(() ->
                     Toast.makeText(ResWrapper.getApplicationContext()
                             , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_LONG).show()
@@ -51,7 +48,7 @@ public class ToastUtils {
 
     public static void l(Context context, String msgString) {
         try {
-            UIHandler.get().post(() ->
+            UIHandler.run(() ->
 
                     Toast.makeText(context, msgString, Toast.LENGTH_LONG).show()
             );
@@ -63,7 +60,7 @@ public class ToastUtils {
 
     public static void s(String msg) {
         try {
-            UIHandler.get().post(() ->
+            UIHandler.run(() ->
                     Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -75,7 +72,7 @@ public class ToastUtils {
     public static void s(@StringRes int msgStringId) {
 
         try {
-            UIHandler.get().post(() ->
+            UIHandler.run(() ->
                     Toast.makeText(ResWrapper.getApplicationContext()
                             , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_SHORT).show()
@@ -94,7 +91,7 @@ public class ToastUtils {
             contxt = context;
         }
         try {
-            UIHandler.get().post(() ->
+            UIHandler.run(() ->
                     Toast.makeText(contxt, contxt.getResources().getString(msgStringId), Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -104,7 +101,7 @@ public class ToastUtils {
 
     public static void s(Context context, String msgString) {
         try {
-            UIHandler.get().post(() ->
+            UIHandler.run(() ->
                     Toast.makeText(context, msgString, Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -113,44 +110,4 @@ public class ToastUtils {
     }
 
 
-    /**
-     * @param text     内容string
-     * @param duration 时长
-     * @return void 返回类型
-     * @Title mkToast
-     * @Description 自定义toast内容和时长
-     */
-    public static void toast(String text, int duration) {
-
-        UIHandler.get().removeCallbacks(r);
-        if (mToast != null) {
-            mToast.setText(text);
-        } else {
-            mToast = Toast.makeText(ResWrapper.getApplicationContext(), text, Toast.LENGTH_SHORT);
-        }
-        UIHandler.get().postDelayed(r, duration);
-
-        mToast.show();
-    }
-
-    /**
-     * @param resId    内容string id
-     * @param duration 时长
-     * @return void 返回类型
-     * @Title mkToast
-     * @Description 自定义toast内容和时长
-     */
-    public static void toast(int resId, int duration) {
-
-        String text = ResWrapper.getApplicationContext().getResources().getString(resId);
-        UIHandler.get().removeCallbacks(r);
-        if (mToast != null) {
-            mToast.setText(text);
-        } else {
-            mToast = Toast.makeText(ResWrapper.getApplicationContext(), text, Toast.LENGTH_SHORT);
-        }
-        UIHandler.get().postDelayed(r, duration);
-
-        mToast.show();
-    }
 }

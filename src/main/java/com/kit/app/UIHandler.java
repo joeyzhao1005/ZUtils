@@ -9,6 +9,7 @@ import android.os.Looper;
  * UIHandler对Handler作了封装
  * 提供全局性的UI支持
  */
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class UIHandler {
     private static Handler mainHandler;
 

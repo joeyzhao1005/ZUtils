@@ -324,4 +324,28 @@ public class ListUtils {
         return list;
     }
 
+
+    public static boolean contains(List list, IEqual iEqual) {
+
+        if (iEqual == null) {
+            return false;
+        }
+        boolean isContain = false;
+
+
+        Iterator iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Object t = iterator.next();
+            if (!(t instanceof IEqual)) {
+                break;
+            }
+
+            if (iEqual.equal(t)) {
+                isContain = true;
+                break;
+            }
+        }
+
+        return isContain;
+    }
 }
