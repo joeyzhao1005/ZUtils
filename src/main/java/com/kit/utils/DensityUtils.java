@@ -84,4 +84,8 @@ public class DensityUtils {
         return ResWrapper.getResources().getDisplayMetrics().density;
     }
 
+    public static float densityDpi() {
+        return ResWrapper.getResources().getDisplayMetrics().densityDpi;
+    }
+
 }
