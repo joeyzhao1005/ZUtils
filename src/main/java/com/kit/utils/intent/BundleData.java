@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.kit.utils.MapUtils;
+import com.kit.utils.log.Zog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -187,12 +188,17 @@ public class BundleData implements Cloneable {
 
 
     // 打印所有的 intent extra 数据
-    public static String printBundle(Bundle bundle) {
-        StringBuilder sb = new StringBuilder();
-        for (Object key : bundle.keySet()) {
-            sb.append("\nkey:" + key + ", value:" + bundle.get(key.toString()));
-        }
-        return sb.toString();
+    public static void printBundle(Bundle bundle) {
+
+        Zog.d(() -> {
+            StringBuilder sb = new StringBuilder();
+            if (bundle != null) {
+                for (Object key : bundle.keySet()) {
+                    sb.append("\nkey:").append(key).append(", value:").append(bundle.get(key.toString()));
+                }
+            }
+            return sb.toString();
+        });
     }
 
 

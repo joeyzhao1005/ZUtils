@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import com.kit.app.application.AppMaster;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 
 public class AssetsUtils extends AssetsTxt2String {
@@ -32,9 +33,6 @@ public class AssetsUtils extends AssetsTxt2String {
 
     @Nullable
     public static String getFromAssetsNoNewLines(String fileName) {
-        if (!FileUtils.isExists(fileName)) {
-            return null;
-        }
         Context context = AppMaster.getInstance().getAppContext();
         try {
             InputStreamReader inputReader = new InputStreamReader(context
