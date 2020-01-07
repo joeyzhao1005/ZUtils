@@ -10,7 +10,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * Created by joeyzhao on 2018/2/2.
+ *
+ * @author joeyzhao
+ * @date 2018/2/2
  * <p>
  * 本类用来做intent传值
  * <p>

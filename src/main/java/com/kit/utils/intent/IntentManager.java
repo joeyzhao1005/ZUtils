@@ -7,15 +7,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.kit.utils.ApiLevel;
 import com.kit.utils.MD5Utils;
 import com.kit.utils.ValueOf;
 import com.kit.utils.log.Zog;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -320,10 +323,20 @@ public class IntentManager {
             getData().putParcelableArrayList(key, (ArrayList<? extends Parcelable>) value);
         } else if (value instanceof String) {
             getData().putString(key, (String) value);
+        } else if (value instanceof String[]) {
+            getData().putStringArray(key, (String[]) value);
+        } else if (value instanceof ArrayList && !((ArrayList) value).isEmpty() && ((ArrayList) value).get(0) instanceof String) {
+            getData().putStringArrayList(key, (ArrayList<String>) value);
         } else if (value instanceof CharSequence) {
             getData().putCharSequence(key, (CharSequence) value);
+        } else if (value instanceof CharSequence[]) {
+            getData().putCharSequenceArray(key, (CharSequence[]) value);
+        } else if (value instanceof ArrayList && !((ArrayList) value).isEmpty() && ((ArrayList) value).get(0) instanceof CharSequence) {
+            getData().putCharSequenceArrayList(key, (ArrayList<CharSequence>) value);
         } else if (value instanceof Integer) {
             getData().putInt(key, (Integer) value);
+        } else if (value instanceof ArrayList && !((ArrayList) value).isEmpty() && ((ArrayList) value).get(0) instanceof Integer) {
+            getData().putIntegerArrayList(key, (ArrayList<Integer>) value);
         } else if (value instanceof Long) {
             getData().putLong(key, (Long) value);
         } else if (value instanceof Float) {
@@ -334,6 +347,24 @@ public class IntentManager {
             getData().putShort(key, (Short) value);
         } else if (value instanceof Byte) {
             getData().putByte(key, (Byte) value);
+        } else if (value instanceof IBinder && ApiLevel.ATLEAST_JB_MR2) {
+            getData().putBinder(key, (IBinder) value);
+        } else if (value instanceof char[]) {
+            getData().putCharArray(key, (char[]) value);
+        } else if (value instanceof Character) {
+            getData().putChar(key, (Character) value);
+        } else if (value instanceof int[]) {
+            getData().putIntArray(key, (int[]) value);
+        } else if (value instanceof long[]) {
+            getData().putLongArray(key, (long[]) value);
+        } else if (value instanceof float[]) {
+            getData().putFloatArray(key, (float[]) value);
+        } else if (value instanceof double[]) {
+            getData().putDoubleArray(key, (double[]) value);
+        } else if (value instanceof short[]) {
+            getData().putShortArray(key, (short[]) value);
+        } else if (value instanceof byte[]) {
+            getData().putByteArray(key, (byte[]) value);
         }
 
         return this;
@@ -347,7 +378,7 @@ public class IntentManager {
     @NonNull
     public Bundle getData(Intent intent) {
         if (intent == null) {
-            return null;
+            return emptyBundleData;
         }
         Bundle bundle = intent.getParcelableExtra("BundleData");
         if (bundle != null) {
@@ -359,18 +390,6 @@ public class IntentManager {
 
 
     /************* intent 的取值  END *********/
-
-
-    /************* intent 的传值销毁  START *********/
-    /**
-     * 销毁
-     * 在基类的onDestory中调用最好
-     */
-    public void destory(Intent intent) {
-    }
-
-
-    /************* intent 的传值销毁  END *********/
 
 
     private Intent getIntent() {
@@ -390,47 +409,15 @@ public class IntentManager {
 
 
     /**
-     * 往map中压数据
-     *
      * @param intent
-     * @param bundleData
+     * @param bundle
      */
-    private void putItem(Intent intent, Bundle bundleData) {
+    private void putItem(Intent intent, Bundle bundle) {
         if (intent == null) {
             return;
         }
 
-        intent.putExtra("BundleData", bundleData);
-    }
-
-    private String getKey(Intent intent) {
-        String classStr = intent.getComponent() == null ? "" : intent.getComponent().getClassName();
-        String action = intent.getAction() == null ? "" : intent.getAction();
-
-        String categories = "";
-
-        if (intent.getCategories() != null && !intent.getCategories().isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (String s : intent.getCategories()) {
-                categories = sb
-                        .append(categories)
-                        .append(s)
-                        .append(";")
-                        .toString();
-            }
-        }
-
-        return MD5Utils.getMD5String(classStr + "_" + action + "_" + categories);
-    }
-
-
-    public static void register(String intentKey, Class classTarget) {
-        if (targetMap == null) {
-            Zog.e("You must init IntentManager first before target");
-            return;
-        }
-
-        targetMap.put(intentKey, classTarget);
+        intent.putExtra("BundleData", bundle);
     }
 
 

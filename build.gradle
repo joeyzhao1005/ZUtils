@@ -3,14 +3,16 @@ apply plugin: 'kotlin-android'
 
 dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
-//    implementation "androidx.legacy:legacy-support-v4:${android_x_legacy_support_v4}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
     implementation "androidx.appcompat:appcompat:${android_x_appcompat}"
     implementation "androidx.annotation:annotation:${android_x_annotation}"
-    implementation "androidx.palette:palette:${android_x_palette}"
+
+//    //协程两者
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
 
     implementation "com.google.code.gson:gson:${gson}"
-
-
 }
 
 android {

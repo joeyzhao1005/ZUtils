@@ -13,11 +13,8 @@ import com.kit.utils.ZString;
 public class Zog {
 
 
-
     /**
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
+     * 打印日志
      */
     public static void i(String tag, ZString.Creator creator) {
         if (AppConfig.getAppConfig() == null || !AppConfig.getAppConfig().isShowLog()) {
@@ -28,9 +25,7 @@ public class Zog {
 
 
     /**
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
+     * 打印日志
      */
     public static void i(ZString.Creator creator) {
         i(LOGUTILS_TAG, creator);
@@ -38,20 +33,15 @@ public class Zog {
 
 
     /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
+     * 打印日志
      */
     public static void i(String msg) {
         i(() -> msg);
     }
 
+
     /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
+     * 打印日志
      */
     public static void i(Object... msg) {
 
@@ -66,9 +56,7 @@ public class Zog {
 
 
     /**
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
+     * 打印日志
      */
     public static void e(String tag, ZString.Creator creator) {
         AppConfig.IAppConfig appConfig = AppConfig.getAppConfig();
@@ -80,19 +68,15 @@ public class Zog {
 
 
     /**
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
+     * 打印日志
      */
     public static void e(ZString.Creator creator) {
         e(LOGUTILS_TAG, creator);
     }
 
+
     /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
+     * 打印日志
      */
     public static void e(String msg) {
         e(() -> msg);
@@ -100,10 +84,7 @@ public class Zog {
 
 
     /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
+     * 打印日志
      */
     public static void e(Object... msg) {
 
@@ -118,9 +99,7 @@ public class Zog {
 
 
     /**
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
+     * 打印日志
      */
     public static void d(String tag, ZString.Creator creator) {
         if (!AppConfig.getAppConfig().isShowLog()) {
@@ -131,9 +110,7 @@ public class Zog {
 
 
     /**
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Log
+     * 打印日志
      */
     public static void d(ZString.Creator creator) {
         d(LOGUTILS_TAG, creator);
@@ -141,10 +118,7 @@ public class Zog {
 
 
     /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
+     * 打印日志
      */
     public static void d(String msg) {
         d(() -> msg);
@@ -152,10 +126,7 @@ public class Zog {
 
 
     /**
-     * @param msg String 消息
-     * @return void 返回类型
-     * @Title i
-     * @Description 打印Log
+     * 打印日志
      */
     public static void d(Object... msg) {
 
@@ -201,11 +172,9 @@ public class Zog {
         return title;
     }
 
+
     /**
-     * @param object
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Object
+     * 打印日志
      */
     public static void printObj(Object object) {
         String msg = GsonUtils.toJson(object);
@@ -213,11 +182,9 @@ public class Zog {
         i(msg);
     }
 
+
     /**
-     * @param object
-     * @return void 返回类型
-     * @Title e
-     * @Description 打印Object
+     * 打印日志
      */
     public static void printObj(Object object, String tag) {
 
@@ -227,10 +194,7 @@ public class Zog {
 
 
     /**
-     * @param
-     * @return void 返回类型
-     * @Title showException
-     * @Description 显示Exception
+     * 打印日志
      */
     public static void showException(Throwable e) {
         if (AppConfig.getAppConfig().isShowException()) {
@@ -238,11 +202,9 @@ public class Zog {
         }
     }
 
+
     /**
-     * @param
-     * @return void 返回类型
-     * @Title showException
-     * @Description 显示Exception
+     * 打印日志
      */
     public static void showException(Exception e) {
         if (AppConfig.getAppConfig().isShowException()) {
@@ -250,10 +212,20 @@ public class Zog {
         }
     }
 
+    /**
+     * 极简
+     */
+    public static final String STYLE_MINIMAL = "MINIMAL";
 
-    public static final String STYLE_MINIMAL = "MINIMAL";//极简
-    public static final String STYLE_SIMPLE = "SIMPLE";//简单
-    public static final String STYLE_VERBOSE = "VERBOSE";//简单
+    /**
+     * 简单
+     */
+    public static final String STYLE_SIMPLE = "SIMPLE";
+
+    /**
+     * 啰嗦
+     */
+    public static final String STYLE_VERBOSE = "VERBOSE";
 
 
     public static int COUNT = 0;
@@ -265,8 +237,10 @@ public class Zog {
     public static String LOGUTILS_IDENTIFY = "@";
 
 
-    public static Zog setStyle(String style) {
+    private Zog() {
+    }
+
+    public static void setStyle(String style) {
         Zog.STYLE = style;
-        return new Zog();
     }
 }
