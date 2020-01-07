@@ -268,7 +268,7 @@ public class DeviceUtils {
         if (realScreenHeight != 0) {
             return realScreenHeight;
         }
-        if (context == null || !(context instanceof Activity)) {
+        if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
@@ -303,12 +303,12 @@ public class DeviceUtils {
             return screenWidth;
         }
 
-        if (context == null || !(context instanceof Activity)) {
-            context = ActivityManager.getInstance().getCurrActivity();
+        if (context == null) {
+            context = AppMaster.getInstance().getAppContext();
         }
 
         if (context == null) {
-            return 0;
+            return 768;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -331,12 +331,12 @@ public class DeviceUtils {
             return realScreenWidth;
         }
 
-        if (context == null || !(context instanceof Activity)) {
-            context = ActivityManager.getInstance().getCurrActivity();
+        if (context == null) {
+            context = AppMaster.getInstance().getAppContext();
         }
 
         if (context == null) {
-            return 0;
+            return 1080;
         }
 
         Display display = ((Activity) context).getWindowManager()
