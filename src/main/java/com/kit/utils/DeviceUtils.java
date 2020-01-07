@@ -235,7 +235,7 @@ public class DeviceUtils {
         if (screenHeight != 0) {
             return screenHeight;
         }
-        if (context == null || !(context instanceof Activity)) {
+        if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
