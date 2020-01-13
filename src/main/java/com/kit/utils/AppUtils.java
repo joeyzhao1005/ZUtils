@@ -27,6 +27,9 @@ import com.kit.app.core.task.DoSomeThing;
 import com.kit.app.core.task.OnNext;
 import com.kit.utils.log.Zog;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -314,25 +317,54 @@ public class AppUtils {
         }
         return appName;
     }
-
     /**
-     * @return null may be returned if the specified process not found
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
      */
-    @TargetApi(3)
-    public static String getProcessName(Context cxt, int pid) {
-        android.app.ActivityManager am = (android.app.ActivityManager) cxt.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-        List<android.app.ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
-        if (runningApps == null) {
-            return null;
-        }
-        for (android.app.ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
-            if (procInfo.pid == pid) {
-                return procInfo.processName;
+    public static String getProcessName(int pid) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            String processName = reader.readLine();
+            if (!StringUtils.isEmptyOrNullStr(processName)) {
+                processName = processName.trim();
             }
-
+            return processName;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         }
         return null;
     }
+
+//    /**
+//     * @return null may be returned if the specified process not found
+//     */
+//    @TargetApi(3)
+//    @Deprecated
+//    public static String getProcessName(Context cxt, int pid) {
+//        android.app.ActivityManager am = (android.app.ActivityManager) cxt.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+//        List<android.app.ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+//        if (runningApps == null) {
+//            return null;
+//        }
+//        for (android.app.ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+//            if (procInfo.pid == pid) {
+//                return procInfo.processName;
+//            }
+//
+//        }
+//        return null;
+//    }
 
     public static String getAppPackage(Context context) {
         String packageName = context.getPackageName();
