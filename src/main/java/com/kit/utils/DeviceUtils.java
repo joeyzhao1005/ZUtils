@@ -370,11 +370,30 @@ public class DeviceUtils {
      * @return
      */
     public static int getNavigationBarHeight(Context context) {
-        if (ApiLevel.ATLEAST_JELLY_BEAN_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
-            //小米手势导航 启用
-            return 0;
+        if (ApiLevel.ATLEAST_Q) {
+            //Android Q 统一启用导航栏高度
+            Zog.e("Android Q 及以上版本不建议使用getNavigationBarHeight来获取导航栏，建议采用ViewCompat.setOnApplyWindowInsetsListener的方式来监听导航栏");
         }
 
+        if (navigationBarHeight != -1) {
+            return navigationBarHeight;
+        }
+
+        if (ApiLevel.ATLEAST_JELLY_BEAN_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
+            //小米手势导航 启用
+            navigationBarHeight = 0;
+            return navigationBarHeight;
+        } else {
+            navigationBarHeight = getNaviBarHeight(context);
+            return navigationBarHeight;
+        }
+
+    }
+
+    private static int getNaviBarHeight(@Nullable Context context) {
+        if (context == null) {
+            context = AppMaster.getInstance().getAppContext();
+        }
         int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
         if (rid != 0) {
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -382,12 +401,16 @@ public class DeviceUtils {
             } else {
                 return DeviceUtils.getRealScreenWidth(context) - DeviceUtils.getScreenWidth(context);
             }
-//            int resourceId  = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-//            return context.getResources().getDimensionPixelSize(resourceId);
         } else {
             return 0;
         }
     }
+
+    public static void setNavigationBarHeight(int navigationBarHeight) {
+        DeviceUtils.navigationBarHeight = navigationBarHeight;
+    }
+
+    private static int navigationBarHeight = -1;
 
     /**
      * 获取虚拟按键宽度
