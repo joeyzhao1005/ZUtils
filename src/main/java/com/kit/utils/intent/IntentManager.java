@@ -380,7 +380,7 @@ public class IntentManager {
         if (intent == null) {
             return emptyBundleData;
         }
-        Bundle bundle = intent.getParcelableExtra("BundleData");
+        Bundle bundle = intent.getExtras();
         if (bundle != null) {
             return bundle;
         } else {
@@ -413,11 +413,11 @@ public class IntentManager {
      * @param bundle
      */
     private void putItem(Intent intent, Bundle bundle) {
-        if (intent == null) {
+        if (intent == null || bundle == null) {
             return;
         }
 
-        intent.putExtra("BundleData", bundle);
+        intent.putExtras(bundle);
     }
 
 
