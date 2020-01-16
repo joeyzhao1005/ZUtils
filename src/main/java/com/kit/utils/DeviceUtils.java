@@ -14,6 +14,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.core.content.ContextCompat;
@@ -331,8 +332,8 @@ public class DeviceUtils {
             return realScreenWidth;
         }
 
-        if (context == null) {
-            context = AppMaster.getInstance().getAppContext();
+        if (!(context instanceof Activity)) {
+            context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context == null) {

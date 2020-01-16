@@ -91,17 +91,17 @@ public class AppUtils {
 
     public static boolean isSysApp(ApplicationInfo applicationInfo) {
         boolean flag = false;
-//        if ((applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+//        if ((applicationInfo.flags & applicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
 //            // Updated system app
 //            flag = true;
-//        } else if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+//        } else if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) == 0) {
 //            // Non-system app
 //            flag = true;
 //        }
 
         //判断是否系统应用
         if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0
-            /*|| (applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0*/) {
+            /*|| (applicationInfo.flags & applicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0*/) {
             //非系统应用
             flag = false;
         } else {

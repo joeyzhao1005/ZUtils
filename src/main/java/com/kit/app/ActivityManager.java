@@ -184,7 +184,6 @@ public class ActivityManager {
         } catch (Exception e) {
             Zog.i("none activity.");
 
-//            Zog.showException(e);
             return null;
         }
     }
