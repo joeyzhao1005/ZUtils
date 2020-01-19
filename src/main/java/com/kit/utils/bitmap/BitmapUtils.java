@@ -629,6 +629,7 @@ public class BitmapUtils {
      * @param opts    注意：opts.inSampleSize 可能会被改变
      * @return
      */
+    @Nullable
     public static Bitmap safeDecodeBimtapFile(String bmpFile,
                                               BitmapFactory.Options opts) {
 
