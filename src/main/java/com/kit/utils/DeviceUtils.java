@@ -344,7 +344,7 @@ public class DeviceUtils {
                 .getDefaultDisplay();
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
-            display.getSize(size);
+            display.getSize(size);g
             realScreenWidth = size.x;
         } else {
             realScreenWidth = display.getWidth();
