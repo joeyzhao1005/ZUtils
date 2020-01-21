@@ -39,9 +39,6 @@ public class AppConfig {
 
         String getCacheImageDir();
 
-        boolean isFirstReLaunch();
-
-        void setFirstReLaunch(boolean isFirstReLaunch);
 
         String getTheme();
 
