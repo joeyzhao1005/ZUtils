@@ -1,26 +1,17 @@
 package com.kit.utils;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.PowerManager;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresPermission;
-import androidx.core.content.ContextCompat;
-
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -29,33 +20,48 @@ import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
+
 import com.kit.app.ActivityManager;
 import com.kit.app.application.AppMaster;
+import com.kit.sharedpreferences.DataCache;
 import com.kit.utils.log.Zog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.UUID;
 
 public class DeviceUtils {
 
+    private static String deviceId;
 
-    @SuppressWarnings("MissingPermission")
+    /**
+     * 获取设备唯一标识符
+     *
+     * @return 唯一标识符
+     */
     public static String getDeviceId() {
+        // 通过 SharedPreferences 获取 deviceId
+        deviceId = DataCache.getInstance().loadStringSharedPreference("deviceId");
         if (deviceId != null) {
             return deviceId;
         }
-        TelephonyManager mTelephonyMgr = (TelephonyManager) AppMaster.getInstance().getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
-//        String imsi = mTelephonyMgr.getSubscriberId(); //获取IMSI号
-        //获取IMEI号
-        if (ContextCompat.checkSelfPermission(AppMaster.getInstance().getAppContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-            deviceId = mTelephonyMgr.getDeviceId();
+
+        // 获取 ANDROID_ID
+        String androidId = Settings.System.getString(
+                AppMaster.getInstance().getAppContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        if (!StringUtils.isEmptyOrNullStr(androidId)) {
+            // 通过 ANDROID_ID 生成 deviceId（唯一标识符）
+            deviceId = MD5Utils.getMD5String(androidId);
         } else {
-            deviceId = DeviceTokenUtils.getMd5DeviceToken();
+            // 通过 UUID 生成 deviceId（唯一标识符）
+            deviceId = MD5Utils.getMD5String(UUID.randomUUID().toString());
         }
+        // 保存 deviceId 到 SharedPreferences
+        DataCache.getInstance().saveSharedPreferences("deviceId", deviceId);
         return deviceId;
     }
 
-    private static String deviceId;
 
     /**
      * 设备厂商
@@ -344,7 +350,7 @@ public class DeviceUtils {
                 .getDefaultDisplay();
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
-            display.getSize(size);g
+            display.getSize(size);
             realScreenWidth = size.x;
         } else {
             realScreenWidth = display.getWidth();

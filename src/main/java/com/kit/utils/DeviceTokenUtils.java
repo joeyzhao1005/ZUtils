@@ -26,8 +26,7 @@ public class DeviceTokenUtils {
 
 		// System.out.println(str + " str str " + str.length());
 
-		MD5 md5 = new MD5();
-		String deviceToken = md5.getMD5FromStr(str);
+		String deviceToken = MD5Utils.getMD5String(str);
 
 		// System.out.println(deviceToken + " deviceToken deviceToken "
 		// + deviceToken.length());
@@ -48,7 +47,6 @@ public class DeviceTokenUtils {
 			int n = (int) (Math.random() * k.size());
 
 			randomNum = k.get(n);
-			//System.out.println("RandomNum: " + randomNum);
 
 		}
 
