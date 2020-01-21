@@ -22,7 +22,7 @@ public class AppThread {
 
     public static void checkNeedInAsyncThread() throws IllegalThreadStateException {
         if (isMainThread()) {
-            throw new IllegalThreadStateException("u need call this method in async thread!!!");
+            throw new IllegalThreadStateException("u should call this method in async thread!!!");
         }
 
     }
