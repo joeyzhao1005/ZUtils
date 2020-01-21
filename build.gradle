@@ -8,9 +8,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${android_x_appcompat}"
     implementation "androidx.annotation:annotation:${android_x_annotation}"
 
-//    //协程两者
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
+    //协程两者
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
 
     implementation "com.google.code.gson:gson:${gson}"
 }

@@ -20,6 +20,12 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class AppThread {
 
+    public static void checkNeedInAsyncThread() throws IllegalThreadStateException {
+        if (isMainThread()) {
+            throw new IllegalThreadStateException("u need call this method in async thread!!!");
+        }
+
+    }
 
     public static boolean isMainThread() {
         return Looper.getMainLooper() == Looper.myLooper();
