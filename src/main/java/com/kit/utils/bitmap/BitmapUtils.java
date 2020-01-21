@@ -297,13 +297,18 @@ public class BitmapUtils {
      * @param bitmap
      * @return Bitmap
      */
-    public static Bitmap rotate(int degree, Bitmap bitmap) {
+    @Nullable
+    public static Bitmap rotate(int degree, @Nullable Bitmap bitmap) {
         //旋转图片 动作
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
+        Bitmap resizedBitmap = null;
         // 创建新的图片
-        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-                bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        if (bitmap != null) {
+            resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+                    bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        }
+
         return resizedBitmap;
     }
 
@@ -891,11 +896,13 @@ public class BitmapUtils {
      * @Description 从文件路径，获取图片缩略图
      */
     public static Bitmap getBitmapFromFile(String path, double scale) {
+        if (scale == 1 && FileUtils.isExists(path)) {
+            return BitmapFactory.decodeFile(path);
+        }
+
         Bitmap bmp = null;
         try {
             int digree = getDegree(path);
-
-
             bmp = BitmapFactory.decodeFile(path, getBitmapOption(scale));
             if (digree != 0) {
                 bmp = rotate(digree, bmp);
