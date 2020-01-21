@@ -285,7 +285,7 @@ public class DeviceUtils {
 
         Display display = ((Activity) context).getWindowManager()
                 .getDefaultDisplay();
-        if (ApiLevel.ATLEAST_JELLY_BEAN_MR1) {
+        if (ApiLevel.ATLEAST_JB_MR1) {
             Point size = new Point();
             display.getRealSize(size);
             realScreenHeight = size.y;
@@ -386,7 +386,7 @@ public class DeviceUtils {
             return navigationBarHeight;
         }
 
-        if (ApiLevel.ATLEAST_JELLY_BEAN_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
+        if (ApiLevel.ATLEAST_JB_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
             //小米手势导航 启用
             navigationBarHeight = 0;
             return navigationBarHeight;

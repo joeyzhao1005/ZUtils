@@ -44,19 +44,14 @@ public class ApiLevel {
     public static final boolean ATLEAST_KITKAT =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-    public static final boolean ATLEAST_JB_MR1 =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
-
-
 
     public static final boolean ATLEAST_JB_MR2 =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
 
 
-
-
-    public static final boolean ATLEAST_JELLY_BEAN_MR1=
+    public static final boolean ATLEAST_JB_MR1 =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+
 
     public static final boolean ATLEAST_JELLY_BEAN =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
