@@ -120,8 +120,8 @@ public class DrawableUtils {
         return file;
     }
 
-    public static String saveDrawable(Context context, int drawableID, String filename) {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableID);
+    public static String saveDrawable(int drawableId, String filename) {
+        Bitmap bitmap = BitmapFactory.decodeResource(ResWrapper.getResources(), drawableId);
         try {
             if (bitmap == null || bitmap.isRecycled()) {
                 return null;
