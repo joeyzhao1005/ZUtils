@@ -218,12 +218,6 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;
 
 
-        /* 另外，为了节约内存我们还可以使用下面的几个字段：*/
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;    // 默认是Bitmap.Config.ARGB_8888
-        /* 下面两个字段需要组合使用 */
-        options.inPurgeable = true;
-        options.inInputShareable = true;
-
         return options;
     }
 
@@ -1200,7 +1194,7 @@ public class BitmapUtils {
         return bitmap;
     }
 
-    public static Bitmap resizeBitmapFileByHeight(Context context, String filePath,
+    public static Bitmap resizeBitmapFileByHeight(String filePath,
                                                   int imageViewHeight) {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
