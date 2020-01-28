@@ -52,14 +52,20 @@ public class BitmapUtils {
     public static String TAG = BitmapUtils.class.getName();
 
     public static Bitmap drawBackground4Bitmap(int color, Bitmap orginBitmap) {
-        Paint paint = new Paint();
-        paint.setColor(color);
-        Bitmap bitmap = Bitmap.createBitmap(orginBitmap.getWidth(),
-                orginBitmap.getHeight(), orginBitmap.getConfig());
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawRect(0, 0, orginBitmap.getWidth(), orginBitmap.getHeight(), paint);
-        canvas.drawBitmap(orginBitmap, 0, 0, paint);
-        return bitmap;
+        if (orginBitmap != null) {
+            Paint paint = new Paint();
+            paint.setColor(color);
+            Bitmap bitmap = Bitmap.createBitmap(orginBitmap.getWidth(),
+                    orginBitmap.getHeight(), orginBitmap.getConfig());
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawRect(0, 0, orginBitmap.getWidth(), orginBitmap.getHeight(), paint);
+            if (!orginBitmap.isRecycled()) {
+                canvas.drawBitmap(orginBitmap, 0, 0, paint);
+            }
+            return bitmap;
+        }
+        return null;
+
     }
 
     public static Bitmap loadGifFirstBitmap(FileDescriptor fd) {
@@ -593,32 +599,38 @@ public class BitmapUtils {
      */
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
 
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
+        if (bitmap != null) {
 
-                .getHeight(), Config.ARGB_8888);
+            Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
 
-        Canvas canvas = new Canvas(output);
+                    .getHeight(), Config.ARGB_8888);
 
-        final int color = 0xff424242;
+            Canvas canvas = new Canvas(output);
 
-        final Paint paint = new Paint();
+            final int color = 0xff424242;
 
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+            final Paint paint = new Paint();
 
-        final RectF rectF = new RectF(rect);
+            final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
 
-        paint.setAntiAlias(true);
+            final RectF rectF = new RectF(rect);
 
-        canvas.drawARGB(0, 0, 0, 0);
+            paint.setAntiAlias(true);
 
-        paint.setColor(color);
+            canvas.drawARGB(0, 0, 0, 0);
 
-        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+            paint.setColor(color);
 
-        canvas.drawBitmap(bitmap, rect, rect, paint);
+            canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
 
-        return output;
+            if (!bitmap.isRecycled()) {
+                canvas.drawBitmap(bitmap, rect, rect, paint);
+            }
 
+            return output;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -711,72 +723,6 @@ public class BitmapUtils {
     }
 
 
-    public static Bitmap addBitmap(ArrayList<Integer> listResId, int lineNum,
-                                   int columnNum, Context context) {
-        // 等分图片的处理
-        // System.gc();
-
-        // BitmapFactory.Options bfOptions=new BitmapFactory.Options();
-        // bfOptions.inTempStorage=new byte[12 * 1024 * 1024];
-        BitmapFactory.Options bfOptions = new BitmapFactory.Options();
-        bfOptions.inTempStorage = new byte[2 * 1024 * 1024];
-        bfOptions.inPreferredConfig = Config.ARGB_8888;
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(),
-                listResId.get(0), bfOptions);
-        int width = bmp.getWidth() * lineNum;
-        int height = bmp.getHeight() * columnNum;
-
-        // int width = bmp.getWidth() ;
-        // int height = bmp.getHeight();
-
-        bmp.recycle();
-        bmp = null;
-        // System.gc();
-
-        Bitmap result = Bitmap.createBitmap(width, height, Config.ARGB_8888);
-        Canvas canvas = new Canvas(result);
-
-        int flag = 0;
-        float left = 0, top = 0;
-
-        for (int line = 0; line < lineNum; line++) {
-
-            for (int column = 0; column < columnNum; column++) {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inTempStorage = new byte[2 * 1024 * 1024];
-                options.inPreferredConfig = Config.ARGB_8888;
-
-                Bitmap bmpTemp = BitmapFactory.decodeResource(
-                        context.getResources(), listResId.get(flag), options);
-
-                canvas.drawBitmap(bmpTemp, left, top, null);
-
-                left += bmpTemp.getWidth();
-                flag++;
-                if (column == columnNum - 1) {
-                    left = 0;
-                    top += bmpTemp.getHeight();
-                }
-            }
-
-        }
-        // canvas.drawBitmap(second, first.getWidth(), 0, null);
-        return result;
-
-        //
-        // Bitmap bitmap = Bitmap
-        // .createBitmap(
-        // drawable.getIntrinsicWidth(),
-        // drawable.getIntrinsicHeight(),
-        // drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-        // : Bitmap.Config.RGB_565);
-        // Canvas canvas = new Canvas(bitmap);
-        // // canvas.setBitmap(bitmap);
-        // drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-        // drawable.getIntrinsicHeight());
-        // drawable.draw(canvas);
-        // return bitmap;
-    }
 
     public static Bitmap drawable2Bitmap(Drawable drawable) {
         Bitmap bitmap = Bitmap
