@@ -243,7 +243,9 @@ public class IntentManager {
 
     /************* intent 的构造   START ************************/
     public IntentManager setClass(Context packageContext, Class<?> cls) {
-        getIntent().setClass(packageContext, cls);
+        if (cls != null) {
+            getIntent().setClass(packageContext, cls);
+        }
         return this;
     }
 
