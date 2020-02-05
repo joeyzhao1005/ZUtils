@@ -123,7 +123,7 @@ public class DeviceUtils {
     public static final int DEVICE_ADMIN = 70 + 1;
 
 
-    public static void lockScreen(@Nullable Activity activity, Class<?> adminManagerReceiver) {
+    public static boolean lockScreen(@Nullable Activity activity, Class<?> adminManagerReceiver) {
 
         if (activity == null) {
             activity = ActivityManager.getInstance().getCurrActivity();
@@ -135,30 +135,33 @@ public class DeviceUtils {
 
         //AdminReceiver 继承自 DeviceAdminReceiver
         ComponentName componentName = new ComponentName(activity, adminManagerReceiver);
+        if (policyManager == null) {
+            return false;
+        }
 
         boolean active = policyManager.isAdminActive(componentName);
-        if (!active) {//若无权限
-            // 启动设备管理(隐式Intent) - 在AndroidManifest.xml中设定相应过滤器
-            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+        if (!active) {
+            //若无权限
+            try {
+                // 启动设备管理(隐式Intent) - 在AndroidManifest.xml中设定相应过滤器
+                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
 
-            //权限列表
-            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+                //权限列表
+                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+                //描述(additional explanation)
+//                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Lock Screen");
 
-            //描述(additional explanation)
-//        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "------------");
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                activity.startActivityForResult(intent, DEVICE_ADMIN);
+                activity.startActivity(intent);
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivityForResult(intent, DEVICE_ADMIN);
-
-            // 判断该组件是否有系统管理员的权限
-            active = policyManager.isAdminActive(componentName);
-            if (active) {
-                policyManager.lockNow();//并锁屏
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            return false;
         }
-        if (active) {
-            policyManager.lockNow();//直接锁屏
-        }
+        policyManager.lockNow();//直接锁屏
+        return true;
     }
 
 

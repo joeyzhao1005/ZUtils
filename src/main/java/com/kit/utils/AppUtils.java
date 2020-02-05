@@ -2,14 +2,12 @@ package com.kit.utils;
 
 import android.annotation.TargetApi;
 import android.app.Application;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
@@ -656,6 +654,8 @@ public class AppUtils {
      * @param packageName
      */
     public static void uninstallAPK(Context context, String packageName) {
+
+
         Intent intent;
 //        if (ApiLevel.ATLEAST_LOLLIPOP) {
 //            intent = new Intent();
