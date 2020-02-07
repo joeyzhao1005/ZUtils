@@ -723,7 +723,6 @@ public class BitmapUtils {
     }
 
 
-
     public static Bitmap drawable2Bitmap(Drawable drawable) {
         Bitmap bitmap = Bitmap
                 .createBitmap(
@@ -1328,7 +1327,7 @@ public class BitmapUtils {
      * @param bmp
      * @param fileFullPath
      */
-    public static File saveBitmap(Bitmap bmp, String fileFullPath) {
+    public static File saveBitmap(@Nullable Bitmap bmp, @Nullable String fileFullPath) {
         if (bmp == null || fileFullPath == null) {
             return null;
         }

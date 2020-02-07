@@ -12,6 +12,13 @@ public class ApiLevel {
     public static final boolean ATMOST_P =
             Build.VERSION.SDK_INT <= Build.VERSION_CODES.P;
 
+    public static final boolean ATMOST_N_MR1 =
+            Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1;
+
+
+    public static final boolean ATMOST_N =
+            Build.VERSION.SDK_INT <= Build.VERSION_CODES.N;
+
     public static final boolean ATLEAST_Q =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
 
