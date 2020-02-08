@@ -174,11 +174,11 @@ public class NotchScreenUtils {
             Method get = HwNotchSizeUtil.getMethod("hasNotchInScreen");
             ret = (boolean) get.invoke(HwNotchSizeUtil);
         } catch (ClassNotFoundException e) {
-            Log.e("NotchScreenUtil", "hasNotchAtHuawei ClassNotFoundException");
+//            Log.e("NotchScreenUtil", "hasNotchAtHuawei ClassNotFoundException");
         } catch (NoSuchMethodException e) {
-            Log.e("NotchScreenUtil", "hasNotchAtHuawei NoSuchMethodException");
+//            Log.e("NotchScreenUtil", "hasNotchAtHuawei NoSuchMethodException");
         } catch (Exception e) {
-            Log.e("NotchScreenUtil", "hasNotchAtHuawei Exception");
+//            Log.e("NotchScreenUtil", "hasNotchAtHuawei Exception");
         } finally {
             return ret;
         }
@@ -200,11 +200,11 @@ public class NotchScreenUtils {
             Method method = FtFeature.getMethod("isFeatureSupport", int.class);
             ret = (boolean) method.invoke(FtFeature, VIVO_NOTCH);
         } catch (ClassNotFoundException e) {
-            Log.e("NotchScreenUtil", "hasNotchAtVivo ClassNotFoundException");
+//            Log.e("NotchScreenUtil", "hasNotchAtVivo ClassNotFoundException");
         } catch (NoSuchMethodException e) {
-            Log.e("NotchScreenUtil", "hasNotchAtVivo NoSuchMethodException");
+//            Log.e("NotchScreenUtil", "hasNotchAtVivo NoSuchMethodException");
         } catch (Exception e) {
-            Log.e("NotchScreenUtil", "hasNotchAtVivo Exception");
+//            Log.e("NotchScreenUtil", "hasNotchAtVivo Exception");
         } finally {
             return ret;
         }
