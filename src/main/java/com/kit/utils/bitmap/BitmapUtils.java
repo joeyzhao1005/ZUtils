@@ -1264,21 +1264,31 @@ public class BitmapUtils {
      * @param isRecycle 保存之后是否回收
      */
     public static File saveBitmap(Bitmap bmp, File file, boolean isRecycle, boolean notifySystem) {
-        if (bmp == null) {
+        if (file != null && file.exists()) {
+            return file;
+        }
+
+        if (bmp == null || bmp.isRecycled()) {
             return null;
         }
 
-        File dir = new File(file.getParent());
-
-
-        boolean mkdirResult = false;
-        if (!dir.exists()) {
-            mkdirResult = dir.mkdirs();
+        if (file == null) {
+            return null;
         }
 
-        //多级目录
-        if (!mkdirResult && !dir.exists()) {
-            return null;
+        String parent = file.getParent();
+        if (parent != null && !parent.isEmpty()) {
+            File dir = new File(parent);
+
+            boolean mkdirResult = false;
+            if (!dir.exists()) {
+                mkdirResult = dir.mkdirs();
+            }
+
+            //多级目录
+            if (!mkdirResult && !dir.exists()) {
+                return null;
+            }
         }
 
         if (file.exists()) {
