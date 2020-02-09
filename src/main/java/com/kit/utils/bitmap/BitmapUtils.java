@@ -1264,9 +1264,6 @@ public class BitmapUtils {
      * @param isRecycle 保存之后是否回收
      */
     public static File saveBitmap(Bitmap bmp, File file, boolean isRecycle, boolean notifySystem) {
-        if (file != null && file.exists()) {
-            return file;
-        }
 
         if (bmp == null || bmp.isRecycled()) {
             return null;
@@ -1275,6 +1272,11 @@ public class BitmapUtils {
         if (file == null) {
             return null;
         }
+
+        if (file != null && file.exists()) {
+            file.delete();
+        }
+
 
         String parent = file.getParent();
         if (parent != null && !parent.isEmpty()) {
@@ -1291,9 +1293,6 @@ public class BitmapUtils {
             }
         }
 
-        if (file.exists()) {
-            file.delete();
-        }
 
         FileOutputStream fos = null;
         try {
