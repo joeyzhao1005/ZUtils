@@ -2,6 +2,7 @@ package com.kit.sharedpreferences;
 
 import android.content.Context;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.ResWrapper;
 
 import java.util.List;
@@ -174,7 +175,7 @@ public class DataCache {
 
     private void init(Context context) {
         if (context == null) {
-            context = ResWrapper.getApplicationContext();
+            context = AppMaster.getInstance().getAppContext();
         }
         sharedPreferencesUtils = new SharedPreferencesUtils(context, sharedPreferencesName);
     }

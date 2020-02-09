@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.os.Build;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.log.Zog;
 
 /**
@@ -48,7 +49,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
      */
     public void setReceiverMode() {
         Zog.i("set to receiver mode");
-        context = ResWrapper.getApplicationContext();
+        context = AppMaster.getInstance().getAppContext();
         audioManager = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 
 //        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -107,7 +108,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
      * 开启耳机发音模式
      */
     public void setHeadsetMode() {
-        context = ResWrapper.getApplicationContext();
+        context = AppMaster.getInstance().getAppContext();
         audioManager = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 
 //        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -135,7 +136,7 @@ public class AudioUtils implements AudioManager.OnAudioFocusChangeListener {
      */
     public void setSpeakerMode() {
         Zog.i("set to speaker mode");
-        context = ResWrapper.getApplicationContext();
+        context = AppMaster.getInstance().getAppContext();
         audioManager = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 
         if (audioManager.getMode() == AudioManager.MODE_NORMAL) {

@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 
+import com.kit.app.application.AppMaster;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,7 +22,7 @@ public class ConnectivityUtils {
     public static ConnectivityUtils getInstance() {
         if (connectivityUtils == null) {
             connectivityUtils = new ConnectivityUtils();
-            Context context = ResWrapper.getApplicationContext();
+            Context context = AppMaster.getInstance().getAppContext();
             connectivityUtils.mConnectivityManager = (ConnectivityManager) context.getApplicationContext()
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             connectivityUtils.wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);

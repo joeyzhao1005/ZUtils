@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
 import com.kit.utils.log.Zog;
@@ -101,12 +102,12 @@ public class MediaUtils {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             try {
-                ResWrapper.getApplicationContext().startActivity(it);
+                AppMaster.getInstance().getAppContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
                 Zog.showException(e);
             }
         } else {
-            Context context = ResWrapper.getApplicationContext();
+            Context context = AppMaster.getInstance().getAppContext();
             ContentValues contentValues = new ContentValues(1);
             contentValues.put(MediaStore.Images.Media.DATA, dir);
             Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
@@ -122,7 +123,7 @@ public class MediaUtils {
                     "");
 
             try {
-                ResWrapper.getApplicationContext().startActivity(it);
+                AppMaster.getInstance().getAppContext().startActivity(it);
             } catch (ActivityNotFoundException e) {
                 Zog.showException(e);
             }
@@ -139,7 +140,7 @@ public class MediaUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
-            ResWrapper.getApplicationContext().startActivity(intent);
+            AppMaster.getInstance().getAppContext().startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Zog.showException(e);
         }

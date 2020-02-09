@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.ListUtils;
 import com.kit.utils.ResWrapper;
 import com.kit.utils.StringUtils;
@@ -107,7 +108,7 @@ public class SMSUtils {
 
     public static ArrayList<SMSInfo> getSmsByKeyWord(String keyword) {
         Uri SMS_INBOX = Uri.parse("content://sms/");
-        ContentResolver cr = ResWrapper.getApplicationContext().getContentResolver();
+        ContentResolver cr = AppMaster.getInstance().getAppContext().getContentResolver();
         String[] projection = new String[]{"_id", "person", "address", "date", "body"};
         String[] selectionArgs = new String[]{"%" + keyword + "%"};
 
@@ -149,7 +150,7 @@ public class SMSUtils {
     public static ArrayList<SMSInfo> getSmsByPhone() {
         Uri SMS_INBOX = Uri.parse("content://sms/");
 
-        ContentResolver cr = ResWrapper.getApplicationContext().getContentResolver();
+        ContentResolver cr = AppMaster.getInstance().getAppContext().getContentResolver();
 
         String[] projection = new String[]{"_id", "person", "address", "date", "body"};
         String where = " address = '1066321332' AND date >  "

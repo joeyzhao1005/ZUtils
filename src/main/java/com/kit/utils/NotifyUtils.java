@@ -42,7 +42,7 @@
 //
 //
 //    public static Notification creatNotification(int smallIconDrawableRes, CharSequence title, CharSequence content) {
-//        Context context = ResWrapper.getApplicationContext();
+//        Context context = AppMaster.getInstance().getAppContext();
 //        NotificationCompat.Builder builder =
 //                new NotificationCompat.Builder(context)
 //                        .setSmallIcon(smallIconDrawableRes)

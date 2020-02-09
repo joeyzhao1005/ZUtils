@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore.Audio.Media;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.ResWrapper;
 import com.kit.utils.log.Zog;
 
@@ -46,7 +47,7 @@ public class MusicLoader {
 
     public List<MusicInfo> getMusicList() {
         List<MusicInfo> musicList = null;
-        ContentResolver contentResolver = ResWrapper.getApplicationContext().getContentResolver();
+        ContentResolver contentResolver = AppMaster.getInstance().getAppContext().getContentResolver();
 
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
@@ -97,7 +98,7 @@ public class MusicLoader {
         where = "mime_type in ('audio/mpeg','audio/x-ms-wma') and _display_name like '%"
                 + name
                 + "%' and is_music > 0 ";
-        ContentResolver contentResolver = ResWrapper.getApplicationContext().getContentResolver();
+        ContentResolver contentResolver = AppMaster.getInstance().getAppContext().getContentResolver();
         Cursor cursor = contentResolver.query(contentUri, projection, where, null, sortOrder);
         if (cursor == null) {
             Zog.e("Music Loader cursor == null.");

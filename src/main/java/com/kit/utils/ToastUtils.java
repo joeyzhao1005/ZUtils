@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.StringRes;
 
 import com.kit.app.UIHandler;
+import com.kit.app.application.AppMaster;
 import com.kit.utils.log.Zog;
 
 /**
@@ -16,7 +17,7 @@ public class ToastUtils {
     public static void l(String msg) {
         try {
             UIHandler.run(() ->
-                    Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_LONG).show()
+                    Toast.makeText(AppMaster.getInstance().getAppContext(), msg, Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
             Zog.showException(e);
@@ -26,8 +27,8 @@ public class ToastUtils {
     public static void l(int msgStringId) {
         try {
             UIHandler.run(() ->
-                    Toast.makeText(ResWrapper.getApplicationContext()
-                            , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
+                    Toast.makeText(AppMaster.getInstance().getAppContext()
+                            , AppMaster.getInstance().getAppContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
@@ -61,7 +62,7 @@ public class ToastUtils {
     public static void s(String msg) {
         try {
             UIHandler.run(() ->
-                    Toast.makeText(ResWrapper.getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(AppMaster.getInstance().getAppContext(), msg, Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
             Zog.showException(e);
@@ -73,8 +74,8 @@ public class ToastUtils {
 
         try {
             UIHandler.run(() ->
-                    Toast.makeText(ResWrapper.getApplicationContext()
-                            , ResWrapper.getApplicationContext().getResources().getString(msgStringId)
+                    Toast.makeText(AppMaster.getInstance().getAppContext()
+                            , AppMaster.getInstance().getAppContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -86,7 +87,7 @@ public class ToastUtils {
     public static void s(final Context context, @StringRes int msgStringId) {
         final Context contxt;
         if (context == null) {
-            contxt = ResWrapper.getApplicationContext();
+            contxt = AppMaster.getInstance().getAppContext();
         } else {
             contxt = context;
         }

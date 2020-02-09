@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.kit.app.application.AppMaster;
+
 /**
  * Created by Zhao on 14-10-1.
  */
@@ -27,7 +29,7 @@ public class ResourceUtils {
 
     public static void setSelectableItemBackgroundBorderless(Context context, View view) {
         if (context == null) {
-            context = ResWrapper.getApplicationContext();
+            context = AppMaster.getInstance().getAppContext();
         } else {
             context = context.getApplicationContext();
         }
@@ -55,7 +57,7 @@ public class ResourceUtils {
     public static int getResId(Context context, String name, String defType) {
 
         if (context == null) {
-            context = ResWrapper.getApplicationContext();
+            context = AppMaster.getInstance().getAppContext();
         } else {
             context = context.getApplicationContext();
         }

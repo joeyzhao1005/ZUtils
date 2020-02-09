@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import androidx.core.content.ContextCompat;
 import android.telephony.TelephonyManager;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.log.Zog;
 
 /**
@@ -23,7 +25,7 @@ public class PhoneUtils {
      */
     public static boolean isTelephonyCalling() {
         boolean calling = false;
-        TelephonyManager telephonyManager = (TelephonyManager) ResWrapper.getApplicationContext()
+        TelephonyManager telephonyManager = (TelephonyManager) AppMaster.getInstance().getAppContext()
                 .getSystemService(Context.TELEPHONY_SERVICE);
         if (TelephonyManager.CALL_STATE_OFFHOOK == telephonyManager.getCallState()
                 || TelephonyManager.CALL_STATE_RINGING == telephonyManager.getCallState()) {
@@ -33,16 +35,16 @@ public class PhoneUtils {
     }
 
 
-
+    @SuppressLint("MissingPermission")
     public static void mkCall(String strPhone) {
 
-        if (ContextCompat.checkSelfPermission(ResWrapper.getApplicationContext()
+        if (ContextCompat.checkSelfPermission(AppMaster.getInstance().getAppContext()
                 , Manifest.permission.CALL_PHONE) !=
                 PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
-        Context context = ResWrapper.getApplicationContext();
+        Context context = AppMaster.getInstance().getAppContext();
         Uri uri = Uri.parse("tel:" + strPhone);
         Intent intent = new Intent(Intent.ACTION_CALL, uri);// 注意：call是直接就打出去了，dial是经过系统的确定才能打
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -10,6 +10,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import android.widget.RemoteViews;
 
+import com.kit.app.application.AppMaster;
 import com.kit.utils.bitmap.BitmapUtils;
 import com.kit.utils.log.Zog;
 
@@ -188,7 +189,7 @@ public class NotificationUtils {
     }
 
     public static NotificationCompat.Builder creatNotificationBuilder(int smallIconDrawableRes, CharSequence title, CharSequence content) {
-        Context context = ResWrapper.getApplicationContext();
+        Context context = AppMaster.getInstance().getAppContext();
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(smallIconDrawableRes)
@@ -199,7 +200,7 @@ public class NotificationUtils {
     }
 
     public static Notification creatNotification(int smallIconDrawableRes, CharSequence title, CharSequence content) {
-        Context context = ResWrapper.getApplicationContext();
+        Context context = AppMaster.getInstance().getAppContext();
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(smallIconDrawableRes)

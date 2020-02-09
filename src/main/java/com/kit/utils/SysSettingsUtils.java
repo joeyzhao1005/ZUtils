@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.kit.app.application.AppMaster;
+
 /**
  * Created by Zhao on 16/9/1.
  */
@@ -26,7 +28,7 @@ public class SysSettingsUtils {
             intent.setComponent(component);
             intent.setAction("android.intent.action.VIEW");
         }
-        Context context = ResWrapper.getApplicationContext();
+        Context context = AppMaster.getInstance().getAppContext();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
