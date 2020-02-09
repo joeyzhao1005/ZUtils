@@ -1273,7 +1273,7 @@ public class BitmapUtils {
             return null;
         }
 
-        if (file != null && file.exists()) {
+        if (file.exists()) {
             file.delete();
         }
 
