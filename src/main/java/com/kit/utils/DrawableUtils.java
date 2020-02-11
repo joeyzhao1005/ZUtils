@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.kit.app.application.AppMaster;
@@ -67,8 +68,12 @@ public class DrawableUtils {
 
     }
 
+    @Nullable
     public static Bitmap drawableToBitmap(Drawable drawable, int toWidth, int toHeight) {
         Bitmap bitmap = drawableToBitmap(drawable);
+        if (bitmap == null || bitmap.isRecycled()) {
+            return null;
+        }
 
         Matrix matrix = new Matrix();
         matrix.setScale(ValueOf.toFloat(MathExtend.divide(toWidth, bitmap.getWidth())), ValueOf.toFloat(MathExtend.divide(toHeight, bitmap.getHeight())));
