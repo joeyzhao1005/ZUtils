@@ -30,7 +30,6 @@ public class AppConfig {
 
         boolean isShowException();
 
-        Bitmap.Config getPicLevel();//图片清晰度
 
         String getCacheDir();
 
@@ -41,10 +40,6 @@ public class AppConfig {
 
 
         String getTheme();
-
-        boolean isNeedRestart();
-        void setNeedRestart(boolean needRestart);
-
     }
 
 
