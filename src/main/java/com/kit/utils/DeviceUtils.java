@@ -283,7 +283,7 @@ public class DeviceUtils {
         }
 
         if (context == null) {
-            return 0;
+            return 1080;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -313,8 +313,9 @@ public class DeviceUtils {
             return screenWidth;
         }
 
-        if (context == null) {
-            context = AppMaster.getInstance().getAppContext();
+
+        if (!(context instanceof Activity)) {
+            context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context == null) {
