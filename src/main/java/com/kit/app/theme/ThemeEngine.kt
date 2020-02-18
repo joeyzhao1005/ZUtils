@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatDelegate
 import com.kit.utils.ColorUtils
+import com.kit.utils.ResWrapper
 
 /**
  * Created by Zhao on 16/7/17.
@@ -48,8 +49,8 @@ object ThemeEngine {
     }
 
     val isLogicDarkMode: Boolean
-        get() =
-            darkMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES || !ColorUtils.isLightColor(themeColor)
+        get() = (ResWrapper.getResources().configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                || !ColorUtils.isLightColor(themeColor))
 
 
     val isDarkMode: Boolean
