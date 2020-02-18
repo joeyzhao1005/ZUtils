@@ -9,9 +9,11 @@ import android.os.Build;
 
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 import android.view.View;
 
+import com.kit.app.ActivityManager;
 import com.kit.app.application.AppMaster;
 
 import java.util.List;
@@ -34,11 +36,7 @@ public class ResWrapper {
 //    }
 
     public static void setBackground(View view, Drawable drawable) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            view.setBackground(drawable);
-        } else {
-            view.setBackgroundDrawable(drawable);
-        }
+        ViewCompat.setBackground(view, drawable);
     }
 
 
@@ -46,7 +44,7 @@ public class ResWrapper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return getResources().getColor(colorId, null);
         } else {
-            return ContextCompat.getColor(getApplicationContext(), colorId);
+            return ContextCompat.getColor(currContext(), colorId);
         }
     }
 
@@ -66,7 +64,7 @@ public class ResWrapper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return getResources().getDrawable(drawableId, null);
         } else {
-            return ContextCompat.getDrawable(getApplicationContext(), drawableId);
+            return ContextCompat.getDrawable(currContext(), drawableId);
         }
     }
 
@@ -95,7 +93,7 @@ public class ResWrapper {
         return getResources().getIntArray(arrayId);
     }
 
-    public static List<String> getStringList(int stringId) {
+    public static List getStringList(int stringId) {
         try {
             return ArrayUtils.toList(getResources().getStringArray(stringId));
         } catch (Exception e) {
@@ -103,6 +101,13 @@ public class ResWrapper {
         }
     }
 
+    private static Context currContext() {
+        if (ActivityManager.getInstance().getCurrActivity() != null) {
+            return ActivityManager.getInstance().getCurrActivity();
+        } else {
+            return getApplicationContext();
+        }
+    }
 
     public String getText4ResStringArray(int intR) {
         String[] hibernate_copy = getResources().getStringArray(intR);
@@ -112,6 +117,6 @@ public class ResWrapper {
     }
 
     public static Resources getResources() {
-        return getApplicationContext().getResources();
+        return currContext().getResources();
     }
 }
