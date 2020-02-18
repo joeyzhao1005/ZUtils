@@ -519,6 +519,10 @@ public class BitmapUtils {
      */
     public static Bitmap getAdapterSizeBitmap(Bitmap bmp, int width, int height, boolean isRecyclerOriginal) {
 
+        if (bmp == null) {
+            return null;
+        }
+
         Bitmap outBitmap = null;
 
 //        try {
@@ -1042,6 +1046,9 @@ public class BitmapUtils {
      * @return 指定宽高的bitmap
      */
     public static Bitmap zoom(Bitmap bitmapOrg, int newWidth, int newHeight) {
+        if (bitmapOrg == null) {
+            return null;
+        }
 
         if (bitmapOrg.getWidth() < newWidth
                 || bitmapOrg.getHeight() < newHeight) {
@@ -1241,6 +1248,10 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap setAlpha(Bitmap sourceImg, int number) {
+        if (sourceImg == null) {
+            return null;
+        }
+
         int[] argb = new int[sourceImg.getWidth() * sourceImg.getHeight()];
         sourceImg.getPixels(argb, 0, sourceImg.getWidth(), 0, 0, sourceImg.getWidth(), sourceImg.getHeight());// 获得图片的ARGB值
         number = number * 255 / 100;
@@ -1360,7 +1371,7 @@ public class BitmapUtils {
      * @return
      */
     public static String resizeBitmapAndSave(String filePath, int width,
-                                             int height) throws IOException {
+                                             int height) {
         if (filePath != null && !TextUtils.isEmpty(filePath)) {
 
 

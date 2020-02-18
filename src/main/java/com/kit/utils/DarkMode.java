@@ -1,10 +1,12 @@
 package com.kit.utils;
 
-import android.content.Context;
 import android.content.res.Configuration;
 
 import com.kit.app.application.AppMaster;
 
+/**
+ * @author joeyzhao
+ */
 public class DarkMode {
 
     /**
