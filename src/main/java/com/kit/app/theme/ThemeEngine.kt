@@ -52,6 +52,10 @@ object ThemeEngine {
             darkMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES || !ColorUtils.isLightColor(themeColor)
 
 
+    val isDarkMode: Boolean
+        get() =
+            darkMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
     val darkMode: Int
         get() = themeProvider?.darkMode() ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 
