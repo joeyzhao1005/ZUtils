@@ -674,16 +674,17 @@ public class AppUtils {
     }
 
     /**
-     * 卸载应用
+     * 跳转到应用市场
      *
      * @param packageName
      */
     public static void seeAppInMarket(Context context, String packageName) {
         try {
-            final Intent intentPlayStore = new Intent(Intent.ACTION_VIEW);
-            intentPlayStore.setData(Uri.parse("market://details?id=" + packageName));
-            intentPlayStore.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-            context.startActivity(intentPlayStore);
+            AppMarketUtils.gotoMarket(context, packageName);
+//            final Intent intentPlayStore = new Intent(Intent.ACTION_VIEW);
+//            intentPlayStore.setData(Uri.parse("market://details?id=" + packageName));
+//            intentPlayStore.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//            context.startActivity(intentPlayStore);
         } catch (Exception e) {
             Zog.showException(e);
         }

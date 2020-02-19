@@ -1,9 +1,12 @@
 package com.kit.utils.intent;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -420,6 +424,21 @@ public class IntentManager {
         }
 
         intent.putExtras(bundle);
+    }
+
+    /**
+     * 检测 响应某个Intent的Activity 是否存在
+     *
+     * @param context
+     * @param intent
+     * @return
+     */
+    @SuppressLint("WrongConstant")
+    public static boolean isIntentAvailable(Context context, Intent intent) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+                PackageManager.GET_ACTIVITIES);
+        return list.size() > 0;
     }
 
 
