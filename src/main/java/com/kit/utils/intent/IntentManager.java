@@ -340,19 +340,19 @@ public class IntentManager {
         } else if (value instanceof ArrayList && !((ArrayList) value).isEmpty() && ((ArrayList) value).get(0) instanceof CharSequence) {
             getData().putCharSequenceArrayList(key, (ArrayList<CharSequence>) value);
         } else if (value instanceof Integer) {
-            getData().putInt(key, (Integer) value);
+            getData().putInt(key, ValueOf.toInt(value));
         } else if (value instanceof ArrayList && !((ArrayList) value).isEmpty() && ((ArrayList) value).get(0) instanceof Integer) {
             getData().putIntegerArrayList(key, (ArrayList<Integer>) value);
         } else if (value instanceof Long) {
-            getData().putLong(key, (Long) value);
+            getData().putLong(key, ValueOf.toLong(value));
         } else if (value instanceof Float) {
-            getData().putFloat(key, (Float) value);
+            getData().putFloat(key, ValueOf.toFloat(value));
         } else if (value instanceof Double) {
-            getData().putDouble(key, (Double) value);
+            getData().putDouble(key, ValueOf.toDouble(value));
         } else if (value instanceof Short) {
-            getData().putShort(key, (Short) value);
+            getData().putShort(key, ValueOf.toShort(value));
         } else if (value instanceof Byte) {
-            getData().putByte(key, (Byte) value);
+            getData().putByte(key, ValueOf.toByte(value));
         } else if (value instanceof IBinder && ApiLevel.ATLEAST_JB_MR2) {
             getData().putBinder(key, (IBinder) value);
         } else if (value instanceof char[]) {

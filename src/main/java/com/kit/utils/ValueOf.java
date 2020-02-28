@@ -68,6 +68,39 @@ public class ValueOf {
         return toLong(o, 0);
     }
 
+
+    public static short toShort(Object o) {
+        short value = 0;
+        try {
+            value = Short.valueOf(o.toString());
+        } catch (Exception e) {
+        }
+
+        return value;
+    }
+
+    public static short toShort(Object o, short defaultValue) {
+        short value;
+        try {
+            value = Short.valueOf(o.toString());
+        } catch (Exception e) {
+            value = defaultValue;
+        }
+
+        return value;
+    }
+
+
+    public static byte toByte(Object o) {
+        byte value = 0;
+        try {
+            value = Byte.valueOf(o.toString());
+        } catch (Exception e) {
+        }
+
+        return value;
+    }
+
     public static boolean toBoolean(Object o, boolean defaultValue) {
         boolean value = defaultValue;
         try {
