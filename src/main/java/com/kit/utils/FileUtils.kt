@@ -22,7 +22,7 @@ object FileUtils {
         }
 
         val file = File(fileName)
-        var inputStream: InputStream? = null
+        var inputStream: InputStream?
         try { ////System.out.println("以字节为单位读取文件内容，一次读一个字节：");
 
             // 一次读一个字节
@@ -39,7 +39,7 @@ object FileUtils {
         try { ////System.out.println("以字节为单位读取文件内容，一次读多个字节：");
             // 一次读多个字节
             val tempbytes = ByteArray(100)
-            var byteread = 0
+            var byteread: Int
             inputStream = FileInputStream(fileName)
             //            showAvailableBytes(in);
             // 读入多个字节到字节数组中，byteread为一次读入的字节数
@@ -75,7 +75,7 @@ object FileUtils {
         var reader: BufferedReader? = null
         try { ////System.out.println("以行为单位读取文件内容，一次读一整行：");
             reader = BufferedReader(FileReader(file))
-            var tempStr: String? = null
+            var tempStr: String?
             // 一次读入一行，直到读入null为文件结束
             while (reader.readLine().also { tempStr = it } != null) { // 显示行号
 ////System.out.println("line " + line + ": " + tempString);
@@ -114,7 +114,7 @@ object FileUtils {
             // 将读文件的开始位置移到beginIndex位置。
             randomFile.seek(beginIndex.toLong())
             val bytes = ByteArray(10)
-            var byteread = 0
+            var byteread: Int
             // 一次读10个字节，如果文件内容不足10个字节，则读剩下的字节。
 // 将一次读取的字节数赋给byteread
             while (randomFile.read(bytes).also { byteread = it } != -1) {
@@ -366,7 +366,7 @@ object FileUtils {
     /* 判断文件MimeType的method */
     @JvmStatic
     private fun getMIMEType(f: File): String {
-        var type = ""
+        var type: String
         val fName = f.name
         /* 取得扩展名 */
         val end = fName
@@ -581,7 +581,7 @@ object FileUtils {
         AppThread.checkNeedInAsyncThread()
 
         var isSuccess = false
-        if (StringUtils.isEmptyOrNullStr(dir)) {
+        if (dir == null || StringUtils.isEmptyOrNullStr(dir)) {
             return isSuccess
         }
         var file: File? = null
@@ -715,14 +715,14 @@ object FileUtils {
                 File(destFileName).delete()
             }
         } else { // 如果目标文件所在目录不存在，则创建目录
-            if (destFile.parentFile != null && !destFile.parentFile.exists()) { // 目标文件所在目录不存在
-                if (!destFile.parentFile.mkdirs()) { // 复制文件失败：创建目标文件所在目录失败
+            if (destFile.parentFile != null && destFile.parentFile?.exists() == false) { // 目标文件所在目录不存在
+                if (destFile.parentFile?.mkdirs() == false) { // 复制文件失败：创建目标文件所在目录失败
                     return false
                 }
             }
         }
         // 复制文件
-        var byteread = 0 // 读取的字节数
+        var byteread: Int // 读取的字节数
         var inputStream: InputStream? = null
         var out: OutputStream? = null
         return try {
@@ -766,7 +766,7 @@ object FileUtils {
             val oldFile = File(oldPath)
 
             val file = oldFile.list() ?: arrayOf<String>()
-            var temp: File? = null
+            var temp: File?
             for (i in file.indices) {
                 temp = if (oldPath.endsWith(File.separator)) {
                     File(oldPath + file[i])
