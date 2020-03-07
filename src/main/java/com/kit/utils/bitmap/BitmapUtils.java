@@ -9,10 +9,13 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
@@ -85,30 +88,6 @@ public class BitmapUtils {
 
         return bitmap;
 
-
-//        try {
-//            GifImageDecoder   gifDecoder = new GifImageDecoder();
-//
-//            gifDecoder.read();  //这是Gif图片资源
-//            int size =gifDecoder.getFrameCount();
-//            for(int i=0;i<size;i++)
-//            {
-//
-//                ImageView iv_image = new ImageView(CustomActivity.this);
-//                iv_image.setPadding(5, 5, 5, 5);
-//                LayoutParams lparams = new LayoutParams(100,100);
-//                iv_image.setLayoutParams(lparams);
-//                iv_image.setImageBitmap(gifDecoder.getFrame(i));
-//                ll_decodeimages.addView(iv_image);
-////                gifFrame.nextFrame();
-//            }
-//        } catch (NotFoundException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
     }
 
     public static Bitmap getViewBitmap(View addViewContent) {
@@ -1261,6 +1240,71 @@ public class BitmapUtils {
         sourceImg = Bitmap.createBitmap(argb, sourceImg.getWidth(), sourceImg.getHeight(), Config.ARGB_8888);
 
         return sourceImg;
+    }
+
+    /**
+     * 按比例居中剪切
+     *
+     * @param bitmap
+     * @param rate   w/h
+     * @return
+     */
+    public static Bitmap cropImage(Bitmap bitmap, float rate) {
+        float width = bitmap.getWidth();
+        float height = bitmap.getHeight();
+        float x = 0;
+        float y = 0;
+        float cropWidth = width;
+        float cropHeight = height;
+        Bitmap newBitmap;
+        if (rate < 1) {//比例宽度小于高度的情况
+            float tempH = width / rate;
+            if (height > tempH) {//
+                x = 0;
+                y = (height - tempH) / 2;
+                cropHeight = tempH;
+            } else {
+                cropWidth = height * rate;
+                x = (width - cropWidth) / 2;
+                y = 0;
+            }
+
+            Zog.d("scale:" + rate + " scaleWidth:" + cropWidth + " scaleHeight:" + cropHeight);
+        } else if (rate > 1) {//比例宽度大于高度的情况
+            float tempW = height / rate;
+            if (width > tempW) {
+                y = 0;
+                x = (width - tempW) / 2;
+                cropWidth = tempW;
+                cropHeight = height;
+            } else {
+                cropHeight = width * rate;
+                y = (height - cropHeight) / 2;
+                x = 0;
+                cropWidth = width;
+            }
+
+        } else {//比例宽高相等的情况
+            if (width > height) {
+                x = (width - height) / 2;
+                y = 0;
+                cropHeight = height;
+                cropWidth = height;
+            } else {
+                y = (height - width) / 2;
+                x = 0;
+                cropHeight = width;
+                cropWidth = width;
+            }
+        }
+        try {
+            // createBitmap()方法中定义的参数x+width要小于或等于bitmap.getWidth()，y+height要小于或等于bitmap.getHeight()
+            newBitmap = Bitmap.createBitmap(bitmap, (int) x, (int) y, (int) cropWidth, (int) cropHeight, null, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return newBitmap;
     }
 
     public static File saveBitmap(Bitmap bmp, String filePath, boolean isRecycle, boolean notifySystem) {
