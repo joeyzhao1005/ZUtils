@@ -21,6 +21,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.kit.app.ActivityManager;
 import com.kit.app.application.AppMaster;
@@ -242,15 +243,14 @@ public class DeviceUtils {
      */
     @SuppressWarnings("deprecation")
     public static int getScreenHeight(Context context) {
-        if (screenHeight != 0) {
-            return screenHeight;
-        }
+
+        int screenHeight;
         if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context == null) {
-            return 0;
+            return realScreenHeight == 0 ? 1080 : realScreenHeight;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -266,7 +266,6 @@ public class DeviceUtils {
         return screenHeight;
     }
 
-    private static int screenHeight;
 
 
     @Deprecated
@@ -283,7 +282,7 @@ public class DeviceUtils {
         }
 
         if (context == null) {
-            return 1080;
+            return realScreenHeight == 0 ? 1080 : realScreenHeight;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -301,25 +300,16 @@ public class DeviceUtils {
 
     private static int realScreenHeight;
 
-    /**
-     * Get the screen width.
-     *
-     * @param context
-     * @return the screen width
-     */
-    @SuppressWarnings("deprecation")
+
     public static int getScreenWidth(Context context) {
-        if (screenWidth != 0) {
-            return screenWidth;
-        }
 
-
+        int width;
         if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context == null) {
-            return 768;
+            return realScreenWidth == 0 ? 1080 : realScreenWidth;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -327,15 +317,13 @@ public class DeviceUtils {
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
-            screenWidth = size.x;
+            width = size.x;
         } else {
-            screenWidth = display.getWidth();
+            width = display.getWidth();
         }
-
-        return screenWidth;
+        return width;
     }
 
-    private static int screenWidth;
 
     public static int getRealScreenWidth(Context context) {
         if (realScreenWidth != 0) {
@@ -363,6 +351,11 @@ public class DeviceUtils {
     }
 
     private static int realScreenWidth;
+
+
+    public static boolean isLandscape() {
+        return ResWrapper.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
 
     /**
      * Get the screen width.
