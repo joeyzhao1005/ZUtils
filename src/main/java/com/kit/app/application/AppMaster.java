@@ -7,12 +7,14 @@
 package com.kit.app.application;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 
 /**
  * Created by joeyzhao on 2018/3/16.
  */
 
 public class AppMaster implements IApp {
+
 
     @Override
     public void restartApp() {
