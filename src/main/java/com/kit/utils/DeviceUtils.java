@@ -267,7 +267,6 @@ public class DeviceUtils {
     }
 
 
-
     @Deprecated
     public static int getRealScreenHeight() {
         return getRealScreenHeight(null);
@@ -374,26 +373,33 @@ public class DeviceUtils {
      * @return
      */
     public static int getNavigationBarHeight(Context context) {
-        if (ApiLevel.ATLEAST_Q) {
-            //Android Q 统一启用导航栏高度
-            Zog.e("Android Q 及以上版本不建议使用getNavigationBarHeight来获取导航栏，建议采用ViewCompat.setOnApplyWindowInsetsListener的方式来监听导航栏");
-        }
 
-        if (navigationBarHeight != -1) {
-            return navigationBarHeight;
+
+        if (naviBarHeight != -1) {
+            return naviBarHeight;
+        } else {
+            if (ApiLevel.ATLEAST_Q) {
+                //Android Q 统一启用导航栏高度
+                Zog.e("Android Q 及以上版本不建议使用getNavigationBarHeight来获取导航栏，建议采用ViewCompat.setOnApplyWindowInsetsListener的方式来监听导航栏");
+            }
         }
 
         if (ApiLevel.ATLEAST_JB_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
             //小米手势导航 启用
-            navigationBarHeight = 0;
-            return navigationBarHeight;
+            naviBarHeight = 0;
+            return naviBarHeight;
         } else {
-            navigationBarHeight = getNaviBarHeight(context);
-            return navigationBarHeight;
+            return getNaviBarHeight(context);
         }
 
     }
 
+    /**
+     * 权宜之计 做不得数
+     *
+     * @param context
+     * @return
+     */
     private static int getNaviBarHeight(@Nullable Context context) {
         if (context == null) {
             context = AppMaster.getInstance().getAppContext();
@@ -411,10 +417,14 @@ public class DeviceUtils {
     }
 
     public static void setNavigationBarHeight(int navigationBarHeight) {
-        DeviceUtils.navigationBarHeight = navigationBarHeight;
+        if (naviBarHeight < 0
+                && navigationBarHeight < DensityUtils.dip2px(100)
+                && navigationBarHeight >= 0) {
+            naviBarHeight = navigationBarHeight;
+        }
     }
 
-    private static int navigationBarHeight = -1;
+    private static int naviBarHeight = -1;
 
     /**
      * 获取虚拟按键宽度
@@ -438,7 +448,7 @@ public class DeviceUtils {
      * @param context
      * @return
      */
-    public static int getNavigationBarHeithtLandscape(Context context) {
+    public static int getNavigationBarHeightLandscape(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height_landscape", "dimen", "android");
         if (resourceId > 0) {
