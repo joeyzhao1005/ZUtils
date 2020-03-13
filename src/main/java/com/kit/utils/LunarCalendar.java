@@ -378,8 +378,8 @@ public class LunarCalendar {
 
 
         //黑色星期五
-        if ((this.firstWeek + 12) % 7 == 5)
-            elements.get(12).solarFestival += "黑色星期五";
+//        if ((this.firstWeek + 12) % 7 == 5)
+//            elements.get(12).solarFestival += "黑色星期五";
 
         //今日
         //if (y == tY && m == tM) this[tD - 1].isToday = true;
