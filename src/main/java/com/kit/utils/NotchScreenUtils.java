@@ -107,7 +107,7 @@ public class NotchScreenUtils {
      * @param activity
      * @return
      */
-    public static DisplayCutout getDisplayCutout4P(Activity activity) {
+    private static DisplayCutout getDisplayCutout4P(Activity activity) {
         if (activity == null) {
             return null;
         }

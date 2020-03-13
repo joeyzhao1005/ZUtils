@@ -15,9 +15,12 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.DisplayCutout;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
@@ -116,9 +119,6 @@ public class DeviceUtils {
 
         return model;
     }
-
-
-    private static int statusBarHeight = 0;
 
 
     public static final int DEVICE_ADMIN = 70 + 1;
@@ -375,7 +375,7 @@ public class DeviceUtils {
     public static int getNavigationBarHeight(Context context) {
 
 
-        if (naviBarHeight != -1) {
+        if (naviBarHeight >= 0) {
             return naviBarHeight;
         } else {
             if (ApiLevel.ATLEAST_Q) {
@@ -389,7 +389,7 @@ public class DeviceUtils {
             naviBarHeight = 0;
             return naviBarHeight;
         } else {
-            return getNaviBarHeight(context);
+            return 0;
         }
 
     }
@@ -463,22 +463,44 @@ public class DeviceUtils {
      * @param context
      * @return
      */
-    public static int getStatusBarHeight(Context context) {
-
-        if (statusBarHeight == 0) {
-            int sbar = 0;
-
-            try {
-                Class<?> c = Class.forName("com.android.internal.R$dimen");
-                Object obj = c.newInstance();
-                Field field = c.getField("status_bar_height");
-                int x = (Integer) (field.get(obj));
-                sbar = context.getResources().getDimensionPixelSize(x);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-            statusBarHeight = sbar;
+    public static int getStatusBarHeight(@Nullable Context context) {
+        if (statusBarHeight != -1) {
+            return statusBarHeight;
         }
+
+        if (context instanceof Activity) {
+            View decorView = ((Activity) context).getWindow().getDecorView();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                WindowInsets windowInsets = decorView.getRootWindowInsets();
+                if (windowInsets != null) {
+                    DisplayCutout displayCutout = windowInsets.getDisplayCutout();
+                    if (displayCutout != null) {
+                        statusBarHeight = displayCutout.getSafeInsetTop();
+                        return statusBarHeight;
+                    }
+                }
+            } else {
+                if (RomUtils.getAvailableRomType() == RomUtils.AvailableRomType.EMUI) {
+                    statusBarHeight = NotchScreenUtils.getNotchSize4Huawei(((Activity) context))[1];
+                } else if (RomUtils.getAvailableRomType() == RomUtils.AvailableRomType.MIUI) {
+                    statusBarHeight = NotchScreenUtils.getNotchSize4MIUI(((Activity) context));
+                }
+                return statusBarHeight;
+            }
+        }
+
+        int sbar = 0;
+        try {
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            Object obj = c.newInstance();
+            Field field = c.getField("status_bar_height");
+            int x = (Integer) (field.get(obj));
+            sbar = context.getResources().getDimensionPixelSize(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        statusBarHeight = sbar;
+
         if (statusBarHeight <= 0) {
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
                 statusBarHeight = DensityUtils.dip2px(context, 24);
@@ -490,6 +512,18 @@ public class DeviceUtils {
         return statusBarHeight;
     }
 
+    private static int statusBarHeight = -1;
+
+
+    /**
+     * 获取状态栏高度
+     *
+     * @param height
+     * @return
+     */
+    public static void setStatusBarHeight(int height) {
+        statusBarHeight = height;
+    }
 
     /**
      * 获取ActionBar的高度
