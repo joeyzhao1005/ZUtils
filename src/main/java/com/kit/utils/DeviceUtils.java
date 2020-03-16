@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.DisplayCutout;
@@ -24,7 +25,6 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.kit.app.ActivityManager;
 import com.kit.app.application.AppMaster;
@@ -35,6 +35,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+/**
+ * @author joeyzhao
+ */
 public class DeviceUtils {
 
     private static String deviceId;
@@ -481,9 +484,7 @@ public class DeviceUtils {
                 }
             } else {
                 if (RomUtils.getAvailableRomType() == RomUtils.AvailableRomType.EMUI) {
-                    statusBarHeight = NotchScreenUtils.getNotchSize4Huawei(((Activity) context))[1];
-                } else if (RomUtils.getAvailableRomType() == RomUtils.AvailableRomType.MIUI) {
-                    statusBarHeight = NotchScreenUtils.getNotchSize4MIUI(((Activity) context));
+                    statusBarHeight = getNotchSize4Huawei(((Activity) context))[1];
                 }
                 return statusBarHeight;
             }
@@ -524,6 +525,25 @@ public class DeviceUtils {
     public static void setStatusBarHeight(int height) {
         statusBarHeight = height;
     }
+
+    public static int[] getNotchSize4Huawei(Context context) {
+        int[] ret = new int[]{0, 0};
+        try {
+            ClassLoader cl = context.getClassLoader();
+            Class HwNotchSizeUtil = cl.loadClass("com.huawei.android.util.HwNotchSizeUtil");
+            Method get = HwNotchSizeUtil.getMethod("getNotchSize");
+            ret = (int[]) get.invoke(HwNotchSizeUtil);
+        } catch (ClassNotFoundException e) {
+            Log.e("test", "getNotchSize ClassNotFoundException");
+        } catch (NoSuchMethodException e) {
+            Log.e("test", "getNotchSize NoSuchMethodException");
+        } catch (Exception e) {
+            Log.e("test", "getNotchSize Exception");
+        } finally {
+            return ret;
+        }
+    }
+
 
     /**
      * 获取ActionBar的高度

@@ -16,6 +16,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.TransactionTooLargeException;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -316,6 +317,7 @@ public class AppUtils {
         }
         return appName;
     }
+
     /**
      * 获取进程号对应的进程名
      *
@@ -566,17 +568,27 @@ public class AppUtils {
         List<PackageInfo> apps = new ArrayList<PackageInfo>();
         PackageManager pManager = context.getPackageManager();
         //获取手机内所有应用
-        List<PackageInfo> paklist = pManager.getInstalledPackages(0);
-        for (int i = 0; i < paklist.size(); i++) {
-            PackageInfo pak = (PackageInfo) paklist.get(i);
-            //判断是否为非系统预装的应用程序
+        List<PackageInfo> packageInfoList = null;
+        try {
+            packageInfoList = pManager.getInstalledPackages(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (packageInfoList != null) {
+            int count = packageInfoList.size();
+            for (int i = 0; i < count; i++) {
+                PackageInfo pak = packageInfoList.get(i);
+                //判断是否为非系统预装的应用程序
 //            if ((pak.applicationInfo.flags & pak.applicationInfo.FLAG_SYSTEM) <= 0) {
 //                // customs applications
 //                apps.add(pak);
 //            }
-            apps.add(pak);
+                apps.add(pak);
 
+            }
         }
+
         return apps;
     }
 
@@ -664,10 +676,10 @@ public class AppUtils {
 //            PackageInstaller mPackageInstaller = context.getPackageManager().getPackageInstaller();
 //            mPackageInstaller.uninstall(packageName, sender.getIntentSender());
 //        } else {
-            Uri uri = Uri.parse("package:" + packageName);
-            intent = new Intent(Intent.ACTION_DELETE, uri);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+        Uri uri = Uri.parse("package:" + packageName);
+        intent = new Intent(Intent.ACTION_DELETE, uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
 //        }
 
 
