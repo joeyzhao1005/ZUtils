@@ -246,14 +246,13 @@ public class DeviceUtils {
      */
     @SuppressWarnings("deprecation")
     public static int getScreenHeight(Context context) {
-
         int screenHeight;
         if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context == null) {
-            return realScreenHeight == 0 ? 1080 : realScreenHeight;
+            return realScreenHeight == 0 ? 1920 : realScreenHeight;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -276,15 +275,12 @@ public class DeviceUtils {
     }
 
     public static int getRealScreenHeight(Context context) {
-        if (realScreenHeight != 0) {
-            return realScreenHeight;
-        }
         if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context == null) {
-            return realScreenHeight == 0 ? 1080 : realScreenHeight;
+            return realScreenHeight == 0 ? 1920 : realScreenHeight;
         }
 
         Display display = ((Activity) context).getWindowManager()
@@ -304,7 +300,6 @@ public class DeviceUtils {
 
 
     public static int getScreenWidth(Context context) {
-
         int width;
         if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
@@ -328,23 +323,21 @@ public class DeviceUtils {
 
 
     public static int getRealScreenWidth(Context context) {
-        if (realScreenWidth != 0) {
-            return realScreenWidth;
-        }
+
 
         if (!(context instanceof Activity)) {
             context = ActivityManager.getInstance().getCurrActivity();
         }
 
         if (context == null) {
-            return 1080;
+            return realScreenWidth == 0 ? 1080 : realScreenWidth;
         }
 
         Display display = ((Activity) context).getWindowManager()
                 .getDefaultDisplay();
-        if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
+        if (ApiLevel.ATLEAST_JB_MR1) {
             Point size = new Point();
-            display.getSize(size);
+            display.getRealSize(size);
             realScreenWidth = size.x;
         } else {
             realScreenWidth = display.getWidth();
