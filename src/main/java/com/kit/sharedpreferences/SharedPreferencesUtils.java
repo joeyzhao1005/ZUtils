@@ -26,9 +26,6 @@ import java.util.Map;
  * @author joeyzhao
  */
 public class SharedPreferencesUtils {
-    // private final String MAK = "innoview";
-//    public int MODE = Context.MODE_WORLD_READABLE
-//            + Context.MODE_WORLD_WRITEABLE;
     public SharedPreferences sharedpreferences;
 
 
