@@ -3,6 +3,8 @@ package com.kit.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.kit.app.UIHandler;
@@ -59,7 +61,10 @@ public class ToastUtils {
     }
 
 
-    public static void s(String msg) {
+    public static void s(@Nullable String msg) {
+        if (msg == null) {
+            return;
+        }
         try {
             UIHandler.run(() ->
                     Toast.makeText(AppMaster.getInstance().getAppContext(), msg, Toast.LENGTH_SHORT).show()

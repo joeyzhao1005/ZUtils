@@ -50,7 +50,7 @@ public class ActivityManager {
 
 
     public synchronized void popActivity(Class cls) {
-        popActivity(cls, false);
+        popActivity(cls, true);
     }
 
 
