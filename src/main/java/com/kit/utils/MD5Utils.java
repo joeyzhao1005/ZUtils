@@ -123,6 +123,21 @@ public class MD5Utils {
     }
 
     /**
+     * 获取单个文件的MD5值！
+     *
+     * @param filePath
+     * @return
+     */
+
+    public static String getFileMD5(String filePath) {
+        File file = new File(filePath);
+        if (!file.isFile()) {
+            return null;
+        }
+        return getFileMD5(file);
+    }
+
+    /**
      * 获取文件夹中文件的MD5值
      *
      * @param file

@@ -34,6 +34,14 @@ public class AppMaster implements IApp {
     }
 
     @Override
+    public String getAppName() {
+        if (app == null) {
+            return null;
+        }
+        return app.getAppName();
+    }
+
+    @Override
     public Context getAppContext() {
         if (app == null) {
             return null;
