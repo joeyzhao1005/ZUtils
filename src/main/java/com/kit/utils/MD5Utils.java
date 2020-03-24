@@ -1,6 +1,12 @@
 package com.kit.utils;
 
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+
+import com.kit.app.application.AppMaster;
+
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -100,20 +106,30 @@ public class MD5Utils {
      */
 
     public static String getFileMD5(File file) {
-        if (!file.isFile()) {
+        if (!file.isFile() || !file.exists()) {
             return null;
         }
         MessageDigest digest = null;
         FileInputStream in = null;
-        byte buffer[] = new byte[1024];
         int len;
         try {
             digest = MessageDigest.getInstance("MD5");
-            in = new FileInputStream(file);
-            while ((len = in.read(buffer, 0, 1024)) != -1) {
-                digest.update(buffer, 0, len);
+            if (ApiLevel.ATLEAST_Q) {
+                ParcelFileDescriptor parcelFileDescriptor = AppMaster.getInstance().getAppContext().getContentResolver().openFileDescriptor(Uri.fromFile(file), "r", null);
+                if (parcelFileDescriptor != null) {
+                    in = new FileInputStream(parcelFileDescriptor.getFileDescriptor());
+                }
+            } else {
+                in = new FileInputStream(file);
             }
-            in.close();
+
+            if (in != null) {
+                byte buffer[] = new byte[1024];
+                while ((len = in.read(buffer, 0, 1024)) != -1) {
+                    digest.update(buffer, 0, len);
+                }
+                in.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -131,7 +147,7 @@ public class MD5Utils {
 
     public static String getFileMD5(String filePath) {
         File file = new File(filePath);
-        if (!file.isFile()) {
+        if (!file.isFile() || !file.exists()) {
             return null;
         }
         return getFileMD5(file);
