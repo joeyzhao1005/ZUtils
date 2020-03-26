@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.kit.thread.AppThread
 import com.kit.utils.log.Zog
 import java.io.*
+import java.nio.channels.FileChannel
 import java.text.DecimalFormat
 import java.util.*
 
@@ -510,6 +511,53 @@ object FileUtils {
             e.printStackTrace()
         }
         return false
+    }
+
+    fun copyFdToFile(src: FileDescriptor?, toFilePath: String?) {
+        if (src == null || toFilePath.isNullOrBlank()) {
+            return
+        }
+        copyFdToFile(src, toFilePath)
+    }
+
+    fun copyFdToFile(src: FileDescriptor?, dst: File?) {
+        if (src == null || dst == null) {
+            return
+        }
+        if (dst.exists()) {
+            dst.delete()
+        }
+        mkDir(getDir(dst.path))
+
+        val inChannel: FileChannel = FileInputStream(src).channel ?: return
+        val outChannel: FileChannel = FileOutputStream(dst).channel ?: return
+        try {
+            inChannel.transferTo(0, inChannel.size(), outChannel)
+        } finally {
+            inChannel.close()
+            outChannel.close()
+        }
+    }
+
+
+    fun copyFile(src: String?, dst: String?) {
+        if (src == null || dst == null) {
+            return
+        }
+        val dstFile = File(dst)
+        if (dstFile.exists()) {
+            dstFile.delete()
+        }
+        mkDir(getDir(dst))
+
+        val inChannel: FileChannel = FileInputStream(src).channel ?: return
+        val outChannel: FileChannel = FileOutputStream(dst).channel ?: return
+        try {
+            inChannel.transferTo(0, inChannel.size(), outChannel)
+        } finally {
+            inChannel.close()
+            outChannel.close()
+        }
     }
 
     /**

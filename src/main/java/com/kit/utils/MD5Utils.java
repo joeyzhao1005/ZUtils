@@ -3,7 +3,11 @@ package com.kit.utils;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.kit.app.application.AppMaster;
+import com.kit.utils.log.Zog;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -104,7 +108,7 @@ public class MD5Utils {
      * @param file
      * @return
      */
-
+    @Nullable
     public static String getFileMD5(File file) {
         if (!file.isFile() || !file.exists()) {
             return null;
@@ -114,11 +118,9 @@ public class MD5Utils {
         int len;
         try {
             digest = MessageDigest.getInstance("MD5");
-            if (ApiLevel.ATLEAST_Q) {
-                ParcelFileDescriptor parcelFileDescriptor = AppMaster.getInstance().getAppContext().getContentResolver().openFileDescriptor(Uri.fromFile(file), "r", null);
-                if (parcelFileDescriptor != null) {
-                    in = new FileInputStream(parcelFileDescriptor.getFileDescriptor());
-                }
+            if (ApiLevel.ATLEAST_Q && !file.getPath().contains(AppMaster.getInstance().getApplicationId())) {
+                Zog.d("Android Q 不可读取沙盒外的文件，请先copy到沙盒中，然后再进行处理");
+                return null;
             } else {
                 in = new FileInputStream(file);
             }
@@ -144,7 +146,7 @@ public class MD5Utils {
      * @param filePath
      * @return
      */
-
+    @Nullable
     public static String getFileMD5(String filePath) {
         File file = new File(filePath);
         if (!file.isFile() || !file.exists()) {
