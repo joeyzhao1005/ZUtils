@@ -31,6 +31,8 @@ public class AppConfig {
         boolean isShowException();
 
 
+        String getFilesDir(String type);
+
         String getCacheDir();
 
 

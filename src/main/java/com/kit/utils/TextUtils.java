@@ -3,16 +3,20 @@ package com.kit.utils;
 import com.kit.utils.log.Zog;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.List;
 
 public class TextUtils {
 
@@ -96,7 +100,7 @@ public class TextUtils {
         try {
             File file = new File(filename);
 
-            Zog.i( file.getPath());
+            Zog.i(file.getPath());
 
             File path = new File(file.getParent());
             if (!file.exists()) {
@@ -119,6 +123,41 @@ public class TextUtils {
         }
     }
 
+    /**
+     * 将list按行写入到txt文件中
+     *
+     * @param path
+     * @throws Exception
+     */
+    public static void writeStringList2File(String path, String... strings) {
+        writeStringList2File(path, Arrays.asList(strings));
+
+    }
+
+    /**
+     * 将list按行写入到txt文件中
+     *
+     * @param strings
+     * @param path
+     * @throws Exception
+     */
+    public static void writeStringList2File(String path, List<String> strings) {
+        try {
+            File file = new File(path);
+            //如果没有文件就创建
+            if (!file.isFile()) {
+                file.createNewFile();
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            for (String l : strings) {
+                writer.write(l + "\r\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("写入文件操作出错");
+            e.printStackTrace();
+        }
+    }
 
 
 }

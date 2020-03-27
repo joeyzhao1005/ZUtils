@@ -731,6 +731,7 @@ object FileUtils {
         } else filedir.substring(filedir.lastIndexOf(".") + 1)
     }
 
+
     /**
      * 文件copy
      *
@@ -739,8 +740,26 @@ object FileUtils {
      * @param overlay      新目录存在，是否覆盖
      */
     @JvmStatic
-    fun copy(srcFileName: String, destFileName: String?,
-             overlay: Boolean): Boolean {
+    fun copy2Dir(srcFileName: String, destDir: String?, overlay: Boolean): Boolean {
+        if (destDir == null) {
+            return false
+        }
+
+        AppThread.checkNeedInAsyncThread()
+
+        val destFileName = if (destDir.endsWith(File.separator)) destDir + getFilename(srcFileName) else destDir + File.separator + getFilename(srcFileName)
+        return copy(srcFileName, destFileName, overlay)
+    }
+
+    /**
+     * 文件copy
+     *
+     * @param srcFileName
+     * @param destFileName
+     * @param overlay      新目录存在，是否覆盖
+     */
+    @JvmStatic
+    fun copy(srcFileName: String, destFileName: String?, overlay: Boolean): Boolean {
 
         AppThread.checkNeedInAsyncThread()
 
@@ -762,6 +781,8 @@ object FileUtils {
         if (destFile.exists()) { // 如果目标文件存在并允许覆盖
             if (overlay) { // 删除已经存在的目标文件，无论目标文件是目录还是单个文件
                 File(destFileName).delete()
+            } else {
+                return true
             }
         } else { // 如果目标文件所在目录不存在，则创建目录
             if (destFile.parentFile != null && destFile.parentFile?.exists() == false) { // 目标文件所在目录不存在
