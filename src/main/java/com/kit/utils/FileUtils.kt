@@ -612,7 +612,11 @@ object FileUtils {
      * @param file
      */
     @JvmStatic
-    fun deleteFile(file: File) {
+    fun deleteFile(file: File?) {
+        if (file == null || !file.exists()) {
+            return
+        }
+
         if (file.isFile) {
             file.delete()
         } else if (file.isDirectory) {
@@ -665,7 +669,10 @@ object FileUtils {
      * @return
      */
     @JvmStatic
-    fun getFilename(file: File): String {
+    fun getFilename(file: File?): String? {
+        if (file == null) {
+            return null
+        }
         return file.name.substring(file.name.lastIndexOf(File.separator) + 1)
     }
 
@@ -732,6 +739,10 @@ object FileUtils {
     }
 
 
+    fun copy2Dir(srcFile: File, destDir: String?, overlay: Boolean): Boolean {
+        return copy2Dir(srcFile.path, destDir, overlay)
+    }
+
     /**
      * 文件copy
      *
@@ -740,15 +751,15 @@ object FileUtils {
      * @param overlay      新目录存在，是否覆盖
      */
     @JvmStatic
-    fun copy2Dir(srcFileName: String, destDir: String?, overlay: Boolean): Boolean {
+    fun copy2Dir(srcFilePath: String, destDir: String?, overlay: Boolean): Boolean {
         if (destDir == null) {
             return false
         }
 
         AppThread.checkNeedInAsyncThread()
 
-        val destFileName = if (destDir.endsWith(File.separator)) destDir + getFilename(srcFileName) else destDir + File.separator + getFilename(srcFileName)
-        return copy(srcFileName, destFileName, overlay)
+        val destFileName = if (destDir.endsWith(File.separator)) destDir + getFilename(srcFilePath) else destDir + File.separator + getFilename(srcFilePath)
+        return copy(srcFilePath, destFileName, overlay)
     }
 
     /**
