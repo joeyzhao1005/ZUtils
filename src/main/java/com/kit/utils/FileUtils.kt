@@ -689,6 +689,10 @@ object FileUtils {
         } else filedir.substring(filedir.lastIndexOf(File.separator) + 1)
     }
 
+    fun getFilenameWithoutSuffix(file: File?): String? {
+        return getFilenameWithoutSuffix(file?.canonicalPath ?: "")
+    }
+
     /**
      * 获取文件扩展名（通过文件的路径）
      *
@@ -696,22 +700,22 @@ object FileUtils {
      * @return
      */
     @JvmStatic
-    fun getFilenameWithoutSuffix(filedir: String): String? {
-        if (StringUtils.isEmptyOrNullStr(filedir)) {
+    fun getFilenameWithoutSuffix(filePath: String): String? {
+        if (StringUtils.isEmptyOrNullStr(filePath)) {
             return null
         }
-        if (!filedir.contains(".")) {
-            return filedir
+        if (!filePath.contains(".")) {
+            return filePath
         }
-        val full = getFilename(filedir) ?: return null
+        val full = getFilename(filePath) ?: return null
         if (!full.contains(".")) {
-            return filedir
+            return filePath
         }
         if (!StringUtils.isEmptyOrNullStr(full)) {
             val end = if (full.lastIndexOf(".") > 0) full.lastIndexOf(".") else 0
             return full.substring(0, end)
         }
-        return filedir.substring(filedir.lastIndexOf(".") + 1)
+        return filePath.substring(filePath.lastIndexOf(".") + 1)
     }
 
     /**

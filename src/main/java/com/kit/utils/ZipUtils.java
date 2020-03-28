@@ -24,11 +24,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * @author joeyzhao
+ */
 public class ZipUtils {
     /**
      * 压缩缓冲
      */
-    private static byte[] buffer = new byte[1024 * 10];
+    private static byte[] BUFFER = new byte[1024 * 10];
 
     /**
      * 压缩一个目录
@@ -56,8 +59,8 @@ public class ZipUtils {
                 target.delete();
             }
         } else { //不存在
+            //一个不存在的目录，以是否有扩展名为判断是否是一个目录
             if (!target.getName().matches(".+\\..+$")) {
-                //一个不存在的目录，以是否有扩展名为判断是否是一个目录
                 target.mkdirs();
                 target = new File(target.getAbsolutePath(), source.getName().concat(".zip"));
             } else { //一个不存在的文件
@@ -124,8 +127,10 @@ public class ZipUtils {
             if (target.exists()) {
                 target.delete(); // 删除旧的文件
             }
-        } else { //不存在
-            if (!target.getName().matches("\\..+$")) {  //一个不存在的目录，以是否有扩展名为判断是否是一个目录
+        } else {
+            //不存在
+            //一个不存在的目录，以是否有扩展名为判断是否是一个目录
+            if (!target.getName().matches("\\..+$")) {
                 target.mkdirs();
                 target = new File(target.getAbsolutePath(), source.getName().concat(".zip"));
             } else {
@@ -180,7 +185,6 @@ public class ZipUtils {
      * @throws IOException
      * @Description: 压缩文件，构建压缩内部文件结构
      * @CreateTime: 2016年11月5日 下午5:23:48
-     * @author: 蕪園樓主
      */
     private static void addEntry(String base, File source, ZipOutputStream zos, boolean dir)
             throws IOException {
@@ -189,7 +193,8 @@ public class ZipUtils {
             File[] files = source.listFiles();
             if (files == null || files.length < 1) {
                 //空目录
-//                zos.putNextEntry(new ZipEntry(entry));
+                //如果不想保留空目录，那么下面这行注释掉，仅保留closeEntry即可
+                zos.putNextEntry(new ZipEntry(entry.concat(File.separator)));
                 zos.closeEntry();
                 return;
             }
@@ -202,15 +207,30 @@ public class ZipUtils {
             BufferedInputStream bis = null;
             try {
                 fis = new FileInputStream(source);
-                bis = new BufferedInputStream(fis, buffer.length);
+                bis = new BufferedInputStream(fis, BUFFER.length);
                 int read = 0;
                 zos.putNextEntry(new ZipEntry(entry));
-                while ((read = bis.read(buffer, 0, buffer.length)) != -1) {
-                    zos.write(buffer, 0, read);
+                while ((read = bis.read(BUFFER, 0, BUFFER.length)) != -1) {
+                    zos.write(BUFFER, 0, read);
                 }
                 zos.closeEntry();
             } finally {
                 //关闭流
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (bis != null) {
+                    try {
+                        bis.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -317,6 +337,10 @@ public class ZipUtils {
         zipInputStream.close();
     }
 
+    public static void unZip(File zipFile, String targetDir) {
+        unZip(zipFile.getPath(), targetDir);
+    }
+
     public static void unZip(String zipFile, String targetDir) {
         //保存每个zip的条目名称
         String strEntry;
@@ -349,9 +373,9 @@ public class ZipUtils {
                     }
 
                     FileOutputStream fos = new FileOutputStream(entryFile);
-                    dest = new BufferedOutputStream(fos, buffer.length);
-                    while ((count = zis.read(buffer, 0, buffer.length)) != -1) {
-                        dest.write(buffer, 0, count);
+                    dest = new BufferedOutputStream(fos, BUFFER.length);
+                    while ((count = zis.read(BUFFER, 0, BUFFER.length)) != -1) {
+                        dest.write(BUFFER, 0, count);
                     }
                     dest.flush();
                     dest.close();
@@ -458,4 +482,5 @@ public class ZipUtils {
         return lines;
     }
 
-} 
+
+}
