@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -364,18 +366,34 @@ public class ZipUtils {
     }
 
     public static String readTextInZip(String zipFilePath, @NonNull String fileName) {
-        return readTextInZip(zipFilePath, fileName, -1);
+        return readTextStrInZip(zipFilePath, fileName, -1);
     }
 
-    public static String readTextInZip(String zipFilePath, @NonNull String fileName, int lineIndex) {
+    public static String readTextStrInZip(String zipFilePath, @NonNull String fileName, int lineIndex) {
         if (!FileUtils.isExists(zipFilePath)) {
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder();
+
+        List<String> strings = readTextInZip(zipFilePath, fileName, lineIndex);
+        if (strings != null && !strings.isEmpty()) {
+            for (String s : strings) {
+                stringBuilder.append(s);
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static List<String> readTextInZip(String zipFilePath, @NonNull String fileName, int lineIndex) {
+        if (!FileUtils.isExists(zipFilePath)) {
+            return null;
+        }
         //获取文件输入流
         FileInputStream input = null;
 
         ZipInputStream zipInputStream = null;
+        List<String> lines = new ArrayList<>();
         try {
             //获取文件输入流
             input = new FileInputStream(zipFilePath);
@@ -406,9 +424,9 @@ public class ZipUtils {
                 String line;
                 //内容不为空，输出
                 while ((line = br.readLine()) != null) {
-                    stringBuilder.append(line);
+                    lines.add(line);
                     if (lineIndex != -1 && currLineIndex == lineIndex) {
-                        return stringBuilder.toString();
+                        return lines;
                     }
                     currLineIndex++;
                 }
@@ -437,7 +455,7 @@ public class ZipUtils {
         }
 
 
-        return stringBuilder.toString();
+        return lines;
     }
 
 } 
