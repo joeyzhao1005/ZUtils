@@ -109,8 +109,8 @@ public class MD5Utils {
      * @return
      */
     @Nullable
-    public static String getFileMD5(File file) {
-        if (!file.isFile() || !file.exists()) {
+    public static String getFileMD5(@Nullable File file) {
+        if (file == null || !file.isFile() || !file.exists()) {
             return null;
         }
         MessageDigest digest = null;
