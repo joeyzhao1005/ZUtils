@@ -93,9 +93,7 @@ public class TextJsonUtils extends TextUtils {
         String str = TextUtils.readTxtFromLocal(FILE_NAME, CharsetName.UTF_8);
 
         Gson gson = new Gson();
-        Object object = gson.fromJson(str, clazz);
-
-        return object;
+        return gson.fromJson(str, clazz);
     }
 
 

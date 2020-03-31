@@ -1,5 +1,7 @@
 package com.kit.utils;
 
+import androidx.annotation.Nullable;
+
 import com.kit.utils.log.Zog;
 
 import java.io.BufferedReader;
@@ -15,6 +17,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,31 +38,91 @@ public class TextUtils {
      * @param path
      * @return
      */
+    public static String readTxtFromLocal(String path, Charset charset) {
+        return readTxtFromLocal(path, charset.name());
+    }
+
+    /**
+     * 从本地路径读取文本
+     *
+     * @param path
+     * @return
+     */
+    @Nullable
     public static String readTxtFromLocal(String path, String charsetName) {
-        String str = "";
+        StringBuilder stringBuilder = null;
         try {
-            String encoding = charsetName; // 字符编码(可解决中文乱码问题 )
             File file = new File(path);
+            stringBuilder = new StringBuilder();
+
             if (file.isFile() && file.exists()) {
                 InputStreamReader read = new InputStreamReader(
-                        new FileInputStream(file), encoding);
+                        new FileInputStream(file), charsetName);
                 BufferedReader bufferedReader = new BufferedReader(read);
-                String lineTXT = null;
-
+                String lineTXT;
                 while ((lineTXT = bufferedReader.readLine()) != null) {
-                    str += lineTXT.toString().trim();
-
-                    // System.out.println(lineTXT.toString().trim());
+                    stringBuilder.append(lineTXT.trim());
                 }
                 read.close();
             } else {
-                System.out.println("找不到指定的文件！");
+                Zog.e("找不到指定的文件！");
             }
         } catch (Exception e) {
-            System.out.println("读取文件内容操作出错");
+            Zog.e("读取文件内容操作出错");
             e.printStackTrace();
         }
-        return str;
+        if (stringBuilder != null) {
+            return stringBuilder.toString();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 从本地路径读取文本
+     *
+     * @param path
+     * @return
+     */
+    @Nullable
+    public static List<String> readTxtListFromLocal(String path, Charset charset) {
+        return readTxtListFromLocal(path, charset.name());
+    }
+
+    /**
+     * 从本地路径读取文本
+     *
+     * @param path
+     * @return
+     */
+    @Nullable
+    public static List<String> readTxtListFromLocal(String path, String charsetName) {
+        List<String> stringList = null;
+        try {
+            File file = new File(path);
+            stringList = new ArrayList<>();
+
+            if (file.isFile() && file.exists()) {
+                InputStreamReader read = new InputStreamReader(
+                        new FileInputStream(file), charsetName);
+                BufferedReader bufferedReader = new BufferedReader(read);
+                String lineTXT;
+                while ((lineTXT = bufferedReader.readLine()) != null) {
+                    stringList.add(lineTXT.trim());
+                }
+                read.close();
+            } else {
+                Zog.e("找不到指定的文件！");
+            }
+        } catch (Exception e) {
+            Zog.e("读取文件内容操作出错");
+            e.printStackTrace();
+        }
+        if (stringList != null) {
+            return stringList;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -66,27 +131,39 @@ public class TextUtils {
      * @param path
      * @return
      */
+    @Nullable
     public static String readTxtFromWeb(String path) {
-        String output = "";
-        URL MyURL;
+        URL url;
+        StringBuilder stringBuilder = null;
         try {
-            MyURL = new URL(path);
+            url = new URL(path);
 
-            URLConnection uc = MyURL.openConnection();
+            URLConnection uc = url.openConnection();
             uc.connect();
 
-            InputStreamReader _Input = new InputStreamReader(
-                    uc.getInputStream(), "UTF-8");
+            InputStreamReader _Input;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                _Input = new InputStreamReader(
+                        uc.getInputStream(), StandardCharsets.UTF_8);
+            } else {
+                _Input = new InputStreamReader(
+                        uc.getInputStream(), "UTF-8");
+            }
             BufferedReader br = new BufferedReader(_Input);
 
-            String s = "";
+            stringBuilder = new StringBuilder();
+            String s;
             while ((s = br.readLine()) != null) {
-                output += s;
+                stringBuilder.append(s);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return output;
+        if (stringBuilder != null) {
+            return stringBuilder.toString();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -115,10 +192,10 @@ public class TextUtils {
             os.flush();
             fos.close();
         } catch (FileNotFoundException e) {
-            System.out.println("找不到指定的文件！");
+            Zog.e("找不到指定的文件！");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("写入文件操作出错");
+            Zog.e("写入文件操作出错");
             e.printStackTrace();
         }
     }
@@ -154,7 +231,7 @@ public class TextUtils {
             }
             writer.close();
         } catch (IOException e) {
-            System.out.println("写入文件操作出错");
+            Zog.e("写入文件操作出错");
             e.printStackTrace();
         }
     }
