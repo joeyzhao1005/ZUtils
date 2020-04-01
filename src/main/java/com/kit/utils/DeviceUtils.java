@@ -373,19 +373,13 @@ public class DeviceUtils {
 
         if (naviBarHeight >= 0) {
             return naviBarHeight;
-        } else {
-            if (ApiLevel.ATLEAST_Q) {
-                //Android Q 统一启用导航栏高度
-                Zog.e("Android Q 及以上版本不建议使用getNavigationBarHeight来获取导航栏，建议采用ViewCompat.setOnApplyWindowInsetsListener的方式来监听导航栏");
-            }
         }
-
         if (ApiLevel.ATLEAST_JB_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
             //小米手势导航 启用
             naviBarHeight = 0;
             return naviBarHeight;
         } else {
-            return 0;
+            return getNaviBarHeight(context);
         }
 
     }

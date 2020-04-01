@@ -59,9 +59,9 @@ public class TextUtils {
                 InputStreamReader read = new InputStreamReader(
                         new FileInputStream(file), charsetName);
                 BufferedReader bufferedReader = new BufferedReader(read);
-                String lineTXT;
-                while ((lineTXT = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(lineTXT.trim());
+                String lineText;
+                while ((lineText = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(lineText.trim());
                 }
                 read.close();
             } else {
