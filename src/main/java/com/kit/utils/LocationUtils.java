@@ -17,6 +17,7 @@ import android.provider.Settings;
 import androidx.core.app.ActivityCompat;
 
 import com.kit.app.application.AppMaster;
+import com.kit.utils.log.Zog;
 
 import java.util.List;
 import java.util.Locale;
@@ -103,8 +104,14 @@ public class LocationUtils {
                 }
             }
             //注册位置更新
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+            try {
+                if (locationListener != null) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+                }
+            } catch (IllegalArgumentException e) {
+                Zog.showException(e);
+            }
             return bestLocation;
         } else {
             return null;
