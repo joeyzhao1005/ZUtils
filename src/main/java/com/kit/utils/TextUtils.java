@@ -219,20 +219,29 @@ public class TextUtils {
      * @throws Exception
      */
     public static void writeStringList2File(String path, List<String> strings) {
+        BufferedWriter writer = null;
         try {
             File file = new File(path);
             //如果没有文件就创建
             if (!file.isFile()) {
                 file.createNewFile();
             }
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer = new BufferedWriter(new FileWriter(path));
             for (String l : strings) {
                 writer.write(l + "\r\n");
             }
             writer.close();
         } catch (IOException e) {
             Zog.e("写入文件操作出错");
-            e.printStackTrace();
+            Zog.showException(e);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
