@@ -1,6 +1,7 @@
 package com.kit.utils;
 
 import android.annotation.SuppressLint;
+import android.text.format.Time;
 
 import com.kit.utils.log.Zog;
 
@@ -31,7 +32,6 @@ public class DateUtils {
     public static String MONTH_DAY_WEEK_CHINA = "MM月dd日 EEE";
     public static String MONTH_DAY_WEEK = "MM dd";
     public static String MONTH_DAY_WEEK2 = "MM月dd日";
-
 
 
     public static String HOUR_MIN = "HH:mm";
@@ -192,6 +192,12 @@ public class DateUtils {
         }
         return c;
     }
+
+    public static String getDateFormat(long millions, String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.format(new Date(millions));
+    }
+
 
     public static String getDateFormat(Date date, String format) {
         // dateStrWithZone = 1351582444220+0800;
@@ -674,6 +680,15 @@ public class DateUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * @return true if the supplied when is today else false
+     */
+    public static boolean isToday(long when) {
+        return (DateUtils.getCurrDateFormat(DateUtils.YEAR_MONTH_DAY_WEEK_CHINA)
+                .equals(DateUtils.getDateFormat(when, DateUtils.YEAR_MONTH_DAY_WEEK_CHINA)));
     }
 
 }
