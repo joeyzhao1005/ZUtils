@@ -120,6 +120,10 @@ public class ValueOf {
 
 
     public static int toInt(Object o, int defaultValue) {
+        if (o == null) {
+            return defaultValue;
+        }
+
         int value;
         try {
             String s = o.toString();
