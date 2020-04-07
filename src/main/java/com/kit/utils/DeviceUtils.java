@@ -247,15 +247,25 @@ public class DeviceUtils {
     @SuppressWarnings("deprecation")
     public static int getScreenHeight(Context context) {
         int screenHeight;
-        if (!(context instanceof Activity)) {
-            context = ActivityManager.getInstance().getCurrActivity();
+        Activity activity;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
+        } else {
+            activity = ActivityManager.getInstance().getCurrActivity();
         }
 
-        if (context == null) {
-            return realScreenHeight == 0 ? 1920 : realScreenHeight;
+        if (ApiLevel.ATLEAST_JB_MR1) {
+            if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+                return realScreenHeight == 0 ? 1920 : realScreenHeight;
+            }
+        } else {
+            if (activity == null || activity.isFinishing()) {
+                return realScreenHeight == 0 ? 1920 : realScreenHeight;
+            }
         }
 
-        Display display = ((Activity) context).getWindowManager()
+
+        Display display = activity.getWindowManager()
                 .getDefaultDisplay();
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
@@ -275,15 +285,24 @@ public class DeviceUtils {
     }
 
     public static int getRealScreenHeight(Context context) {
-        if (!(context instanceof Activity)) {
-            context = ActivityManager.getInstance().getCurrActivity();
+        Activity activity;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
+        } else {
+            activity = ActivityManager.getInstance().getCurrActivity();
         }
 
-        if (context == null) {
-            return realScreenHeight == 0 ? 1920 : realScreenHeight;
+        if (ApiLevel.ATLEAST_JB_MR1) {
+            if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+                return realScreenHeight == 0 ? 1920 : realScreenHeight;
+            }
+        } else {
+            if (activity == null || activity.isFinishing()) {
+                return realScreenHeight == 0 ? 1920 : realScreenHeight;
+            }
         }
 
-        Display display = ((Activity) context).getWindowManager()
+        Display display = activity.getWindowManager()
                 .getDefaultDisplay();
         if (ApiLevel.ATLEAST_JB_MR1) {
             Point size = new Point();
@@ -301,15 +320,24 @@ public class DeviceUtils {
 
     public static int getScreenWidth(Context context) {
         int width;
-        if (!(context instanceof Activity)) {
-            context = ActivityManager.getInstance().getCurrActivity();
+        Activity activity;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
+        } else {
+            activity = ActivityManager.getInstance().getCurrActivity();
         }
 
-        if (context == null) {
-            return realScreenWidth == 0 ? 1080 : realScreenWidth;
+        if (ApiLevel.ATLEAST_JB_MR1) {
+            if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+                return realScreenWidth == 0 ? 1080 : realScreenWidth;
+            }
+        } else {
+            if (activity == null || activity.isFinishing()) {
+                return realScreenWidth == 0 ? 1080 : realScreenWidth;
+            }
         }
 
-        Display display = ((Activity) context).getWindowManager()
+        Display display = (activity).getWindowManager()
                 .getDefaultDisplay();
         if (ApiLevel.ATLEAST_HONEYCOMB_MR2) {
             Point size = new Point();
@@ -323,17 +351,24 @@ public class DeviceUtils {
 
 
     public static int getRealScreenWidth(Context context) {
-
-
-        if (!(context instanceof Activity)) {
-            context = ActivityManager.getInstance().getCurrActivity();
+        Activity activity;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
+        } else {
+            activity = ActivityManager.getInstance().getCurrActivity();
         }
 
-        if (context == null) {
-            return realScreenWidth == 0 ? 1080 : realScreenWidth;
+        if (ApiLevel.ATLEAST_JB_MR1) {
+            if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+                return realScreenWidth == 0 ? 1080 : realScreenWidth;
+            }
+        } else {
+            if (activity == null || activity.isFinishing()) {
+                return realScreenWidth == 0 ? 1080 : realScreenWidth;
+            }
         }
 
-        Display display = ((Activity) context).getWindowManager()
+        Display display = (activity).getWindowManager()
                 .getDefaultDisplay();
         if (ApiLevel.ATLEAST_JB_MR1) {
             Point size = new Point();
@@ -391,6 +426,9 @@ public class DeviceUtils {
      * @return
      */
     private static int getNaviBarHeight(@Nullable Context context) {
+        if (context == null) {
+            context = ActivityManager.getInstance().getCurrActivity();
+        }
         if (context == null) {
             context = AppMaster.getInstance().getAppContext();
         }
