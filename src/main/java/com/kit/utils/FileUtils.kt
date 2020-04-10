@@ -888,6 +888,9 @@ object FileUtils {
      * @return double值的大小
      */
     fun getFileOrFilesSize(filePath: String?, sizeType: Int): Double {
+        if (filePath.isNullOrBlank()) {
+            return 0.toDouble()
+        }
         val file = File(filePath)
         var blockSize: Long = 0
         try {
@@ -909,6 +912,9 @@ object FileUtils {
      * @return 计算好的带B、KB、MB、GB的字符串
      */
     fun getAutoFileOrFilesSize(filePath: String?): String? {
+        if (filePath.isNullOrBlank()) {
+            return null
+        }
         val file = File(filePath)
         var blockSize: Long = 0
         try {
@@ -934,8 +940,7 @@ object FileUtils {
     fun getFileSize(file: File): Long {
         var size: Long = 0
         if (file.exists()) {
-            var fis: FileInputStream? = null
-            fis = FileInputStream(file)
+            val fis: FileInputStream = FileInputStream(file)
             size = fis.available().toLong()
         } else {
             file.createNewFile()
@@ -953,12 +958,13 @@ object FileUtils {
     @Throws(java.lang.Exception::class)
     fun getFileSizes(f: File): Long {
         var size: Long = 0
-        val flist = f.listFiles()
-        for (i in flist.indices) {
-            size = if (flist[i].isDirectory) {
-                size + getFileSizes(flist[i])
+        val fList = f.listFiles() ?: return 0
+
+        for (i in fList.indices) {
+            size = if (fList[i].isDirectory) {
+                size + getFileSizes(fList[i])
             } else {
-                size + getFileSize(flist[i])
+                size + getFileSize(fList[i])
             }
         }
         return size
