@@ -409,7 +409,9 @@ public class DeviceUtils {
         if (naviBarHeight >= 0) {
             return naviBarHeight;
         }
-        if (ApiLevel.ATLEAST_JB_MR1 && Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
+        if (context != null &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 &&
+                Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
             //小米手势导航 启用
             naviBarHeight = 0;
             return naviBarHeight;
