@@ -102,7 +102,7 @@ public class Zog {
      * 打印日志
      */
     public static void d(String tag, ZString.Creator creator) {
-        if (!AppConfig.getAppConfig().isShowLog()) {
+        if (AppConfig.getAppConfig() == null || !AppConfig.getAppConfig().isShowLog()) {
             return;
         }
         Log.d(tag, getTitle() + creator.build());
