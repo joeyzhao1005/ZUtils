@@ -82,7 +82,7 @@ public class NotificationUtils {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            builder.setSubText(content);   //API level 16
+            builder.setSubText(content);
             n = builder.build();
         } else {
             n = builder.getNotification();
@@ -101,9 +101,9 @@ public class NotificationUtils {
      * @Description 常驻状态栏的通知, 通过view设置点击，可以设置点击时间
      */
     @SuppressWarnings("deprecation")
-    public static Notification creatResidentNotification(Context context,
-                                                         int notificationId, int statusBarIcon, Intent intent,
-                                                         RemoteViews view, String notice, int notificationFlag) {
+    public static Notification createResidentNotification(Context context,
+                                                          int notificationId, int statusBarIcon, Intent intent,
+                                                          RemoteViews view, String notice, int notificationFlag) {
 
         Notification notification = new Notification(statusBarIcon, notice,
                 System.currentTimeMillis());
