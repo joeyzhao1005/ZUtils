@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatDelegate
+import com.kit.app.application.AppMaster
 import com.kit.utils.ColorUtils
 import com.kit.utils.ResWrapper
 
@@ -49,8 +50,18 @@ object ThemeEngine {
     }
 
     val isLogicDarkMode: Boolean
-        get() = (ResWrapper.getResources().configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-                || !ColorUtils.isLightColor(themeColor))
+        get() =
+            when(AppMaster.getInstance().applicationId){
+//                "com.zhao.ink"->{
+//                    !ColorUtils.isLightColor(themeColor)
+//                }
+//
+                else ->{
+                    (ResWrapper.getResources().configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                            || !ColorUtils.isLightColor(themeColor))
+
+                }
+            }
 
 
     val isDarkMode: Boolean
