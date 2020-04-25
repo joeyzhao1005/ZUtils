@@ -51,14 +51,18 @@ object ThemeEngine {
 
     val isLogicDarkMode: Boolean
         get() =
-            when(AppMaster.getInstance().applicationId){
+            when (AppMaster.getInstance().applicationId) {
 //                "com.zhao.ink"->{
 //                    !ColorUtils.isLightColor(themeColor)
 //                }
 //
-                else ->{
-                    (ResWrapper.getResources().configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-                            || !ColorUtils.isLightColor(themeColor))
+                else -> {
+                    if (darkMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || darkMode == AppCompatDelegate.MODE_NIGHT_AUTO_TIME) {
+                        (ResWrapper.getResources().configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                                || !ColorUtils.isLightColor(themeColor))
+                    } else {
+                        isDarkMode
+                    }
 
                 }
             }
@@ -66,7 +70,14 @@ object ThemeEngine {
 
     val isDarkMode: Boolean
         get() =
-            darkMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+            when (darkMode) {
+
+                AppCompatDelegate.MODE_NIGHT_YES -> true
+
+                AppCompatDelegate.MODE_NIGHT_NO -> false
+
+                else -> false
+            }
 
     val darkMode: Int
         get() = themeProvider?.darkMode() ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
