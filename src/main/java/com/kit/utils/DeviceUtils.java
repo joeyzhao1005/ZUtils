@@ -279,10 +279,6 @@ public class DeviceUtils {
     }
 
 
-    @Deprecated
-    public static int getRealScreenHeight() {
-        return getRealScreenHeight(null);
-    }
 
     public static int getRealScreenHeight(Context context) {
         Activity activity;
@@ -387,15 +383,6 @@ public class DeviceUtils {
         return ResWrapper.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    /**
-     * Get the screen width.
-     *
-     * @return the screen width
-     */
-    @Deprecated
-    public static int getRealScreenWidth() {
-        return getRealScreenWidth(null);
-    }
 
     /**
      * 获取虚拟按键高度
