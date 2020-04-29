@@ -280,7 +280,7 @@ public class DeviceUtils {
 
 
 
-    public static int getRealScreenHeight(Context context) {
+    public static int getRealScreenHeight(@Nullable Context context) {
         Activity activity;
         if (context instanceof Activity) {
             activity = (Activity) context;
@@ -346,7 +346,7 @@ public class DeviceUtils {
     }
 
 
-    public static int getRealScreenWidth(Context context) {
+    public static int getRealScreenWidth(@Nullable Context context) {
         Activity activity;
         if (context instanceof Activity) {
             activity = (Activity) context;
