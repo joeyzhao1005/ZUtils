@@ -650,7 +650,7 @@ object FileUtils {
             return isSuccess
         } else if (file.isDirectory) {
             val childFile = file.listFiles()
-            if (childFile == null || childFile.size == 0) {
+            if (childFile == null || childFile.isEmpty()) {
                 isSuccess = file.delete()
                 return isSuccess
             }
@@ -679,14 +679,14 @@ object FileUtils {
     /**
      * 获取文件名（通过文件的路径）
      *
-     * @param filedir
+     * @param filePath
      * @return
      */
     @JvmStatic
-    fun getFilename(filedir: String): String? {
-        return if (StringUtils.isEmptyOrNullStr(filedir)) {
+    fun getFilename(filePath: String): String? {
+        return if (StringUtils.isEmptyOrNullStr(filePath)) {
             null
-        } else filedir.substring(filedir.lastIndexOf(File.separator) + 1)
+        } else filePath.substring(filePath.lastIndexOf(File.separator) + 1)
     }
 
     fun getFilenameWithoutSuffix(file: File?): String? {
