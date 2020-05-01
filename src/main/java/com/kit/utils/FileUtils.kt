@@ -736,10 +736,10 @@ object FileUtils {
      * @return
      */
     @JvmStatic
-    fun getSuffix(filedir: String): String? {
-        return if (StringUtils.isEmptyOrNullStr(filedir) || !filedir.contains(".")) {
+    fun getSuffix(filePath: String?): String? {
+        return if (StringUtils.isEmptyOrNullStr(filePath) || !filePath!!.contains(".")) {
             null
-        } else filedir.substring(filedir.lastIndexOf(".") + 1)
+        } else filePath.substring(filePath.lastIndexOf(".") + 1)
     }
 
 
@@ -755,8 +755,8 @@ object FileUtils {
      * @param overlay      新目录存在，是否覆盖
      */
     @JvmStatic
-    fun copy2Dir(srcFilePath: String, destDir: String?, overlay: Boolean): Boolean {
-        if (destDir == null) {
+    fun copy2Dir(srcFilePath: String?, destDir: String?, overlay: Boolean): Boolean {
+        if (destDir == null || srcFilePath.isNullOrBlank()) {
             return false
         }
 

@@ -3,6 +3,8 @@ package com.kit.utils.intent;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+
 import com.kit.utils.MapUtils;
 import com.kit.utils.log.Zog;
 
@@ -188,7 +190,7 @@ public class BundleData implements Cloneable {
 
 
     // 打印所有的 intent extra 数据
-    public static void printBundle(Bundle bundle) {
+    public static void printBundle(@Nullable Bundle bundle) {
 
         Zog.d(() -> {
             StringBuilder sb = new StringBuilder();

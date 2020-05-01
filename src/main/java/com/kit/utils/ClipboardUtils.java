@@ -19,7 +19,7 @@ public class ClipboardUtils {
             final android.content.ClipboardManager clipboardManager =
                     (android.content.ClipboardManager) AppMaster.getInstance().getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
             final android.content.ClipData clipData = android.content.ClipData
-                    .newPlainText(content,content);
+                    .newPlainText(content, content);
 
             if (clipboardManager != null) {
                 clipboardManager.setPrimaryClip(clipData);
@@ -42,7 +42,7 @@ public class ClipboardUtils {
         if (ApiLevel.ATLEAST_HONEYCOMB) {
             final android.content.ClipboardManager clipboardManager =
                     (android.content.ClipboardManager) AppMaster.getInstance().getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            if (clipboardManager != null && clipboardManager.getPrimaryClip().getItemCount() > 0) {
+            if (clipboardManager != null && clipboardManager.getPrimaryClip() != null && clipboardManager.getPrimaryClip().getItemCount() > 0) {
                 return clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
             }
         } else {
