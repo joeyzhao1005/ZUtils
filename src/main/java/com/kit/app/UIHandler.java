@@ -7,7 +7,7 @@ import android.os.Looper;
  * @author joeyzhao
  * <p>
  * UIHandler对Handler作了封装
- * 提供全局性的UI支持
+ * 提供全局性的UI线程切换支持
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class UIHandler {
