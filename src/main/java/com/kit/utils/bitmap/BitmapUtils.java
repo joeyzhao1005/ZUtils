@@ -209,6 +209,7 @@ public class BitmapUtils {
     /**
      * 从给定的路径加载图片，并指定是否自动旋转方向
      */
+    @Nullable
     public static Bitmap loadBitmap(String imgPath, int width, int height, boolean adjustOritation) {
         Options options = getOptions(imgPath, width, height, null);
 
@@ -1184,6 +1185,7 @@ public class BitmapUtils {
         return generateBitmapFile(filePath, options);
     }
 
+    @Nullable
     public static Bitmap generateBitmapFile(String filePath,
                                             BitmapFactory.Options options) {
         if (StringUtils.isEmptyOrNullStr(filePath)) {
@@ -1204,6 +1206,9 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
+        if (is == null) {
+            return null;
+        }
         return BitmapFactory.decodeStream(new PatchInputStream(is), null, options);
     }
 
