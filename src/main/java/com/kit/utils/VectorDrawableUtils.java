@@ -22,6 +22,7 @@ import java.nio.ByteOrder;
 
 /**
  * 从string path中读取图标信息
+ * @author joeyzhao
  */
 public class VectorDrawableUtils {
     public static Drawable getDrawable(Context context, String pathData) {
