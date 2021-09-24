@@ -1,6 +1,9 @@
 package com.kit.app;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.os.Build;
 
 import com.kit.utils.log.Zog;
 
@@ -226,6 +229,46 @@ public class ActivityManager {
         }
 
         return false;
+    }
+
+    /**
+     * Get activity from context object
+     *
+     * @param context something
+     * @return object of Activity or null if it is not Activity
+     */
+    public static Activity castActivity(Context context) {
+        if (context == null) return null;
+
+        if (context instanceof Activity) {
+            return (Activity) context;
+        } else if (context instanceof ContextWrapper) {
+            return castActivity(((ContextWrapper) context).getBaseContext());
+        }
+
+        return null;
+    }
+
+    /**
+     * 判断Activity是否还活着
+     * @param ctx
+     * @return
+     */
+    public static boolean activityIsAlive(Context ctx) {
+        if (ctx == null) {
+            return false;
+        }
+
+        Activity activity = castActivity(ctx);
+        if (activity == null) {
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return !(activity.isDestroyed() || activity.isFinishing());
+        } else {
+            return !activity.isFinishing();
+        }
     }
 
 }

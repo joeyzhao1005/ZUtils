@@ -1,10 +1,14 @@
 package com.kit.utils;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+import androidx.annotation.Nullable;
 
 public class AnimUtils {
 
@@ -95,4 +99,8 @@ public class AnimUtils {
         myAnimation.setAnimationListener(animationListener);
         return myAnimation;
     }
+
+
+
+
 }
