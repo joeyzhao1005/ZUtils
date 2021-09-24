@@ -33,6 +33,7 @@ public class ApiLevel {
     public static final boolean ATLEAST_N_MR1 =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1;
 
+
     public static final boolean ATLEAST_N =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
 

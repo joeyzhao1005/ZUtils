@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+
 apply plugin: 'kotlin-kapt'
 
 dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
+    implementation "androidx.core:core-ktx:${android_x_core}"
     implementation "androidx.appcompat:appcompat:${android_x_appcompat}"
     implementation "androidx.annotation:annotation:${android_x_annotation}"
 
