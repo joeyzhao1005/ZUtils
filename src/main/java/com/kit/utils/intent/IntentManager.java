@@ -248,6 +248,9 @@ public class IntentManager {
     /************* intent 的构造   START ************************/
     public IntentManager setClass(Context packageContext, Class<?> cls) {
         if (cls != null) {
+            if (!(packageContext instanceof Activity)) {
+                getIntent().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
             getIntent().setClass(packageContext, cls);
         }
         return this;

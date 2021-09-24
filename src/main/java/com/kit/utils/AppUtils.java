@@ -347,6 +347,30 @@ public class AppUtils {
         return null;
     }
 
+    private static String sCurrentProcessName;
+    private static final Object sGetCurrentProcessNameLock = new Object();
+    public static String currentProcessName(Context context) {
+        if (context == null)
+            return sCurrentProcessName;
+
+        synchronized (sGetCurrentProcessNameLock) {
+            if (sCurrentProcessName == null) {
+                android.app.ActivityManager activityManager = (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                List<android.app.ActivityManager.RunningAppProcessInfo> infos = activityManager.getRunningAppProcesses();
+                if (infos == null)
+                    return null;
+
+                for (android.app.ActivityManager.RunningAppProcessInfo info : infos) {
+                    if (info.pid == android.os.Process.myPid()) {
+                        sCurrentProcessName = info.processName;
+                        return sCurrentProcessName;
+                    }
+                }
+            }
+        }
+        return sCurrentProcessName;
+    }
+
 //    /**
 //     * @return null may be returned if the specified process not found
 //     */

@@ -1,7 +1,9 @@
 package com.kit.utils;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
+@SuppressLint({"AnnotateVersionCheck","ObsoleteSdkInt"})
 public class ApiLevel {
     public static final boolean ATMOST_O_MR1 =
             Build.VERSION.SDK_INT <=Build.VERSION_CODES.O_MR1;
