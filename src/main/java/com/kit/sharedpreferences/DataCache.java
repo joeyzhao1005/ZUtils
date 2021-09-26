@@ -12,85 +12,85 @@ public class DataCache {
 
 
     public void saveSharedPreferences(String key, String value) {
-        sharedPreferencesUtils.saveSharedPreferences(key, value);
+        sharedPreferencesUtils.save(key, value);
     }
 
     public String loadStringSharedPreference(String key, String stringValue) {
-        return sharedPreferencesUtils.loadStringSharedPreference(key, stringValue);
+        return sharedPreferencesUtils.load(key, stringValue);
 
     }
 
     public String loadStringSharedPreference(String key) {
-        return sharedPreferencesUtils.loadStringSharedPreference(key);
+        return sharedPreferencesUtils.loadString(key);
     }
 
     public void saveSharedPreferences(String key, int value) {
-        sharedPreferencesUtils.saveSharedPreferences(key, value);
+        sharedPreferencesUtils.save(key, value);
 
     }
 
     public int loadIntSharedPreference(String key, int intValue) {
-        return sharedPreferencesUtils.loadIntSharedPreference(key, intValue);
+        return sharedPreferencesUtils.load(key, intValue);
     }
 
     public int loadIntSharedPreference(String key) {
-        return sharedPreferencesUtils.loadIntSharedPreference(key);
+        return sharedPreferencesUtils.loadInt(key);
     }
 
 
     public void saveSharedPreferences(String key, long value) {
-        sharedPreferencesUtils.saveSharedPreferences(key, value);
+        sharedPreferencesUtils.save(key, value);
 
     }
 
     public void saveSharedPreferences(String key, float value) {
-        sharedPreferencesUtils.saveSharedPreferences(key, value);
+        sharedPreferencesUtils.save(key, value);
     }
 
 
     public float loadFloatSharedPreference(String key, Float floatValue) {
-        return sharedPreferencesUtils.loadFloatSharedPreference(key, floatValue);
+        return sharedPreferencesUtils.load(key, floatValue);
     }
 
     public float loadFloatSharedPreference(String key) {
-        return sharedPreferencesUtils.loadFloatSharedPreference(key);
+        return sharedPreferencesUtils.loadFloat(key);
     }
 
     public void saveSharedPreferences(String key, Long value) {
-        sharedPreferencesUtils.saveSharedPreferences(key, value);
+        sharedPreferencesUtils.save(key, value);
     }
 
     public long loadLongSharedPreference(String key, long longValue) {
-        return sharedPreferencesUtils.loadLongSharedPreference(key, longValue);
+        return sharedPreferencesUtils.load(key, longValue);
     }
 
 
     public float loadLongSharedPreference(String key, float longValue) {
-        return sharedPreferencesUtils.loadLongSharedPreference(key, longValue);
+        return sharedPreferencesUtils.load(key, longValue);
     }
 
     public long loadLongSharedPreference(String key) {
-        return sharedPreferencesUtils.loadLongSharedPreference(key);
+        return sharedPreferencesUtils.loadLong(key);
     }
 
     public void saveSharedPreferences(String key, Boolean value) {
-        sharedPreferencesUtils.saveSharedPreferences(key, value);
+        sharedPreferencesUtils.save(key, value);
     }
 
     public boolean loadBooleanSharedPreference(String key, boolean booleanValue) {
-        return sharedPreferencesUtils.loadBooleanSharedPreference(key, booleanValue);
+        return sharedPreferencesUtils.load(key, booleanValue);
     }
 
     public boolean loadBooleanSharedPreference(String key) {
-        return sharedPreferencesUtils.loadBooleanSharedPreference(key);
+        return sharedPreferencesUtils.loadBoolean(key);
     }
 
     public void saveAllSharePreference(String keyName, List<?> list) {
-        sharedPreferencesUtils.saveAllSharePreference(keyName, list);
+        sharedPreferencesUtils.saveAll(keyName, list);
     }
 
     public Map<String, ?> loadAllSharePreference(String key) {
-        return sharedPreferencesUtils.loadAllSharePreference(key);
+        return sharedPreferencesUtils.loadAll(key);
 
     }
 

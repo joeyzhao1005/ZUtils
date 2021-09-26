@@ -1,10 +1,14 @@
 package com.kit.sharedpreferences;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
+
 import com.kit.utils.GsonUtils;
+import com.kit.utils.ValueOf;
 import com.kit.utils.log.Zog;
 
 import java.io.ByteArrayInputStream;
@@ -23,6 +27,7 @@ import java.util.Map;
 /**
  * 存储配置信息的工具类 <br>
  * 注：可读取的数据类型有-<code>boolean、int、float、long、String.</code>
+ *
  * @author joeyzhao
  */
 public class SharedPreferencesUtils {
@@ -38,29 +43,118 @@ public class SharedPreferencesUtils {
         sharedpreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
 
-    public void saveSharedPreferences(String key, String value) {
+
+    @NonNull
+    public <T> T load(String key, @NonNull T defaultValue) {
+        if (defaultValue instanceof String) {
+            return (T) load(key, (String) defaultValue);
+        } else if (defaultValue instanceof Boolean) {
+            return (T) load(key, (Boolean) defaultValue);
+        } else if (defaultValue instanceof Integer) {
+            return (T) load(key, (Integer) defaultValue);
+        } else if (defaultValue instanceof Long) {
+            return (T) load(key, (Long) defaultValue);
+        } else if (defaultValue instanceof Float) {
+            return (T) load(key, (Float) defaultValue);
+        } else if (defaultValue instanceof Double) {
+            return (T) load(key, (Double) defaultValue);
+        }
+
+        return defaultValue;
+    }
+
+
+    public <T> void save(String key, @NonNull T defaultValue) {
+        if (defaultValue instanceof String) {
+            save(key, (String) defaultValue);
+        } else if (defaultValue instanceof Boolean) {
+            save(key, (Boolean) defaultValue);
+        } else if (defaultValue instanceof Integer) {
+            save(key, (Integer) defaultValue);
+        } else if (defaultValue instanceof Long) {
+            save(key, (Long) defaultValue);
+        } else if (defaultValue instanceof Float) {
+            save(key, (Float) defaultValue);
+        } else if (defaultValue instanceof Double) {
+            save(key, (Double) defaultValue);
+        }
+
+    }
+
+    public void save(String key, String value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         try {
             editor.putString(key, value);
         } catch (Exception e) {
-            editor.putString(key, value);
             e.printStackTrace();
         }
         editor.apply();
     }
 
-    public String loadStringSharedPreference(String key, String stringValue) {
-        String str = null;
-        try {
-            str = sharedpreferences.getString(key, stringValue);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return str;
+    public void save(String key, int value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
     }
 
-    public String loadStringSharedPreference(String key) {
+    public void save(String key, Integer value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+
+    public void save(String key, long value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putLong(key, value);
+        editor.apply();
+    }
+
+
+    public void save(String key, float value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putFloat(key, value);
+        editor.apply();
+    }
+
+    public void save(String key, Float value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putFloat(key, value);
+        editor.apply();
+    }
+
+    public void save(String key, double value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putFloat(key, ValueOf.toFloat(value));
+        editor.apply();
+    }
+
+
+    public void save(String key, Double value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putFloat(key, ValueOf.toFloat(value));
+        editor.apply();
+    }
+
+
+
+    public float loadFloat(String key) {
+        return sharedpreferences.getFloat(key, 0f);
+    }
+
+    public void save(String key, Long value) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putLong(key, value);
+        editor.apply();
+    }
+
+    public int loadInt(String key) {
+        return sharedpreferences.getInt(key, 0);
+    }
+
+
+    public String loadString(String key) {
         String str = null;
         try {
             str = sharedpreferences.getString(key, null);
@@ -71,79 +165,79 @@ public class SharedPreferencesUtils {
         return str;
     }
 
-    public void saveSharedPreferences(String key, int value) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putInt(key, value);
-        editor.apply();
+    public String load(String key, String stringValue) {
+        String str = null;
+        try {
+            str = sharedpreferences.getString(key, stringValue);
+        } catch (Exception e) {
+            str = stringValue;
+            e.printStackTrace();
+        }
+        return str;
     }
 
-    public int loadIntSharedPreference(String key, int intValue) {
-        return sharedpreferences.getInt(key, intValue);
+    public boolean load(String key, boolean value) {
+        return sharedpreferences.getBoolean(key, value);
     }
 
-    public int loadIntSharedPreference(String key) {
-        return sharedpreferences.getInt(key, 0);
-    }
-
-
-    public void saveSharedPreferences(String key, long value) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putLong(key, value);
-        editor.apply();
-    }
-
-    public void saveSharedPreferences(String key, float value) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putFloat(key, value);
-        editor.apply();
+    public Boolean load(String key, Boolean value) {
+        return sharedpreferences.getBoolean(key, value);
     }
 
 
-    public float loadFloatSharedPreference(String key, Float floatValue) {
-        return sharedpreferences.getFloat(key, floatValue);
+    public int load(String key, int value) {
+        return sharedpreferences.getInt(key, value);
     }
 
-    public float loadFloatSharedPreference(String key) {
-        return sharedpreferences.getFloat(key, 0f);
+    public Integer load(String key, Integer value) {
+        return sharedpreferences.getInt(key, value);
     }
 
-    public void saveSharedPreferences(String key, Long value) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putLong(key, value);
-        editor.apply();
-    }
 
-    public long loadLongSharedPreference(String key, long longValue) {
+    public long load(String key, long longValue) {
         return sharedpreferences.getLong(key, longValue);
     }
 
+    public Long load(String key, Long longValue) {
+        return sharedpreferences.getLong(key, longValue);
+    }
 
-    public float loadLongSharedPreference(String key, float longValue) {
+    public float load(String key, float longValue) {
         return sharedpreferences.getFloat(key, longValue);
     }
 
-    public long loadLongSharedPreference(String key) {
+
+    public Float load(String key, Float longValue) {
+        return sharedpreferences.getFloat(key, longValue);
+    }
+
+    public double load(String key, double doubleValue) {
+        return ValueOf.toDouble(sharedpreferences.getFloat(key, ValueOf.toFloat(doubleValue)));
+    }
+
+
+    public Double load(String key, Double doubleValue) {
+        return ValueOf.toDouble(sharedpreferences.getFloat(key, ValueOf.toFloat(doubleValue)));
+    }
+
+    public long loadLong(String key) {
         return sharedpreferences.getLong(key, 0L);
     }
 
-    public void saveSharedPreferences(String key, Boolean value) {
+    public void save(String key, Boolean value) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
-    public boolean loadBooleanSharedPreference(String key, boolean booleanValue) {
-        return sharedpreferences.getBoolean(key, booleanValue);
-    }
-
-    public boolean loadBooleanSharedPreference(String key) {
+    public boolean loadBoolean(String key) {
         return sharedpreferences.getBoolean(key, false);
     }
 
-    public void saveAllSharePreference(String keyName, List<?> list) {
+    public void saveAll(String keyName, List<?> list) {
         int size = list.size();
         if (size < 1) {
-            return ;
+            return;
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         if (list.get(0) instanceof String) {
@@ -170,7 +264,7 @@ public class SharedPreferencesUtils {
         editor.apply();
     }
 
-    public Map<String, ?> loadAllSharePreference(String key) {
+    public Map<String, ?> loadAll(String key) {
         return sharedpreferences.getAll();
     }
 
@@ -202,6 +296,7 @@ public class SharedPreferencesUtils {
      *
      * @return
      */
+    @SuppressLint("ApplySharedPref")
     public void clear() {
         sharedpreferences.edit().clear().commit();
     }
