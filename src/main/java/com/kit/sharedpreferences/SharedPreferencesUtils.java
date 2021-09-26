@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.kit.utils.GsonUtils;
 import com.kit.utils.ValueOf;
@@ -154,11 +155,11 @@ public class SharedPreferencesUtils {
     }
 
 
+    @Nullable
     public String loadString(String key) {
         String str = null;
         try {
             str = sharedpreferences.getString(key, null);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -264,7 +265,7 @@ public class SharedPreferencesUtils {
         editor.apply();
     }
 
-    public Map<String, ?> loadAll(String key) {
+    public Map<String, ?> loadAll() {
         return sharedpreferences.getAll();
     }
 

@@ -90,7 +90,7 @@ public class DataCache {
     }
 
     public Map<String, ?> loadAllSharePreference(String key) {
-        return sharedPreferencesUtils.loadAll(key);
+        return sharedPreferencesUtils.loadAll();
 
     }
 
