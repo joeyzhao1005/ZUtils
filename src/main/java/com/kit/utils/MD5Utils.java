@@ -118,7 +118,7 @@ public class MD5Utils {
         int len;
         try {
             digest = MessageDigest.getInstance("MD5");
-            if (ApiLevel.ATLEAST_Q && !file.getPath().contains(AppMaster.getInstance().getApplicationId())) {
+            if (ApiLevel.ATLEAST_Q && !file.getPath().contains(AppMaster.INSTANCE.getApplicationId())) {
                 Zog.d("Android Q 不可读取沙盒外的文件，请先copy到沙盒中，然后再进行处理");
                 return null;
             } else {

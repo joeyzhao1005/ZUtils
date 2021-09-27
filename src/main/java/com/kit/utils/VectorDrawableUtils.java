@@ -27,7 +27,7 @@ import java.nio.ByteOrder;
 public class VectorDrawableUtils {
     public static Drawable getDrawable(Context context, String pathData) {
         if (context == null) {
-            context = AppMaster.getInstance().getAppContext();
+            context = AppMaster.INSTANCE.getAppContext();
         }
         byte[] binXml = createBinaryDrawableXml(pathData.getBytes());
         try {

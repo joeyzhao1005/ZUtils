@@ -55,8 +55,17 @@ public class UrlSchemeParse {
         Uri uri = Uri.parse(url);
         // 得到参数字符串
         String encoded = uri.getEncodedQuery();
+        if (encoded == null) {
+            encoded = uri.toString();
+        }
         // 拆分获得单个参数
-        if (encoded != null && !encoded.isEmpty()) {
+        if (!encoded.isEmpty()) {
+            if (encoded.contains("?")) {
+                encoded = encoded.substring(encoded.indexOf("?")+1);
+            } else if (encoded.contains("#")) {
+                encoded = encoded.substring(encoded.indexOf("#")+1);
+            }
+
             HashMap<String, Object> map = new HashMap<>();
             String[] params = encoded.split("&");
             for (String param : params) {

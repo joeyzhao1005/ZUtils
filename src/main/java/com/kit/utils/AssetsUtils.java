@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 public class AssetsUtils extends AssetsTxt2String {
     @Nullable
     public static String getFromAssets(String fileName) {
-        Context context = AppMaster.getInstance().getAppContext();
+        Context context = AppMaster.INSTANCE.getAppContext();
         if (!isFileExists(fileName)) {
             return null;
         }
@@ -40,7 +40,7 @@ public class AssetsUtils extends AssetsTxt2String {
 
     @Nullable
     public static String getFromAssetsNoNewLines(String fileName) {
-        Context context = AppMaster.getInstance().getAppContext();
+        Context context = AppMaster.INSTANCE.getAppContext();
         if (!isFileExists(fileName)) {
             return null;
         }
@@ -68,7 +68,7 @@ public class AssetsUtils extends AssetsTxt2String {
      * @return false 不存在    true 存在
      */
     public static boolean isFileExists(String filename) {
-        AssetManager assetManager = AppMaster.getInstance().getAppContext().getResources().getAssets();
+        AssetManager assetManager = AppMaster.INSTANCE.getAppContext().getResources().getAssets();
         try {
             String[] names = assetManager.list("");
             for (int i = 0; i < names.length; i++) {

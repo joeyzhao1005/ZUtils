@@ -28,7 +28,7 @@ public class ResWrapper {
 
 
     public static Context getApplicationContext() {
-        return AppMaster.getInstance().getAppContext();
+        return AppMaster.INSTANCE.getAppContext();
     }
 
 //    public Context getContext() {

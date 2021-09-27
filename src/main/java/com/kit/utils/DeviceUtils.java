@@ -56,7 +56,7 @@ public class DeviceUtils {
 
         // 获取 ANDROID_ID
         String androidId = Settings.System.getString(
-                AppMaster.getInstance().getAppContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                AppMaster.INSTANCE.getAppContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         if (!StringUtils.isEmptyOrNullStr(androidId)) {
             // 通过 ANDROID_ID 生成 deviceId（唯一标识符）
             deviceId = MD5Utils.getMD5String(androidId);
@@ -419,7 +419,7 @@ public class DeviceUtils {
             context = ActivityManager.getInstance().getCurrActivity();
         }
         if (context == null) {
-            context = AppMaster.getInstance().getAppContext();
+            context = AppMaster.INSTANCE.getAppContext();
         }
         int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
         if (rid != 0) {

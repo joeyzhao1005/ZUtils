@@ -29,7 +29,7 @@ public class SysSettingsUtils {
             intent.setComponent(component);
             intent.setAction("android.intent.action.VIEW");
         }
-        Context context = AppMaster.getInstance().getAppContext();
+        Context context = AppMaster.INSTANCE.getAppContext();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

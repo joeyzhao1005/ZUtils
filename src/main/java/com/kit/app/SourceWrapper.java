@@ -19,26 +19,26 @@ public class SourceWrapper {
         if (uri.startsWith("file://")) {
             return uri.substring("file://".length(), uri.length());
         } else if (uri.startsWith("asset://")) {
-            return uri.substring(("asset://" + AppMaster.getInstance().getApplicationId() + "/").length(), uri.length());
+            return uri.substring(("asset://" + AppMaster.INSTANCE.getApplicationId() + "/").length(), uri.length());
         } else if (uri.startsWith("res://")) {
-            return uri.substring(("res://" + AppMaster.getInstance().getApplicationId() + "/").length(), uri.length());
+            return uri.substring(("res://" + AppMaster.INSTANCE.getApplicationId() + "/").length(), uri.length());
         } else if (uri.startsWith("content://")) {
-            return uri.substring(("content://" + AppMaster.getInstance().getApplicationId() + "/").length(), uri.length());
+            return uri.substring(("content://" + AppMaster.INSTANCE.getApplicationId() + "/").length(), uri.length());
         }
         return uri;
     }
 
 
     public static String contentProvider(String assetsName) {
-        return "content://" + AppMaster.getInstance().getApplicationId() + "/" + assetsName;
+        return "content://" + AppMaster.INSTANCE.getApplicationId() + "/" + assetsName;
     }
 
     public static String res(@DrawableRes int drawableResId) {
-        return "res://" + AppMaster.getInstance().getApplicationId() + "/" + drawableResId;
+        return "res://" + AppMaster.INSTANCE.getApplicationId() + "/" + drawableResId;
     }
 
     public static String assets(String assetsName) {
-        return "asset://" + AppMaster.getInstance().getApplicationId() + "/" + assetsName;
+        return "asset://" + AppMaster.INSTANCE.getApplicationId() + "/" + assetsName;
     }
 
     public static String file(String fileFullPath) {

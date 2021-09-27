@@ -145,7 +145,7 @@ public class LocationUtils {
         List<Address> result = null;
         try {
             if (location != null) {
-                Geocoder gc = new Geocoder(AppMaster.getInstance().getAppContext(), Locale.getDefault());
+                Geocoder gc = new Geocoder(AppMaster.INSTANCE.getAppContext(), Locale.getDefault());
                 result = gc.getFromLocation(location.getLatitude(),
                         location.getLongitude(), 1);
 
@@ -166,6 +166,6 @@ public class LocationUtils {
     public static void openGps() {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        AppMaster.getInstance().getAppContext().startActivity(intent);
+        AppMaster.INSTANCE.getAppContext().startActivity(intent);
     }
 }

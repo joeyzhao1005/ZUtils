@@ -1373,7 +1373,7 @@ public class BitmapUtils {
         }
 //
         if (file.exists() && notifySystem) {
-            notifySystemSavedPic(AppMaster.getInstance().getAppContext(), file);
+            notifySystemSavedPic(AppMaster.INSTANCE.getAppContext(), file);
         }
         return file;
     }

@@ -84,7 +84,7 @@ public class WakeLockUtils {
     @SuppressLint("InvalidWakeLockTag")
     @TargetApi(23)
     private void screenOffAboveAPI23() {
-        pm = (PowerManager) AppMaster.getInstance().getAppContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) AppMaster.INSTANCE.getAppContext().getSystemService(Context.POWER_SERVICE);
         if (pm == null) {
             return;
         }
@@ -109,7 +109,7 @@ public class WakeLockUtils {
     @SuppressLint("InvalidWakeLockTag")
     @TargetApi(23)
     private void screenOnAboveAPI23() {
-        pm = (PowerManager) AppMaster.getInstance().getAppContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) AppMaster.INSTANCE.getAppContext().getSystemService(Context.POWER_SERVICE);
         if (pm == null) {
             return;
         }
@@ -132,7 +132,7 @@ public class WakeLockUtils {
 
     @SuppressLint("InvalidWakeLockTag")
     private void screenOnOld() {
-        pm = (PowerManager) AppMaster.getInstance().getAppContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) AppMaster.INSTANCE.getAppContext().getSystemService(Context.POWER_SERVICE);
         if (pm == null) {
             return;
         }
@@ -154,7 +154,7 @@ public class WakeLockUtils {
      */
     @SuppressLint("InvalidWakeLockTag")
     private void screenOffOld() {
-        pm = (PowerManager) AppMaster.getInstance().getAppContext().getSystemService(Context.POWER_SERVICE);
+        pm = (PowerManager) AppMaster.INSTANCE.getAppContext().getSystemService(Context.POWER_SERVICE);
         if (pm == null) {
             return;
         }

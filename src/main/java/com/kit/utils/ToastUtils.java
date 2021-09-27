@@ -19,7 +19,7 @@ public class ToastUtils {
     public static void l(String msg) {
         try {
             UIHandler.run(() ->
-                    Toast.makeText(AppMaster.getInstance().getAppContext(), msg, Toast.LENGTH_LONG).show()
+                    Toast.makeText(AppMaster.INSTANCE.getAppContext(), msg, Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
             Zog.showException(e);
@@ -29,8 +29,8 @@ public class ToastUtils {
     public static void l(int msgStringId) {
         try {
             UIHandler.run(() ->
-                    Toast.makeText(AppMaster.getInstance().getAppContext()
-                            , AppMaster.getInstance().getAppContext().getResources().getString(msgStringId)
+                    Toast.makeText(AppMaster.INSTANCE.getAppContext()
+                            , AppMaster.INSTANCE.getAppContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class ToastUtils {
         }
         try {
             UIHandler.run(() ->
-                    Toast.makeText(AppMaster.getInstance().getAppContext(), msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(AppMaster.INSTANCE.getAppContext(), msg, Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
             Zog.showException(e);
@@ -79,8 +79,8 @@ public class ToastUtils {
 
         try {
             UIHandler.run(() ->
-                    Toast.makeText(AppMaster.getInstance().getAppContext()
-                            , AppMaster.getInstance().getAppContext().getResources().getString(msgStringId)
+                    Toast.makeText(AppMaster.INSTANCE.getAppContext()
+                            , AppMaster.INSTANCE.getAppContext().getResources().getString(msgStringId)
                             , Toast.LENGTH_SHORT).show()
             );
         } catch (Exception e) {
@@ -92,7 +92,7 @@ public class ToastUtils {
     public static void s(final Context context, @StringRes int msgStringId) {
         final Context contxt;
         if (context == null) {
-            contxt = AppMaster.getInstance().getAppContext();
+            contxt = AppMaster.INSTANCE.getAppContext();
         } else {
             contxt = context;
         }

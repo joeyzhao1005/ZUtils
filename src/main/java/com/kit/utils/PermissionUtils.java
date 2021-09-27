@@ -10,7 +10,7 @@ public class PermissionUtils {
 
 
     public static boolean check(@NonNull String permission) {
-        return check(AppMaster.getInstance().getAppContext(), permission);
+        return check(AppMaster.INSTANCE.getAppContext(), permission);
     }
 
     public static boolean check(Context context, @NonNull String permission) {
@@ -28,7 +28,7 @@ public class PermissionUtils {
     }
 
     public static void check(@NonNull String permission, PermissionCallback callback) {
-         check(AppMaster.getInstance().getAppContext(), permission, callback);
+         check(AppMaster.INSTANCE.getAppContext(), permission, callback);
     }
 
     public static void check(Context context, @NonNull String permission, PermissionCallback callback) {

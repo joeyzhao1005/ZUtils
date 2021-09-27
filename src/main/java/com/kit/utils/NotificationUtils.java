@@ -189,7 +189,7 @@ public class NotificationUtils {
     }
 
     public static NotificationCompat.Builder creatNotificationBuilder(int smallIconDrawableRes, CharSequence title, CharSequence content) {
-        Context context = AppMaster.getInstance().getAppContext();
+        Context context = AppMaster.INSTANCE.getAppContext();
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(smallIconDrawableRes)
@@ -200,7 +200,7 @@ public class NotificationUtils {
     }
 
     public static Notification creatNotification(int smallIconDrawableRes, CharSequence title, CharSequence content) {
-        Context context = AppMaster.getInstance().getAppContext();
+        Context context = AppMaster.INSTANCE.getAppContext();
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(smallIconDrawableRes)

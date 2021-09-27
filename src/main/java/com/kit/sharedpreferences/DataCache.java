@@ -175,7 +175,7 @@ public class DataCache {
 
     private void init(Context context) {
         if (context == null) {
-            context = AppMaster.getInstance().getAppContext();
+            context = AppMaster.INSTANCE.getAppContext();
         }
         sharedPreferencesUtils = new SharedPreferencesUtils(context, sharedPreferencesName);
     }

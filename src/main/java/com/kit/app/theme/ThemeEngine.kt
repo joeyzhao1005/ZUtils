@@ -51,7 +51,7 @@ object ThemeEngine {
 
     val isLogicDarkMode: Boolean
         get() =
-            when (AppMaster.getInstance().applicationId) {
+            when (AppMaster.applicationId) {
 //                "com.zhao.ink"->{
 //                    !ColorUtils.isLightColor(themeColor)
 //                }

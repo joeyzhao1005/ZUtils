@@ -3,104 +3,47 @@
  * Author：Zhao
  * Email：joeyzhao1005@gmail.com
  */
+package com.kit.app.application
 
-package com.kit.app.application;
-
-import android.content.Context;
-import android.content.pm.ActivityInfo;
+import android.content.Context
+import com.kit.app.application.AppMaster
 
 /**
  * Created by joeyzhao on 2018/3/16.
  */
-
-public class AppMaster implements IApp {
-
-
-    @Override
-    public void restartApp() {
-
-        if (app == null) {
-            return;
-        }
-        app.restartApp();
+object AppMaster : IApp {
+    override fun restartApp() {
+        app.restartApp()
     }
 
-    @Override
-    public boolean isDebug() {
-        if (app == null) {
-            return false;
-        }
-        return app.isDebug();
+    override fun isDebug(): Boolean {
+        return app.isDebug
     }
 
-    @Override
-    public String getAppName() {
-        if (app == null) {
-            return null;
-        }
-        return app.getAppName();
+    override fun getAppName(): String {
+        return app.appName
     }
 
-    @Override
-    public Context getAppContext() {
-        if (app == null) {
-            return null;
-        }
-        return app.getAppContext();
+    override fun getAppContext(): Context {
+        return app.appContext
     }
 
-    @Override
-    public String getApplicationId() {
-        if (app == null) {
-            return null;
-        }
-        return app.getApplicationId();
+    override fun getApplicationId(): String {
+        return app.applicationId
     }
 
-    @Override
-    public String getFlavor() {
-        if (app == null) {
-            return null;
-        }
-        return app.getFlavor();
+    override fun getFlavor(): String {
+        return app.flavor
     }
 
-    @Override
-    public String getVersionName() {
-        if (app == null) {
-            return null;
-        }
-        return app.getVersionName();
+    override fun getVersionName(): String {
+        return app.versionName
     }
 
-    @Override
-    public long getVersionCode() {
-        if (app == null) {
-            return 0;
-        }
-        return app.getVersionCode();
+    override fun getVersionCode(): Long {
+        return app.versionCode
     }
 
-    public IApp getApp() {
-        return app;
-    }
+    lateinit var app: IApp
 
-    public void setApp(IApp app) {
-        this.app = app;
-    }
-
-    private IApp app;
-
-
-    private static AppMaster mInstance;
-
-    private AppMaster() {
-    }
-
-    public static AppMaster getInstance() {
-        if (mInstance == null) {
-            mInstance = new AppMaster();
-        }
-        return mInstance;
-    }
 }
