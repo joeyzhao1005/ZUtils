@@ -18,7 +18,7 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion compileVersion
 
     defaultConfig {
         minSdkVersion 14
