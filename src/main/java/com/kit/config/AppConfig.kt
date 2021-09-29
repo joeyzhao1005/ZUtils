@@ -1,48 +1,21 @@
-package com.kit.config;
+package com.kit.config
 
-import android.graphics.Bitmap;
-import android.util.Log;
+import android.util.Log
+import com.kit.app.application.AppMaster
+import com.kit.config.AppConfig.IAppConfig
+import com.kit.config.AppConfig
 
-public class AppConfig {
-    private static IAppConfig appConfig;
+object AppConfig {
+    @JvmStatic
+    var appConfig: IAppConfig = AppMaster.app as IAppConfig
 
-    public static final String LOCKNOW = "com.kit.LockNow";
-
-    public static IAppConfig getAppConfig() {
-        if (appConfig == null) {
-            Log.e("AppConfig", "You must called setAppConfig(IAppConfig appConfig) before.");
-        }
-        return appConfig;
+    interface IAppConfig {
+        val isShowLog: Boolean
+        val isShowException: Boolean
+        fun getFilesDir(type: String?): String?
+        val cacheDir: String?
+        val cacheDataDir: String?
+        val cacheImageDir: String?
+        val theme: String?
     }
-
-    public static void setAppConfig(IAppConfig appConfig) {
-        AppConfig.appConfig = appConfig;
-    }
-
-    public interface IAppConfig {
-        /**
-         * 获取 sp name
-         * @return
-         */
-        String sharedPreferencesName();
-
-        boolean isShowLog();
-
-        boolean isShowException();
-
-
-        String getFilesDir(String type);
-
-        String getCacheDir();
-
-
-        String getCacheDataDir();
-
-        String getCacheImageDir();
-
-
-        String getTheme();
-    }
-
-
 }
