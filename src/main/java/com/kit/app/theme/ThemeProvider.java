@@ -4,6 +4,8 @@ package com.kit.app.theme;
  * @author joeyzhao
  */
 public interface ThemeProvider {
+
+
     int getThemeColor();
 
     /**
@@ -11,6 +13,12 @@ public interface ThemeProvider {
      */
     void setThemeColor(int themeColor);
 
+    int getAccentColor();
+
+    /**
+     * @param themeColor
+     */
+    void setAccentColor(int themeColor);
 
     int getThemeLightColor();
 

@@ -7,7 +7,7 @@ import com.kit.config.AppConfig
 
 object AppConfig {
     @JvmStatic
-    var appConfig: IAppConfig = AppMaster.app as IAppConfig
+    val appConfig: IAppConfig = AppMaster.appConfig
 
     interface IAppConfig {
         val isShowLog: Boolean

@@ -7,6 +7,8 @@ package com.kit.app.application
 
 import android.content.Context
 import com.kit.app.application.AppMaster
+import com.kit.app.theme.ThemeProvider
+import com.kit.config.AppConfig
 
 /**
  * Created by joeyzhao on 2018/3/16.
@@ -42,6 +44,14 @@ object AppMaster : IApp {
 
     override fun getVersionCode(): Long {
         return app.versionCode
+    }
+
+    override fun getAppConfig(): AppConfig.IAppConfig {
+        return app.appConfig
+    }
+
+    override fun getThemeProvider(): ThemeProvider {
+        return app.themeProvider
     }
 
     lateinit var app: IApp
