@@ -61,23 +61,6 @@ public class GsonUtils {
     }
 
 
-    /**
-     * 解析成list
-     *
-     * @param jsonStr
-     * @param type    要构建出type
-     * @return
-     */
-    public static <T> List<T> getList(String jsonStr, Type type) {
-        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
-            return null;
-        }
-
-        Gson gson = new Gson();
-        List<T> list = gson.fromJson(jsonStr, type);
-        return list;
-    }
-
 
     /**
      * 解析成list
@@ -136,33 +119,15 @@ public class GsonUtils {
      * @param jsonStr
      * @return
      */
-    public static <T> ArrayList<T> getArrayList(String jsonStr, Type typeOfT) {
+    public static <T> T getList(String jsonStr, Type typeOfT) {
         if (StringUtils.isEmptyOrNullStr(jsonStr)) {
             return null;
         }
 
         Gson gson = new Gson();
-        ArrayList<T> list = gson.fromJson(jsonStr, typeOfT);
-        return list;
+        return gson.fromJson(jsonStr, typeOfT);
     }
 
-    /**
-     * 解析成ArrayList
-     *
-     * @param jsonStr
-     * @return
-     */
-    public static <T> ArrayList<T> getArrayList(String jsonStr) {
-
-        if (StringUtils.isEmptyOrNullStr(jsonStr)) {
-            return null;
-        }
-
-        Type type = new TypeToken<ArrayList<T>>() {
-        }.getType();
-
-        return GsonUtils.getArrayList(jsonStr, type);
-    }
 
 
     /**

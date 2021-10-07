@@ -8,6 +8,7 @@ import android.util.Base64;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.kit.utils.GsonUtils;
 import com.kit.utils.ValueOf;
 import com.kit.utils.log.Zog;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -59,6 +61,12 @@ public class SharedPreferencesUtils {
             return (T) load(key, (Float) defaultValue);
         } else if (defaultValue instanceof Double) {
             return (T) load(key, (Double) defaultValue);
+        } else if (defaultValue instanceof List) {
+            String dataStr = load(key, "");
+            return new Gson().fromJson(dataStr, defaultValue.getClass().getGenericSuperclass());
+        } else if (defaultValue instanceof Object) {
+            String dataStr = load(key, "");
+            return new Gson().fromJson(dataStr, defaultValue.getClass().getGenericSuperclass());
         }
 
         return defaultValue;
@@ -78,6 +86,8 @@ public class SharedPreferencesUtils {
             save(key, (Float) defaultValue);
         } else if (defaultValue instanceof Double) {
             save(key, (Double) defaultValue);
+        } else if (defaultValue instanceof List) {
+            save(key, GsonUtils.toJson(defaultValue));
         }
 
     }
@@ -137,7 +147,6 @@ public class SharedPreferencesUtils {
         editor.putFloat(key, ValueOf.toFloat(value));
         editor.apply();
     }
-
 
 
     public float loadFloat(String key) {
@@ -219,6 +228,24 @@ public class SharedPreferencesUtils {
 
     public Double load(String key, Double doubleValue) {
         return ValueOf.toDouble(sharedpreferences.getFloat(key, ValueOf.toFloat(doubleValue)));
+    }
+
+
+    @Nullable
+    public <T> T loadObj(String key, @NonNull Class<T> clazz) {
+        String dataStr = loadString(key);
+        if (dataStr == null) {
+            return null;
+        }
+        return GsonUtils.getObj(key, clazz);
+    }
+    @Nullable
+    public <T> T loadList(String key, @NonNull Type type) {
+        String dataStr = loadString(key);
+        if (dataStr == null) {
+            return null;
+        }
+        return GsonUtils.getList(key, type);
     }
 
     public long loadLong(String key) {

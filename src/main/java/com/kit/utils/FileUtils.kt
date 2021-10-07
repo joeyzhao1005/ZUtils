@@ -372,8 +372,8 @@ object FileUtils {
         val fName = f.name
         /* 取得扩展名 */
         val end = fName
-                .substring(fName.lastIndexOf(".") + 1, fName.length)
-                .toLowerCase()
+            .substring(fName.lastIndexOf(".") + 1, fName.length)
+            .lowercase(Locale.getDefault())
         /* 依扩展名的类型决定MimeType */type = if (end == "m4a" || end == "mp3" || end == "mid" || end == "xmf" || end == "ogg" || end == "wav" || end == "wma") {
             "audio"
         } else if (end == "3gp" || end == "mp4") {
