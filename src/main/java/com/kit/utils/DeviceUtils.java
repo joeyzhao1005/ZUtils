@@ -480,28 +480,10 @@ public class DeviceUtils {
      * @param context
      * @return
      */
+    @Deprecated
     public static int getStatusBarHeight(@Nullable Context context) {
         if (statusBarHeight != -1) {
             return statusBarHeight;
-        }
-
-        if (context instanceof Activity) {
-            View decorView = ((Activity) context).getWindow().getDecorView();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                WindowInsets windowInsets = decorView.getRootWindowInsets();
-                if (windowInsets != null) {
-                    DisplayCutout displayCutout = windowInsets.getDisplayCutout();
-                    if (displayCutout != null) {
-                        statusBarHeight = displayCutout.getSafeInsetTop();
-                        return statusBarHeight;
-                    }
-                }
-            } else {
-                if (RomUtils.getAvailableRomType() == RomUtils.AvailableRomType.EMUI) {
-                    statusBarHeight = getNotchSize4Huawei(((Activity) context))[1];
-                }
-                return statusBarHeight;
-            }
         }
 
         int sbar = 0;
@@ -540,23 +522,6 @@ public class DeviceUtils {
         statusBarHeight = height;
     }
 
-    public static int[] getNotchSize4Huawei(Context context) {
-        int[] ret = new int[]{0, 0};
-        try {
-            ClassLoader cl = context.getClassLoader();
-            Class HwNotchSizeUtil = cl.loadClass("com.huawei.android.util.HwNotchSizeUtil");
-            Method get = HwNotchSizeUtil.getMethod("getNotchSize");
-            ret = (int[]) get.invoke(HwNotchSizeUtil);
-        } catch (ClassNotFoundException e) {
-            Log.e("test", "getNotchSize ClassNotFoundException");
-        } catch (NoSuchMethodException e) {
-            Log.e("test", "getNotchSize NoSuchMethodException");
-        } catch (Exception e) {
-            Log.e("test", "getNotchSize Exception");
-        } finally {
-            return ret;
-        }
-    }
 
 
     /**

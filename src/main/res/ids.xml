@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <item type="id" name="status_bar_fake_status_bar_view" />
+    <item type="id" name="status_bar_translucent_view" />
+    <item type="id" name="navigation_bar_fake_view" />
+    <item type="id" name="view_fits_layout_overlap" />
+
+    <item name="immersion_status_bar_view" type="id" />
+    <item name="immersion_navigation_bar_view" type="id" />
+    <item name="immersion_fits_layout_overlap" type="id" />
+    <item name="action_bar_container" type="id" />
+
+</resources>
