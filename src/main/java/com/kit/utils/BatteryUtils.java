@@ -39,23 +39,19 @@ public class BatteryUtils {
      */
     public static void ignoreBatteryOptimization(@NonNull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            try {
-                PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-                boolean hasIgnored = powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
-                /**
-                 * 判断当前APP是否有加入电池优化的白名单，
-                 * 如果没有，弹出加入电池优化的白名单的设置对话框
-                 * */
-                if (!hasIgnored) {
-                    Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                    intent.setData(Uri.parse("package:" + context.getPackageName()));
-                    if (!(context instanceof Activity)) {
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    }
-                    context.startActivity(intent);
+            PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            boolean hasIgnored = powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
+            /**
+             * 判断当前APP是否有加入电池优化的白名单，
+             * 如果没有，弹出加入电池优化的白名单的设置对话框
+             * */
+            if (!hasIgnored) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + context.getPackageName()));
+                if (!(context instanceof Activity)) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                context.startActivity(intent);
             }
         }
     }
