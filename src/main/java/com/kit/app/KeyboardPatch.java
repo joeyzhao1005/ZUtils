@@ -20,7 +20,7 @@ public class KeyboardPatch {
     private boolean isNeedPaddingNavigationBar;
 
 
-    public void destory() {
+    public void destroy() {
         disable();
         isNeedPaddingNavigationBar = false;
         contentView = null;

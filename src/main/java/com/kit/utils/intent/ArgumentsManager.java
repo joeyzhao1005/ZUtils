@@ -94,7 +94,7 @@ public class ArgumentsManager {
      *
      * @param fragment
      */
-    public void destory(Fragment fragment) {
+    public void destroy(Fragment fragment) {
         if (fragment == null) {
             return;
         }

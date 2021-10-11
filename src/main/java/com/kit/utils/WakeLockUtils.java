@@ -61,7 +61,7 @@ public class WakeLockUtils {
     /**
      * 销毁
      */
-    public void destory() {
+    public void destroy() {
         if (wakeLockScreen != null) {
             wakeLockScreen.release();
         }
