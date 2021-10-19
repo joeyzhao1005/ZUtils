@@ -25,6 +25,10 @@ android {
         targetSdkVersion 31
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
